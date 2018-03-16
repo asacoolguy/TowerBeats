@@ -13,7 +13,7 @@ public class CoilRotateScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// rotate the scanner (and its underlying line)
-		transform.Rotate(new Vector3(0, 0, - rotationSpeed * Time.deltaTime));
+		transform.Rotate(new Vector3(0, - rotationSpeed * Time.deltaTime, 0));
 
 	}
 }

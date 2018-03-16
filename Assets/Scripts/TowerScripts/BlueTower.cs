@@ -80,26 +80,9 @@ public class BlueTower : BasicTower {
 				line.SetPosition(1, enemies[enemyIndex].transform.position);
 				enemies[enemyIndex].TakeDamage(attackPower * FindObjectOfType<GameManager>().attackPowerBonus);
 
-				StartCoroutine(FadeBulletTrail(bullet, bulletFadeTime));
-
 				yield return new WaitForSeconds(0.4f);
 			}
 		}
-	}
-
-	// helper function that slowly fades out a bullet trail before destroying it
-	private IEnumerator FadeBulletTrail(GameObject trail, float time){
-		Material mat = trail.GetComponent<LineRenderer>().material;
-		float t = 0f;
-		float decaySpeed = mat.color.a / time;
-		while (t < time){
-			Color c = mat.color;
-			mat.color = new Color(c.r, c.g, c.b, c.a -= decaySpeed * Time.deltaTime);
-			yield return null;
-		}
-
-		Destroy(trail);
-		yield break;
 	}
 
 }

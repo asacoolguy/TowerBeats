@@ -13,12 +13,13 @@ public class UIManager : MonoBehaviour {
 	public List<AudioSource> pausedAudios;
 	private bool paused = false;
 	public bool tutorialShowing = false;
+	private float progressBarMaxSize;
 
 	// Use this for initialization
 	void Start () {
 		gm = FindObjectOfType<GameManager>();
 		textHealth = healthTextObj.GetComponent<Text>();
-		textHealth.text = "Base Health: " + gm.maxHealth + " / " + gm.maxHealth;
+		textHealth.text = "LIVES: " + gm.maxHealth + " / " + gm.maxHealth;
 		textLevel = textLevelObj.GetComponent<Text>();
 		gameOverBox = transform.Find("GameOverBox").gameObject;
 		gameOverBox.SetActive(false);
@@ -29,12 +30,15 @@ public class UIManager : MonoBehaviour {
 		// hide elements initially
 		transform.Find("Button_Start").gameObject.SetActive(true);
 		transform.Find("Build Panel").gameObject.SetActive(false);
-		transform.Find("Bottom Panel").gameObject.SetActive(false);
+		transform.Find("Progress Panel").gameObject.SetActive(false);
 
 		// show tutorial by default
 		tutorialBox = transform.Find("TutorialBox").gameObject;
 		tutorialBox.SetActive(true);
 		tutorialShowing = true;
+
+		// get some initial values
+		progressBarMaxSize = progressionBar.transform.localScale.x;
 	}	
 	
 	// Update is called once per frame
@@ -46,11 +50,14 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void UpdateHealth(int i){
-		textHealth.text = "Base Health: " + i + " / " + gm.maxHealth;
+		textHealth.text = "LIVES: " + i + " / " + gm.maxHealth;
 	}
 
-	public void UpdateScore(float newScore){
-		progressionBar.GetComponent<Slider>().value = newScore;
+	public void UpdateProgressionBar(float width){
+		// progressionBar.GetComponent<Slider>().value = newScore;
+		progressionBar.transform.localScale = new Vector3(width * progressBarMaxSize,
+														progressionBar.transform.localScale.y,
+														progressionBar.transform.localScale.z);
 	}
 
 	public void DisplayGameOverScreen(){
@@ -137,7 +144,10 @@ public class UIManager : MonoBehaviour {
 	public void StartGame(){
 		transform.Find("Button_Start").gameObject.SetActive(false);
 		transform.Find("Build Panel").gameObject.SetActive(true);
-		transform.Find("Bottom Panel").gameObject.SetActive(true);
+		transform.Find("Progress Panel").gameObject.SetActive(true);
+		progressionBar.transform.localScale = new Vector3(0,
+														progressionBar.transform.localScale.y,
+														progressionBar.transform.localScale.z);
 	}
 
 	public void ShowUpgradeButton(bool b){
@@ -146,7 +156,7 @@ public class UIManager : MonoBehaviour {
 
 	public void UpgradeToLevel(int i){
 		ShowUpgradeButton(false);
-		textLevel.text = "HEAT LEVEL" + i;
+		textLevel.text = "LEVEL" + i;
 	}
 
 	public void TogglePause(){

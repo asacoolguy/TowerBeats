@@ -58,7 +58,7 @@ public class EnemyManager : MonoBehaviour {
 		}
 
 		// increase next wave's amount
-		amountPerSpawn += 0.2f;
+		amountPerSpawn += 0.05f;
 	}
 
 

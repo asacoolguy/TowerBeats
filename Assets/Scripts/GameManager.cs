@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour {
 		scoresToAdvance.Add(600);
 
 		// call UIManager to configure the progression bar
-		uiManager.SetupProgressionBar(scoresToAdvance, scoreToUpgrade);
+		// uiManager.SetupProgressionBar(scoresToAdvance, scoreToUpgrade);
 	}
 	
 	// Update is called once per frame
@@ -234,7 +234,7 @@ public class GameManager : MonoBehaviour {
 
 	public void GetPoints(float pts){
 		currentScore += pts;
-		uiManager.UpdateScore(currentScore);
+		uiManager.UpdateProgressionBar(currentScore / scoreToUpgrade);
 
 		if (currentScore > scoreToUpgrade && transform.Find("WaveSphere").gameObject.activeSelf == false){
 			if (currentLevel < 4){
@@ -299,7 +299,7 @@ public class GameManager : MonoBehaviour {
 		goldBuildLimitBase = 0;
 		totalScore += currentScore;
 		currentScore = 0;
-		uiManager.UpdateScore(currentScore);
+		uiManager.UpdateProgressionBar(currentScore);
 		uiManager.ToggleGreenTowerButton(true);
 		uiManager.ToggleBlueTowerButton(false);
 		uiManager.ToggleGoldTowerButton(false);
