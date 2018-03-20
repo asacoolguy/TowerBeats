@@ -8,18 +8,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFocus : MonoBehaviour {
-
+	// variables for zooming
 	public GameObject target;
 	public float maxZoomOut = 80f;
 	public float maxZoomIn = 20f;
 	public float zoomSpeed;
 	private float targetZoom;
 
+	// variables for rotating
 	public float maxAngle = 30f;
 	public float angleRotateSpeed;
 	private Vector3 lastMousePosition;
 	private float currentAngle;
 	private float targetAngle;
+
+	// variables for changing positions
+	//public GameObject defaultLocation;
+	//public GameObject pauseLocation;
+
 
 	// Use this for initialization
 	void Start () {

@@ -76,7 +76,7 @@ public abstract class BasicTower : MonoBehaviour {
 	public virtual void MakePlanning(){
 		state = TowerState.planning;
 		mRenderer.material = planningMat;
-		transform.Find("Area").GetComponent<MeshRenderer>().enabled = true;
+		transform.Find("AOEIndicator").gameObject.SetActive(true);
 	}
 
 
@@ -85,6 +85,6 @@ public abstract class BasicTower : MonoBehaviour {
 		// TODO should there still be planning stage?
 		state = TowerState.functional;
 		mRenderer.material = originalMat;
-		transform.Find("Area").GetComponent<MeshRenderer>().enabled = false;
+		transform.Find("AOEIndicator").gameObject.SetActive(false);
 	}
 }

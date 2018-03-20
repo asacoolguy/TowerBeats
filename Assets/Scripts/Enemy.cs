@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour {
 		health -= i;
 		if (health <= 0f){
 			// destroy
-			SelfDestruct();
+			StartCoroutine(SelfDestruct());
 		}
 		else{
 			// play damage effect 
@@ -80,10 +80,19 @@ public class Enemy : MonoBehaviour {
 	}
 
 
-	// destroys this object and plays the appropriate animation
-	public void SelfDestruct(){
-		// TODO: need FX/animation for this
+	// destroy this object and play the appropriate animation
+	private IEnumerator SelfDestruct(){
 		FindObjectOfType<GameManager>().GetPoints(pointVal);
+
+		ParticleSystem ps = transform.GetChild(0).GetComponent<ParticleSystem>();
+		ps.Play();
+		GetComponent<MeshRenderer>().enabled = false;
+		FindObjectOfType<EnemyManager>().PlayDestroyEnemySound();
+
+		while (ps.isPlaying){
+			yield return null;
+		}
+
 		FindObjectOfType<EnemyManager>().DestroyEnemy(this.gameObject);
 	}
 }

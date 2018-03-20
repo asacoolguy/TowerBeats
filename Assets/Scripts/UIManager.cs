@@ -15,6 +15,9 @@ public class UIManager : MonoBehaviour {
 	public bool tutorialShowing = false;
 	private float progressBarMaxSize;
 
+	// UI sound effects
+	public AudioClip buttonEnable, buttonPress;
+
 	// Use this for initialization
 	void Start () {
 		gm = FindObjectOfType<GameManager>();
@@ -27,15 +30,15 @@ public class UIManager : MonoBehaviour {
 		gameWinBox.SetActive(false);
 		pauseScreen = transform.Find("PauseScreen").gameObject;
 
-		// hide elements initially
+		// hide elements except the start button initially
 		transform.Find("Button_Start").gameObject.SetActive(true);
 		transform.Find("Build Panel").gameObject.SetActive(false);
 		transform.Find("Progress Panel").gameObject.SetActive(false);
 
 		// show tutorial by default
 		tutorialBox = transform.Find("TutorialBox").gameObject;
-		tutorialBox.SetActive(true);
-		tutorialShowing = true;
+		//tutorialBox.SetActive(true);
+		//tutorialShowing = true;
 
 		// get some initial values
 		progressBarMaxSize = progressionBar.transform.localScale.x;
@@ -43,7 +46,8 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		tutorialShowing = tutorialBox.activeSelf;
+		//tutorialShowing = tutorialBox.activeSelf;
+
 		if (Input.GetKeyDown(KeyCode.Escape)){
 			TogglePause();
 		}
@@ -54,8 +58,7 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void UpdateProgressionBar(float width){
-		// progressionBar.GetComponent<Slider>().value = newScore;
-		progressionBar.transform.localScale = new Vector3(width * progressBarMaxSize,
+		progressionBar.transform.localScale = new Vector3(Mathf.Clamp(width, 0f, 1f) * progressBarMaxSize,
 														progressionBar.transform.localScale.y,
 														progressionBar.transform.localScale.z);
 	}
@@ -94,18 +97,23 @@ public class UIManager : MonoBehaviour {
 
 	// sets up the build tower buttons accordingly to availability
 	public void SetupBuildTowerButtons(bool greenOkay, bool blueOkay, bool goldOkay){
-		ToggleGreenTowerButton(greenOkay);
-		ToggleBlueTowerButton(blueOkay);
-		ToggleGoldTowerButton(goldOkay);
+		if (transform.Find("Build Panel").gameObject.activeSelf){
+			ToggleGreenTowerButton(greenOkay);
+			ToggleBlueTowerButton(blueOkay);
+			ToggleGoldTowerButton(goldOkay);
+		}
 	}
+
 
 	public void ToggleGreenTowerButton(bool b){
 		Button button = greenBuildButton.GetComponent<Button>();
 		Text text = greenBuildButton.GetComponentInChildren<Text>();
+		greenBuildButton.GetComponent<Animator>().SetBool("Available", b);
 		if (b && button.IsInteractable() == false){
 			button.interactable = true;
 			text.text = "Build Shockwave Tower";
 			greenBuildButton.GetComponent<Animator>().SetTrigger("Enable");
+			GetComponent<AudioSource>().PlayOneShot(buttonEnable);
 		}
 		else if (!b){
 			button.interactable = false;
@@ -116,10 +124,12 @@ public class UIManager : MonoBehaviour {
 	public void ToggleBlueTowerButton(bool b){
 		Button button = blueBuildButton.GetComponent<Button>();
 		Text text = blueBuildButton.GetComponentInChildren<Text>();
+		blueBuildButton.GetComponent<Animator>().SetBool("Available", b);
 		if (b && button.IsInteractable() == false){
 			button.interactable = true;
 			text.text = "Build Sniper Tower";
 			blueBuildButton.GetComponent<Animator>().SetTrigger("Enable");
+			GetComponent<AudioSource>().PlayOneShot(buttonEnable);
 		}
 		else if (!b){
 			button.interactable = false;
@@ -130,10 +140,12 @@ public class UIManager : MonoBehaviour {
 	public void ToggleGoldTowerButton(bool b){
 		Button button = goldBuildButton.GetComponent<Button>();
 		Text text = goldBuildButton.GetComponentInChildren<Text>();
+		goldBuildButton.GetComponent<Animator>().SetBool("Available", b);
 		if (b && button.IsInteractable() == false){
 			button.interactable = true;
 			text.text = "Build Laser Tower";
 			goldBuildButton.GetComponent<Animator>().SetTrigger("Enable");
+			GetComponent<AudioSource>().PlayOneShot(buttonEnable);
 		}
 		else if (!b){
 			button.interactable = false;
@@ -165,6 +177,7 @@ public class UIManager : MonoBehaviour {
 			return;
 		}
 
+		PlayButtonPressSound();
 		if (paused){
 			paused = false;
 			Time.timeScale = 1;
@@ -183,11 +196,15 @@ public class UIManager : MonoBehaviour {
 			// pause all audiosources
 			pausedAudios = new List<AudioSource>();
 			foreach(AudioSource au in FindObjectsOfType<AudioSource>()){
-				if (au.isPlaying){
+				if (au != this.GetComponent<AudioSource>() && au.isPlaying){
 					pausedAudios.Add(au);
 					au.Pause();
 				}
 			}
 		}
+	}
+
+	public void PlayButtonPressSound(){
+		GetComponent<AudioSource>().PlayOneShot(buttonPress);
 	}
 }

@@ -71,7 +71,7 @@ public class GoldTower : BasicTower {
 				// find first enemy still alive
 				Enemy target = null;
 				for (int i = 0; i < enemies.Count; i++){
-					if (enemies[i] != null){
+					if (enemies[i] != null && enemies[i].health > 0){
 						target = enemies[i];
 						break;
 					}
@@ -85,7 +85,7 @@ public class GoldTower : BasicTower {
 				else{
 					// target found. keep shooting laser at it until it dies
 					laser.gameObject.SetActive(true);
-					while (target != null && enemies.Contains(target)){
+					while (target != null && enemies.Contains(target) && target.health > 0){
 						laser.SetPosition(0, launcher.transform.position);
 						laser.SetPosition(1, target.transform.position);
 						target.TakeDamage(damagePerSec * Time.deltaTime * FindObjectOfType<GameManager>().attackPowerBonus);

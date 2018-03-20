@@ -1,0 +1,89 @@
+TO IMPLEMENT
+- currency based tower building
+	currency counter 
+	enemies destroyed increases currency
+	tower build cost
+- better tower building
+	Clicking on build tower button spawns a transparent tower floating above the valid
+		position
+	We still have snapping to valid grid positions, but the transparent tower should float
+		from position to position
+	when building, the tower should drop down or warp in and appear inactive until 
+		the scanner hits it
+- pre-wave tower set up
+	this let's players test out ideas and defenses before hand
+	unleash wave button to release waves
+	click on homebase to select a basic repeat beat
+- tower upgrading 
+	clicking on a tower will reveal buttons to upgrade the tower using currency
+	upgrading a tower will increase its power, make it look cooler
+	but how will its sound upgrade? (to be figured out)
+- different enemy types and movement
+	change spawn so less spawn but with more health
+	enemies that go in different patterns
+	enemies of various speed
+	mini boss enemies that disable towers?
+	
+	
+	
+IDEAS
+- tower moving
+	clicking on a tower shows an option to move it,
+	in moving mode, you can place it anywhere just like when you build a tower
+	reuse the code for tower building here
+- Rhythm game elements
+	each tower has a keyboard key that you have to hit as the sensor hits it like a rhythm game
+- hype level
+	as the progress bar increases, the music gets more intense?
+- audio visualizer
+	somehow incorporate a cool looking audio visualizer into the game?
+		maybe just 2d sound bars that pop up around the game field
+		or have octagon/hexagon towers outside of the game field that move
+			according to he audio 
+- encourage good tower placement
+	give towers bonus when placed in smart ways to next to each other
+	give bonuses in such ways that encourage player to make good music
+	but how? (to be figured out)
+- variable keys
+	the key of the tower changes based on
+		tower level?
+		distance to base?
+	(to be figured out)
+- variable tower heights
+	base towers are on ground level, while vocals are floating? just an examples
+- homebase upgrades
+	applies to all towers
+	some sort of global sound changing effect like dropmix's wild cards?
+- levels with different musical genres
+	maybe you only control the same X towers that always attack the same way
+	but their sound changes based on the level. one level might be trap the other might
+		be hip hop.
+	you can use points you get from beating levels to permanently unlock a tower sound
+		as your own so that you can use it whenever and also in the custom music
+		making stage.
+	
+	
+	
+QUESTIONS
+- how to upgrade towers
+	just individually? as the level progresses?
+	how does the sound of the tower change?
+- changing the key of the tower
+	should the tower's key change at all? if so, how?
+- how to incorporate rhythm game elements?
+	
+	
+TO DO 
+- better looking blue bullet and scanner
+- coin based tower building
+- pre-wave planning stage
+- better tower building & tower moving
+- try out rhythm game aspect 
+
+
+BUGS
+- any form of lag during the game will mess up the game's audio 
+- clicking on other build buttons while already selecting a button will not build a tower but merely change the tower type
+- players can cheese the game by just surrounding base with towers
+
+

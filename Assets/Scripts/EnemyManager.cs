@@ -16,16 +16,25 @@ public class EnemyManager : MonoBehaviour {
 	public float enemyDistancePerMove = 6f;
 	public float enemyPointMultiplier = 1f;
 
-	[SerializeField]private List<GameObject> allEnemies;
+	private List<GameObject> allEnemies;
+
+	// enemy destroy audio
+	private int enemyDestroySoundCounter;
+	public AudioClip enemyDestroySound;
 
 	// Use this for initialization
 	void Start () {
 		allEnemies = new List<GameObject>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	// LateUpdate is called at the end of the game logic cycle
+	void LateUpdate () {
+		// destory enemies and play the destruction sound at the right volume
+		if (enemyDestroySoundCounter > 0){
+			float volume = Mathf.Clamp(0.9f + enemyDestroySoundCounter * 0.1f, 1f, 1.5f);
+			GetComponent<AudioSource>().PlayOneShot(enemyDestroySound, volume);
+			enemyDestroySoundCounter = 0;
+		}
 	}
 
 
@@ -73,10 +82,15 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 
-	// destroy the given enemy
+	// destroy the given enemy. add it to the enemyTodestory list which will destory them
+	// all at the same time and also play th destory sound at the right volume
 	public void DestroyEnemy(GameObject obj){
 		allEnemies.Remove(obj);
 		Destroy(obj);
+	}
+
+	public void PlayDestroyEnemySound(){
+		enemyDestroySoundCounter++;
 	}
 
 

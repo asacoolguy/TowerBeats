@@ -24,7 +24,6 @@ public class BlueBullet : MonoBehaviour {
 		}
 
 		Destroy(this.gameObject);
-		print("bullet destroyed");
 		yield break;
 	}
 }

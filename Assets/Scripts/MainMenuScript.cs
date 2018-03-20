@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour {
+	public AudioClip buttonPressSound;
+
 
 	// Use this for initialization
 	void Start () {
@@ -16,15 +18,18 @@ public class MainMenuScript : MonoBehaviour {
 	}
 
 	public void LoadElectro(){
-		SceneManager.LoadSceneAsync("Electro");
+		GetComponent<AudioSource>().PlayOneShot(buttonPressSound);
+		SceneManager.LoadSceneAsync("Electro_New");
 	}
 
 	public void LoadSynth(){
-		SceneManager.LoadSceneAsync("Synth");
+		GetComponent<AudioSource>().PlayOneShot(buttonPressSound);
+		SceneManager.LoadSceneAsync("Synth_New");
 	}
 
 	public void LoadHipHop(){
-		SceneManager.LoadSceneAsync("Hip Hop");
+		GetComponent<AudioSource>().PlayOneShot(buttonPressSound);
+		SceneManager.LoadSceneAsync("HipHop_New");
 	}
 
 	public void Quit(){

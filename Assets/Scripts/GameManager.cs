@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour {
 	private UIManager uiManager;
 	private AudioSource endGameAudio;
 
-	public List<GameObject> BuildableTowers;
+	public List<GameObject> buildableTowers;
+	public GameObject homeBase;
 	[SerializeField]private LayerMask layerMask;
 	public float maxDistance = 35f;
 
@@ -47,8 +48,11 @@ public class GameManager : MonoBehaviour {
 	public int goldBuildLimitBase = 0;
 	private int goldBuildLimitCurrent = 0;
 
+
+
 	private AudioClip[] endGameClips;
 	private AudioClip youWinClip, youLoseClip;
+
 
 	// Use this for initialization
 	void Start () {
@@ -121,7 +125,7 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 
-		if (i > BuildableTowers.Count){
+		if (i > buildableTowers.Count){
 			print ("index out of bounds");
 			return;
 		}
@@ -132,7 +136,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		//Vector3 startingPos = new Vector3(-20,2,20);
-		selectedTower = Instantiate(BuildableTowers[i], BuildableTowers[i].transform.position, Quaternion.identity) as GameObject;
+		selectedTower = Instantiate(buildableTowers[i], buildableTowers[i].transform.position, Quaternion.identity) as GameObject;
 		selectedTower.SetActive(true);
 
 		// also turn on axes
@@ -197,6 +201,9 @@ public class GameManager : MonoBehaviour {
 	public void TakeDamage(int i){
 		currentHealth -= i;
 		uiManager.UpdateHealth(currentHealth);
+		homeBase.GetComponent<AudioSource>().Play();
+		homeBase.GetComponent<Animator>().SetTrigger("TakeDamage");
+
 		if (currentHealth <= 0){
 			// game over!
 			foreach (AudioSource a in FindObjectsOfType<AudioSource>()){
@@ -308,7 +315,7 @@ public class GameManager : MonoBehaviour {
 		if (currentLevel == 2){
 			greenBuildLimitBase = 3;
 			FindObjectOfType<EnemyManager>().enemyHealth = 3;
-			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 8f;
+			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 9.5f;
 			FindObjectOfType<EnemyManager>().amountPerSpawn = 3;
 			FindObjectOfType<EnemyManager>().enemyPointMultiplier = .9f;
 
@@ -319,7 +326,7 @@ public class GameManager : MonoBehaviour {
 			blueBuildLimitBase = 1;
 			uiManager.ToggleBlueTowerButton(true);
 			FindObjectOfType<EnemyManager>().enemyHealth = 4;
-			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 10f;
+			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 11f;
 			FindObjectOfType<EnemyManager>().amountPerSpawn = 4;
 			FindObjectOfType<EnemyManager>().enemyPointMultiplier = .8f;
 
@@ -330,7 +337,7 @@ public class GameManager : MonoBehaviour {
 			blueBuildLimitBase = 2;
 			uiManager.ToggleBlueTowerButton(true);
 			FindObjectOfType<EnemyManager>().enemyHealth = 5;
-			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 12f;
+			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 12.5f;
 			FindObjectOfType<EnemyManager>().amountPerSpawn = 4;
 			FindObjectOfType<EnemyManager>().enemyPointMultiplier = .75f;
 
