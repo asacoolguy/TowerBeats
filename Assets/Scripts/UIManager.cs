@@ -33,13 +33,14 @@ public class UIManager : MonoBehaviour {
 		gameWinBox.SetActive(false);
 		pauseScreen = transform.Find("PauseScreen").gameObject;
 
-		// hide elements except the start button initially
-		transform.Find("Button_Start").gameObject.SetActive(true);
-		transform.Find("Build Panel").gameObject.SetActive(false);
-		transform.Find("Progress Panel").gameObject.SetActive(false);
+		// show the game start button and reset the progress bar
+		transform.Find("StartButton").gameObject.SetActive(true);
+        progressionBar.transform.localScale = new Vector3(0,
+                                                        progressionBar.transform.localScale.y,
+                                                        progressionBar.transform.localScale.z);
 
-		// show tutorial by default
-		tutorialBox = transform.Find("TutorialBox").gameObject;
+        // show tutorial by default
+        tutorialBox = transform.Find("TutorialBox").gameObject;
 		//tutorialBox.SetActive(true);
 		//tutorialShowing = true;
 
@@ -92,11 +93,9 @@ public class UIManager : MonoBehaviour {
 
 	// sets up the build tower buttons accordingly to availability
 	public void SetupBuildTowerButtons(bool greenOkay, bool blueOkay, bool goldOkay){
-		if (transform.Find("Build Panel").gameObject.activeSelf){
-			ToggleShockTowerButton(greenOkay);
-			ToggleSniperTowerButton(blueOkay);
-			ToggleLaserTowerButton(goldOkay);
-		}
+		ToggleShockTowerButton(greenOkay);
+		ToggleSniperTowerButton(blueOkay);
+		ToggleLaserTowerButton(goldOkay);
 	}
 
 
@@ -148,17 +147,17 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	public void StartGame(){
-		transform.Find("Button_Start").gameObject.SetActive(false);
-		transform.Find("Build Panel").gameObject.SetActive(true);
-		transform.Find("Progress Panel").gameObject.SetActive(true);
-		progressionBar.transform.localScale = new Vector3(0,
-														progressionBar.transform.localScale.y,
-														progressionBar.transform.localScale.z);
+	public void StartMusic(){
+		transform.Find("StartButton").gameObject.SetActive(false);		
 	}
 
+    public void StartWave() {
+        transform.Find("SpawnButton").gameObject.SetActive(false);
+        FindObjectOfType<Scanner>().spawnEnemies = true;
+    }
 
-	public void ShowUpgradeButton(bool b){
+
+    public void ShowUpgradeButton(bool b){
 		transform.Find("Button_Upgrade").gameObject.SetActive(b);
 	}
 

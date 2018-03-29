@@ -12,15 +12,17 @@ public class GameManager : MonoBehaviour {
 
 	public List<GameObject> buildableTowers;
 	public GameObject homeBase;
-	[SerializeField]private LayerMask layerMask;
+	[SerializeField]private LayerMask groundLayerMask;
+    [SerializeField] private LayerMask towerLayerMask;
 
-	/// <summary>
-	/// Enum that describes if the user is currently building a tower or not.
-	/// Unselected means the player is currently
-	/// </summary>
-	private enum BuildState{unselected, selected};
+    /// <summary>
+    /// Enum that describes if the user is currently building a tower or not.
+    /// Unselected means the player is currently
+    /// </summary>
+    private enum BuildState{unselected, selected};
 	[SerializeField] private BuildState bState = BuildState.unselected;
 	private GameObject selectedTower = null;
+    [SerializeField] private GameObject hoveredTower = null;
 
 	// game progression variables
 	public int maxHealth = 10;
@@ -79,24 +81,52 @@ public class GameManager : MonoBehaviour {
         uiManager.SetupBuildTowerButtons(currentMoney >= buildableTowers[0].GetComponent<BasicTower>().cost,
                                          currentMoney >= buildableTowers[1].GetComponent<BasicTower>().cost,
                                          currentMoney >= buildableTowers[2].GetComponent<BasicTower>().cost);
+
+        // highlight any towers the mouse is hovering over
+        // if we're not in build mode
+        if (bState == BuildState.unselected) {
+            GameObject newHoveredTower = GetTowerFromMouse();
+            if (hoveredTower != newHoveredTower) {
+                if (hoveredTower != null) {
+                    hoveredTower.GetComponent<BasicTower>().ToggleOutline(false);
+                }
+                if (newHoveredTower != null) {
+                    newHoveredTower.GetComponent<BasicTower>().ToggleOutline(true);
+                }
+                hoveredTower = newHoveredTower;
+            }
+        }
     }
 
     private void LateUpdate() {
-        // handle deselecting/building towers
-        if (Input.GetMouseButtonDown(0) && GetMousePositionInWorld() != Vector3.zero
-            && bState == BuildState.selected && selectedTower != null) 
-        {
-            if (selectedTower.GetComponent<BasicTower>().IsBuildable()) {
-                print("build tower");
-                BuildSelectedTower();
+        // handle deselecting/building/moving towers
+        if (Input.GetMouseButtonDown(0)){
+            if (GetMousePositionInWorld() != Vector3.zero && bState == BuildState.selected && selectedTower != null) {
+                if (selectedTower.GetComponent<BasicTower>().IsBuildable()) {
+                    BuildSelectedTower();
+                }
+                else {
+                    print("Invalid build position");
+                }
             }
-            else {
-                print("Invalid build position");
+            else if(GetMousePositionInWorld() != Vector3.zero && bState == BuildState.unselected && hoveredTower != null) {
+                selectedTower = hoveredTower;
+                hoveredTower = null;
+                bState = BuildState.selected;
+                selectedTower.GetComponent<BasicTower>().MakeMoving();
+                selectedTower.GetComponent<BasicTower>().ToggleOutline(false);
+                FindObjectOfType<Scanner>().RemoveTowerFromList(selectedTower);
+                // also turn on axes
+                FindObjectOfType<Scanner>().EnableAllAxes(true);
             }
-
         }
         else if (Input.GetMouseButtonDown(1) && bState == BuildState.selected) {
             bState = BuildState.unselected;
+            // refund half the cost if we already paid for this 
+            if (selectedTower.GetComponent<BasicTower>().refundable) {
+                currentMoney += selectedTower.GetComponent<BasicTower>().cost / 2;
+                uiManager.UpdateMoney(currentMoney);
+            }
             Destroy(selectedTower);
             // also turn off axes
             FindObjectOfType<Scanner>().EnableAllAxes(false);
@@ -106,7 +136,6 @@ public class GameManager : MonoBehaviour {
 
     // select the right tower to build using index
     public void SelectTowerToBuild(int i){
-        print("select tower to build");
 		// build buttons don't work when tutorial's showing
 		if (uiManager.tutorialShowing){
 			return;
@@ -125,6 +154,7 @@ public class GameManager : MonoBehaviour {
 		//Vector3 startingPos = new Vector3(-20,2,20);
 		selectedTower = Instantiate(buildableTowers[i], buildableTowers[i].transform.position, Quaternion.identity) as GameObject;
 		selectedTower.SetActive(true);
+        selectedTower.GetComponent<BasicTower>().ToggleOutline(false);
 
 		// also turn on axes
 		FindObjectOfType<Scanner>().EnableAllAxes(true);
@@ -138,12 +168,21 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 
-		selectedTower.GetComponent<BasicTower>().MakeBuilt();
-		int axisIndex = FindObjectOfType<Scanner>().FindClosestAxisIndex(selectedTower.transform.position);
-		selectedTower.GetComponent<BasicTower>().axisIndex = axisIndex;
+        
+        BasicTower tower = selectedTower.GetComponent<BasicTower>();
+
+        // deduct money if needed
+        if (!tower.refundable) {
+            currentMoney -= selectedTower.GetComponent<BasicTower>().cost;
+            uiManager.UpdateMoney(currentMoney);
+        }
+
+		tower.MakeBuilt();
+        tower.ToggleOutline(false);
+        int axisIndex = FindObjectOfType<Scanner>().FindClosestAxisIndex(selectedTower.transform.position);
+		tower.axisIndex = axisIndex;
 		FindObjectOfType<Scanner>().AddTowerToList(selectedTower);
-        currentMoney -= selectedTower.GetComponent<BasicTower>().cost;
-        uiManager.UpdateMoney(currentMoney);
+        
 
         bState = BuildState.unselected;
 		selectedTower = null;
@@ -153,11 +192,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	// returns the mouse position in world coordinates
+	// returns the mouse position in world coordinates if mouse is within the ground plane
 	private Vector3 GetMousePositionInWorld(){
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 100, layerMask)){
+        if(Physics.Raycast(ray, out hit, 100, groundLayerMask)){
         	return new Vector3(hit.point.x, 0, hit.point.z);
         }
         else{
@@ -165,6 +204,32 @@ public class GameManager : MonoBehaviour {
         	return Vector3.zero;
         }
 	}
+
+
+    // returns the tower that the mouse is currently hovering over
+    // only valid for built towers
+    private GameObject GetTowerFromMouse() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100, towerLayerMask)) {
+            // trace parents until we find the object with BasicTower script on it
+            // in case ray tracing hit a child component of a tower
+            GameObject current = hit.collider.gameObject;
+            print("initial hit is " + current.name);
+            while (current.GetComponent<BasicTower>() == null && 
+                current.transform.parent != null) {
+                current = current.transform.parent.gameObject;
+            }
+            print("final hit is " + current.name);
+            if (hit.collider.gameObject.GetComponent<BasicTower>() != null
+                && hit.collider.gameObject.GetComponent<BasicTower>().IsBuilt()) {
+                return hit.collider.gameObject;
+            }
+        }
+
+        // otherwise no tower hit
+        return null;
+    }
 
 
 	// given a position, return the point nearest ring to that position

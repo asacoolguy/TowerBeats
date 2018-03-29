@@ -7,10 +7,11 @@ public abstract class BasicTower : MonoBehaviour {
 	protected Animator anim;
     public int cost;
 	public int axisIndex = 0;
+    public bool refundable = false;
 
 	// this enum determines what state the tower is in
 	// TODO: combine this with the ready state and other potential states like deactivated, buffed
-	public enum TowerState{planning, planningInvalid, built, functional};
+	public enum TowerState{planning, planningInvalid, built, moving};
 	protected TowerState state;
 
 	public Material originalMat, planningMat, planningInvalidMat;
@@ -63,13 +64,9 @@ public abstract class BasicTower : MonoBehaviour {
 		return state == TowerState.built;
 	}
 
-	public bool IsFunctional(){
-		return state == TowerState.functional;
-	}
-
-	public void MakeFunctional(){
-		state = TowerState.functional;
-	}
+    public bool IsMoving() {
+        return state == TowerState.moving;
+    }
 
 	// set the tower in its planning stage
 	public virtual void MakePlanning(){
@@ -79,11 +76,38 @@ public abstract class BasicTower : MonoBehaviour {
 	}
 
 
+    // set the tower in its moving stage
+    // really just do planning stage, but enable a refund if you cancel the build
+    public virtual void MakeMoving() {
+        refundable = true;
+        MakePlanning();
+    }
+
+
 	// set the tower in its built stage
 	public virtual void MakeBuilt(){
 		// TODO should there still be planning stage?
-		state = TowerState.functional;
+		state = TowerState.built;
+        refundable = false;
 		mRenderer.material = originalMat;
 		transform.Find("AOEIndicator").gameObject.SetActive(false);
 	}
+
+    
+    // toggle on/off the outlines for this tower and its kids
+    public void ToggleOutline(bool b) {
+        print("toggled outline to " + b);
+
+        if (GetComponent<cakeslice.Outline>() != null) {
+            GetComponent<cakeslice.Outline>().enabled = b;
+        }
+
+        foreach (Transform t in GetComponentsInChildren<Transform>()) {
+            cakeslice.Outline outline = t.gameObject.GetComponent<cakeslice.Outline>();
+            if (outline != null) {
+                outline.enabled = b;
+            }
+        }
+    }
+    
 }

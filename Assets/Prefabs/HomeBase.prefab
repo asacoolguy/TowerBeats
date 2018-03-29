@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 95260649872326918}
   - component: {fileID: 135908855871689856}
   m_Layer: 0
-  m_Name: HomeBaseNew
+  m_Name: HomeBase
   m_TagString: HomeBase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

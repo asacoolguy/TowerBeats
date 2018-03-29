@@ -20,7 +20,7 @@ public class LaserTower : BasicTower {
 
 		audioSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
-		mRenderer = transform.Find("JBL_tower").GetComponent<MeshRenderer>();
+		mRenderer = transform.Find("tower").GetComponent<MeshRenderer>();
 		originalMat = mRenderer.material;
 
 		// all towers start in the planning stage
@@ -50,7 +50,7 @@ public class LaserTower : BasicTower {
 
 		// pause all other towers of this type and sound
 		foreach (LaserTower tower in FindObjectsOfType<LaserTower>()){
-			if (tower != this && tower.IsFunctional() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
+			if (tower != this && tower.IsBuilt() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
 		}

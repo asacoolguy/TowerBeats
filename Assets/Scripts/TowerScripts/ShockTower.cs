@@ -38,7 +38,7 @@ public class ShockTower : BasicTower {
 
 		// pause all other towers of this type and sound
 		foreach (ShockTower tower in FindObjectsOfType<ShockTower>()){
-			if (tower != this && tower.IsFunctional() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
+			if (tower != this && tower.IsBuilt() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
 		}

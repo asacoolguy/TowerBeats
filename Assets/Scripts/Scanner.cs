@@ -143,7 +143,7 @@ public class Scanner : MonoBehaviour {
 	    totalRotateAmount = anglePerAxis;
 		enemySpawnCounter = enemyMoveCounter = 0;
 	   	transform.localEulerAngles = new Vector3(-90, -90, 0);
-	   	spawnEnemies = true;
+	   	spawnEnemies = false;
 	}
 
 
@@ -179,6 +179,13 @@ public class Scanner : MonoBehaviour {
 	}
 
 
+    // remove the tower from the list of towers
+    public void RemoveTowerFromList(GameObject tower) {
+        int index = tower.GetComponent<BasicTower>().axisIndex;
+        towerLists[index].Remove(tower);
+    }
+
+
 	// show or hide all axes
 	public void EnableAllAxes(bool b){
 		foreach (GameObject obj in axes){
@@ -196,7 +203,6 @@ public class Scanner : MonoBehaviour {
 
 
 	// enables or disables rotation. 
-	// also turn on/off enemy spawning and audio accordingly.
 	public void SetRotate(bool b){
 		rotating = b;
 		if (b){
@@ -204,14 +210,12 @@ public class Scanner : MonoBehaviour {
 				audios[i].Play();
 			}
 			transform.Find("ScannerLine").gameObject.SetActive(true);
-			spawnEnemies = true;
 		}
 		else{
 			for(int i = 0; i < numAudioPlaying; i++){
 				audios[i].Stop();
 			}
 			transform.Find("ScannerLine").gameObject.SetActive(false);
-			spawnEnemies = false;
 		}
 	}
 

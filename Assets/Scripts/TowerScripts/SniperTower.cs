@@ -19,7 +19,7 @@ public class SniperTower : BasicTower {
 
 		audioSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
-		mRenderer = transform.Find("shaba").GetComponent<MeshRenderer>();
+		mRenderer = transform.Find("tower").GetComponent<MeshRenderer>();
 		originalMat = mRenderer.material;
 
 		// all towers start in the planning stage
@@ -48,7 +48,7 @@ public class SniperTower : BasicTower {
 
 		// pause all other towers of this type and sound
 		foreach (SniperTower tower in FindObjectsOfType<SniperTower>()){
-			if (tower != this && tower.IsFunctional() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
+			if (tower != this && tower.IsBuilt() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
 		}
