@@ -8,12 +8,11 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour {
 	private UIManager uiManager;
-	private AudioSource endGameAudio;
+	private AudioSource audioSource;
 
 	public List<GameObject> buildableTowers;
 	public GameObject homeBase;
 	[SerializeField]private LayerMask layerMask;
-	public float maxDistance = 35f;
 
 	/// <summary>
 	/// Enum that describes if the user is currently building a tower or not.
@@ -23,39 +22,26 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] private BuildState bState = BuildState.unselected;
 	private GameObject selectedTower = null;
 
-	// game progression stuff
+	// game progression variables
 	public int maxHealth = 10;
 	[SerializeField]private int currentHealth;
 	public float currentScore = 0;
 	public float totalScore = 0;
+    public int startingMoney;
+    public int currentMoney;
 	public int scoreToUpgrade = 900;   // this is the amount needed to advance to next level
 	public List<int> scoresToAdvance;  // give it 7 upgrades for now, lets say that upgrade order is set
 									   // start with 2 green, unlock 2 green, 1 blue, 2 green, 1 blue, and a yellow
-
-	public int currentUnlockLevel = -1;
 	public int currentLevel = 1;
 	public int maxLevel = 4;
 	public float attackPowerBonus = 1f;
 
-	// tower build limit
-	private int greenBuildAmount = 0;
-	public int greenBuildLimitBase = 2;
-	private int greenBuildLimitCurrent = 2;
-	private int blueBuildAmount = 0;
-	public int blueBuildLimitBase = 0;
-	private int blueBuildLimitCurrent = 0;
-	private int goldBuildAmount = 0;
-	public int goldBuildLimitBase = 0;
-	private int goldBuildLimitCurrent = 0;
-
-
-
+    // Audio clips used for the game
 	private AudioClip[] endGameClips;
 	private AudioClip youWinClip, youLoseClip;
 
 
-	// Use this for initialization
-	void Start () {
+	private void Start () {
 		Time.timeScale = 1;
 
 		// set up music clips
@@ -63,65 +49,66 @@ public class GameManager : MonoBehaviour {
 		youWinClip = FindObjectOfType<MusicDatabase>().youWinClip;
 		youLoseClip = FindObjectOfType<MusicDatabase>().youLoseClip;
 
+        // set up some variables
 		uiManager = FindObjectOfType<UIManager>();
-		endGameAudio = transform.Find("EndGameAudio").GetComponent<AudioSource>();
+		audioSource = transform.Find("Audio").GetComponent<AudioSource>();
 		currentHealth = maxHealth;
-
-		// sets up the scoresToAdvance
-		scoresToAdvance = new List<int>();
-		scoresToAdvance.Add(30);
-		scoresToAdvance.Add(70);
-		scoresToAdvance.Add(120);
-		scoresToAdvance.Add(190);
-		scoresToAdvance.Add(300);
-		scoresToAdvance.Add(450);
-		scoresToAdvance.Add(600);
-
-		// call UIManager to configure the progression bar
-		// uiManager.SetupProgressionBar(scoresToAdvance, scoreToUpgrade);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetMouseButtonDown(0) && bState == BuildState.selected && selectedTower != null){
-			if (selectedTower.GetComponent<BasicTower>().IsBuildable()){
-				BuildSelectedTower();
-			}
-			else{
-				print("Invalid build position");
-			}
-
-		}
-		else if (Input.GetMouseButtonDown(1) && bState == BuildState.selected){
-			bState = BuildState.unselected;
-			Destroy(selectedTower);
-			// also turn off axes
-			FindObjectOfType<Scanner>().EnableAllAxes(false);
-		}
-
-		if (selectedTower != null){
-			bState = BuildState.selected;
-		}
-
-		if (bState == BuildState.selected && selectedTower != null){
-			// snap selectedTower location and rotation to nearest ring
-			Vector3 axisPos = SnapToAxisPosition(GetMousePositionInWorld());
-			selectedTower.transform.position = new Vector3(axisPos.x, selectedTower.transform.position.y, axisPos.z);
-			// also snap rotation
-			float angle = 180f - GameManager.GetAngleFromVector(-selectedTower.transform.position);
-			selectedTower.transform.eulerAngles = new Vector3(0, angle, 0);
-		}
-
-		// update build limits and call UIManager to toggle tower build buttons accordingly
-		SetupBuildLimits();
-		uiManager.SetupBuildTowerButtons(greenBuildAmount < greenBuildLimitCurrent,
-										 blueBuildAmount < blueBuildLimitCurrent,
-										 goldBuildAmount < goldBuildLimitCurrent);
+        currentMoney = startingMoney;
 	}
 
-	public void SelectTowerToBuild(int i){
+
+    private void Update() {
+        // update the build state if there is current a selected tower 
+        if (selectedTower != null)
+        {
+            bState = BuildState.selected;
+        }
+
+        // if there is a selected tower, update its location and rotation
+        if (bState == BuildState.selected && selectedTower != null)
+        {
+            // snap selectedTower location and rotation to nearest ring
+            Vector3 axisPos = SnapToAxisPosition(GetMousePositionInWorld());
+            selectedTower.transform.position = new Vector3(axisPos.x, selectedTower.transform.position.y, axisPos.z);
+            // also snap rotation
+            float angle = 180f - GameManager.GetAngleFromVector(-selectedTower.transform.position);
+            selectedTower.transform.eulerAngles = new Vector3(0, angle, 0);
+        }
+
+        // enable buildTower buttons accordingly
+        uiManager.SetupBuildTowerButtons(currentMoney >= buildableTowers[0].GetComponent<BasicTower>().cost,
+                                         currentMoney >= buildableTowers[1].GetComponent<BasicTower>().cost,
+                                         currentMoney >= buildableTowers[2].GetComponent<BasicTower>().cost);
+    }
+
+    private void LateUpdate() {
+        // handle deselecting/building towers
+        if (Input.GetMouseButtonDown(0) && GetMousePositionInWorld() != Vector3.zero
+            && bState == BuildState.selected && selectedTower != null) 
+        {
+            if (selectedTower.GetComponent<BasicTower>().IsBuildable()) {
+                print("build tower");
+                BuildSelectedTower();
+            }
+            else {
+                print("Invalid build position");
+            }
+
+        }
+        else if (Input.GetMouseButtonDown(1) && bState == BuildState.selected) {
+            bState = BuildState.unselected;
+            Destroy(selectedTower);
+            // also turn off axes
+            FindObjectOfType<Scanner>().EnableAllAxes(false);
+        }
+    }
+
+
+    // select the right tower to build using index
+    public void SelectTowerToBuild(int i){
+        print("select tower to build");
 		// build buttons don't work when tutorial's showing
-		if (FindObjectOfType<UIManager>().tutorialShowing){
+		if (uiManager.tutorialShowing){
 			return;
 		}
 
@@ -155,19 +142,10 @@ public class GameManager : MonoBehaviour {
 		int axisIndex = FindObjectOfType<Scanner>().FindClosestAxisIndex(selectedTower.transform.position);
 		selectedTower.GetComponent<BasicTower>().axisIndex = axisIndex;
 		FindObjectOfType<Scanner>().AddTowerToList(selectedTower);
+        currentMoney -= selectedTower.GetComponent<BasicTower>().cost;
+        uiManager.UpdateMoney(currentMoney);
 
-		// increment the tower count accordingly
-		if (selectedTower.GetComponent<GreenTower>() != null){
-			greenBuildAmount++;
-		}
-		else if(selectedTower.GetComponent<BlueTower>() != null){
-			blueBuildAmount++;
-		}
-		else if (selectedTower.GetComponent<GoldTower>() != null){
-			goldBuildAmount++;
-		}
-
-		bState = BuildState.unselected;
+        bState = BuildState.unselected;
 		selectedTower = null;
 
 		// also turn off axes
@@ -210,8 +188,8 @@ public class GameManager : MonoBehaviour {
 				a.Stop();
 			}
 
-			endGameAudio.clip = youLoseClip;
-			endGameAudio.Play();
+			audioSource.clip = youLoseClip;
+			audioSource.Play();
 			uiManager.DisplayGameOverScreen();
 			Time.timeScale = 0;
 		}
@@ -252,16 +230,18 @@ public class GameManager : MonoBehaviour {
 				StartCoroutine(WinGame());
 			}
 		}
-		else if (currentUnlockLevel < 6 && currentScore >= scoresToAdvance[currentUnlockLevel + 1]){
-			currentUnlockLevel++;
-		}
 	}
+
+
+    public void GetMoney(int money){
+        currentMoney += money;
+        uiManager.UpdateMoney(currentMoney);
+    }
 
 
 	// upgrades to the next level
 	public void UpgradeLevel(){
 		currentLevel++;
-		currentUnlockLevel = -1;
 
 		// send out wave
 		transform.Find("UpgradeWave").GetComponent<ParticleSystem>().Emit(1);
@@ -285,9 +265,9 @@ public class GameManager : MonoBehaviour {
 	// helper coroutine to reset states for new level
 	private IEnumerator SetupLevel(){
 		// destroy all bullets
-		GameObject[] blueBullets = GameObject.FindGameObjectsWithTag("BlueBullet");
-		for(int i = 0; i < blueBullets.Length; i++){
-			Destroy(blueBullets[i]);
+		GameObject[] SniperBullets = GameObject.FindGameObjectsWithTag("SniperBullet");
+		for(int i = 0; i < SniperBullets.Length; i++){
+			Destroy(SniperBullets[i]);
 		}
 
 		// wait for the wave to pass over
@@ -298,22 +278,12 @@ public class GameManager : MonoBehaviour {
 		FindObjectOfType<Scanner>().ResetRotation();
 		FindObjectOfType<Scanner>().numAudioPlaying = Mathf.Min(currentLevel, 4);
 		FindObjectOfType<Scanner>().SetRotate(true);
-		greenBuildAmount = 0;
-		greenBuildLimitBase = 2;
-		blueBuildAmount = 0;
-		blueBuildLimitBase = 0;
-		goldBuildAmount = 0;
-		goldBuildLimitBase = 0;
 		totalScore += currentScore;
 		currentScore = 0;
 		uiManager.UpdateProgressionBar(currentScore);
-		uiManager.ToggleGreenTowerButton(true);
-		uiManager.ToggleBlueTowerButton(false);
-		uiManager.ToggleGoldTowerButton(false);
 
 
 		if (currentLevel == 2){
-			greenBuildLimitBase = 3;
 			FindObjectOfType<EnemyManager>().enemyHealth = 3;
 			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 9.5f;
 			FindObjectOfType<EnemyManager>().amountPerSpawn = 3;
@@ -322,9 +292,6 @@ public class GameManager : MonoBehaviour {
 			attackPowerBonus = 1.3f;
 		}
 		else if (currentLevel == 3){
-			greenBuildLimitBase = 3;
-			blueBuildLimitBase = 1;
-			uiManager.ToggleBlueTowerButton(true);
 			FindObjectOfType<EnemyManager>().enemyHealth = 4;
 			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 11f;
 			FindObjectOfType<EnemyManager>().amountPerSpawn = 4;
@@ -333,9 +300,6 @@ public class GameManager : MonoBehaviour {
 			attackPowerBonus = 1.6f;
 		}
 		else if (currentLevel == 4){
-			greenBuildLimitBase = 3;
-			blueBuildLimitBase = 2;
-			uiManager.ToggleBlueTowerButton(true);
 			FindObjectOfType<EnemyManager>().enemyHealth = 5;
 			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 12.5f;
 			FindObjectOfType<EnemyManager>().amountPerSpawn = 4;
@@ -355,62 +319,17 @@ public class GameManager : MonoBehaviour {
 			yield return null;
 		}
 		// play the end game sound
-		endGameAudio.clip = endGameClips[Random.Range(0, endGameClips.Length)];
-		endGameAudio.Play();
-		while(endGameAudio.isPlaying){
+		audioSource.clip = endGameClips[Random.Range(0, endGameClips.Length)];
+		audioSource.Play();
+		while(audioSource.isPlaying){
 			yield return null;
 		}
 		// pop the game over box
 		uiManager.DisplayGameWinScreen(totalScore);
-		endGameAudio.clip = youWinClip;
-		endGameAudio.Play();
+		audioSource.clip = youWinClip;
+		audioSource.Play();
 
 		Time.timeScale = 0;
 	}
 
-
-	private void SetupBuildLimits(){
-		switch(currentUnlockLevel){
-			default:
-				greenBuildLimitCurrent = greenBuildLimitBase;
-				blueBuildLimitCurrent = blueBuildLimitBase;
-				goldBuildLimitCurrent = goldBuildLimitBase;
-				break;
-			case 0:
-				greenBuildLimitCurrent = greenBuildLimitBase + 1;
-				blueBuildLimitCurrent = blueBuildLimitBase;
-				goldBuildLimitCurrent = goldBuildLimitBase;
-				break;
-			case 1:
-				greenBuildLimitCurrent = greenBuildLimitBase + 2;
-				blueBuildLimitCurrent = blueBuildLimitBase;
-				goldBuildLimitCurrent = goldBuildLimitBase;
-				break;
-			case 2:
-				greenBuildLimitCurrent = greenBuildLimitBase + 2;
-				blueBuildLimitCurrent = blueBuildLimitBase + 1;
-				goldBuildLimitCurrent = goldBuildLimitBase;
-				break;
-			case 3:
-				greenBuildLimitCurrent = greenBuildLimitBase + 3;
-				blueBuildLimitCurrent = blueBuildLimitBase + 1;
-				goldBuildLimitCurrent = goldBuildLimitBase;
-				break;
-			case 4:
-				greenBuildLimitCurrent = greenBuildLimitBase + 4;
-				blueBuildLimitCurrent = blueBuildLimitBase + 1;
-				goldBuildLimitCurrent = goldBuildLimitBase;
-				break;
-			case 5:
-				greenBuildLimitCurrent = greenBuildLimitBase + 4;
-				blueBuildLimitCurrent = blueBuildLimitBase + 2;
-				goldBuildLimitCurrent = goldBuildLimitBase;
-				break;
-			case 6:
-				greenBuildLimitCurrent = greenBuildLimitBase + 4;
-				blueBuildLimitCurrent = blueBuildLimitBase + 2;
-				goldBuildLimitCurrent = goldBuildLimitBase + 1;
-				break;
-		}
-	}
 }

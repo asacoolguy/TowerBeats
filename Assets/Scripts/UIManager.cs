@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour {
-	private Text textHealth, textLevel;
+	private Text textHealth, textLevel, textMoney;
 	private GameObject gameOverBox, gameWinBox, pauseScreen, tutorialBox;
 	private GameManager gm;
-	public GameObject greenBuildButton, blueBuildButton, goldBuildButton, progressionBar, healthTextObj, textLevelObj;
+	public GameObject greenBuildButton, blueBuildButton, goldBuildButton, textMoneyObj,
+                      progressionBar, healthTextObj, textLevelObj;
 	public List<GameObject> thresholds;
 	public List<AudioSource> pausedAudios;
 	private bool paused = false;
@@ -24,6 +25,8 @@ public class UIManager : MonoBehaviour {
 		textHealth = healthTextObj.GetComponent<Text>();
 		textHealth.text = "LIVES: " + gm.maxHealth + " / " + gm.maxHealth;
 		textLevel = textLevelObj.GetComponent<Text>();
+        textMoney = textMoneyObj.GetComponent<Text>();
+        textMoney.text = "Total $: " + gm.startingMoney;
 		gameOverBox = transform.Find("GameOverBox").gameObject;
 		gameOverBox.SetActive(false);
 		gameWinBox = transform.Find("GameWinBox").gameObject;
@@ -63,6 +66,11 @@ public class UIManager : MonoBehaviour {
 														progressionBar.transform.localScale.z);
 	}
 
+    public void UpdateMoney(int i)
+    {
+        textMoney.text = "Total $: " + gm.currentMoney;
+    }
+
 	public void DisplayGameOverScreen(){
 		gameOverBox.SetActive(true);
 	}
@@ -76,80 +84,67 @@ public class UIManager : MonoBehaviour {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
+
 	public void LoadMainMenu(){
 		SceneManager.LoadScene("Main Menu");
-	}
-
-	// sets progression bar slider's max score and positions its unlock thresholds
-	public void SetupProgressionBar(List<int> thresholdsValues, int scoreToUpgrade){
-		Slider slider = progressionBar.GetComponent<Slider>();
-		slider.maxValue = scoreToUpgrade;
-		slider.value = 0;
-		float totalWidth = slider.GetComponent<RectTransform>().rect.width;
-		for (int i = 0; i < thresholds.Count; i++){
-			float ratio = (float)thresholdsValues[i] / (float) scoreToUpgrade;
-			float xPos = totalWidth * ratio;
-			xPos -= totalWidth / 2f;
-			thresholds[i].GetComponent<RectTransform>().localPosition = new Vector3(xPos, 0, 0);
-		}
 	}
 
 
 	// sets up the build tower buttons accordingly to availability
 	public void SetupBuildTowerButtons(bool greenOkay, bool blueOkay, bool goldOkay){
 		if (transform.Find("Build Panel").gameObject.activeSelf){
-			ToggleGreenTowerButton(greenOkay);
-			ToggleBlueTowerButton(blueOkay);
-			ToggleGoldTowerButton(goldOkay);
+			ToggleShockTowerButton(greenOkay);
+			ToggleSniperTowerButton(blueOkay);
+			ToggleLaserTowerButton(goldOkay);
 		}
 	}
 
 
-	public void ToggleGreenTowerButton(bool b){
+	public void ToggleShockTowerButton(bool b){
 		Button button = greenBuildButton.GetComponent<Button>();
 		Text text = greenBuildButton.GetComponentInChildren<Text>();
 		greenBuildButton.GetComponent<Animator>().SetBool("Available", b);
 		if (b && button.IsInteractable() == false){
 			button.interactable = true;
-			text.text = "Build Shockwave Tower";
+			text.text = "Shock";
 			greenBuildButton.GetComponent<Animator>().SetTrigger("Enable");
 			GetComponent<AudioSource>().PlayOneShot(buttonEnable);
 		}
 		else if (!b){
 			button.interactable = false;
-			text.text = "Tower Unavailable";
+			text.text = "Unavailable";
 		}
 	}
 
-	public void ToggleBlueTowerButton(bool b){
+	public void ToggleSniperTowerButton(bool b){
 		Button button = blueBuildButton.GetComponent<Button>();
 		Text text = blueBuildButton.GetComponentInChildren<Text>();
 		blueBuildButton.GetComponent<Animator>().SetBool("Available", b);
 		if (b && button.IsInteractable() == false){
 			button.interactable = true;
-			text.text = "Build Sniper Tower";
+			text.text = "Sniper";
 			blueBuildButton.GetComponent<Animator>().SetTrigger("Enable");
 			GetComponent<AudioSource>().PlayOneShot(buttonEnable);
 		}
 		else if (!b){
 			button.interactable = false;
-			text.text = "Tower Unavailable";
+			text.text = "Unavailable";
 		}
 	}
 
-	public void ToggleGoldTowerButton(bool b){
+	public void ToggleLaserTowerButton(bool b){
 		Button button = goldBuildButton.GetComponent<Button>();
 		Text text = goldBuildButton.GetComponentInChildren<Text>();
 		goldBuildButton.GetComponent<Animator>().SetBool("Available", b);
 		if (b && button.IsInteractable() == false){
 			button.interactable = true;
-			text.text = "Build Laser Tower";
+			text.text = "Laser";
 			goldBuildButton.GetComponent<Animator>().SetTrigger("Enable");
 			GetComponent<AudioSource>().PlayOneShot(buttonEnable);
 		}
 		else if (!b){
 			button.interactable = false;
-			text.text = "Tower Unavailable";
+			text.text = "Unavailable";
 		}
 	}
 
@@ -162,9 +157,11 @@ public class UIManager : MonoBehaviour {
 														progressionBar.transform.localScale.z);
 	}
 
+
 	public void ShowUpgradeButton(bool b){
 		transform.Find("Button_Upgrade").gameObject.SetActive(b);
 	}
+
 
 	public void UpgradeToLevel(int i){
 		ShowUpgradeButton(false);

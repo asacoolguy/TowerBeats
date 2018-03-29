@@ -124,10 +124,10 @@
      <Compile Include="Assets\Scripts\Scanner.cs" />
      <Compile Include="Assets\Scripts\ScannerLine.cs" />
      <Compile Include="Assets\Scripts\TowerScripts\BasicTower.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\BlueBullet.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\BlueTower.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\GoldTower.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\GreenTower.cs" />
+     <Compile Include="Assets\Scripts\TowerScripts\LaserTower.cs" />
+     <Compile Include="Assets\Scripts\TowerScripts\ShockTower.cs" />
+     <Compile Include="Assets\Scripts\TowerScripts\SniperBullet.cs" />
+     <Compile Include="Assets\Scripts\TowerScripts\SniperTower.cs" />
      <Compile Include="Assets\Scripts\TowerScripts\TowerAoE.cs" />
      <Compile Include="Assets\Scripts\Tutorial.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/HipHop_New.unity
+- path: Assets/Scenes/Synth_New.unity
   isLoaded: 1
   isActive: 1

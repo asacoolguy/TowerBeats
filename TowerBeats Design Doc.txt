@@ -71,17 +71,27 @@ QUESTIONS
 - changing the key of the tower
 	should the tower's key change at all? if so, how?
 - how to incorporate rhythm game elements?
+	maybe the tap based gameplay will work if some of the towers change location to switch it up
+	player can customize the music being played by purposefully missing some towers
+	
 	
 	
 TO DO 
-- better looking blue bullet and scanner
-- coin based tower building
 - pre-wave planning stage
+	sensor is just always going once the scene is loaded
+	in pre planning stage you can click on a tower to move it
+		move it to garbage can to destory it
+- wave based gameplay instead of levels
+- fix lagging issue
+	reset the play timer per round of rotations for the sensor
+	
+- better looking blue bullet and scanner
 - better tower building & tower moving
 - try out rhythm game aspect 
 
 
 BUGS
+- when building a tower, if mouse goes off the grid the proposed build position should still be the last location
 - any form of lag during the game will mess up the game's audio 
 - clicking on other build buttons while already selecting a button will not build a tower but merely change the tower type
 - players can cheese the game by just surrounding base with towers

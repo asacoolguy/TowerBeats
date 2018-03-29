@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour {
 	public float moveDuration = 0.2f;
 	public float thresholdDist = 5f; // how close before it will start attack home base
 	public float pointVal = 10f;
+    public int moneyDropped = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -83,8 +84,9 @@ public class Enemy : MonoBehaviour {
 	// destroy this object and play the appropriate animation
 	private IEnumerator SelfDestruct(){
 		FindObjectOfType<GameManager>().GetPoints(pointVal);
+        FindObjectOfType<GameManager>().GetMoney(moneyDropped);
 
-		ParticleSystem ps = transform.GetChild(0).GetComponent<ParticleSystem>();
+        ParticleSystem ps = transform.GetChild(0).GetComponent<ParticleSystem>();
 		ps.Play();
 		GetComponent<MeshRenderer>().enabled = false;
 		FindObjectOfType<EnemyManager>().PlayDestroyEnemySound();

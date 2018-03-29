@@ -86,7 +86,7 @@ public class Scanner : MonoBehaviour {
 			transform.Rotate(new Vector3(0, 0, - rotationSpeed * Time.deltaTime));
 
 			float angleSpun = Mathf.Abs(- rotationSpeed * Time.deltaTime);
-			// when the angle's right, play everthing on the axis
+			// when the angle's right, play everything on the axis
 			totalRotateAmount += angleSpun;
 			if (totalRotateAmount > anglePerAxis){
 				for (int i = 0; i < towerLists[nextAxisToPlay].Count; i++){

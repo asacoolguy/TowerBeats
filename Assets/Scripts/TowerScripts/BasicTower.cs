@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class BasicTower : MonoBehaviour {
 	protected AudioSource audioSource;
 	protected Animator anim;
+    public int cost;
 	public int axisIndex = 0;
 
 	// this enum determines what state the tower is in
@@ -13,22 +14,20 @@ public abstract class BasicTower : MonoBehaviour {
 	protected TowerState state;
 
 	public Material originalMat, planningMat, planningInvalidMat;
-	protected CapsuleCollider collider;
 	protected MeshRenderer mRenderer;
 
-	// Use this for initialization
+
 	protected void Start () {
 		audioSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
 		mRenderer = GetComponent<MeshRenderer>();
 		originalMat = mRenderer.material;
-		collider = GetComponent<CapsuleCollider>();
 
 		// all towers start in the planning stage
 		MakePlanning();
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
 		
 	}
