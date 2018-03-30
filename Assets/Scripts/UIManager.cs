@@ -19,8 +19,12 @@ public class UIManager : MonoBehaviour {
 	// UI sound effects
 	public AudioClip buttonEnable, buttonPress;
 
-	// Use this for initialization
-	void Start () {
+    private void Awake() {
+        progressBarMaxSize = progressionBar.transform.localScale.x;
+    }
+
+    // Use this for initialization
+    void Start () {
 		gm = FindObjectOfType<GameManager>();
 		textHealth = healthTextObj.GetComponent<Text>();
 		textHealth.text = "LIVES: " + gm.maxHealth + " / " + gm.maxHealth;
@@ -45,7 +49,7 @@ public class UIManager : MonoBehaviour {
 		//tutorialShowing = true;
 
 		// get some initial values
-		progressBarMaxSize = progressionBar.transform.localScale.x;
+		
 	}	
 	
 	// Update is called once per frame
@@ -62,6 +66,7 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void UpdateProgressionBar(float width){
+        print("new width " + width + ", max sie is " + progressBarMaxSize);
 		progressionBar.transform.localScale = new Vector3(Mathf.Clamp(width, 0f, 1f) * progressBarMaxSize,
 														progressionBar.transform.localScale.y,
 														progressionBar.transform.localScale.z);

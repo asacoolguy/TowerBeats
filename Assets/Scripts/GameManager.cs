@@ -20,9 +20,10 @@ public class GameManager : MonoBehaviour {
     /// Unselected means the player is currently
     /// </summary>
     private enum BuildState{unselected, selected};
-	[SerializeField] private BuildState bState = BuildState.unselected;
+	private BuildState bState = BuildState.unselected;
 	private GameObject selectedTower = null;
-    [SerializeField] private GameObject hoveredTower = null;
+    private GameObject hoveredTower = null;
+    private GameObject towerWithActiveUI = null;
 
 	// game progression variables
 	public int maxHealth = 10;
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour {
     private void LateUpdate() {
         // handle deselecting/building/moving towers
         if (Input.GetMouseButtonDown(0)){
+            // if you have a tower selected, build the tower
             if (GetMousePositionInWorld() != Vector3.zero && bState == BuildState.selected && selectedTower != null) {
                 if (selectedTower.GetComponent<BasicTower>().IsBuildable()) {
                     BuildSelectedTower();
@@ -109,15 +111,32 @@ public class GameManager : MonoBehaviour {
                     print("Invalid build position");
                 }
             }
+            // if you're click on a hovering over a tower, enable its build panel
             else if(GetMousePositionInWorld() != Vector3.zero && bState == BuildState.unselected && hoveredTower != null) {
-                selectedTower = hoveredTower;
-                hoveredTower = null;
-                bState = BuildState.selected;
-                selectedTower.GetComponent<BasicTower>().MakeMoving();
-                selectedTower.GetComponent<BasicTower>().ToggleOutline(false);
-                FindObjectOfType<Scanner>().RemoveTowerFromList(selectedTower);
-                // also turn on axes
-                FindObjectOfType<Scanner>().EnableAllAxes(true);
+                // if there's already an active tower UI
+                if (towerWithActiveUI != null) {
+                    // if active tower is the same tower, just close its UI
+                    if (towerWithActiveUI == hoveredTower) {
+                        towerWithActiveUI.GetComponent<BasicTower>().ToggleUIPanel(false);
+                        towerWithActiveUI = null;
+                    }
+                    // active tower is different tower, close its UI and open the new one's
+                    else {
+                        towerWithActiveUI.GetComponent<BasicTower>().ToggleUIPanel(false);
+                        hoveredTower.GetComponent<BasicTower>().ToggleUIPanel(true);
+                        towerWithActiveUI = hoveredTower;
+                    }
+                }
+                // if there is no active UI yet
+                else {
+                    hoveredTower.GetComponent<BasicTower>().ToggleUIPanel(true);
+                    towerWithActiveUI = hoveredTower;
+                }
+            }
+            // if you click somewhere random, close the current build panel if it exists
+            else if (towerWithActiveUI != null){
+                //towerWithActiveUI.GetComponent<BasicTower>().ToggleUIPanel(false);
+                //towerWithActiveUI = null;
             }
         }
         else if (Input.GetMouseButtonDown(1) && bState == BuildState.selected) {
@@ -192,6 +211,24 @@ public class GameManager : MonoBehaviour {
 	}
 
 
+    // go into planning mode with the input tower
+    // this function is called by towers when they go into moving mode
+    public void MoveSelectedTower(GameObject tower) {
+        selectedTower = tower;
+        hoveredTower = null;
+        towerWithActiveUI = null;
+        bState = BuildState.selected;
+        FindObjectOfType<Scanner>().RemoveTowerFromList(selectedTower);
+        // also turn on axes
+        FindObjectOfType<Scanner>().EnableAllAxes(true);
+    }
+
+
+    public void ClearTowerUI() {
+        towerWithActiveUI = null;
+    }
+
+
 	// returns the mouse position in world coordinates if mouse is within the ground plane
 	private Vector3 GetMousePositionInWorld(){
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -215,12 +252,11 @@ public class GameManager : MonoBehaviour {
             // trace parents until we find the object with BasicTower script on it
             // in case ray tracing hit a child component of a tower
             GameObject current = hit.collider.gameObject;
-            print("initial hit is " + current.name);
             while (current.GetComponent<BasicTower>() == null && 
                 current.transform.parent != null) {
                 current = current.transform.parent.gameObject;
             }
-            print("final hit is " + current.name);
+
             if (hit.collider.gameObject.GetComponent<BasicTower>() != null
                 && hit.collider.gameObject.GetComponent<BasicTower>().IsBuilt()) {
                 return hit.collider.gameObject;
@@ -343,7 +379,8 @@ public class GameManager : MonoBehaviour {
 		FindObjectOfType<Scanner>().ResetRotation();
 		FindObjectOfType<Scanner>().numAudioPlaying = Mathf.Min(currentLevel, 4);
 		FindObjectOfType<Scanner>().SetRotate(true);
-		totalScore += currentScore;
+        FindObjectOfType<Scanner>().spawnEnemies = true;
+        totalScore += currentScore;
 		currentScore = 0;
 		uiManager.UpdateProgressionBar(currentScore);
 

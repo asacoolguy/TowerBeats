@@ -5,9 +5,11 @@ using UnityEngine;
 public abstract class BasicTower : MonoBehaviour {
 	protected AudioSource audioSource;
 	protected Animator anim;
+    public GameObject UIpanel;
     public int cost;
 	public int axisIndex = 0;
     public bool refundable = false;
+    public int upgradeLevel = 1;
 
 	// this enum determines what state the tower is in
 	// TODO: combine this with the ready state and other potential states like deactivated, buffed
@@ -24,8 +26,11 @@ public abstract class BasicTower : MonoBehaviour {
 		mRenderer = GetComponent<MeshRenderer>();
 		originalMat = mRenderer.material;
 
-		// all towers start in the planning stage
-		MakePlanning();
+        ToggleOutline(false);
+        ToggleUIPanel(false);
+
+        // all towers start in the planning stage
+        MakePlanning();
 	}
 	
 
@@ -79,25 +84,27 @@ public abstract class BasicTower : MonoBehaviour {
     // set the tower in its moving stage
     // really just do planning stage, but enable a refund if you cancel the build
     public virtual void MakeMoving() {
+        ToggleOutline(false);
+        ToggleUIPanel(false);
         refundable = true;
         MakePlanning();
+        FindObjectOfType<GameManager>().MoveSelectedTower(this.gameObject);
+        print("make move");
     }
 
 
 	// set the tower in its built stage
 	public virtual void MakeBuilt(){
-		// TODO should there still be planning stage?
 		state = TowerState.built;
         refundable = false;
 		mRenderer.material = originalMat;
 		transform.Find("AOEIndicator").gameObject.SetActive(false);
+        UIpanel.transform.eulerAngles = new Vector3(90, 0, 0);
 	}
 
     
     // toggle on/off the outlines for this tower and its kids
     public void ToggleOutline(bool b) {
-        print("toggled outline to " + b);
-
         if (GetComponent<cakeslice.Outline>() != null) {
             GetComponent<cakeslice.Outline>().enabled = b;
         }
@@ -109,5 +116,17 @@ public abstract class BasicTower : MonoBehaviour {
             }
         }
     }
+
+
+    public void ToggleUIPanel(bool b) {
+        UIpanel.SetActive(b);
+    }
+
+
+    public abstract void UpgradeTower();
     
+    public void CloseUIPanel() {
+        ToggleUIPanel(false);
+        FindObjectOfType<GameManager>().ClearTowerUI();
+    }
 }
