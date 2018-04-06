@@ -337,7 +337,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1074745549523234}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.0028, y: -0.0112, z: 0}
+  m_LocalPosition: {x: 0.0028, y: -0.011, z: 0}
   m_LocalScale: {x: 26.09885, y: 0.02, z: 26.098856}
   m_Children: []
   m_Father: {fileID: 4949144013285394}
@@ -455,8 +455,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1491221876436546}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.89, y: 3.45, z: 17.6}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 13.89, y: 4.15, z: 17.6}
   m_LocalScale: {x: 153.2636, y: 370.98233, z: 153.26363}
   m_Children:
   - {fileID: 4164765225766590}
@@ -1235,6 +1235,7 @@ MonoBehaviour:
   cost: 100
   axisIndex: 0
   refundable: 0
+  upgradeLevel: 0
   originalMat: {fileID: 2100000, guid: cd15e3a81c83872409e0b544da84fa0d, type: 2}
   planningMat: {fileID: 2100000, guid: ce397a7269fa73a44bab2d4d0dcc12e6, type: 2}
   planningInvalidMat: {fileID: 2100000, guid: 0a88b7df744822948b8c0bd0dae46156, type: 2}
@@ -1328,8 +1329,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114611501305136304}
-        m_MethodName: ToggleUIPanel
-        m_Mode: 6
+        m_MethodName: CloseUIPanel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1380,7 +1381,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114611501305136304}
-        m_MethodName: MakePlanning
+        m_MethodName: MakeMoving
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

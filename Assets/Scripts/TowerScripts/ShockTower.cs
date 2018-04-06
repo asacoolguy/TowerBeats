@@ -15,10 +15,11 @@ public class ShockTower : BasicTower {
 
 		base.Start();
 
-		// randomly pick a sound
-		int maxIndex = numSoundsUsed + FindObjectOfType<GameManager>().currentLevel;
+        // randomly pick a sound
+		int maxIndex = numSoundsUsed + FindObjectOfType<GameManagerNew>().currentLevel;
 		int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
 		audioSource.clip = soundClips[r];
+        
 
 		// set up particle system
 		pSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
@@ -45,8 +46,32 @@ public class ShockTower : BasicTower {
 
 		// damage enemies in area
 		foreach(Enemy e in GetComponentInChildren<TowerAoE>().enemiesInRange){
-			e.TakeDamage(attackPower * FindObjectOfType<GameManager>().attackPowerBonus);
+			e.TakeDamage(attackPower);
 		}
 	}
-    
+
+
+    // called to upgrade the sound level of this tower
+    public override void UpgradeTower() {
+        if (upgradeLevel < soundClips.Length - 1) {
+            upgradeLevel++;
+            StartCoroutine(UpgradeTowerHelper());
+            ToggleUIPanel(false);
+            FindObjectOfType<GameManagerNew>().ClearTowerUI();
+        }
+        else {
+            print("error, tower already at max level");
+        }
+    }
+
+
+    // wait until the current sound stops playing before swapping in the new sound
+    private IEnumerator UpgradeTowerHelper() {
+        while (audioSource.isPlaying) {
+            yield return null;
+        }
+
+        audioSource.clip = soundClips[upgradeLevel];
+        print(gameObject.name + " upgrade complete");
+    }
 }

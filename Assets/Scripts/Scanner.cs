@@ -33,7 +33,8 @@ public class Scanner : MonoBehaviour {
 	// variables for tracking current rotation amount
 	private int nextAxisToPlay;
 	private float totalRotateAmount;
-	private float enemySpawnCounter, enemyMoveCounter;
+	private float fullRotationCounter;
+    private float measureRotationCounter;
 
 	// variables for kepeing track of audio
 	private AudioSource[] audios;
@@ -41,8 +42,14 @@ public class Scanner : MonoBehaviour {
 	public int numAudioPlaying = 1;
 
 
-	// Use this for initialization
-	void Start () {
+    // full rotation events
+    public delegate void RotationCounter();
+    public static event RotationCounter RotatedFully;  // scanner has made a full rotation
+    public static event RotationCounter RotatedMeasure;  // scanner has rotated a single measure
+
+
+    // Use this for initialization
+    void Start () {
 		// set up audio clips
 		audioClips = FindObjectOfType<MusicDatabase>().scannerClips;
 
@@ -99,21 +106,19 @@ public class Scanner : MonoBehaviour {
 				nextAxisToPlay %= axisNumber;
 			}
 
-			// spawn enemies after each full rotation
-			enemySpawnCounter += angleSpun;
-			if (enemySpawnCounter > 360f){
-				if (spawnEnemies){
-					FindObjectOfType<EnemyManager>().SpawnEnemies();
-				}
-				enemySpawnCounter -= 360f;
+			// after each full rotation, run the FullyRotated event 
+			fullRotationCounter += angleSpun;
+			if (fullRotationCounter > 360f){
+                RotatedFully();
+                fullRotationCounter -= 360f;
 			}
 
 			// move enemies after each measure
-			enemyMoveCounter += angleSpun;
-			if (enemyMoveCounter > (360f / measurePerRotation)){
-				FindObjectOfType<EnemyManager>().MoveEnemies();
-				enemyMoveCounter -= 360f / measurePerRotation;
-			}
+			measureRotationCounter += angleSpun;
+			if (measureRotationCounter > (360f / measurePerRotation)){
+                RotatedMeasure();
+                measureRotationCounter -= (360f / measurePerRotation);
+            }
 		}
 	}
 
@@ -127,8 +132,8 @@ public class Scanner : MonoBehaviour {
 			float angle = sectionAngle * i;
 			GameObject line = Instantiate(axisOBj, this.transform) as GameObject;
 			Vector3 direction = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
-			Vector3 newEndPoint = direction.normalized * maxAxisLength;
-			Vector3 newStartPoint = direction.normalized * minAxisLength;
+            Vector3 newEndPoint = direction.normalized * maxAxisLength + new Vector3(0, transform.position.y + 1, 0);
+			Vector3 newStartPoint = direction.normalized * minAxisLength + new Vector3(0, transform.position.y + 1, 0);
 			line.GetComponent<LineRenderer>().SetPosition(0, newStartPoint);
 			line.GetComponent<LineRenderer>().SetPosition(1, newEndPoint);
 			axes.Add(line);
@@ -141,7 +146,7 @@ public class Scanner : MonoBehaviour {
 	public void ResetRotation(){
 		nextAxisToPlay = 4;
 	    totalRotateAmount = anglePerAxis;
-		enemySpawnCounter = enemyMoveCounter = 0;
+		fullRotationCounter = measureRotationCounter = 0;
 	   	transform.localEulerAngles = new Vector3(-90, -90, 0);
 	   	spawnEnemies = false;
 	}
@@ -150,10 +155,13 @@ public class Scanner : MonoBehaviour {
 	// given a point in space, find the closest point on the closest axis
 	public Vector3 FindPointOnAxis(Vector3 pos){
 		int axisIndex = FindClosestAxisIndex(pos);
-		Vector3 cloestAxis = axes[axisIndex].GetComponent<LineRenderer>().GetPosition(1);
+		Vector3 closestAxis = axes[axisIndex].GetComponent<LineRenderer>().GetPosition(1);
+        closestAxis -= new Vector3(0, closestAxis.y, 0); // 0 out the y so it doesn't affect the direction
 
-		// return the cloest axis's unit vector scaled by pos's magnitude
-		Vector3 result = cloestAxis.normalized * Mathf.Clamp(pos.magnitude, minAxisLength, maxAxisLength);
+        // return the cloest axis's unit vector scaled by pos's magnitude
+        float magnitude = new Vector3(pos.x, 0, pos.y).magnitude; // 0 out y so it doesn't affect the magnitude
+		Vector3 result = closestAxis.normalized * Mathf.Clamp(pos.magnitude, minAxisLength, maxAxisLength);
+        result += new Vector3(0, transform.position.y, 0); // add the y position back in
 		return result;
 	}
 
@@ -161,7 +169,7 @@ public class Scanner : MonoBehaviour {
 	// given a point in 3D world space, find the index of the axis cloest to that point
 	public int FindClosestAxisIndex(Vector3 pos){
 		// first find the angle of the pos vector
-		float angle = GameManager.GetAngleFromVector(pos);
+		float angle = GameManagerNew.GetAngleFromVector(pos);
 
 		// then find the vector of the cloest axis
 		int axisIndex = (int)(angle / (anglePerAxis / 2f));

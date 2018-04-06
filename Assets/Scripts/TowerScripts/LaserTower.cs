@@ -26,11 +26,13 @@ public class LaserTower : BasicTower {
 		// all towers start in the planning stage
 		MakePlanning();
 
-		// randomly pick a sound
-		int maxIndex = numSoundsUsed + FindObjectOfType<GameManager>().currentLevel;
-		int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
-		audioSource.clip = soundClips[r];
-		attackDuration = audioSource.clip.length;
+        // randomly pick a sound
+        // int maxIndex = numSoundsUsed + FindObjectOfType<GameManagerNew>().currentLevel;
+        // int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
+        // audioSource.clip = soundClips[r];
+
+        audioSource.clip = soundClips[0];
+        attackDuration = audioSource.clip.length;
 
 		// set up the laser and launcher
 		laser = transform.Find("LaserBeam").GetComponent<LineRenderer>();;
@@ -87,7 +89,7 @@ public class LaserTower : BasicTower {
 					while (target != null && enemies.Contains(target) && target.health > 0){
 						laser.SetPosition(0, launcher.transform.position);
 						laser.SetPosition(1, target.transform.position);
-						target.TakeDamage(damagePerSec * Time.deltaTime * FindObjectOfType<GameManager>().attackPowerBonus);
+						target.TakeDamage(damagePerSec * Time.deltaTime);
 
 						t += Time.deltaTime;
 						yield return null;
@@ -100,5 +102,29 @@ public class LaserTower : BasicTower {
 			yield return null;
 		}
 	}
+
+    // called to upgrade the sound level of this tower
+    public override void UpgradeTower() {
+        if (upgradeLevel < soundClips.Length - 1) {
+            upgradeLevel++;
+            StartCoroutine(UpgradeTowerHelper());
+            ToggleUIPanel(false);
+            FindObjectOfType<GameManagerNew>().ClearTowerUI();
+        }
+        else {
+            print("error, tower already at max level");
+        }
+    }
+
+
+    // wait until the current sound stops playing before swapping in the new sound
+    private IEnumerator UpgradeTowerHelper() {
+        while (audioSource.isPlaying) {
+            yield return null;
+        }
+
+        audioSource.clip = soundClips[upgradeLevel];
+        print(gameObject.name + " upgrade complete");
+    }
 
 }

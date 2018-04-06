@@ -9,7 +9,7 @@ public abstract class BasicTower : MonoBehaviour {
     public int cost;
 	public int axisIndex = 0;
     public bool refundable = false;
-    public int upgradeLevel = 1;
+    public int upgradeLevel = 0; 
 
 	// this enum determines what state the tower is in
 	// TODO: combine this with the ready state and other potential states like deactivated, buffed
@@ -88,7 +88,7 @@ public abstract class BasicTower : MonoBehaviour {
         ToggleUIPanel(false);
         refundable = true;
         MakePlanning();
-        FindObjectOfType<GameManager>().MoveSelectedTower(this.gameObject);
+        FindObjectOfType<GameManagerNew>().MoveSelectedTower(this.gameObject);
         print("make move");
     }
 
@@ -127,6 +127,6 @@ public abstract class BasicTower : MonoBehaviour {
     
     public void CloseUIPanel() {
         ToggleUIPanel(false);
-        FindObjectOfType<GameManager>().ClearTowerUI();
+        FindObjectOfType<GameManagerNew>().ClearTowerUI();
     }
 }

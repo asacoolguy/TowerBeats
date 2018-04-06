@@ -25,13 +25,13 @@ public class Enemy : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag == "HomeBase"){
-			FindObjectOfType<GameManager>().TakeDamage(1);
+			FindObjectOfType<GameManagerNew>().TakeDamage(1);
 			SelfDestruct();
 		}
 	}
 
 	public void FaceCenter(){
-		float angle = 90f - GameManager.GetAngleFromVector(transform.position);
+		float angle = 90f - GameManagerNew.GetAngleFromVector(transform.position);
 		transform.eulerAngles = new Vector3(0, angle, 0);
 	}
 
@@ -83,8 +83,8 @@ public class Enemy : MonoBehaviour {
 
 	// destroy this object and play the appropriate animation
 	private IEnumerator SelfDestruct(){
-		FindObjectOfType<GameManager>().GetPoints(pointVal);
-        FindObjectOfType<GameManager>().GetMoney(moneyDropped);
+		FindObjectOfType<GameManagerNew>().GetPoints(pointVal);
+        FindObjectOfType<GameManagerNew>().GetMoney(moneyDropped);
 
         ParticleSystem ps = transform.GetChild(0).GetComponent<ParticleSystem>();
 		ps.Play();

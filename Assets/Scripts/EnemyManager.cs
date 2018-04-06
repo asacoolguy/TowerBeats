@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Handles spawning and destroying enemies. Interacts with GameManager. 
+/// Handles spawning and destroying enemies. Interacts with GameManagerNew. 
 /// </summary>
 
 public class EnemyManager : MonoBehaviour {

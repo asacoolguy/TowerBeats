@@ -10,8 +10,8 @@ using UnityEngine;
 public class CameraFocus : MonoBehaviour {
 	// variables for zooming
 	public GameObject target;
-	public float maxZoomOut = 80f;
-	public float maxZoomIn = 20f;
+    public float maxZoomOut;
+	public float maxZoomIn;
 	public float zoomSpeed;
 	private float targetZoom;
 
@@ -29,8 +29,9 @@ public class CameraFocus : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// make sure camera is zoomedOut
-		cameraZoom(maxZoomOut);
+        // make sure camera is zoomedOut
+        maxZoomOut = transform.position.y;
+        maxZoomIn = maxZoomOut - 40f;
 		targetZoom = maxZoomOut;
 
 		// make sure the camera is at default rotation
@@ -85,7 +86,7 @@ public class CameraFocus : MonoBehaviour {
 
 	// helper function to rotate towards a certain angle
 	void cameraRotate(float angle){
-		Vector3 rotation = new Vector3(0, angle, 0);
+		Vector3 rotation = new Vector3(transform.localEulerAngles.x, angle, transform.localEulerAngles.z);
 		transform.position = Quaternion.Euler(rotation) * 
 			(transform.position - target.transform.position) + target.transform.position;
 	}
