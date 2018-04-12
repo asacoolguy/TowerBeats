@@ -26,9 +26,9 @@ public class CameraMover : MonoBehaviour {
 
     void Start () {
         // initialize camera position
-        transform.position = new Vector3(levels[0].transform.position.x,
-                                         levels[0].transform.position.y + 60,
-                                         levels[0].transform.position.z - 30);
+        //transform.position = new Vector3(levels[0].transform.position.x,
+          //                               levels[0].transform.position.y + 60,
+            //                             levels[0].transform.position.z - 30);
 
         // initialize rotations
         currentAngle = scene.transform.eulerAngles.y;
