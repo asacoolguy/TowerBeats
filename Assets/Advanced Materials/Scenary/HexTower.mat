@@ -47,11 +47,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MKGlowTex:
-        m_Texture: {fileID: 2800000, guid: d6cf92b76a31e6c4898eaf7009a4ee70, type: 3}
+        m_Texture: {fileID: 2800000, guid: bb17ba2cdcaf3a040b1bf68d14e22214, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d6cf92b76a31e6c4898eaf7009a4ee70, type: 3}
+        m_Texture: {fileID: 2800000, guid: bb17ba2cdcaf3a040b1bf68d14e22214, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:

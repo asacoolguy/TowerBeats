@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMover : MonoBehaviour {
-
     // change switch variables
-    public GameObject[] levels; // objects for the camera to anchor on at each level
+    private GameObject[] levels;
     public AnimationCurve yCurve, zCurve;
+    private Vector3 positionOffset;
     private bool isMoving = false;
     public float scrollTime = 0.5f;
 
@@ -25,10 +25,8 @@ public class CameraMover : MonoBehaviour {
 
 
     void Start () {
-        // initialize camera position
-        //transform.position = new Vector3(levels[0].transform.position.x,
-          //                               levels[0].transform.position.y + 60,
-            //                             levels[0].transform.position.z - 30);
+        levels = FindObjectOfType<GameManagerNew>().levels;
+        positionOffset = transform.localPosition - levels[0].transform.position;
 
         // initialize rotations
         currentAngle = scene.transform.eulerAngles.y;
@@ -60,9 +58,7 @@ public class CameraMover : MonoBehaviour {
     // helper function to move camera to a certain level
     public IEnumerator MoveToLevel(int target) {
         Vector3 start = transform.position;
-        Vector3 destination = new Vector3(levels[target].transform.position.x,
-                                          levels[target].transform.position.y + 60,
-                                          levels[target].transform.position.z - 30);
+        Vector3 destination = levels[target].transform.localPosition + positionOffset;
         float currentTime = 0f;
         Vector3 distance = new Vector3(0, destination.y - start.y, start.z - 40);
             ;
