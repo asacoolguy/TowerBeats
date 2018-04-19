@@ -26,7 +26,7 @@ public class SniperTower : BasicTower {
 		MakePlanning();
 
 		// randomly pick a sound
-		int maxIndex = numSoundsUsed + FindObjectOfType<GameManager>().currentLevel;
+		int maxIndex = numSoundsUsed;
 		int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
 		audioSource.clip = soundClips[r];
 
@@ -77,7 +77,7 @@ public class SniperTower : BasicTower {
 				LineRenderer line = bullet.GetComponent<LineRenderer>();
 				line.SetPosition(0, launcher.transform.position);
 				line.SetPosition(1, enemies[enemyIndex].transform.position);
-				enemies[enemyIndex].TakeDamage(attackPower * FindObjectOfType<GameManager>().attackPowerBonus);
+				enemies[enemyIndex].TakeDamage(attackPower);
 
 				yield return new WaitForSeconds(0.4f);
 			}

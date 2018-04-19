@@ -26,8 +26,8 @@ public class LaserTower : BasicTower {
 		// all towers start in the planning stage
 		MakePlanning();
 
-		// randomly pick a sound
-		int maxIndex = numSoundsUsed + FindObjectOfType<GameManager>().currentLevel;
+        // randomly pick a sound
+        int maxIndex = numSoundsUsed;
 		int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
 		audioSource.clip = soundClips[r];
 		attackDuration = audioSource.clip.length;
@@ -87,7 +87,7 @@ public class LaserTower : BasicTower {
 					while (target != null && enemies.Contains(target) && target.health > 0){
 						laser.SetPosition(0, launcher.transform.position);
 						laser.SetPosition(1, target.transform.position);
-						target.TakeDamage(damagePerSec * Time.deltaTime * FindObjectOfType<GameManager>().attackPowerBonus);
+						target.TakeDamage(damagePerSec * Time.deltaTime);
 
 						t += Time.deltaTime;
 						yield return null;

@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour {
 
 	public List<GameObject> buildableTowers;
 	public GameObject homeBase;
-	[SerializeField]private LayerMask groundLayerMask;
-    [SerializeField] private LayerMask towerLayerMask;
+    [SerializeField] private LayerMask octLayerMask, towerLayerMask;
 
     /// <summary>
     /// Enum that describes if the user is currently building a tower or not.
@@ -22,21 +21,17 @@ public class GameManager : MonoBehaviour {
     private enum BuildState{unselected, selected};
 	[SerializeField] private BuildState bState = BuildState.unselected;
 	private GameObject selectedTower = null;
-    [SerializeField] private GameObject hoveredTower = null;
+    [SerializeField] private GameObject hoveredGrid = null;
 
 	// game progression variables
 	public int maxHealth = 10;
-	[SerializeField]private int currentHealth;
+	public int currentHealth;
 	public float currentScore = 0;
 	public float totalScore = 0;
     public int startingMoney;
     public int currentMoney;
-	public int scoreToUpgrade = 900;   // this is the amount needed to advance to next level
-	public List<int> scoresToAdvance;  // give it 7 upgrades for now, lets say that upgrade order is set
-									   // start with 2 green, unlock 2 green, 1 blue, 2 green, 1 blue, and a yellow
-	public int currentLevel = 1;
-	public int maxLevel = 4;
-	public float attackPowerBonus = 1f;
+	public int currentWave = 1;
+    public int maxWave = 5;
 
     // Audio clips used for the game
 	private AudioClip[] endGameClips;
@@ -60,6 +55,7 @@ public class GameManager : MonoBehaviour {
 
 
     private void Update() {
+        /*
         // update the build state if there is current a selected tower 
         if (selectedTower != null)
         {
@@ -76,25 +72,19 @@ public class GameManager : MonoBehaviour {
             float angle = 180f - GameManager.GetAngleFromVector(-selectedTower.transform.position);
             selectedTower.transform.eulerAngles = new Vector3(0, angle, 0);
         }
+                                         
+        */
 
-        // enable buildTower buttons accordingly
-        uiManager.SetupBuildTowerButtons(currentMoney >= buildableTowers[0].GetComponent<BasicTower>().cost,
-                                         currentMoney >= buildableTowers[1].GetComponent<BasicTower>().cost,
-                                         currentMoney >= buildableTowers[2].GetComponent<BasicTower>().cost);
-
-        // highlight any towers the mouse is hovering over
-        // if we're not in build mode
-        if (bState == BuildState.unselected) {
-            GameObject newHoveredTower = GetTowerFromMouse();
-            if (hoveredTower != newHoveredTower) {
-                if (hoveredTower != null) {
-                    hoveredTower.GetComponent<BasicTower>().ToggleOutline(false);
-                }
-                if (newHoveredTower != null) {
-                    newHoveredTower.GetComponent<BasicTower>().ToggleOutline(true);
-                }
-                hoveredTower = newHoveredTower;
+        // highlight any BuildableOctagons the mouse is hovering over
+        GameObject newHoveredGrid = GetOctagonFromMouse();
+        if (hoveredGrid != newHoveredGrid) {
+            if (hoveredGrid != null) {
+                hoveredGrid.GetComponent<BuildableOctagon>().LowerTower();
             }
+            if (newHoveredGrid != null) {
+                newHoveredGrid.GetComponent<BuildableOctagon>().RaiseTower();
+            }
+            hoveredGrid = newHoveredGrid;
         }
     }
 
@@ -109,9 +99,9 @@ public class GameManager : MonoBehaviour {
                     print("Invalid build position");
                 }
             }
-            else if(GetMousePositionInWorld() != Vector3.zero && bState == BuildState.unselected && hoveredTower != null) {
-                selectedTower = hoveredTower;
-                hoveredTower = null;
+            else if(GetMousePositionInWorld() != Vector3.zero && bState == BuildState.unselected && hoveredGrid != null) {
+                selectedTower = hoveredGrid;
+                hoveredGrid = null;
                 bState = BuildState.selected;
                 selectedTower.GetComponent<BasicTower>().MakeMoving();
                 selectedTower.GetComponent<BasicTower>().ToggleOutline(false);
@@ -194,6 +184,7 @@ public class GameManager : MonoBehaviour {
 
 	// returns the mouse position in world coordinates if mouse is within the ground plane
 	private Vector3 GetMousePositionInWorld(){
+        /*
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 100, groundLayerMask)){
@@ -202,7 +193,8 @@ public class GameManager : MonoBehaviour {
         else{
         	//print("Error: cannot get mouse position");
         	return Vector3.zero;
-        }
+        }*/
+        return Vector3.zero;
 	}
 
 
@@ -232,8 +224,36 @@ public class GameManager : MonoBehaviour {
     }
 
 
-	// given a position, return the point nearest ring to that position
-	private Vector3 SnapToAxisPosition(Vector3 pos){
+    // returns the BuildableOctagon that the mouse is currently hovering over
+    // only valid for built towers
+    private GameObject GetOctagonFromMouse() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 1000, octLayerMask)) {
+            // trace parents until we find the object with BuildableOctagon script on it
+            // in case ray tracing hit a child component of a tower
+            GameObject current = hit.collider.gameObject;
+            print("initial hit is " + current.name);
+            while (current.GetComponent<BuildableOctagon>() == null &&
+                current.transform.parent != null) {
+                current = current.transform.parent.gameObject;
+            }
+            print("final hit is " + current.name);
+            if (current.GetComponent<BuildableOctagon>() != null) {
+                print("script returned");
+                return current;
+            }
+            print("no script");
+        }
+
+        print("no hit ");
+        // otherwise no tower hit
+        return null;
+    }
+
+
+    // given a position, return the point nearest ring to that position
+    private Vector3 SnapToAxisPosition(Vector3 pos){
 		Vector3 newPos = FindObjectOfType<Scanner>().FindPointOnAxis(pos);
 		return new Vector3(newPos.x, 0, newPos.z);
 	}
@@ -284,17 +304,6 @@ public class GameManager : MonoBehaviour {
 
 	public void GetPoints(float pts){
 		currentScore += pts;
-		uiManager.UpdateProgressionBar(currentScore / scoreToUpgrade);
-
-		if (currentScore > scoreToUpgrade && transform.Find("WaveSphere").gameObject.activeSelf == false){
-			if (currentLevel < 4){
-				uiManager.ShowUpgradeButton(true);
-			}
-			else{
-				// the game is won!
-				StartCoroutine(WinGame());
-			}
-		}
 	}
 
 
@@ -302,77 +311,6 @@ public class GameManager : MonoBehaviour {
         currentMoney += money;
         uiManager.UpdateMoney(currentMoney);
     }
-
-
-	// upgrades to the next level
-	public void UpgradeLevel(){
-		currentLevel++;
-
-		// send out wave
-		transform.Find("UpgradeWave").GetComponent<ParticleSystem>().Emit(1);
-		transform.Find("WaveSphere").gameObject.SetActive(true);
-
-		// play the upgrade song while pausing all other songs
-		transform.Find("UpgradeWave").GetComponent<AudioSource>().Play();
-		FindObjectOfType<Scanner>().SetRotate(false);
-
-		// update ui
-		uiManager.UpgradeToLevel(currentLevel);
-
-		// clear enemies and tower lists
-
-		FindObjectOfType<EnemyManager>().ClearEnemyList();
-		FindObjectOfType<Scanner>().ClearTowerList();
-
-		StartCoroutine(SetupLevel());
-	}
-
-	// helper coroutine to reset states for new level
-	private IEnumerator SetupLevel(){
-		// destroy all bullets
-		GameObject[] SniperBullets = GameObject.FindGameObjectsWithTag("SniperBullet");
-		for(int i = 0; i < SniperBullets.Length; i++){
-			Destroy(SniperBullets[i]);
-		}
-
-		// wait for the wave to pass over
-		while(transform.Find("UpgradeWave").GetComponent<AudioSource>().isPlaying){
-			yield return null;
-		}
-
-		FindObjectOfType<Scanner>().ResetRotation();
-		FindObjectOfType<Scanner>().numAudioPlaying = Mathf.Min(currentLevel, 4);
-		FindObjectOfType<Scanner>().SetRotate(true);
-		totalScore += currentScore;
-		currentScore = 0;
-		uiManager.UpdateProgressionBar(currentScore);
-
-
-		if (currentLevel == 2){
-			FindObjectOfType<EnemyManager>().enemyHealth = 3;
-			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 9.5f;
-			FindObjectOfType<EnemyManager>().amountPerSpawn = 3;
-			FindObjectOfType<EnemyManager>().enemyPointMultiplier = .9f;
-
-			attackPowerBonus = 1.3f;
-		}
-		else if (currentLevel == 3){
-			FindObjectOfType<EnemyManager>().enemyHealth = 4;
-			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 11f;
-			FindObjectOfType<EnemyManager>().amountPerSpawn = 4;
-			FindObjectOfType<EnemyManager>().enemyPointMultiplier = .8f;
-
-			attackPowerBonus = 1.6f;
-		}
-		else if (currentLevel == 4){
-			FindObjectOfType<EnemyManager>().enemyHealth = 5;
-			FindObjectOfType<EnemyManager>().enemyDistancePerMove = 12.5f;
-			FindObjectOfType<EnemyManager>().amountPerSpawn = 4;
-			FindObjectOfType<EnemyManager>().enemyPointMultiplier = .75f;
-
-			attackPowerBonus = 2f;
-		}
-	}
 
 	private IEnumerator WinGame(){
 		// destroy all enemies
@@ -397,4 +335,14 @@ public class GameManager : MonoBehaviour {
 		Time.timeScale = 0;
 	}
 
+
+    public static Vector3 SmoothStep(Vector3 start, Vector3 end, float t) {
+        t = t * t * t * (t * (6f * t - 15f) + 10f);
+        return start + (end - start) * t;
+    }
+
+    public static float SmoothStep(float start, float end, float t) {
+        t = t * t * t * (t * (6f * t - 15f) + 10f);
+        return start + (end - start) * t;
+    }
 }

@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4889965591198318}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Selector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,8 @@ GameObject:
   - component: {fileID: 33924888831468352}
   - component: {fileID: 23612743736424212}
   - component: {fileID: 95353104971799600}
-  m_Layer: 0
+  - component: {fileID: 114766795552677248}
+  m_Layer: 17
   m_Name: OctGridTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4820960447952822}
   - component: {fileID: 65844040653725446}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: GameObject (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4186770577369218}
   - component: {fileID: 65405108198495088}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4629859305568500}
   - component: {fileID: 65363148800864140}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4941430548845190}
   - component: {fileID: 65106336937085054}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: GameObject (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 1157417956831150}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.025, z: 0}
-  m_LocalScale: {x: 1.1901964, y: 1.1901962, z: 1.1901962}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4186770577369218}
   - {fileID: 4629859305568500}
@@ -184,7 +185,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1211793805111186}
   m_LocalRotation: {x: -0, y: 0.19509031, z: -0, w: 0.98078537}
-  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalPosition: {x: -10, y: 0, z: -10}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 4889965591198318}
@@ -205,7 +206,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3bac6904ec3dc5343ae60d6e36fb24d4, type: 2}
+  - {fileID: 2100000, guid: 73569d7dc251cee4687c050f1ee7b79c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -242,8 +243,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6, y: 0.01, z: 0.7}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 2.2, z: 1}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!65 &65363148800864140
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -254,8 +255,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6, y: 0.01, z: 0.7}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 2.2, z: 1}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!65 &65405108198495088
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -266,8 +267,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6, y: 0.01, z: 0.7}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 2.2, z: 1}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!65 &65844040653725446
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -278,8 +279,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6, y: 0.01, z: 0.7}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 2.2, z: 1}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!95 &95353104971799600
 Animator:
   serializedVersion: 3
@@ -297,3 +298,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114766795552677248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1211793805111186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcc4a957bb59dd48935bfab6eb966a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulseTime: 5
+  maxScale: 20
+  maxYPos: 10
+  moveTime: 0.25

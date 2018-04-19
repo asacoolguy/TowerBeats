@@ -16,7 +16,7 @@ public class ShockTower : BasicTower {
 		base.Start();
 
 		// randomly pick a sound
-		int maxIndex = numSoundsUsed + FindObjectOfType<GameManager>().currentLevel;
+		int maxIndex = numSoundsUsed;
 		int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
 		audioSource.clip = soundClips[r];
 
@@ -45,7 +45,7 @@ public class ShockTower : BasicTower {
 
 		// damage enemies in area
 		foreach(Enemy e in GetComponentInChildren<TowerAoE>().enemiesInRange){
-			e.TakeDamage(attackPower * FindObjectOfType<GameManager>().attackPowerBonus);
+			e.TakeDamage(attackPower);
 		}
 	}
     
