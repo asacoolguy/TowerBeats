@@ -85,8 +85,11 @@ public class EnemyManager : MonoBehaviour {
 	// destroy the given enemy. add it to the enemyTodestory list which will destory them
 	// all at the same time and also play th destory sound at the right volume
 	public void DestroyEnemy(GameObject obj){
-		allEnemies.Remove(obj);
-		Destroy(obj);
+        if (obj) {
+            allEnemies.Remove(obj);
+            Destroy(obj);
+        }
+		
 	}
 
 	public void PlayDestroyEnemySound(){

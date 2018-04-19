@@ -257,7 +257,8 @@ public class GameManagerNew : MonoBehaviour {
     private Vector3 GetMousePositionInWorld() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, groundLayerMask)) {
+        if (Physics.Raycast(ray, out hit, 1000, groundLayerMask)) {
+            //print(hit.transform.gameObject.name);
             return new Vector3(hit.point.x, 0, hit.point.z);
         }
         else {

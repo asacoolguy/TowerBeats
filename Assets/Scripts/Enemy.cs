@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour {
 	public float pointVal = 10f;
     public int moneyDropped = 5;
 
+    public EnemyManagerNew manager;
+
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();
@@ -89,12 +91,12 @@ public class Enemy : MonoBehaviour {
         ParticleSystem ps = transform.GetChild(0).GetComponent<ParticleSystem>();
 		ps.Play();
 		GetComponent<MeshRenderer>().enabled = false;
-		FindObjectOfType<EnemyManager>().PlayDestroyEnemySound();
+		manager.PlayDestroyEnemySound();
 
 		while (ps.isPlaying){
 			yield return null;
 		}
 
-		FindObjectOfType<EnemyManager>().DestroyEnemy(this.gameObject);
+		manager.DestroyEnemy(this.gameObject);
 	}
 }

@@ -83,6 +83,7 @@ public class EnemyManagerNew : MonoBehaviour {
                 allEnemies.Add(enemyObj);
                 enemiesNumberToSpawn[i]--;
                 justSpawned = true;
+                enemyObj.GetComponent<Enemy>().manager = this;
             }
         }
 
