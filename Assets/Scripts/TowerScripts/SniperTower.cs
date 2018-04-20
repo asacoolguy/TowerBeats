@@ -23,7 +23,7 @@ public class SniperTower : BasicTower {
 		originalMat = mRenderer.material;
 
 		// all towers start in the planning stage
-		MakePlanning();
+		// MakePlanning();
 
 		// randomly pick a sound
 		int maxIndex = numSoundsUsed;
@@ -42,7 +42,7 @@ public class SniperTower : BasicTower {
 	// plays the designated sound and also does the attack
 	public override void PlaySound(){
 		audioSource.Play();
-		anim.SetTrigger("Activate");
+		//anim.SetTrigger("Activate");
 
 		//pSystem.Emit(1);
 

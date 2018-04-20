@@ -16,7 +16,7 @@ public class Scanner : MonoBehaviour {
 	private float secondsPerMeasure;
 	public int measurePerRotation = 1;
 	private float rotationSpeed;
-	public bool rotating;
+	public bool rotating = false;
 	public bool spawnEnemies;
 	public bool finishedUp = false;
 
@@ -75,12 +75,16 @@ public class Scanner : MonoBehaviour {
 		// initialize variables for rotation counting
 		ResetRotation();
 
-	    // no rotations by default
-	    SetRotate(false);
+	    // start rotation
+	    //SetRotate(true);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            SetRotate(!rotating);
+        }
+
 		if (rotating){
 			// rotate the scanner (and its underlying line)
 			transform.Rotate(new Vector3(0, 0, - rotationSpeed * Time.deltaTime));
@@ -160,11 +164,12 @@ public class Scanner : MonoBehaviour {
 
 	// given a point in 3D world space, find the index of the axis cloest to that point
 	public int FindClosestAxisIndex(Vector3 pos){
-		// first find the angle of the pos vector
-		float angle = GameManager.GetAngleFromVector(pos);
-
-		// then find the vector of the cloest axis
-		int axisIndex = (int)(angle / (anglePerAxis / 2f));
+        // first find the angle of the pos vector
+        //float angle = GameManager.GetAngleFromVector(pos);
+        float angle = 180 + GameManager.GetAngleFromVectorSpecial(-pos);
+        print("angle is " + angle);
+        // then find the vector of the cloest axis
+        int axisIndex = (int)(angle / (anglePerAxis / 2f));
 		axisIndex = (axisIndex + 1) / 2;
 		axisIndex = axisIndex % axisNumber; // prevent overflow
 

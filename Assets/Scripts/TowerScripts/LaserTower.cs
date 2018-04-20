@@ -24,7 +24,7 @@ public class LaserTower : BasicTower {
 		originalMat = mRenderer.material;
 
 		// all towers start in the planning stage
-		MakePlanning();
+		//MakePlanning();
 
         // randomly pick a sound
         int maxIndex = numSoundsUsed;
@@ -46,7 +46,7 @@ public class LaserTower : BasicTower {
 	// plays the designated sound and also does the attack
 	public override void PlaySound(){
 		audioSource.Play();
-		anim.SetTrigger("Activate");
+		//anim.SetTrigger("Activate");
 
 		// pause all other towers of this type and sound
 		foreach (LaserTower tower in FindObjectsOfType<LaserTower>()){

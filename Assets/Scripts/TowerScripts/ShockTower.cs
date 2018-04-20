@@ -32,7 +32,7 @@ public class ShockTower : BasicTower {
 	// plays the designated sound and also does the attack
 	public override void PlaySound(){
 		audioSource.Play();
-		anim.SetTrigger("Activate");
+		//anim.SetTrigger("Activate");
 
 		pSystem.Emit(1);
 

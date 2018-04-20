@@ -23,9 +23,7 @@ public abstract class BasicTower : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		mRenderer = GetComponent<MeshRenderer>();
 		originalMat = mRenderer.material;
-
-		// all towers start in the planning stage
-		MakePlanning();
+        
 	}
 	
 
@@ -89,7 +87,7 @@ public abstract class BasicTower : MonoBehaviour {
 		// TODO should there still be planning stage?
 		state = TowerState.built;
         refundable = false;
-		mRenderer.material = originalMat;
+        //mRenderer.material = originalMat;
 		transform.Find("AOEIndicator").gameObject.SetActive(false);
 	}
 

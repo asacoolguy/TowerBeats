@@ -544,7 +544,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1204173533622984}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 1aa8d83ada723664790027db254c0cf5, type: 3}
   m_Controller: {fileID: 9100000, guid: 341256fe6bc252e459b7d4c4fef158c1, type: 2}
   m_CullingMode: 0
@@ -567,6 +567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 70
   axisIndex: 0
+  refundable: 0
   originalMat: {fileID: 2100000, guid: 77bc669bb6b2e924aaee7f0104992f51, type: 2}
   planningMat: {fileID: 2100000, guid: ce397a7269fa73a44bab2d4d0dcc12e6, type: 2}
   planningInvalidMat: {fileID: 2100000, guid: 0a88b7df744822948b8c0bd0dae46156, type: 2}

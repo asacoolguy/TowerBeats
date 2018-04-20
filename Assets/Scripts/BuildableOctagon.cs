@@ -9,8 +9,9 @@ using UnityEngine;
  */ 
 
 public class BuildableOctagon : MonoBehaviour {
-    private enum GridStatus {lowering, raising, immoble};
-    private GridStatus status;
+    private enum OctagonStatus {lowering, raising, immoble, builtOn};
+    private OctagonStatus status;
+    private bool selected = false;
 
     public float pulseTime;
     private float currentPulseTime;
@@ -30,46 +31,56 @@ public class BuildableOctagon : MonoBehaviour {
         selector = transform.Find("Selector").gameObject;
         selector.SetActive(true);
 
+        pulseTime = FindObjectOfType<MusicDatabase>().scannerClips[0].length;
         currentPulseTime = 0f;
         pulseDirection = 1;
+
+
         minScale = transform.localScale.y;
         minYPos = transform.localPosition.y;
         currentMoveTime = 0f;
 
         mat = GetComponent<MeshRenderer>().material;
 
-        status = GridStatus.immoble;
+        status = OctagonStatus.immoble;
     }
 	
 
 	void Update () {
-        // make the color pulsate
-        currentPulseTime += pulseDirection * Time.deltaTime;
-        if (currentPulseTime > pulseTime) {
-            currentPulseTime = pulseTime;
-            pulseDirection *= -1;
-        } 
-        else if(currentPulseTime < 0) {
-            currentPulseTime = 0;
-            pulseDirection *= -1;
+        // make the color pulsate if the tower is not selected
+        if (!selected) {
+            currentPulseTime += pulseDirection * Time.deltaTime;
+            if (currentPulseTime > pulseTime) {
+                currentPulseTime = pulseTime;
+                pulseDirection *= -1;
+            }
+            else if (currentPulseTime < 0) {
+                currentPulseTime = 0;
+                pulseDirection *= -1;
+            }
+            float t = currentPulseTime / pulseTime;
+            float str = GameManager.SmoothStep(2, 6, t);
+            float glow = GameManager.SmoothStep(0f, 0.3f, t);
+            mat.SetFloat("_MKGlowTexStrength", str);
+            mat.SetFloat("_MKGlowPower", glow);
         }
-        float str = GameManager.SmoothStep(0, 10, currentPulseTime / pulseTime);
-        mat.SetFloat("_MKGlowTexStrength", str);
 
         // raise or lower the tower
-        if (status != GridStatus.immoble) {
-            if (status == GridStatus.lowering) {
+        if (status != OctagonStatus.immoble) {
+            if (status == OctagonStatus.lowering) {
                 currentMoveTime -= Time.deltaTime;
                 if (currentMoveTime < 0) {
                     currentMoveTime = 0;
-                    status = GridStatus.immoble;
+                    status = OctagonStatus.immoble;
                 }
             }
-            else {
+            else if (status == OctagonStatus.raising) {
                 currentMoveTime += Time.deltaTime;
                 if (currentMoveTime > moveTime) {
                     currentMoveTime = moveTime;
-                    status = GridStatus.immoble;
+                    if (status == OctagonStatus.raising) {
+                        status = OctagonStatus.immoble;
+                    }
                 }                
             }
 
@@ -82,11 +93,36 @@ public class BuildableOctagon : MonoBehaviour {
         
     }
 
-    public void RaiseTower() {
-        status = GridStatus.raising;
+    public void RaiseOctagon() {
+        status = OctagonStatus.raising;
     }
 
-    public void LowerTower() {
-        status = GridStatus.lowering;
+    public void LowerOctagon() {
+        if (!selected && !IsBuiltOn()) {
+            status = OctagonStatus.lowering;
+        }
+    }
+
+    public void BuiltOnOctagon() {
+        status = OctagonStatus.builtOn;
+    }
+
+    public bool IsBuiltOn() {
+        return status == OctagonStatus.builtOn;
+    }
+
+    public void SelectOctagon(bool b) {
+        if (b) {
+            selected = true;
+            mat.SetFloat("_MKGlowTexStrength", 10);
+            mat.SetFloat("_MKGlowPower", 0.6f);
+            RaiseOctagon();
+        }
+        else {
+            selected = false;
+            mat.SetFloat("_MKGlowTexStrength", 6);
+            mat.SetFloat("_MKGlowPower", 0.3f);
+            LowerOctagon();
+        }
     }
 }
