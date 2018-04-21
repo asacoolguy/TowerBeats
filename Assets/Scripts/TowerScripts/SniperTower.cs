@@ -32,7 +32,12 @@ public class SniperTower : BasicTower {
 
 		// set up the muzzle for bullets
 		launcher = transform.Find("Launcher").gameObject;
-	}
+
+        // set up the light
+        spotlight = transform.Find("Spotlight").GetComponent<Light>();
+        spotlight.intensity = lightMinIntensity;
+        defaultScale = transform.localScale;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -41,6 +46,7 @@ public class SniperTower : BasicTower {
 
 	// plays the designated sound and also does the attack
 	public override void PlaySound(){
+        base.PlaySound();
 		audioSource.Play();
 		//anim.SetTrigger("Activate");
 

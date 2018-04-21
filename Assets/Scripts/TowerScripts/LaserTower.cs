@@ -36,7 +36,12 @@ public class LaserTower : BasicTower {
 		laser = transform.Find("LaserBeam").GetComponent<LineRenderer>();;
 		laser.gameObject.SetActive(false);
 		launcher = transform.Find("Launcher").gameObject;
-	}
+
+        // set up the light
+        spotlight = transform.Find("Spotlight").GetComponent<Light>();
+        spotlight.intensity = lightMinIntensity;
+        defaultScale = transform.localScale;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -45,7 +50,8 @@ public class LaserTower : BasicTower {
 
 	// plays the designated sound and also does the attack
 	public override void PlaySound(){
-		audioSource.Play();
+        base.PlaySound();
+        audioSource.Play();
 		//anim.SetTrigger("Activate");
 
 		// pause all other towers of this type and sound

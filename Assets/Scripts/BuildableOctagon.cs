@@ -125,4 +125,10 @@ public class BuildableOctagon : MonoBehaviour {
             LowerOctagon();
         }
     }
+
+    public void SetColor(Color c) {
+        mat.SetColor("_Color", c);
+        mat.SetColor("_MKGlowColor", c);
+        mat.SetColor("_MKGlowTexColor", c);
+    }
 }

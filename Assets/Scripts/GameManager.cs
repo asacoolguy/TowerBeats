@@ -170,8 +170,8 @@ public class GameManager : MonoBehaviour {
 
 
     // select the right tower to build using index
-    public void BuildTower(int i){
-		if (i > buildableTowers.Count){
+    public void BuildTower(int input){
+		if (input > buildableTowers.Count){
 			print ("index out of bounds");
 			return;
 		}
@@ -184,22 +184,23 @@ public class GameManager : MonoBehaviour {
         //print("building tower " + i + " in gamemanager");
 
         // build the tower
-        GameObject towerObj = Instantiate(buildableTowers[i]) as GameObject;
+        GameObject towerObj = Instantiate(buildableTowers[input]) as GameObject;
 		towerObj.SetActive(true);
 
         // parent it to selectedOctagon and set its position and rotation accordingly
         // TODO: need better way of handling tower positioning
         Vector3 pos = Vector3.zero;
-        if (i == 0)  pos = new Vector3(0, 1.14f, 0);
-        else if (i == 1) pos = new Vector3(0, 1.11f, 0);
-        else if (i == 2) pos = new Vector3(0, 1.176f, 0);
+        if (input == 0)  pos = new Vector3(0, 1.4f, 0);
+        else if (input == 1) pos = new Vector3(0, 1.2f, 0);
+        else if (input == 2) pos = new Vector3(0, 1.4f, 0);
         float angle = 180f - GameManager.GetAngleFromVectorSpecial(-selectedOctagon.transform.position);
         towerObj.transform.eulerAngles = new Vector3(0, angle, 0);
         towerObj.transform.SetParent(selectedOctagon.transform, true);
         towerObj.transform.localPosition = pos;
 
-        // change selectedOctagon to built 
+        // change selectedOctagon to built and also change its color
         selectedOctagon.GetComponent<BuildableOctagon>().BuiltOnOctagon();
+        selectedOctagon.GetComponent<BuildableOctagon>().SetColor(towerBuildPanel.GetComponent<BuildPanel>().towerColors[input]);
 
         BasicTower tower = towerObj.GetComponent<BasicTower>();
         tower.ToggleOutline(false);
@@ -214,7 +215,6 @@ public class GameManager : MonoBehaviour {
         // do some stuff about finding the right list to add tower to
         int axisIndex = FindObjectOfType<Scanner>().FindClosestAxisIndex(tower.transform.position);
         tower.axisIndex = axisIndex;
-        print("index is " + axisIndex);
         FindObjectOfType<Scanner>().AddTowerToList(towerObj);
 
     }

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class BuildPanel : MonoBehaviour {
     public Color[] towerColors;
 
-
 	private void Awake () {
         for (int i = 0; i < towerColors.Length; i++) {
             string name = "Tower" + (i + 1);
