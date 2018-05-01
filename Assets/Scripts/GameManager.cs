@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 
 	public List<GameObject> buildableTowers;
 	public GameObject homeBase;
-    [SerializeField] private LayerMask octLayerMask, buildPanelLayerMask, towerLayerMask;
+    [SerializeField] private LayerMask selectableLayerMask, towerLayerMask;
 
     /// <summary>
     /// Enum that describes if the user is currently building a tower or not.
@@ -93,6 +93,11 @@ public class GameManager : MonoBehaviour {
             }
             hoveredOctagon = newHoveredOctagon;
         }
+
+		// highlight any BuildPanelButtons the mouse is hovering over
+		if (towerBuildPanel.activeSelf){
+			towerBuildPanel.GetComponent<BuildPanel>().HighlightButton(GetBuildPanelFromMouse());
+		}
     }
 
     private void LateUpdate() {
@@ -154,7 +159,7 @@ public class GameManager : MonoBehaviour {
             }
             // if the clicked on hoverOctagon is not yet selected, select it
             else if (hoveredOctagon && hoveredOctagon != selectedOctagon) {
-                towerBuildPanel.SetActive(true);
+				towerBuildPanel.GetComponent<BuildPanel>().ActivatePanel();
                 towerBuildPanel.transform.SetParent(hoveredOctagon.transform, true);
                 //towerBuildPanel.transform.parent = hoveredOctagon.transform;
                 towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
@@ -267,7 +272,7 @@ public class GameManager : MonoBehaviour {
     private GameObject GetOctagonFromMouse() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 1000, octLayerMask)) {
+		if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
             // trace parents until we find the object with BuildableOctagon script on it
             // in case ray tracing hit a child component of a tower
             GameObject current = hit.collider.gameObject;
@@ -295,7 +300,7 @@ public class GameManager : MonoBehaviour {
     private int GetBuildPanelFromMouse() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 1000, buildPanelLayerMask)) {
+		if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
             // trace parents until we find the object with BuildPanel script on it
             // in case ray tracing hit a child component of a tower
             GameObject current = hit.collider.gameObject;
