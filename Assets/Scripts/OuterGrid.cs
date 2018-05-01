@@ -51,7 +51,7 @@ public class OuterGrid : MonoBehaviour {
         spectrum = FindObjectOfType<GameManager>().GetComponent<SpectrumData>();
         spectrumValues = new float[bumpColors.Length];
 
-        diffScale = maxScale - minScale;
+        diffScale = maxBumpScale - minBumpScale;
         diffGlowPow = maxGlowPow - minGlowPow;
         diffGlowStr = maxTextureStr - minTextreStr;
     }
@@ -64,14 +64,12 @@ public class OuterGrid : MonoBehaviour {
         
 
         for(int i = 0; i < octTowers.Count; i++) {
-            float newScale = octTowerScales[i] * (1 + spectrumValues[octTowerColorType[i]]);
+            //float newScale = octTowerScales[i] * (1 + spectrumValues[octTowerColorType[i]]);
+            float newScale = octTowerScales[i] * (1 + diffScale * spectrumValues[octTowerColorType[i]]);
             // change the scale and location accordingly
             octTowers[i].transform.localScale = new Vector3(octTowers[i].transform.localScale.x,
                                                           newScale,
                                                           octTowers[i].transform.localScale.z);
-            octTowers[i].transform.localPosition = new Vector3(octTowers[i].transform.localPosition.x,
-                                                             octTowers[i].transform.localScale.y,
-                                                             octTowers[i].transform.localPosition.z);
             // make the material brighter/darker accordingly
             Material mat = octTowers[i].GetComponent<MeshRenderer>().material;
             mat.SetFloat("_MKGlowTexStrength", Mathf.Clamp(minTextreStr + diffGlowStr * spectrumValues[octTowerColorType[i]] * 2, minTextreStr, maxTextureStr));
