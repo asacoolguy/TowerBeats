@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1058980505790196}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: -57.5, z: 0}
+  m_LocalPosition: {x: 0, y: -57, z: 0}
   m_LocalScale: {x: 176.11267, y: 47.107903, z: 176.1125}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,12 +53,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee9af5f0769444259c39a59205758b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 0.6
+  scale: 0.3
   intensity: 0.6
   alpha: 0.6
-  alphasub: 0.05
-  pow: 0.6
-  color: {r: 1, g: 1, b: 1, a: 1}
+  alphasub: 0.1
+  pow: 0.1
+  color: {r: 0.1254902, g: 0.08235294, b: 0.14901961, a: 1}
   fogMaterial: {fileID: 2100000, guid: 015ded2f9331e4ffdb975fd20910ea0c, type: 2}
 --- !u!198 &198664095493011706
 ParticleSystem:

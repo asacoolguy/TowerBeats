@@ -61,6 +61,9 @@ public abstract class BasicTower : MonoBehaviour {
         // enable the lights
         StartCoroutine(BoostLight());
         // make the tower pop
+
+        // boost the color of the octagon
+        transform.parent.GetComponent<BuildableOctagon>().BoostColor();
     }
 
 

@@ -190,9 +190,9 @@ public class GameManager : MonoBehaviour {
         // parent it to selectedOctagon and set its position and rotation accordingly
         // TODO: need better way of handling tower positioning
         Vector3 pos = Vector3.zero;
-        if (input == 0)  pos = new Vector3(0, 1.4f, 0);
-        else if (input == 1) pos = new Vector3(0, 1.2f, 0);
-        else if (input == 2) pos = new Vector3(0, 1.4f, 0);
+        if (input == 0)  pos = new Vector3(0, 4.4f, 0);
+        else if (input == 1) pos = new Vector3(0, 3.6f, 0);
+        else if (input == 2) pos = new Vector3(0, 5f, 0);
         float angle = 180f - GameManager.GetAngleFromVectorSpecial(-selectedOctagon.transform.position);
         towerObj.transform.eulerAngles = new Vector3(0, angle, 0);
         towerObj.transform.SetParent(selectedOctagon.transform, true);

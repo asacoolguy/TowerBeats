@@ -42,7 +42,7 @@ public class Scanner : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		// set up audio clips
 		audioClips = FindObjectOfType<MusicDatabase>().scannerClips;
 
@@ -222,6 +222,11 @@ public class Scanner : MonoBehaviour {
 		}
 	}
 
+    
+    // returns the time required for a whole rotation
+    public float GetRotationTime() {
+        return audios[0].clip.length;
+    }
 
 	// stops scanner from rotating in r rotations 
 	public IEnumerator StopScannerRotation(int r){

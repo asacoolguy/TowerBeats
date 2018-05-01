@@ -11,6 +11,7 @@ using UnityEngine;
 public class OuterGrid : MonoBehaviour {
     public float minDistFromCenter, maxDistFromCenter;
     public float minScale, maxScale;
+    public float yPosOffset;
 
     private List<GameObject> octTowers;
     private List<float> octTowerScales;
@@ -41,6 +42,7 @@ public class OuterGrid : MonoBehaviour {
             octTowers.Add(t.gameObject);
             float scale = GetScaleByDistance(t.position);
             t.localScale = new Vector3(t.localScale.x, scale, t.localScale.z);
+            t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y + yPosOffset, t.localPosition.z);
             octTowerScales.Add(scale);
 
             // make each transform a random type
