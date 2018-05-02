@@ -6,8 +6,10 @@ public class Enemy : MonoBehaviour {
 	private Animator anim;
     private List<Vector3> path;
     private int nextTarget;
+    private LineRenderer healthBar;
 
 	public float health;
+    private float initialHealth;
 	public float distancePerMove;
 	public float moveDuration;
 	public float pointVal;
@@ -18,11 +20,15 @@ public class Enemy : MonoBehaviour {
 
 	private void Start () {
 		anim = GetComponent<Animator>();
-	}
+        healthBar = transform.Find("HealthBar").GetComponent<LineRenderer>();
+        initialHealth = health;
+    }
 	
 
 	private void Update () {
-	}
+        healthBar.SetPosition(0, transform.position + new Vector3(-initialHealth / 4f, 0f, 4f));
+        healthBar.SetPosition(1, healthBar.GetPosition(0) + new Vector3(health / 2f, 0, 0));
+    }
 
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag == "HomeBase"){

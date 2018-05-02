@@ -36,7 +36,6 @@ public class SniperTower : BasicTower {
         // set up the light
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
-        defaultScale = transform.localScale;
     }
 	
 	// Update is called once per frame

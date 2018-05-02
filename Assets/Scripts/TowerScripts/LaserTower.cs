@@ -37,10 +37,9 @@ public class LaserTower : BasicTower {
 		laser.gameObject.SetActive(false);
 		launcher = transform.Find("Launcher").gameObject;
 
-        // set up the light
+        // set up the light boosting and popping
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
-        defaultScale = transform.localScale;
     }
 	
 	// Update is called once per frame

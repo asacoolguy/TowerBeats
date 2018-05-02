@@ -605,8 +605,9 @@ MonoBehaviour:
   originalMat: {fileID: 2100000, guid: 77bc669bb6b2e924aaee7f0104992f51, type: 2}
   planningMat: {fileID: 2100000, guid: ce397a7269fa73a44bab2d4d0dcc12e6, type: 2}
   planningInvalidMat: {fileID: 2100000, guid: 0a88b7df744822948b8c0bd0dae46156, type: 2}
-  popScale: 0
-  popTime: 0.5
+  popYScale: 1.5
+  popTime: 0.2
+  lightBoostTime: 0.5
   lightMinIntensity: 0.5
   lightMaxIntensity: 1.5
   bulletObj: {fileID: 1911099843679222, guid: d930b58b2945cd241860048fe429938d, type: 2}

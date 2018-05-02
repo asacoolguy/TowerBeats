@@ -17,8 +17,8 @@ public abstract class BasicTower : MonoBehaviour {
 	public Material originalMat, planningMat, planningInvalidMat;
 	protected MeshRenderer mRenderer;
 
-    public float popScale, popTime;
-    protected Vector3 defaultScale;
+    public float popYScale, popTime, lightBoostTime;
+    protected float defaultYScale;
     public float lightMinIntensity, lightMaxIntensity;
     protected Light spotlight;
 
@@ -29,7 +29,7 @@ public abstract class BasicTower : MonoBehaviour {
 		originalMat = mRenderer.material;
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
-        defaultScale = transform.localScale;
+        defaultYScale = transform.localScale.y;
 	}
 	
 
@@ -60,10 +60,9 @@ public abstract class BasicTower : MonoBehaviour {
     public virtual void PlaySound() {
         // enable the lights
         StartCoroutine(BoostLight());
-        // make the tower pop
-
-        // boost the color of the octagon
+        // boost the color and size of the octagon
         transform.parent.GetComponent<BuildableOctagon>().BoostColor();
+        transform.parent.GetComponent<BuildableOctagon>().BoostSize(popYScale, popTime);
     }
 
 
@@ -124,33 +123,19 @@ public abstract class BasicTower : MonoBehaviour {
 
     private IEnumerator BoostLight() {
         float currentTime = 0f;
-        while (currentTime < popTime) {
-            spotlight.intensity = GameManager.SmoothStep(lightMinIntensity, lightMaxIntensity, currentTime / popTime);
+        while (currentTime < lightBoostTime) {
+            spotlight.intensity = GameManager.SmoothStep(lightMinIntensity, lightMaxIntensity, currentTime / lightBoostTime);
             currentTime += Time.deltaTime;
             yield return null;
         }
 
-        currentTime = popTime;
+        currentTime = lightBoostTime;
         while (currentTime > 0) {
-            spotlight.intensity = GameManager.SmoothStep(lightMinIntensity, lightMaxIntensity, currentTime / popTime);
+            spotlight.intensity = GameManager.SmoothStep(lightMinIntensity, lightMaxIntensity, currentTime / lightBoostTime);
             currentTime -= Time.deltaTime;
             yield return null;
         }
     }
 
-    private IEnumerator PopSize() {
-        float currentTime = 0f;
-        while (currentTime < popTime) {
-            transform.localScale = defaultScale * GameManager.SmoothStep(lightMinIntensity, lightMaxIntensity, currentTime / popTime);
-            currentTime += Time.deltaTime;
-            yield return null;
-        }
-
-        currentTime = popTime;
-        while (currentTime > 0) {
-            spotlight.intensity = GameManager.SmoothStep(lightMinIntensity, lightMaxIntensity, currentTime / popTime);
-            currentTime -= Time.deltaTime;
-            yield return null;
-        }
-    }
+    
 }

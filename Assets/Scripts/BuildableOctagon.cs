@@ -132,6 +132,36 @@ public class BuildableOctagon : MonoBehaviour {
         }
     }
 
+
+    public void BoostSize(float maxYScale, float popTime) {
+        StartCoroutine(PopSize(maxYScale, popTime));
+    }
+
+
+    public IEnumerator PopSize(float maxYScale, float popTime) {
+        float currentTime = 0f;
+        float currentYPos = transform.localPosition.y;
+        while (currentTime < popTime) {
+            float newYScale = GameManager.SmoothStep(1, maxYScale, currentTime / popTime);
+            float newYPos = GameManager.SmoothStep(currentYPos, currentYPos + maxYScale - 1, currentTime / popTime);
+            transform.localScale = new Vector3(transform.localScale.x, newYScale, transform.localScale.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, newYPos, transform.localPosition.z);
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+
+        currentTime = popTime;
+        while (currentTime > 0) {
+            float newYScale = GameManager.SmoothStep(1, maxYScale, currentTime / popTime);
+            float newYPos = GameManager.SmoothStep(currentYPos, currentYPos + maxYScale - 1, currentTime / popTime);
+            transform.localScale = new Vector3(transform.localScale.x, newYScale, transform.localScale.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, newYPos, transform.localPosition.z);
+            currentTime -= Time.deltaTime;
+            yield return null;
+        }
+    }
+
+
     public void SetBuiltTower(GameObject tower) {
         if (IsBuiltOn()) {
             Destroy(builtTower);
