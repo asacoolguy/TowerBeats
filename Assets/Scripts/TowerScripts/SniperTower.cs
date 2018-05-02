@@ -76,7 +76,7 @@ public class SniperTower : BasicTower {
 						// no enemies left, just return
 						yield break;
 					}
-				}while(enemies[enemyIndex] == null || enemies[enemyIndex].health <= 0);
+				}while(enemies[enemyIndex] == null || enemies[enemyIndex].health <= 0 || enemies[enemyIndex].ascending);
 
 				// only shoot lasers when the enemy still exist
 				GameObject bullet = Instantiate(bulletObj, Vector3.zero, Quaternion.identity);

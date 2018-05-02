@@ -5,15 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Menu.unity
     guid: 404ab458677314c4bb359747b2683f5f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Electro_New.unity
     guid: a1d2a859034b62c449a6dea320aadd6c
-  - enabled: 1
-    path: Assets/Scenes/Synth.unity
+  - enabled: 0
+    path: Assets/Scenes/Synth_New.unity
     guid: baebf80ccc4db864399597eff797da23
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HipHop_New.unity
     guid: bdce6b4e0862962489ba6c1a01c85f64
+  - enabled: 1
+    path: Assets/Scenes/OctoGrid.unity
+    guid: add30c442ac24d4408ca9fbf85074228

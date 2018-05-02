@@ -46,7 +46,9 @@ public class ShockTower : BasicTower {
 
 		// damage enemies in area
 		foreach(Enemy e in GetComponentInChildren<TowerAoE>().enemiesInRange){
-			e.TakeDamage(attackPower);
+            if (!e.ascending) {
+                e.TakeDamage(attackPower);
+            }
 		}
 	}
     

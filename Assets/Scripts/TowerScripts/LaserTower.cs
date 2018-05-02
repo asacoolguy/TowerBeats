@@ -76,7 +76,7 @@ public class LaserTower : BasicTower {
 				// find first enemy still alive
 				Enemy target = null;
 				for (int i = 0; i < enemies.Count; i++){
-					if (enemies[i] != null && enemies[i].health > 0){
+					if (enemies[i] != null && enemies[i].health > 0 && !enemies[i].ascending){
 						target = enemies[i];
 						break;
 					}

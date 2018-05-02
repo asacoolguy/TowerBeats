@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour {
     private GameObject selectedOctagon = null;
     public GameObject towerBuildPanelPrefab;
     private GameObject towerBuildPanel = null;
+    private GameObject AOEIndicator = null;
 
 	// game progression variables
 	public float currentScore = 0;
@@ -145,19 +146,45 @@ public class GameManager : MonoBehaviour {
 
         // handle clicking events
         if (Input.GetMouseButtonDown(0)) {
-            // if we clicked on a BuildablePanel
-            int panelClicked = GetBuildPanelFromMouse();
+            int buttonClicked = GetBuildPanelFromMouse();
+            // delelte any AOE indicators already showing
+            if (AOEIndicator != null) {
+                Destroy(AOEIndicator);
+            }
 
-            if (panelClicked >= 0) {
-                BuildTower(panelClicked);
-                towerBuildPanel.transform.SetParent(null, true);
-                towerBuildPanel.SetActive(false);
+            // if we clicked on a BuildablePanel
+            if (buttonClicked >= 0) {
+                BuildPanel panel = towerBuildPanel.GetComponent<BuildPanel>();
+                // if we clicked on an already selected button
+                if (buttonClicked == panel.GetSelectedButton()) {
+                    BuildTower(buttonClicked);
+                    panel.ActivatePanel(false);
+                    panel.SelectButton(-1);
+                }
+                else {
+                    // otherwise select that button
+                    panel.SelectButton(buttonClicked);
+
+                    // display the appropriate AOEIndicator
+                    GameObject AOEIndicatorPrefab = buildableTowers[buttonClicked].transform.Find("AOEIndicator").gameObject;
+                    AOEIndicator = Instantiate(AOEIndicatorPrefab);
+                    // TODO: need better way of getting position
+                    Vector3 pos = Vector3.zero;
+                    if (buttonClicked == 0) pos = new Vector3(0, 4.4f, 0);
+                    else if (buttonClicked == 1) pos = new Vector3(0, 3.6f, 0);
+                    else if (buttonClicked == 2) pos = new Vector3(0, 5f, 0);
+                    AOEIndicator.transform.position = selectedOctagon.transform.position + pos;
+                    AOEIndicator.transform.localScale = AOEIndicatorPrefab.transform.lossyScale;
+                    AOEIndicator.SetActive(true);
+                }
             }
             // if you clicked somewhere random or on the selected Octagon, deselect the selectedOctagon
             else if (hoveredOctagon == null || hoveredOctagon == selectedOctagon) {
                 //towerBuildPanel.transform.parent = null;
-                towerBuildPanel.transform.SetParent(null, true);
-                towerBuildPanel.SetActive(false);
+                towerBuildPanel.GetComponent<BuildPanel>().ActivatePanel(false);
+                if (AOEIndicator != null) {
+                    Destroy(AOEIndicator);
+                }
                 // deselect any selectedOctagons
                 if (selectedOctagon) {
                     selectedOctagon.GetComponent<BuildableOctagon>().SelectOctagon(false);
@@ -167,7 +194,7 @@ public class GameManager : MonoBehaviour {
             }
             // if the clicked on hoverOctagon is not yet selected, select it
             else if (hoveredOctagon && hoveredOctagon != selectedOctagon) {
-				towerBuildPanel.GetComponent<BuildPanel>().ActivatePanel();
+				towerBuildPanel.GetComponent<BuildPanel>().ActivatePanel(true);
                 towerBuildPanel.transform.SetParent(hoveredOctagon.transform, true);
                 //towerBuildPanel.transform.parent = hoveredOctagon.transform;
                 towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);

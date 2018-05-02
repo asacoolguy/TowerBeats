@@ -211,8 +211,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4373712322260548}
   - component: {fileID: 33806899885003598}
-  - component: {fileID: 64208623703722590}
   - component: {fileID: 114204852050449502}
+  - component: {fileID: 136597669284902948}
   m_Layer: 0
   m_Name: Area
   m_TagString: Untagged
@@ -226,13 +226,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1074745549523234}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.0028, y: -0.0112, z: 0}
-  m_LocalScale: {x: 26.09885, y: 0.02, z: 26.098856}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.15, y: 0.002, z: 0.15}
   m_Children: []
   m_Father: {fileID: 4949144013285394}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4061162952912618
 Transform:
   m_ObjectHideFlags: 1
@@ -306,13 +306,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1779225535306486}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.0028, y: 0.022831276, z: 0}
-  m_LocalScale: {x: 26.098833, y: 6.4693103, z: 26.098839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4949144013285394}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4473978901287202
 Transform:
   m_ObjectHideFlags: 1
@@ -359,7 +359,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1491221876436546}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 29.4, z: 0}
+  m_LocalPosition: {x: 20, y: 29.4, z: 28.8}
   m_LocalScale: {x: 153.26361, y: 370.9823, z: 153.26366}
   m_Children:
   - {fileID: 4164765225766590}
@@ -611,7 +611,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1074745549523234}
-  m_Mesh: {fileID: 4300000, guid: b74ecaeb9b798fb42b6bfc8c5ae7bd3b, type: 3}
+  m_Mesh: {fileID: 4300000, guid: c6049a62ac4f4a44f85a1ebc18c49390, type: 3}
 --- !u!33 &33291214693856318
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -625,7 +625,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1779225535306486}
-  m_Mesh: {fileID: 4300000, guid: b74ecaeb9b798fb42b6bfc8c5ae7bd3b, type: 3}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &33906864300884362
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -662,20 +662,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &64208623703722590
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1779225535306486}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: b74ecaeb9b798fb42b6bfc8c5ae7bd3b, type: 3}
 --- !u!82 &82595244373868566
 AudioSource:
   m_ObjectHideFlags: 1
@@ -912,7 +898,7 @@ MonoBehaviour:
   originalMat: {fileID: 2100000, guid: cd15e3a81c83872409e0b544da84fa0d, type: 2}
   planningMat: {fileID: 2100000, guid: ce397a7269fa73a44bab2d4d0dcc12e6, type: 2}
   planningInvalidMat: {fileID: 2100000, guid: 0a88b7df744822948b8c0bd0dae46156, type: 2}
-  popMaxSize: 0
+  popScale: 0
   popTime: 0.2
   lightMinIntensity: 0.5
   lightMaxIntensity: 1.5
@@ -1034,3 +1020,16 @@ CapsuleCollider:
   m_Height: 0.03
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &136597669284902948
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1779225535306486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.15
+  m_Height: 0.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.1, z: 0}
