@@ -9,6 +9,8 @@ TagManager:
   - HomeBase
   - Enemy
   - SniperBullet
+  - Waypoint
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

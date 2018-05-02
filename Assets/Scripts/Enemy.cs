@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 	private Animator anim;
+    private List<Vector3> path;
+    private int nextTarget;
 
 	public float health;
 	public float distancePerMove;
 	public float moveDuration;
 	public float pointVal;
     public int moneyDropped;
+
+    public bool ascending; // this is true when enemy is still rising. enemy is untargetable in this phase
 
 
 	private void Start () {
@@ -18,8 +22,6 @@ public class Enemy : MonoBehaviour {
 	
 
 	private void Update () {
-		// adjust to always face the center
-		FaceCenter();
 	}
 
 	void OnTriggerEnter(Collider other){
@@ -29,20 +31,40 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void FaceCenter(){
-		float angle = 90f - GameManager.GetAngleFromVector(transform.position);
+
+	public void FaceDirection(Vector3 direction){
+		float angle = 90f - GameManager.GetAngleFromVectorSpecial(direction);
 		transform.eulerAngles = new Vector3(0, angle, 0);
 	}
 
+
 	public IEnumerator Move(){
 		float currentDuration = 0f;
-		Vector3 targetLocation = new Vector3(0, transform.position.y, 0);
+        Vector3 targetLocation = path[nextTarget];
 		float moveSpeed = distancePerMove / moveDuration;
 
 		while(currentDuration <= moveDuration){
 			float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
 			float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
-			transform.position += (targetLocation - transform.position).normalized * moveAmount;
+            Vector3 moveDirection = (targetLocation - transform.position);
+
+            // if we're still ascending out of the spawn point, double the speed and face up
+            if (nextTarget == 1) {
+                moveAmount *= 2;
+                float angle = 90f + GameManager.GetAngleFromVectorSpecial(transform.position);
+                transform.eulerAngles = new Vector3(90, 0, angle);
+                ascending = true;
+            }
+            else {
+                FaceDirection(-moveDirection);
+                ascending = false;
+            }
+
+			transform.position += moveDirection.normalized * moveAmount;
+            if (Vector3.Distance(transform.position, targetLocation) < 0.1f) {
+                targetLocation = path[++nextTarget];
+            }
+
 			currentDuration += Time.deltaTime;
 			yield return null;
 		}
@@ -51,15 +73,17 @@ public class Enemy : MonoBehaviour {
 
 	// called by other functions to damage this enemy. destroys this enemy when appropriate
 	public void TakeDamage(float i){
-		health -= i;
-		if (health <= 0f){
-			// destroy
-			StartCoroutine(SelfDestruct());
-		}
-		else{
-			// play damage effect 
-			anim.SetTrigger("TakeDamage");
-		}
+        if (!ascending) {
+            health -= i;
+            if (health <= 0f) {
+                // destroy
+                StartCoroutine(SelfDestruct());
+            }
+            else {
+                // play damage effect 
+                anim.SetTrigger("TakeDamage");
+            }
+        }
 
 	}
 
@@ -80,4 +104,11 @@ public class Enemy : MonoBehaviour {
 
 		FindObjectOfType<EnemyManager>().DestroyEnemy(this.gameObject);
 	}
+
+
+    public void SetPath(List<Vector3> input) {
+        path = input;
+        nextTarget = 1;
+        ascending = true;
+    }
 }

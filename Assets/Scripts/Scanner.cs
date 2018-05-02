@@ -81,8 +81,8 @@ public class Scanner : MonoBehaviour {
 		// initialize variables for rotation counting
 		ResetRotation();
 
-		// start rotation
-		SetRotate(true);
+        // start rotation after some delay
+        StartCoroutine(StartScannerRotation(2f));
 	}
 
 	// Update is called once per frame
@@ -257,4 +257,9 @@ public class Scanner : MonoBehaviour {
 
 		yield break;
 	}
+
+    private IEnumerator StartScannerRotation(float delay) {
+        yield return new WaitForSeconds(delay);
+        SetRotate(true);
+    }
 }
