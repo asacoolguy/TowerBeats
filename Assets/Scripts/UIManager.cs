@@ -8,11 +8,10 @@ public class UIManager : MonoBehaviour {
 	// GUI
 	public GameObject healthTextObj, moneyTextObj, waveTextObj;
 	private Text healthText, moneyText, waveText;
+	public GameObject spawnButton;
 
 	// pop up windows
 	private GameObject gameOverBox, gameWinBox, pauseScreen, tutorialBox;
-
-	private GameManager gm;
 
 	public List<AudioSource> pausedAudios;
 	private bool paused = false;
@@ -22,13 +21,10 @@ public class UIManager : MonoBehaviour {
 
 
 	// Use this for initialization
-	private void Start () {
-		gm = FindObjectOfType<GameManager>();
+	private void Awake () {
 		healthText = healthTextObj.GetComponent<Text>();
-		healthText.text = "" + gm.maxHealth + " / " + gm.maxHealth;
 		waveText = waveTextObj.GetComponent<Text>();
 		moneyText = moneyTextObj.GetComponent<Text>();
-		moneyText.text = "" + gm.startingMoney;
 		/*
 		gameOverBox = transform.Find("GameOverBox").gameObject;
 		gameOverBox.SetActive(false);
@@ -54,17 +50,20 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	public void UpdateHealth(int i){
-		healthText.text = "" + i + " / " + gm.maxHealth;
+	public void UpdateHealth(int current, int max){
+		healthText.text = "" + current + "/" + max;
 	}
 
-    public void UpdateMoney(int i){
-        moneyText.text = "" + gm.currentMoney;
+    public void UpdateMoney(int current){
+        moneyText.text = "" + current;
     }
 
-	public void UpdateWave(int i){
-		// todo
-		return; 
+	public void UpdateWave(int current, int max){
+		waveText.text = "Wave: " + current + "/" + max;
+	}
+
+	public void ShowSpawnButton(bool b){
+		spawnButton.gameObject.SetActive(b);
 	}
 
 	public void DisplayGameOverScreen(){
@@ -89,16 +88,7 @@ public class UIManager : MonoBehaviour {
 	public void StartMusic(){
 		transform.Find("StartButton").gameObject.SetActive(false);		
 	}
-
-    public void StartWave() {
-        transform.Find("SpawnButton").gameObject.SetActive(false);
-        FindObjectOfType<Scanner>().spawnEnemies = true;
-    }
-
-
-    public void ShowUpgradeButton(bool b){
-		transform.Find("Button_Upgrade").gameObject.SetActive(b);
-	}
+		
 
 	public void TogglePause(){
 		// pause button doesn't work when tutorial's showing

@@ -173,9 +173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
-  distancePerMove: 8
+  distancePerMove: 10
   moveDuration: 1
-  thresholdDist: 10
   pointVal: 15
   moneyDropped: 5
 --- !u!198 &198750909884240772

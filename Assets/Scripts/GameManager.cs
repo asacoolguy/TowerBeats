@@ -27,14 +27,10 @@ public class GameManager : MonoBehaviour {
     private GameObject towerBuildPanel = null;
 
 	// game progression variables
-	public int maxHealth = 10;
-	public int currentHealth;
 	public float currentScore = 0;
 	public float totalScore = 0;
-    public int startingMoney;
-    public int currentMoney;
-	public int currentWave = 1;
-    public int maxWave = 5;
+	public int startingMoney, maxWave, maxHealth;
+	private int currentMoney, currentWave, currentHealth;
 
     // Audio clips used for the game
 	private AudioClip[] endGameClips;
@@ -50,10 +46,16 @@ public class GameManager : MonoBehaviour {
 		youLoseClip = FindObjectOfType<MusicDatabase>().youLoseClip;
 
         // set up some variables
-		uiManager = FindObjectOfType<UIManager>();
 		audioSource = transform.Find("Audio").GetComponent<AudioSource>();
 		currentHealth = maxHealth;
         currentMoney = startingMoney;
+		currentWave = 0;
+
+		// initialize the UI with some values
+		uiManager = FindObjectOfType<UIManager>();
+		uiManager.UpdateHealth(currentHealth, maxHealth);
+		uiManager.UpdateMoney(currentMoney);
+		uiManager.UpdateWave(currentWave, maxWave);
 
         // make the tower build panel
         towerBuildPanel = Instantiate(towerBuildPanelPrefab);
@@ -97,6 +99,12 @@ public class GameManager : MonoBehaviour {
 		// highlight any BuildPanelButtons the mouse is hovering over
 		if (towerBuildPanel.activeSelf){
 			towerBuildPanel.GetComponent<BuildPanel>().HighlightButton(GetBuildPanelFromMouse());
+		}
+
+
+		// if enemyManager is done spawning, show the spawnButton again
+		if (!FindObjectOfType<EnemyManager>().IsSpawning()){
+			uiManager.ShowSpawnButton(true);
 		}
     }
 
@@ -336,7 +344,7 @@ public class GameManager : MonoBehaviour {
 	// passes the UI stuff to the UIManager
 	public void TakeDamage(int i){
 		currentHealth -= i;
-		uiManager.UpdateHealth(currentHealth);
+		uiManager.UpdateHealth(currentHealth, maxHealth);
 		homeBase.GetComponent<AudioSource>().Play();
 		homeBase.GetComponent<Animator>().SetTrigger("TakeDamage");
 
@@ -352,6 +360,51 @@ public class GameManager : MonoBehaviour {
 			Time.timeScale = 0;
 		}
 	}
+
+	// starts spawning enemies on all levels
+	public void SpawnWave() {
+		currentWave++;
+		uiManager.ShowSpawnButton(false);
+
+		FindObjectOfType<EnemyManager>().SetupWave(currentWave);
+
+		uiManager.UpdateWave(currentWave, maxWave);
+	}
+
+
+    public void GetPoints(float pts){
+		currentScore += pts;
+	}
+
+
+    public void GetMoney(int money){
+        currentMoney += money;
+        uiManager.UpdateMoney(currentMoney);
+    }
+
+	/*
+	private IEnumerator WinGame(){
+		// destroy all enemies
+		FindObjectOfType<EnemyManager>().DestroyAllEnemies();
+		FindObjectOfType<Scanner>().spawnEnemies = false;
+		// stop scanner in 4 measures
+		StartCoroutine(FindObjectOfType<Scanner>().StopScannerRotation(2));
+		while(FindObjectOfType<Scanner>().finishedUp == false){
+			yield return null;
+		}
+		// play the end game sound
+		audioSource.clip = endGameClips[Random.Range(0, endGameClips.Length)];
+		audioSource.Play();
+		while(audioSource.isPlaying){
+			yield return null;
+		}
+		// pop the game over box
+		uiManager.DisplayGameWinScreen(totalScore);
+		audioSource.clip = youWinClip;
+		audioSource.Play();
+
+		Time.timeScale = 0;
+	}*/
 
 	public static float GetAngleFromVector(Vector3 pos){
 		float angle = 0f;
@@ -374,67 +427,33 @@ public class GameManager : MonoBehaviour {
 		return angle;
 	}
 
-    public static float GetAngleFromVectorSpecial(Vector3 pos) {
-        float angle = 0f;
+	public static float GetAngleFromVectorSpecial(Vector3 pos) {
+		float angle = 0f;
 
-        if (pos.x == 0) {
-            if (pos.z > 0) {
-                angle = 90f;
-            }
-            else {
-                angle = -90f;
-            }
-        }
-        else if(pos.z == 0) {
-            if (pos.x > 0) {
-                angle = 0f;
-            }
-            else {
-                angle = 180f;
-            }
-        }
-        else {
-            angle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
-        }
-        if (angle < 0) {
-            angle += 360f;
-        }
-
-        return angle;
-    }
-
-
-    public void GetPoints(float pts){
-		currentScore += pts;
-	}
-
-
-    public void GetMoney(int money){
-        currentMoney += money;
-        uiManager.UpdateMoney(currentMoney);
-    }
-
-	private IEnumerator WinGame(){
-		// destroy all enemies
-		FindObjectOfType<EnemyManager>().DestroyAllEnemies();
-		FindObjectOfType<Scanner>().spawnEnemies = false;
-		// stop scanner in 4 measures
-		StartCoroutine(FindObjectOfType<Scanner>().StopScannerRotation(2));
-		while(FindObjectOfType<Scanner>().finishedUp == false){
-			yield return null;
+		if (pos.x == 0) {
+			if (pos.z > 0) {
+				angle = 90f;
+			}
+			else {
+				angle = -90f;
+			}
 		}
-		// play the end game sound
-		audioSource.clip = endGameClips[Random.Range(0, endGameClips.Length)];
-		audioSource.Play();
-		while(audioSource.isPlaying){
-			yield return null;
+		else if(pos.z == 0) {
+			if (pos.x > 0) {
+				angle = 0f;
+			}
+			else {
+				angle = 180f;
+			}
 		}
-		// pop the game over box
-		uiManager.DisplayGameWinScreen(totalScore);
-		audioSource.clip = youWinClip;
-		audioSource.Play();
+		else {
+			angle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
+		}
+		if (angle < 0) {
+			angle += 360f;
+		}
 
-		Time.timeScale = 0;
+		return angle;
 	}
 
 

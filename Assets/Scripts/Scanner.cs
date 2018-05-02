@@ -16,8 +16,7 @@ public class Scanner : MonoBehaviour {
 	private float secondsPerMeasure;
 	public int measurePerRotation = 1;
 	private float rotationSpeed;
-	public bool rotating = false;
-	public bool spawnEnemies;
+	public bool rotating;
 	public bool finishedUp = false;
 
 	// variables for spawning axes
@@ -33,12 +32,19 @@ public class Scanner : MonoBehaviour {
 	// variables for tracking current rotation amount
 	private int nextAxisToPlay;
 	private float totalRotateAmount;
-	private float enemySpawnCounter, enemyMoveCounter;
+	private float fullRotationCounter;
+	private float measureRotationCounter;
 
 	// variables for kepeing track of audio
 	private AudioSource[] audios;
 	private AudioClip[] audioClips;
 	public int numAudioPlaying = 1;
+
+
+	// full rotation events
+	public delegate void RotationCounter();
+	public static event RotationCounter RotatedFully;  // scanner has made a full rotation
+	public static event RotationCounter RotatedMeasure;  // scanner has rotated a single measure
 
 
 	// Use this for initialization
@@ -63,8 +69,8 @@ public class Scanner : MonoBehaviour {
 		rotationSpeed = 360f / (measurePerRotation * secondsPerMeasure);
 
 		// initiate the axes and disble them
-		SetupAxis();
-		EnableAllAxes(false);
+		//SetupAxis();
+		//EnableAllAxes(false);
 
 		// initialize towerLists
 		towerLists = new List<GameObject>[axisNumber];
@@ -75,16 +81,12 @@ public class Scanner : MonoBehaviour {
 		// initialize variables for rotation counting
 		ResetRotation();
 
-	    // start rotation
-	    //SetRotate(true);
+		// start rotation
+		SetRotate(true);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            SetRotate(!rotating);
-        }
-
 		if (rotating){
 			// rotate the scanner (and its underlying line)
 			transform.Rotate(new Vector3(0, 0, - rotationSpeed * Time.deltaTime));
@@ -103,20 +105,18 @@ public class Scanner : MonoBehaviour {
 				nextAxisToPlay %= axisNumber;
 			}
 
-			// spawn enemies after each full rotation
-			enemySpawnCounter += angleSpun;
-			if (enemySpawnCounter > 360f){
-				if (spawnEnemies){
-					FindObjectOfType<EnemyManager>().SpawnEnemies();
-				}
-				enemySpawnCounter -= 360f;
+			// after each full rotation, run the FullyRotated event 
+			fullRotationCounter += angleSpun;
+			if (fullRotationCounter > 360f){
+				RotatedFully();
+				fullRotationCounter -= 360f;
 			}
 
 			// move enemies after each measure
-			enemyMoveCounter += angleSpun;
-			if (enemyMoveCounter > (360f / measurePerRotation)){
-				FindObjectOfType<EnemyManager>().MoveEnemies();
-				enemyMoveCounter -= 360f / measurePerRotation;
+			measureRotationCounter += angleSpun;
+			if (measureRotationCounter > (360f / measurePerRotation)){
+				RotatedMeasure();
+				measureRotationCounter -= (360f / measurePerRotation);
 			}
 		}
 	}
@@ -145,9 +145,8 @@ public class Scanner : MonoBehaviour {
 	public void ResetRotation(){
 		nextAxisToPlay = 4;
 	    totalRotateAmount = anglePerAxis;
-		enemySpawnCounter = enemyMoveCounter = 0;
+		fullRotationCounter = measureRotationCounter = 0;
 	   	transform.localEulerAngles = new Vector3(-90, -90, 0);
-	   	spawnEnemies = false;
 	}
 
 
