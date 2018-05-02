@@ -107,7 +107,7 @@ public abstract class BasicTower : MonoBehaviour {
     
     // toggle on/off the outlines for this tower and its kids
     public void ToggleOutline(bool b) {
-        print("toggled outline to " + b);
+        //print("toggled outline to " + b);
 
         if (GetComponent<cakeslice.Outline>() != null) {
             GetComponent<cakeslice.Outline>().enabled = b;

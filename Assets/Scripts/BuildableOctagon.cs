@@ -9,7 +9,8 @@ using UnityEngine;
  */ 
 
 public class BuildableOctagon : MonoBehaviour {
-    private enum OctagonStatus {lowering, raising, lowered, raised, builtOn};
+    private enum OctagonStatus {lowering, raising, lowered, raised};
+    private GameObject builtTower;
     private OctagonStatus status;
     private bool selected = false;
 
@@ -51,57 +52,46 @@ public class BuildableOctagon : MonoBehaviour {
     }
 
     private void Update () {
-        // make the tower randomly float up or down a little when lowered
-        if (status == OctagonStatus.lowered) {
-            currentIdleFloatTime += idleFloatDirection * Time.deltaTime;
-            if (currentIdleFloatTime > idleFloatTime) {
-                currentIdleFloatTime = idleFloatTime;
-                idleFloatDirection *= -1;
-            }
-            else if (currentIdleFloatTime < -idleFloatTime) {
-                currentIdleFloatTime = -idleFloatTime;
-                idleFloatDirection *= -1;
-            }
-            float t = currentIdleFloatTime / idleFloatTime;
-            transform.localPosition = new Vector3(transform.localPosition.x,
-                                                  loweredYPos + t * idleFloatRange,
-                                                  transform.localPosition.z);
-        }
-        else if (status == OctagonStatus.builtOn) {
+        // if there's a tower on this platform, decay its color
+        if (builtTower != null) {
             float newTexStr = mat.GetFloat("_MKGlowTexStrength") - (Time.deltaTime * texStrDecaySpeed);
             float newGlowPow = mat.GetFloat("_MKGlowPower") - (Time.deltaTime * glowPowDecaySpeed);
 
             mat.SetFloat("_MKGlowTexStrength", Mathf.Clamp(newTexStr , loweredTexStr, raisedTexStr));
             mat.SetFloat("_MKGlowPower", Mathf.Clamp(newGlowPow , loweredGlowPow, raisedGlowPow));
         }
-        else{
-            // raise or lower the tower
-            if (status == OctagonStatus.lowering) {
-                currentMoveTime -= Time.deltaTime;
-                if (currentMoveTime < 0) {
-                    currentMoveTime = 0;
-                    status = OctagonStatus.lowered;
-                }
-            }
-            else if (status == OctagonStatus.raising) {
-                currentMoveTime += Time.deltaTime;
-                if (currentMoveTime > moveTime) {
-                    currentMoveTime = moveTime;
-                    if (status == OctagonStatus.raising) {
-                        status = OctagonStatus.raised;
-                    }
-                }                
-            }
 
-            float t = currentMoveTime / moveTime;
-            float yPos = GameManager.SmoothStep(loweredYPos, raisedYPos, t);
-            float texStr = GameManager.SmoothStep(loweredTexStr, raisedTexStr, t);
-            float glowPow = GameManager.SmoothStep(loweredGlowPow, raisedGlowPow, t);
-            transform.localPosition = new Vector3(transform.localPosition.x, yPos, transform.localPosition.z);
-            mat.SetFloat("_MKGlowTexStrength", texStr);
-            mat.SetFloat("_MKGlowPower", glowPow);
+        // raise or lower the tower
+        if (status == OctagonStatus.lowering) {
+            currentMoveTime -= Time.deltaTime;
+            if (currentMoveTime < 0) {
+                currentMoveTime = 0;
+                status = OctagonStatus.lowered;
+            }
         }
-        
+        else if (status == OctagonStatus.raising) {
+            currentMoveTime += Time.deltaTime;
+            if (currentMoveTime > moveTime) {
+                currentMoveTime = moveTime;
+                if (status == OctagonStatus.raising) {
+                    status = OctagonStatus.raised;
+                }
+            }    
+        }
+
+        float t = currentMoveTime / moveTime;
+        float yPos = GameManager.SmoothStep(loweredYPos, raisedYPos, t);
+        float texStr = GameManager.SmoothStep(loweredTexStr, raisedTexStr, t);
+        float glowPow = GameManager.SmoothStep(loweredGlowPow, raisedGlowPow, t);
+        transform.localPosition = new Vector3(transform.localPosition.x, yPos, transform.localPosition.z);
+        mat.SetFloat("_MKGlowTexStrength", texStr);
+        mat.SetFloat("_MKGlowPower", glowPow);
+
+        // show AOEIndicator if necessary
+        if (IsBuiltOn()){
+            bool showAOE = (status == OctagonStatus.raising || status == OctagonStatus.raised);
+            builtTower.transform.Find("AOEIndicator").gameObject.SetActive(showAOE);
+        }
     }
 
     public void RaiseOctagon() {
@@ -109,17 +99,13 @@ public class BuildableOctagon : MonoBehaviour {
     }
 
     public void LowerOctagon() {
-        if (!selected && !IsBuiltOn()) {
+        if (!selected) {
             status = OctagonStatus.lowering;
         }
     }
 
-    public void BuiltOnOctagon() {
-        status = OctagonStatus.builtOn;
-    }
-
     public bool IsBuiltOn() {
-        return status == OctagonStatus.builtOn;
+        return builtTower != null;
     }
 
     public void SelectOctagon(bool b) {
@@ -144,5 +130,13 @@ public class BuildableOctagon : MonoBehaviour {
             mat.SetFloat("_MKGlowTexStrength", raisedTexStr);
             mat.SetFloat("_MKGlowPower", raisedGlowPow);
         }
+    }
+
+    public void SetBuiltTower(GameObject tower) {
+        if (IsBuiltOn()) {
+            Destroy(builtTower);
+        }
+
+        builtTower = tower;
     }
 }

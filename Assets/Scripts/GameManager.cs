@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour {
     private enum BuildState{unselected, selected};
 	[SerializeField] private BuildState bState = BuildState.unselected;
 	private GameObject selectedTower = null;
-    private GameObject hoveredOctagon = null;
-    private GameObject selectedOctagon = null;
+    private BuildableOctagon hoveredOctagon = null;
+    private BuildableOctagon selectedOctagon = null;
     public GameObject towerBuildPanelPrefab;
     private GameObject towerBuildPanel = null;
     private GameObject AOEIndicator = null;
@@ -86,13 +86,13 @@ public class GameManager : MonoBehaviour {
         */
 
         // highlight any BuildableOctagons the mouse is hovering over that's not already built on
-        GameObject newHoveredOctagon = GetOctagonFromMouse();
+        BuildableOctagon newHoveredOctagon = GetOctagonFromMouse();
         if (hoveredOctagon != newHoveredOctagon) {
             if (hoveredOctagon != null) {
-                hoveredOctagon.GetComponent<BuildableOctagon>().LowerOctagon();
+                hoveredOctagon.LowerOctagon();
             }
-            if (newHoveredOctagon != null && !newHoveredOctagon.GetComponent<BuildableOctagon>().IsBuiltOn()) {
-                newHoveredOctagon.GetComponent<BuildableOctagon>().RaiseOctagon();
+            if (newHoveredOctagon != null) {
+                newHoveredOctagon.RaiseOctagon();
             }
             hoveredOctagon = newHoveredOctagon;
         }
@@ -169,11 +169,7 @@ public class GameManager : MonoBehaviour {
                     GameObject AOEIndicatorPrefab = buildableTowers[buttonClicked].transform.Find("AOEIndicator").gameObject;
                     AOEIndicator = Instantiate(AOEIndicatorPrefab);
                     // TODO: need better way of getting position
-                    Vector3 pos = Vector3.zero;
-                    if (buttonClicked == 0) pos = new Vector3(0, 4.4f, 0);
-                    else if (buttonClicked == 1) pos = new Vector3(0, 3.6f, 0);
-                    else if (buttonClicked == 2) pos = new Vector3(0, 5f, 0);
-                    AOEIndicator.transform.position = selectedOctagon.transform.position + pos;
+                    AOEIndicator.transform.position = selectedOctagon.transform.position;
                     AOEIndicator.transform.localScale = AOEIndicatorPrefab.transform.lossyScale;
                     AOEIndicator.SetActive(true);
                 }
@@ -187,7 +183,7 @@ public class GameManager : MonoBehaviour {
                 }
                 // deselect any selectedOctagons
                 if (selectedOctagon) {
-                    selectedOctagon.GetComponent<BuildableOctagon>().SelectOctagon(false);
+                    selectedOctagon.SelectOctagon(false);
                     selectedOctagon = null;
                 }
                 
@@ -200,10 +196,10 @@ public class GameManager : MonoBehaviour {
                 towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
                 // set the new selectedOctagon
                 if (selectedOctagon) {
-                    selectedOctagon.GetComponent<BuildableOctagon>().SelectOctagon(false);
+                    selectedOctagon.SelectOctagon(false);
                 }
                 selectedOctagon = hoveredOctagon;
-                selectedOctagon.GetComponent<BuildableOctagon>().SelectOctagon(true);
+                selectedOctagon.SelectOctagon(true);
             }
         }
     }
@@ -238,9 +234,11 @@ public class GameManager : MonoBehaviour {
         towerObj.transform.SetParent(selectedOctagon.transform, true);
         towerObj.transform.localPosition = pos;
 
-        // change selectedOctagon to built and also change its color
-        selectedOctagon.GetComponent<BuildableOctagon>().BuiltOnOctagon();
-        selectedOctagon.GetComponent<BuildableOctagon>().SetColor(towerBuildPanel.GetComponent<BuildPanel>().towerColors[input]);
+        // link tower to selectedOctagon, change its color and deselect it
+        selectedOctagon.SetBuiltTower(towerObj);
+        selectedOctagon.SetColor(towerBuildPanel.GetComponent<BuildPanel>().towerColors[input]);
+        selectedOctagon.SelectOctagon(false);
+        selectedOctagon = null;
 
         BasicTower tower = towerObj.GetComponent<BasicTower>();
         tower.ToggleOutline(false);
@@ -256,7 +254,6 @@ public class GameManager : MonoBehaviour {
         int axisIndex = FindObjectOfType<Scanner>().FindClosestAxisIndex(tower.transform.position);
         tower.axisIndex = axisIndex;
         FindObjectOfType<Scanner>().AddTowerToList(towerObj);
-
     }
 
 
@@ -304,7 +301,7 @@ public class GameManager : MonoBehaviour {
 
     // returns the BuildableOctagon that the mouse is currently hovering over
     // only valid for built towers
-    private GameObject GetOctagonFromMouse() {
+    private BuildableOctagon GetOctagonFromMouse() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
@@ -319,7 +316,7 @@ public class GameManager : MonoBehaviour {
             //print("final hit is " + current.name);
             if (current.GetComponent<BuildableOctagon>() != null) {
                 //print("script returned");
-                return current;
+                return current.GetComponent<BuildableOctagon>();
             }
             //print("no script");
         }
