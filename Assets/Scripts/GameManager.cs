@@ -490,4 +490,10 @@ public class GameManager : MonoBehaviour {
         t = t * t * t * (t * (6f * t - 15f) + 10f);
         return start + (end - start) * t;
     }
+
+    public static float EaseOut(float start, float end, float t) {
+        t--;
+        t = t * t * t + 1;
+        return start + (end - start) * t;
+    }
 }

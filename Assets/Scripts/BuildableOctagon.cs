@@ -142,8 +142,8 @@ public class BuildableOctagon : MonoBehaviour {
         float currentTime = 0f;
         float currentYPos = transform.localPosition.y;
         while (currentTime < popTime) {
-            float newYScale = GameManager.SmoothStep(1, maxYScale, currentTime / popTime);
-            float newYPos = GameManager.SmoothStep(currentYPos, currentYPos + maxYScale - 1, currentTime / popTime);
+            float newYScale = GameManager.EaseOut(1, maxYScale, currentTime / popTime);
+            float newYPos = GameManager.EaseOut(currentYPos, currentYPos + maxYScale - 1, currentTime / popTime);
             transform.localScale = new Vector3(transform.localScale.x, newYScale, transform.localScale.z);
             transform.localPosition = new Vector3(transform.localPosition.x, newYPos, transform.localPosition.z);
             currentTime += Time.deltaTime;
@@ -152,8 +152,8 @@ public class BuildableOctagon : MonoBehaviour {
 
         currentTime = popTime;
         while (currentTime > 0) {
-            float newYScale = GameManager.SmoothStep(1, maxYScale, currentTime / popTime);
-            float newYPos = GameManager.SmoothStep(currentYPos, currentYPos + maxYScale - 1, currentTime / popTime);
+            float newYScale = GameManager.EaseOut(1, maxYScale, currentTime / popTime);
+            float newYPos = GameManager.EaseOut(currentYPos, currentYPos + maxYScale - 1, currentTime / popTime);
             transform.localScale = new Vector3(transform.localScale.x, newYScale, transform.localScale.z);
             transform.localPosition = new Vector3(transform.localPosition.x, newYPos, transform.localPosition.z);
             currentTime -= Time.deltaTime;
