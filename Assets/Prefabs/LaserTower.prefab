@@ -673,7 +673,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -895,6 +895,7 @@ MonoBehaviour:
   cost: 100
   axisIndex: 0
   refundable: 0
+  powerFactor: 1
   originalMat: {fileID: 2100000, guid: cd15e3a81c83872409e0b544da84fa0d, type: 2}
   planningMat: {fileID: 2100000, guid: ce397a7269fa73a44bab2d4d0dcc12e6, type: 2}
   planningInvalidMat: {fileID: 2100000, guid: 0a88b7df744822948b8c0bd0dae46156, type: 2}
@@ -904,7 +905,6 @@ MonoBehaviour:
   lightMinIntensity: 0.5
   lightMaxIntensity: 1.5
   damagePerSec: 1.5
-  numSoundsUsed: 0
 --- !u!114 &114773867567443432
 MonoBehaviour:
   m_ObjectHideFlags: 1

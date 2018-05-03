@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
 	public float moveDuration;
 	public float pointVal;
     public int moneyDropped;
+    private int slowCounter;
 
     public bool ascending; // this is true when enemy is still rising. enemy is untargetable in this phase
 
@@ -48,6 +49,11 @@ public class Enemy : MonoBehaviour {
 		float currentDuration = 0f;
         Vector3 targetLocation = path[nextTarget];
 		float moveSpeed = distancePerMove / moveDuration;
+
+        if (slowCounter > 0) {
+            slowCounter--;
+            moveSpeed /= 2f;
+        }
 
 		while(currentDuration <= moveDuration){
 			float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
@@ -93,6 +99,12 @@ public class Enemy : MonoBehaviour {
         }
 
 	}
+
+
+    // slows the enemy for 2 movement cycles
+    public void Slow() {
+        slowCounter = 2;
+    }
 
 
 	// destroy this object and play the appropriate animation
