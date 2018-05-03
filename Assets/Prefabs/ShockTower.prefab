@@ -491,9 +491,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85bda6716fe9c9e498e00d18c0a00cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 50
+  cost: 250
   axisIndex: 0
   refundable: 0
+  powerFactor: 1
   originalMat: {fileID: 2100000, guid: d27856554a4b8e045879948011b8d5e2, type: 2}
   planningMat: {fileID: 2100000, guid: ce397a7269fa73a44bab2d4d0dcc12e6, type: 2}
   planningInvalidMat: {fileID: 2100000, guid: 0a88b7df744822948b8c0bd0dae46156, type: 2}

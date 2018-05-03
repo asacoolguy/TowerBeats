@@ -10,8 +10,6 @@ public class LaserTower : BasicTower {
 	public float damagePerSec = 0.5f;
 	private float attackDuration;
 
-	public int numSoundsUsed = 0;
-
 
 	// Use this for initialization
 	new void Start () {
@@ -27,8 +25,7 @@ public class LaserTower : BasicTower {
 		//MakePlanning();
 
         // randomly pick a sound
-        int maxIndex = numSoundsUsed;
-		int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
+		int r = Random.Range(0, soundClips.Length);
 		audioSource.clip = soundClips[r];
 		attackDuration = audioSource.clip.length;
 

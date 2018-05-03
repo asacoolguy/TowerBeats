@@ -6,7 +6,6 @@ public class ShockTower : BasicTower {
 	private AudioClip[] soundClips;
 	private ParticleSystem pSystem;
 	public float attackPower = 1f;
-	public int numSoundsUsed = 4;
 
 	// Use this for initialization
 	new void Start () {
@@ -16,8 +15,7 @@ public class ShockTower : BasicTower {
 		base.Start();
 
 		// randomly pick a sound
-		int maxIndex = numSoundsUsed;
-		int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
+		int r = Random.Range(0, soundClips.Length);
 		audioSource.clip = soundClips[r];
 
 		// set up particle system

@@ -6,7 +6,6 @@ public class SniperTower : BasicTower {
 	public GameObject bulletObj;
 	private GameObject launcher;
 	private AudioClip[] soundClips;
-	public int numSoundsUsed = 1;
 
 	public float attackPower = 1f;
 	public float bulletFadeTime = 0.6f;
@@ -26,8 +25,7 @@ public class SniperTower : BasicTower {
 		// MakePlanning();
 
 		// randomly pick a sound
-		int maxIndex = numSoundsUsed;
-		int r = Random.Range(0, Mathf.Min(maxIndex, soundClips.Length));
+		int r = Random.Range(0, soundClips.Length);
 		audioSource.clip = soundClips[r];
 
 		// set up the muzzle for bullets
