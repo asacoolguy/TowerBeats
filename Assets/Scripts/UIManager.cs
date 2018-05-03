@@ -60,6 +60,7 @@ public class UIManager : MonoBehaviour {
 
 	public void UpdateWave(int current, int max){
 		waveText.text = "Wave: " + current + "/" + max;
+        waveText.GetComponent<Animator>().SetTrigger("Pop");
 	}
 
 	public void ShowSpawnButton(bool b){

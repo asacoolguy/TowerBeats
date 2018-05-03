@@ -19,8 +19,10 @@ public class EnemyManager : MonoBehaviour {
     private int instructionIndex;
     private int waitCounter;
 	private bool isSpawning;
+    public bool waveDone;
 
     private EnemyPath enemyPath;
+    private int pathsUsed = 0;
 
 	// enemy destroy audio
 	private int enemyDestroySoundCounter;
@@ -44,6 +46,7 @@ public class EnemyManager : MonoBehaviour {
         enemyPath = FindObjectOfType<EnemyPath>();
         instructionIndex = -1;
         waitCounter = 0;
+        isSpawning = waveDone = false;
 	}
 
 	void LateUpdate() {
@@ -52,20 +55,27 @@ public class EnemyManager : MonoBehaviour {
 			float volume = Mathf.Clamp(0.9f + enemyDestroySoundCounter * 0.1f, 1f, 1.5f);
 			GetComponent<AudioSource>().PlayOneShot(enemyDestroySound, volume);
 			enemyDestroySoundCounter = 0;
-		}
+
+            // shake camera
+            float temp = 1f + enemyDestroySoundCounter / 5f;
+            FindObjectOfType<CameraShakeScript>().ShakeCamera(temp, temp);
+        }
+        
 	}
 
 
 	// set up the correct spawn info for the current wave
 	public void SetupWave(string pattern) {
 		isSpawning = true;
+        waveDone = false;
 
-        if (pattern.Contains("A")) {
-            enemyPath.TogglePath(0, true);
-        }
         if (pattern.Contains("B")) {
-            enemyPath.TogglePath(1, true);
+            pathsUsed = 2;
         }
+        else if (pattern.Contains("A")) {
+            pathsUsed = 1;
+        }
+        
         
         spawnInstruction = pattern.Split(';');
         instructionIndex = 0;
@@ -76,13 +86,21 @@ public class EnemyManager : MonoBehaviour {
 	// spawns the appropriate amount of enemies for the current wave
 	public void SpawnEnemies() {
         // guard against null
-        if (spawnInstruction == null || spawnInstruction.Length == 0) {
+        if (!isSpawning || spawnInstruction == null || spawnInstruction.Length == 0) {
             return;
+        }
+
+        // turn on the paths we're using
+        for (int i = 0; i < pathsUsed; i++) {
+            enemyPath.TogglePath(i, true);
         }
 
         // if we've read all instructions, then we are done spawning.
         if (instructionIndex >= spawnInstruction.Length) {
-            isSpawning = false;
+            // if all enemies are dead, the current wave is done
+            if (allEnemies.Count == 0) {
+                waveDone = true;
+            }
         }
         // if we're supposed to wait this round, wait and decrement the counter
         else if(waitCounter > 0) {
@@ -180,9 +198,5 @@ public class EnemyManager : MonoBehaviour {
 			Destroy(allEnemies[i]);
 		}
 	}
-
-	public bool IsSpawning() {
-		return isSpawning;
-	}
-
+    
 }

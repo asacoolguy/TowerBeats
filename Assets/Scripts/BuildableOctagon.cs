@@ -17,7 +17,7 @@ public class BuildableOctagon : MonoBehaviour {
     private float texStrDecaySpeed, glowPowDecaySpeed;
 
     public float raisedYPos, idleFloatRange, raisedTexStr, raisedGlowPow;
-    private float loweredYPos, loweredTexStr, loweredGlowPow;
+    private float loweredYPos, loweredTexStr, loweredGlowPow, tempTexStr, tempGlowPow;
     public float moveTime, idleFloatTime;
     private float currentMoveTime, currentIdleFloatTime;
     private int idleFloatDirection;
@@ -52,15 +52,6 @@ public class BuildableOctagon : MonoBehaviour {
     }
 
     private void Update () {
-        // if there's a tower on this platform, decay its color
-        if (builtTower != null) {
-            float newTexStr = mat.GetFloat("_MKGlowTexStrength") - (Time.deltaTime * texStrDecaySpeed);
-            float newGlowPow = mat.GetFloat("_MKGlowPower") - (Time.deltaTime * glowPowDecaySpeed);
-
-            mat.SetFloat("_MKGlowTexStrength", Mathf.Clamp(newTexStr , loweredTexStr, raisedTexStr));
-            mat.SetFloat("_MKGlowPower", Mathf.Clamp(newGlowPow , loweredGlowPow, raisedGlowPow));
-        }
-
         // raise or lower the tower
         if (status == OctagonStatus.lowering) {
             currentMoveTime -= Time.deltaTime;
@@ -81,21 +72,49 @@ public class BuildableOctagon : MonoBehaviour {
 
         float t = currentMoveTime / moveTime;
         float yPos = GameManager.SmoothStep(loweredYPos, raisedYPos, t);
-        float texStr = GameManager.SmoothStep(loweredTexStr, raisedTexStr, t);
-        float glowPow = GameManager.SmoothStep(loweredGlowPow, raisedGlowPow, t);
         transform.localPosition = new Vector3(transform.localPosition.x, yPos, transform.localPosition.z);
-        mat.SetFloat("_MKGlowTexStrength", texStr);
-        mat.SetFloat("_MKGlowPower", glowPow);
+
+        // built on, selected, respond to height special
+        // built on, not selected, decay
+        // not built on, selected, respond to height
+        // not built on, not selected, res[ond to height
 
         // show AOEIndicator if necessary
         if (IsBuiltOn()){
-            bool showAOE = (status == OctagonStatus.raising || status == OctagonStatus.raised);
-            builtTower.transform.Find("AOEIndicator").gameObject.SetActive(showAOE);
+            bool highlighted = (status == OctagonStatus.raising || status == OctagonStatus.raised);
+            builtTower.transform.Find("AOEIndicator").gameObject.SetActive(highlighted);
+
+            if (highlighted) {
+                // otherwise link color to height using tempTexStr and tempGlowPow
+                float texStr = GameManager.SmoothStep(tempTexStr, raisedTexStr, t);
+                float glowPow = GameManager.SmoothStep(tempGlowPow, raisedGlowPow, t);
+                mat.SetFloat("_MKGlowTexStrength", texStr);
+                mat.SetFloat("_MKGlowPower", glowPow);
+            }
+            else {
+                // decay color if platform is built on and not selected
+                float newTexStr = mat.GetFloat("_MKGlowTexStrength") - (Time.deltaTime * texStrDecaySpeed);
+                float newGlowPow = mat.GetFloat("_MKGlowPower") - (Time.deltaTime * glowPowDecaySpeed);
+                mat.SetFloat("_MKGlowTexStrength", Mathf.Clamp(newTexStr, loweredTexStr, raisedTexStr));
+                mat.SetFloat("_MKGlowPower", Mathf.Clamp(newGlowPow, loweredGlowPow, raisedGlowPow));
+            }
+        }
+        else {
+            // link color to height
+            float texStr = GameManager.SmoothStep(loweredTexStr, raisedTexStr, t);
+            float glowPow = GameManager.SmoothStep(loweredGlowPow, raisedGlowPow, t);
+            mat.SetFloat("_MKGlowTexStrength", texStr);
+            mat.SetFloat("_MKGlowPower", glowPow);
         }
     }
 
+
     public void RaiseOctagon() {
         status = OctagonStatus.raising;
+        if (IsBuiltOn()) {
+            tempTexStr = mat.GetFloat("_MKGlowTexStrength");
+            tempGlowPow = mat.GetFloat("_MKGlowPower");
+        }
     }
 
     public void LowerOctagon() {

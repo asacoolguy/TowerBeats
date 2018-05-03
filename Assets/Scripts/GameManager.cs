@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour {
 	private UIManager uiManager;
+    private EnemyManager enemyManager;
 	private AudioSource audioSource;
 
 	public List<GameObject> buildableTowers;
@@ -67,12 +68,18 @@ public class GameManager : MonoBehaviour {
         towerBuildPanel = Instantiate(towerBuildPanelPrefab);
         towerBuildPanel.SetActive(false);
 
-        // parse the spawn pattern
+        // set up enemy manager and parse the spawn pattern
+        enemyManager = FindObjectOfType<EnemyManager>();
         spawnPatterns = spawnPattern.Split('\n');
     }
 
 
     private void Update() {
+        // if enemyManager is done with the current wave, advance to the next wave
+        if (enemyManager.waveDone) {
+            SpawnWave();
+        }
+
         /*
         // update the build state if there is current a selected tower 
         if (selectedTower != null)
@@ -110,12 +117,6 @@ public class GameManager : MonoBehaviour {
 			towerBuildPanel.GetComponent<BuildPanel>().HighlightButton(GetBuildPanelFromMouse());
 		}
 
-
-		// if enemyManager is done spawning, show the spawnButton again
-        // TODO: on last wave this should not happen
-		if (!FindObjectOfType<EnemyManager>().IsSpawning()){
-			uiManager.ShowSpawnButton(true);
-		}
     }
 
     private void LateUpdate() {
@@ -396,7 +397,7 @@ public class GameManager : MonoBehaviour {
 	public void SpawnWave() {
 		uiManager.ShowSpawnButton(false);
 
-		FindObjectOfType<EnemyManager>().SetupWave(spawnPatterns[currentWave++]);
+        enemyManager.SetupWave(spawnPatterns[currentWave++]);
 
 		uiManager.UpdateWave(currentWave, maxWave);
 	}
@@ -412,10 +413,10 @@ public class GameManager : MonoBehaviour {
         uiManager.UpdateMoney(currentMoney);
     }
 
-	/*
+    /*
 	private IEnumerator WinGame(){
 		// destroy all enemies
-		FindObjectOfType<EnemyManager>().DestroyAllEnemies();
+		enemyManager.DestroyAllEnemies();
 		FindObjectOfType<Scanner>().spawnEnemies = false;
 		// stop scanner in 4 measures
 		StartCoroutine(FindObjectOfType<Scanner>().StopScannerRotation(2));
@@ -436,7 +437,7 @@ public class GameManager : MonoBehaviour {
 		Time.timeScale = 0;
 	}*/
 
-	public static float GetAngleFromVector(Vector3 pos){
+    public static float GetAngleFromVector(Vector3 pos){
 		float angle = 0f;
 
 		if (pos.x == 0){
