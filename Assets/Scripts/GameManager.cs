@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
     private BuildableOctagon hoveredOctagon = null;
     private BuildableOctagon selectedOctagon = null;
     public GameObject towerBuildPanelPrefab;
-    private GameObject towerBuildPanel = null;
+    private BuildPanel towerBuildPanel = null;
 
 	// game progression variables
 	public float currentScore = 0;
@@ -64,10 +64,10 @@ public class GameManager : MonoBehaviour {
 		uiManager.UpdateWave(currentWave, maxWave);
 
         // make the tower build panel and give it the correct AOEIndicators
-        towerBuildPanel = Instantiate(towerBuildPanelPrefab);
-        towerBuildPanel.SetActive(false);
+        towerBuildPanel = Instantiate(towerBuildPanelPrefab).GetComponent<BuildPanel>();
+        towerBuildPanel.gameObject.SetActive(false);
         for (int i = 0; i < buildableTowers.Count; i++) {
-            // display the appropriate AOEIndicator
+            // set up the appropriate AOEIndicator
             GameObject AOEIndicatorPrefab = buildableTowers[i].transform.Find("AOEIndicator").gameObject;
             GameObject AOEIndicator = Instantiate(AOEIndicatorPrefab);
             AOEIndicator.transform.localScale = AOEIndicatorPrefab.transform.lossyScale;
@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour {
             AOEIndicator.transform.localPosition = Vector3.zero;
             AOEIndicator.SetActive(false);
             towerBuildPanel.GetComponent<BuildPanel>().AOEIndicators.Add(AOEIndicator);
+            // set up the right cost
+            towerBuildPanel.GetComponent<BuildPanel>().SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
         }
 
 
@@ -102,9 +104,19 @@ public class GameManager : MonoBehaviour {
             hoveredOctagon = newHoveredOctagon;
         }
 
-		// highlight any BuildPanelButtons the mouse is hovering over
-		if (towerBuildPanel.activeSelf){
-            towerBuildPanel.GetComponent<BuildPanel>().HighlightButton(GetBuildPanelFromMouse());
+		
+		if (towerBuildPanel.gameObject.activeSelf){
+            // highlight any BuildPanelButtons the mouse is hovering over
+            towerBuildPanel.HighlightButton(GetBuildPanelFromMouse());
+
+            // enable/disable BuildPanelButtons based on money
+            for (int i = 0; i < buildableTowers.Count; i++) {
+                if (currentMoney >= buildableTowers[i].GetComponent<BasicTower>().cost) {
+                    towerBuildPanel.EnableButton(i, true);
+                } else {
+                    towerBuildPanel.EnableButton(i, false);
+                }
+            }
         }
 
     }
@@ -113,16 +125,17 @@ public class GameManager : MonoBehaviour {
         // handle clicking events
         if (Input.GetMouseButtonDown(0)) {
             int buttonClicked = GetBuildPanelFromMouse();
-            // if we clicked on a BuildablePanel, build that tower
+            // if we clicked on a BuildablePanel that's enabled, build that tower
             if (buttonClicked >= 0) {
-                BuildPanel panel = towerBuildPanel.GetComponent<BuildPanel>();
-                BuildTower(buttonClicked);
-                panel.ActivatePanel(false);
+                if (towerBuildPanel.IsButtonEnabled(buttonClicked)) {
+                    BuildTower(buttonClicked);
+                    towerBuildPanel.ActivatePanel(false);
+                }
             }
             // if you clicked somewhere random or on the selected Octagon, deselect the selectedOctagon
             else if (hoveredOctagon == null || hoveredOctagon == selectedOctagon) {
                 //towerBuildPanel.transform.parent = null;
-                towerBuildPanel.GetComponent<BuildPanel>().ActivatePanel(false);
+                towerBuildPanel.ActivatePanel(false);
                 // deselect any selectedOctagons
                 if (selectedOctagon) {
                     selectedOctagon.SelectOctagon(false);
@@ -130,9 +143,9 @@ public class GameManager : MonoBehaviour {
                 }
                 
             }
-            // if the clicked on hoverOctagon is not yet selected, select it
-            else if (hoveredOctagon && hoveredOctagon != selectedOctagon) {
-				towerBuildPanel.GetComponent<BuildPanel>().ActivatePanel(true);
+            // if the clicked on hoverOctagon is not yet selected or built on, select it
+            else if (hoveredOctagon && hoveredOctagon != selectedOctagon && !hoveredOctagon.IsBuiltOn()) {
+				towerBuildPanel.ActivatePanel(true);
                 towerBuildPanel.transform.SetParent(hoveredOctagon.transform, true);
                 //towerBuildPanel.transform.parent = hoveredOctagon.transform;
                 towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
@@ -176,7 +189,7 @@ public class GameManager : MonoBehaviour {
 
         // link tower to selectedOctagon, change its color and deselect it
         selectedOctagon.SetBuiltTower(towerObj);
-        selectedOctagon.SetColor(towerBuildPanel.GetComponent<BuildPanel>().towerColors[input]);
+        selectedOctagon.SetColor(towerBuildPanel.towerColors[input]);
         selectedOctagon.SelectOctagon(false);
         selectedOctagon = null;
 
@@ -187,7 +200,7 @@ public class GameManager : MonoBehaviour {
         // deduct money if needed
         if (!tower.refundable) {
             currentMoney -= tower.cost;
-            //uiManager.UpdateMoney(currentMoney);
+            uiManager.UpdateMoney(currentMoney);
         }
 
         // do some stuff about finding the right list to add tower to

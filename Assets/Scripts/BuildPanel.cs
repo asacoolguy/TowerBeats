@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class BuildPanel : MonoBehaviour {
     public Color[] towerColors;
+    public Color disabledColor;
 	private List<GameObject> towerButtons;
 	private List<Vector3> defaultButtonPos;
+    private List<bool> buttonEnabled;
 	private int highlightedButton = -1;
 
 	public float highlightedButtonSize;
@@ -17,20 +19,17 @@ public class BuildPanel : MonoBehaviour {
 		towerButtons = new List<GameObject>();
 		defaultButtonPos = new List<Vector3>();
         AOEIndicators = new List<GameObject>();
+        buttonEnabled = new List<bool>();
 
         for (int i = 0; i < towerColors.Length; i++) {
-            string name = "Tower" + (i + 1);
-            GameObject towerButton = transform.Find(name).gameObject;
-			towerButtons.Add(towerButton);
-			defaultButtonPos.Add(towerButton.transform.localPosition);
+            // set up tower buttons
+            GameObject towerButton = transform.GetChild(i).gameObject;
+            towerButtons.Add(towerButton);
+            defaultButtonPos.Add(towerButton.transform.localPosition);
 
-            Text towerName = towerButton.transform.Find("Text").GetComponent<Text>();
-            Text towerCost = towerButton.transform.Find("Cost").GetComponent<Text>();
-			towerButton.GetComponent<Image>().color = towerColors[i];
-            towerButton.transform.Find("Description").GetComponent<Image>().color = towerColors[i];
-            towerButton.transform.Find("Description").GetComponentInChildren<Text>().color = towerColors[i];
-            towerName.color = towerColors[i];
-            towerCost.color = towerColors[i];
+            // set all buttons to disabled by default
+            SetButtonColor(i, disabledColor);
+            buttonEnabled.Add(false);
         }
 
 		defaultButtonSize = towerButtons[0].transform.localScale.x;
@@ -40,7 +39,7 @@ public class BuildPanel : MonoBehaviour {
 		// return all non-highlighted buttons to default state 
 		for (int i = 0; i < towerColors.Length; i++){
 			float newSize = defaultButtonSize;
-			if (i == highlightedButton){
+			if (i == highlightedButton && buttonEnabled[i]){
 				// highlight this button
 				newSize = towerButtons[i].transform.localScale.x + 2 * Time.deltaTime;
 			}
@@ -93,4 +92,33 @@ public class BuildPanel : MonoBehaviour {
 			yield return null;
 		}
 	}
+
+
+    private void SetButtonColor(int index, Color c) {
+        Text towerName = towerButtons[index].transform.Find("Text").GetComponent<Text>();
+        Text towerCost = towerButtons[index].transform.Find("Cost").GetComponent<Text>();
+        towerButtons[index].GetComponent<Image>().color = c;
+        towerButtons[index].transform.Find("Description").GetComponent<Image>().color = c;
+        towerButtons[index].transform.Find("Description").GetComponentInChildren<Text>().color = c;
+        towerName.color = c;
+        towerCost.color = c;
+    }
+
+    public void SetButtonCost(int index, int cost) {
+        towerButtons[index].transform.Find("Cost").GetComponent<Text>().text = "" + cost;
+    }
+
+    public void EnableButton(int index, bool b) {
+        buttonEnabled[index] = b;
+        if (b) {
+            SetButtonColor(index, towerColors[index]);
+        }
+        else {
+            SetButtonColor(index, disabledColor);
+        }
+    }
+
+    public bool IsButtonEnabled(int index) {
+        return buttonEnabled[index];
+    }
 }

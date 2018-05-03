@@ -5,12 +5,11 @@ using UnityEngine.UI;
 
 // TODO: this entire class is borrowed functions. refactor it to extend other classes instead
 public class CentralOctagon : Octagon {
-    public Color mainColor;
+    public Color mainColor, disabledColor;
     private int level;
     public LayerMask hitLayers;
-    private bool highlighted;
+    private bool highlighted, buttonHighlighted, buttonEnabled;
     private GameObject upgradeButton;
-    private bool buttonHighlighted;
     public float highlightedButtonSize;
     public int[] cost;
     public float[] powerFactors;
@@ -18,18 +17,12 @@ public class CentralOctagon : Octagon {
     private new void Awake() {
         base.Awake();
 
-        highlighted = false;
-        buttonHighlighted = false;
+        highlighted = buttonHighlighted = buttonEnabled = false;
 
         // set up the central build panel
         upgradeButton = transform.Find("CentralBuildPanel").Find("Upgrade").gameObject;
-        upgradeButton.GetComponent<Image>().color = mainColor;
-        upgradeButton.transform.Find("Text").GetComponent<Text>().color = mainColor;
-        upgradeButton.transform.Find("Cost").GetComponent<Text>().color = mainColor;
-        upgradeButton.transform.Find("Level").GetComponent<Text>().color = mainColor;
         upgradeButton.transform.Find("Cost").GetComponent<Text>().text = "" + cost[0];
-        upgradeButton.transform.Find("Description").GetComponent<Image>().color = mainColor;
-        upgradeButton.transform.Find("Description").GetComponentInChildren<Text>().color = mainColor;
+        SetButtonColor(disabledColor);
 
         // set up initial states
         level = 0;
@@ -39,12 +32,21 @@ public class CentralOctagon : Octagon {
 	private new void Update () {
         highlighted = IsHighlighted();
         buttonHighlighted = IsButtonHighlighted();
+        buttonEnabled = (FindObjectOfType<GameManager>().GetMoney() >= cost[level]);
+        if (buttonEnabled || level == 3) {
+            SetButtonColor(mainColor);
+        }
+        else {
+            SetButtonColor(disabledColor);
+        }
 
         if (Input.GetMouseButtonDown(0)) {
            
             if (buttonHighlighted) {
-                UpgradeCentralTower();
-                ActivatePanel(false);
+                if (buttonEnabled) {
+                    UpgradeCentralTower();
+                    ActivatePanel(false);
+                }
             }
             else {
                 ActivatePanel(highlighted);
@@ -172,5 +174,14 @@ public class CentralOctagon : Octagon {
             }
             
         }
+    }
+
+    private void SetButtonColor(Color c) {
+        upgradeButton.GetComponent<Image>().color = c;
+        upgradeButton.transform.Find("Text").GetComponent<Text>().color = c;
+        upgradeButton.transform.Find("Cost").GetComponent<Text>().color = c;
+        upgradeButton.transform.Find("Level").GetComponent<Text>().color = c;
+        upgradeButton.transform.Find("Description").GetComponent<Image>().color = c;
+        upgradeButton.transform.Find("Description").GetComponentInChildren<Text>().color = c;
     }
 }
