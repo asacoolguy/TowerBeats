@@ -12,10 +12,12 @@ public class BuildPanel : MonoBehaviour {
 
 	public float highlightedButtonSize;
 	private float defaultButtonSize;
+    public List<GameObject> AOEIndicators;
 
 	private void Awake () {
 		towerButtons = new List<GameObject>();
 		defaultButtonPos = new List<Vector3>();
+        AOEIndicators = new List<GameObject>();
 
         for (int i = 0; i < towerColors.Length; i++) {
             string name = "Tower" + (i + 1);
@@ -26,7 +28,8 @@ public class BuildPanel : MonoBehaviour {
             Text towerName = towerButton.transform.Find("Text").GetComponent<Text>();
             Text towerCost = towerButton.transform.Find("Cost").GetComponent<Text>();
 			towerButton.GetComponent<Image>().color = towerColors[i];
-            towerButton.transform.Find("Check").GetComponent<Image>().color = towerColors[i];
+            towerButton.transform.Find("Description").GetComponent<Image>().color = towerColors[i];
+            towerButton.transform.Find("Description").GetComponentInChildren<Text>().color = towerColors[i];
             towerName.color = towerColors[i];
             towerCost.color = towerColors[i];
         }
@@ -51,27 +54,20 @@ public class BuildPanel : MonoBehaviour {
 		}
 	}
 
-    public int GetSelectedButton() {
-        return selectedButton;
-    }
 
 	public void HighlightButton(int index){
 		highlightedButton = index;
-	}
-
-    public void SelectButton(int index) {
-        selectedButton = index;
-        for(int i = 0; i < towerButtons.Count; i++) {
+        for (int i = 0; i < towerButtons.Count; i++) {
             bool temp = (i == index);
-            towerButtons[i].transform.Find("Check").gameObject.SetActive(temp);
-            towerButtons[i].transform.Find("Text").gameObject.SetActive(!temp);
+            towerButtons[i].transform.Find("Description").gameObject.SetActive(temp);
+            AOEIndicators[i].SetActive(temp);
         }
     }
+
 
 	// sets the gameobject to active and plays a little animation
 	public void ActivatePanel(bool b){
         if (b) {
-            SelectButton(-1);
             gameObject.SetActive(b);
             StopCoroutine(PlayActivateAnimation());
             StartCoroutine(PlayActivateAnimation());
@@ -79,7 +75,6 @@ public class BuildPanel : MonoBehaviour {
         else {
             transform.SetParent(null, true);
             gameObject.SetActive(false);
-            SelectButton(-1);
         }
 	}
 

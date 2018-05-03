@@ -124,14 +124,14 @@ public abstract class BasicTower : MonoBehaviour {
     private IEnumerator BoostLight() {
         float currentTime = 0f;
         while (currentTime < lightBoostTime) {
-            spotlight.intensity = GameManager.SmoothStep(lightMinIntensity, lightMaxIntensity, currentTime / lightBoostTime);
+            spotlight.intensity = GameManager.EaseOut(lightMinIntensity, lightMaxIntensity, currentTime / lightBoostTime);
             currentTime += Time.deltaTime;
             yield return null;
         }
 
         currentTime = lightBoostTime;
         while (currentTime > 0) {
-            spotlight.intensity = GameManager.SmoothStep(lightMinIntensity, lightMaxIntensity, currentTime / lightBoostTime);
+            spotlight.intensity = GameManager.EaseOut(lightMinIntensity, lightMaxIntensity, currentTime / lightBoostTime);
             currentTime -= Time.deltaTime;
             yield return null;
         }

@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour {
     private BuildableOctagon selectedOctagon = null;
     public GameObject towerBuildPanelPrefab;
     private GameObject towerBuildPanel = null;
-    private GameObject AOEIndicator = null;
 
 	// game progression variables
 	public float currentScore = 0;
@@ -64,9 +63,20 @@ public class GameManager : MonoBehaviour {
 		uiManager.UpdateMoney(currentMoney);
 		uiManager.UpdateWave(currentWave, maxWave);
 
-        // make the tower build panel
+        // make the tower build panel and give it the correct AOEIndicators
         towerBuildPanel = Instantiate(towerBuildPanelPrefab);
         towerBuildPanel.SetActive(false);
+        for (int i = 0; i < buildableTowers.Count; i++) {
+            // display the appropriate AOEIndicator
+            GameObject AOEIndicatorPrefab = buildableTowers[i].transform.Find("AOEIndicator").gameObject;
+            GameObject AOEIndicator = Instantiate(AOEIndicatorPrefab);
+            AOEIndicator.transform.localScale = AOEIndicatorPrefab.transform.lossyScale;
+            AOEIndicator.transform.parent = towerBuildPanel.transform;
+            AOEIndicator.transform.localPosition = Vector3.zero;
+            AOEIndicator.SetActive(false);
+            towerBuildPanel.GetComponent<BuildPanel>().AOEIndicators.Add(AOEIndicator);
+        }
+
 
         // set up enemy manager and parse the spawn pattern
         enemyManager = FindObjectOfType<EnemyManager>();
@@ -114,8 +124,8 @@ public class GameManager : MonoBehaviour {
 
 		// highlight any BuildPanelButtons the mouse is hovering over
 		if (towerBuildPanel.activeSelf){
-			towerBuildPanel.GetComponent<BuildPanel>().HighlightButton(GetBuildPanelFromMouse());
-		}
+            towerBuildPanel.GetComponent<BuildPanel>().HighlightButton(GetBuildPanelFromMouse());
+        }
 
     }
 
@@ -157,40 +167,16 @@ public class GameManager : MonoBehaviour {
         // handle clicking events
         if (Input.GetMouseButtonDown(0)) {
             int buttonClicked = GetBuildPanelFromMouse();
-            // delelte any AOE indicators already showing
-            if (AOEIndicator != null) {
-                Destroy(AOEIndicator);
-            }
-
-            // if we clicked on a BuildablePanel
+            // if we clicked on a BuildablePanel, build that tower
             if (buttonClicked >= 0) {
                 BuildPanel panel = towerBuildPanel.GetComponent<BuildPanel>();
-                // if we clicked on an already selected button
-                if (buttonClicked == panel.GetSelectedButton()) {
-                    BuildTower(buttonClicked);
-                    panel.ActivatePanel(false);
-                    panel.SelectButton(-1);
-                }
-                else {
-                    // otherwise select that button
-                    panel.SelectButton(buttonClicked);
-
-                    // display the appropriate AOEIndicator
-                    GameObject AOEIndicatorPrefab = buildableTowers[buttonClicked].transform.Find("AOEIndicator").gameObject;
-                    AOEIndicator = Instantiate(AOEIndicatorPrefab);
-                    // TODO: need better way of getting position
-                    AOEIndicator.transform.position = selectedOctagon.transform.position;
-                    AOEIndicator.transform.localScale = AOEIndicatorPrefab.transform.lossyScale;
-                    AOEIndicator.SetActive(true);
-                }
+                BuildTower(buttonClicked);
+                panel.ActivatePanel(false);
             }
             // if you clicked somewhere random or on the selected Octagon, deselect the selectedOctagon
             else if (hoveredOctagon == null || hoveredOctagon == selectedOctagon) {
                 //towerBuildPanel.transform.parent = null;
                 towerBuildPanel.GetComponent<BuildPanel>().ActivatePanel(false);
-                if (AOEIndicator != null) {
-                    Destroy(AOEIndicator);
-                }
                 // deselect any selectedOctagons
                 if (selectedOctagon) {
                     selectedOctagon.SelectOctagon(false);
