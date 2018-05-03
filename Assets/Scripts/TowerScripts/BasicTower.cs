@@ -8,6 +8,7 @@ public abstract class BasicTower : MonoBehaviour {
     public int cost;
 	public int axisIndex = 0;
     public bool refundable = false;
+    public float powerFactor = 1f;
 
 	// this enum determines what state the tower is in
 	// TODO: combine this with the ready state and other potential states like deactivated, buffed
@@ -30,6 +31,8 @@ public abstract class BasicTower : MonoBehaviour {
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
         defaultYScale = transform.localScale.y;
+
+        powerFactor = FindObjectOfType<CentralOctagon>().GetPowerFactor();
 	}
 	
 

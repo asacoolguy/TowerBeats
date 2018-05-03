@@ -8,7 +8,6 @@ public class BuildPanel : MonoBehaviour {
 	private List<GameObject> towerButtons;
 	private List<Vector3> defaultButtonPos;
 	private int highlightedButton = -1;
-    private int selectedButton = -1;
 
 	public float highlightedButtonSize;
 	private float defaultButtonSize;

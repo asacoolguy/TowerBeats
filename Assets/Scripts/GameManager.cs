@@ -89,27 +89,7 @@ public class GameManager : MonoBehaviour {
         if (enemyManager.waveDone) {
             SpawnWave();
         }
-
-        /*
-        // update the build state if there is current a selected tower 
-        if (selectedTower != null)
-        {
-            bState = BuildState.selected;
-        }
-
-        // if there is a selected tower, update its location and rotation
-        if (bState == BuildState.selected && selectedTower != null)
-        {
-            // snap selectedTower location and rotation to nearest ring
-            Vector3 axisPos = SnapToAxisPosition(GetMousePositionInWorld());
-            selectedTower.transform.position = new Vector3(axisPos.x, selectedTower.transform.position.y, axisPos.z);
-            // also snap rotation
-            float angle = 180f - GameManager.GetAngleFromVector(-selectedTower.transform.position);
-            selectedTower.transform.eulerAngles = new Vector3(0, angle, 0);
-        }
-                                         
-        */
-
+        
         // highlight any BuildableOctagons the mouse is hovering over that's not already built on
         BuildableOctagon newHoveredOctagon = GetOctagonFromMouse();
         if (hoveredOctagon != newHoveredOctagon) {
@@ -130,40 +110,6 @@ public class GameManager : MonoBehaviour {
     }
 
     private void LateUpdate() {
-        // handle deselecting/building/moving towers
-        /*
-        if (Input.GetMouseButtonDown(0)){
-            if (GetMousePositionInWorld() != Vector3.zero && bState == BuildState.selected && selectedTower != null) {
-                if (selectedTower.GetComponent<BasicTower>().IsBuildable()) {
-                    BuildSelectedTower();
-                }
-                else {
-                    print("Invalid build position");
-                }
-            }
-            else if(GetMousePositionInWorld() != Vector3.zero && bState == BuildState.unselected && hoveredOctagon != null) {
-                selectedTower = hoveredOctagon;
-                hoveredOctagon = null;
-                bState = BuildState.selected;
-                selectedTower.GetComponent<BasicTower>().MakeMoving();
-                selectedTower.GetComponent<BasicTower>().ToggleOutline(false);
-                FindObjectOfType<Scanner>().RemoveTowerFromList(selectedTower);
-                // also turn on axes
-                FindObjectOfType<Scanner>().EnableAllAxes(true);
-            }
-        }
-        else if (Input.GetMouseButtonDown(1) && bState == BuildState.selected) {
-            bState = BuildState.unselected;
-            // refund half the cost if we already paid for this 
-            if (selectedTower.GetComponent<BasicTower>().refundable) {
-                currentMoney += selectedTower.GetComponent<BasicTower>().cost / 2;
-                uiManager.UpdateMoney(currentMoney);
-            }
-            Destroy(selectedTower);
-            // also turn off axes
-            FindObjectOfType<Scanner>().EnableAllAxes(false);
-        }*/
-
         // handle clicking events
         if (Input.GetMouseButtonDown(0)) {
             int buttonClicked = GetBuildPanelFromMouse();
@@ -389,13 +335,23 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-    public void GetPoints(float pts){
+    public void GainPoints(float pts){
 		currentScore += pts;
 	}
 
 
-    public void GetMoney(int money){
+    public void GainMoney(int money){
         currentMoney += money;
+        uiManager.UpdateMoney(currentMoney);
+    }
+
+
+    public int GetMoney() {
+        return currentMoney;
+    }
+
+    public void SpendMoney(int spent) {
+        currentMoney -= spent;
         uiManager.UpdateMoney(currentMoney);
     }
 

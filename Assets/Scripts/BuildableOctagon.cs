@@ -6,21 +6,16 @@ using UnityEngine;
     Controls behavior of grid units where towers could be guild
     Has a selector to detect mouse hover selection
     Keeps internal states to correctly respond to mouse clicks
- */ 
+ */
+ 
 
-public class BuildableOctagon : MonoBehaviour {
-    private enum OctagonStatus {lowering, raising, lowered, raised};
+public class BuildableOctagon : Octagon {
     private GameObject builtTower;
-    private OctagonStatus status;
-    private bool selected = false;
-
+    
     private float texStrDecaySpeed, glowPowDecaySpeed;
 
-    public float raisedYPos, idleFloatRange, raisedTexStr, raisedGlowPow;
-    private float loweredYPos, loweredTexStr, loweredGlowPow, tempTexStr, tempGlowPow;
-    public float moveTime, idleFloatTime;
-    private float currentMoveTime, currentIdleFloatTime;
-    private int idleFloatDirection;
+    public float raisedTexStr, raisedGlowPow;
+    private float loweredTexStr, loweredGlowPow, tempTexStr, tempGlowPow;
 
 
     private GameObject selector; // a collection of colliders that will allow this tower to be selected
@@ -28,22 +23,17 @@ public class BuildableOctagon : MonoBehaviour {
     private Material mat;
 
 
-    private void Awake () {
+    private new void Awake () {
+        base.Awake();
         mat = GetComponent<MeshRenderer>().material;
 
         selector = transform.Find("Selector").gameObject;
         selector.SetActive(true);
-
-        currentIdleFloatTime = Random.Range(-idleFloatTime, idleFloatTime);
-        idleFloatDirection = 1;
-
-        loweredYPos = transform.localPosition.y;
+        
         loweredTexStr = mat.GetFloat("_MKGlowTexStrength");
         loweredGlowPow = mat.GetFloat("_MKGlowPower");
-        currentMoveTime = 0f;
-
-        status = OctagonStatus.lowered;
     }
+
 
     private void Start() {
         float rotationTime = FindObjectOfType<Scanner>().GetRotationTime();
@@ -51,33 +41,11 @@ public class BuildableOctagon : MonoBehaviour {
         glowPowDecaySpeed = (raisedGlowPow - loweredGlowPow) / rotationTime * 2;
     }
 
-    private void Update () {
-        // raise or lower the tower
-        if (status == OctagonStatus.lowering) {
-            currentMoveTime -= Time.deltaTime;
-            if (currentMoveTime < 0) {
-                currentMoveTime = 0;
-                status = OctagonStatus.lowered;
-            }
-        }
-        else if (status == OctagonStatus.raising) {
-            currentMoveTime += Time.deltaTime;
-            if (currentMoveTime > moveTime) {
-                currentMoveTime = moveTime;
-                if (status == OctagonStatus.raising) {
-                    status = OctagonStatus.raised;
-                }
-            }    
-        }
+
+    private new void Update () {
+        base.Update();
 
         float t = currentMoveTime / moveTime;
-        float yPos = GameManager.SmoothStep(loweredYPos, raisedYPos, t);
-        transform.localPosition = new Vector3(transform.localPosition.x, yPos, transform.localPosition.z);
-
-        // built on, selected, respond to height special
-        // built on, not selected, decay
-        // not built on, selected, respond to height
-        // not built on, not selected, res[ond to height
 
         // show AOEIndicator if necessary
         if (IsBuiltOn()){
@@ -109,7 +77,7 @@ public class BuildableOctagon : MonoBehaviour {
     }
 
 
-    public void RaiseOctagon() {
+    public override void RaiseOctagon() {
         status = OctagonStatus.raising;
         if (IsBuiltOn()) {
             tempTexStr = mat.GetFloat("_MKGlowTexStrength");
@@ -117,26 +85,12 @@ public class BuildableOctagon : MonoBehaviour {
         }
     }
 
-    public void LowerOctagon() {
-        if (!selected) {
-            status = OctagonStatus.lowering;
-        }
-    }
+    
 
     public bool IsBuiltOn() {
         return builtTower != null;
     }
 
-    public void SelectOctagon(bool b) {
-        if (b) {
-            selected = true;
-            RaiseOctagon();
-        }
-        else {
-            selected = false;
-            LowerOctagon();
-        }
-    }
 
     public void SetColor(Color c) {
         mat.SetColor("_Color", c);

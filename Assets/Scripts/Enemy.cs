@@ -97,8 +97,8 @@ public class Enemy : MonoBehaviour {
 
 	// destroy this object and play the appropriate animation
 	private IEnumerator SelfDestruct(){
-		FindObjectOfType<GameManager>().GetPoints(pointVal);
-        FindObjectOfType<GameManager>().GetMoney(moneyDropped);
+		FindObjectOfType<GameManager>().GainPoints(pointVal);
+        FindObjectOfType<GameManager>().GainMoney(moneyDropped);
 
         ParticleSystem ps = transform.GetChild(0).GetComponent<ParticleSystem>();
 		ps.Play();

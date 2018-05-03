@@ -36,6 +36,8 @@ public class SniperTower : BasicTower {
         // set up the light
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
+
+        powerFactor = FindObjectOfType<CentralOctagon>().GetPowerFactor();
     }
 	
 	// Update is called once per frame
@@ -82,7 +84,7 @@ public class SniperTower : BasicTower {
 				LineRenderer line = bullet.GetComponent<LineRenderer>();
 				line.SetPosition(0, launcher.transform.position);
 				line.SetPosition(1, enemies[enemyIndex].transform.position);
-				enemies[enemyIndex].TakeDamage(attackPower);
+				enemies[enemyIndex].TakeDamage(attackPower * powerFactor);
 
 				yield return new WaitForSeconds(0.4f);
 			}

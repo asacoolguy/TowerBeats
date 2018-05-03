@@ -109,7 +109,8 @@ public class Scanner : MonoBehaviour {
 			fullRotationCounter += angleSpun;
 			if (fullRotationCounter > 360f){
 				RotatedFully();
-				fullRotationCounter -= 360f;
+                PlayMusic(true);
+                fullRotationCounter -= 360f;
 			}
 
 			// move enemies after each measure
@@ -208,15 +209,11 @@ public class Scanner : MonoBehaviour {
 	public void SetRotate(bool b){
 		rotating = b;
 		if (b){
-			for(int i = 0; i < numAudioPlaying; i++){
-				audios[i].Play();
-			}
+            PlayMusic(true);
 			transform.Find("ScannerLine").gameObject.SetActive(true);
 		}
 		else{
-			for(int i = 0; i < numAudioPlaying; i++){
-				audios[i].Stop();
-			}
+            PlayMusic(false);
 			transform.Find("ScannerLine").gameObject.SetActive(false);
 		}
 	}
@@ -238,12 +235,10 @@ public class Scanner : MonoBehaviour {
 			yield return null;
 		}
 
-		// stop rotation ?
+        // stop rotation ?
 
-		// stop music
-		for(int i = 0; i < numAudioPlaying; i++){
-			audios[i].Stop();
-		}
+        // stop music
+        PlayMusic(false);
 
 		// delete all towers
 		for (int i = 0; i < axisNumber; i++){
@@ -261,5 +256,19 @@ public class Scanner : MonoBehaviour {
     private IEnumerator StartScannerRotation(float delay) {
         yield return new WaitForSeconds(delay);
         SetRotate(true);
+    }
+
+    private void PlayMusic(bool b) {
+        if (b) {
+            for (int i = 0; i < numAudioPlaying; i++) {
+                audios[i].PlayOneShot(audios[i].clip);
+            }
+        }
+        else {
+            for (int i = 0; i < audios.Length; i++) {
+                audios[i].Stop();
+            }
+        }
+        
     }
 }
