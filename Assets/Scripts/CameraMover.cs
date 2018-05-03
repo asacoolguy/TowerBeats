@@ -8,6 +8,7 @@ using UnityEngine;
 public class CameraMover : MonoBehaviour {
     public float maxVertical, maxHorizontal;
     public float moveSpeed;
+    public Vector3 gameWinPos;
 
 	void Start () {	}
 	
@@ -30,5 +31,21 @@ public class CameraMover : MonoBehaviour {
         transform.position = new Vector3(Mathf.Clamp(transform.position.x + deltaPos.x, -maxHorizontal, maxHorizontal),
                                          transform.position.y,
                                          Mathf.Clamp(transform.position.z + deltaPos.z, -maxVertical, maxVertical));
+    }
+
+
+    public void ZoomOut(float duration) {
+        StartCoroutine(GameWinZoomOut(duration));
+    }
+
+    private IEnumerator GameWinZoomOut(float duration) {
+        float currentTime = 0f;
+        Vector3 startPos = transform.position;
+
+        while (currentTime < duration) {
+            currentTime = Mathf.Clamp(currentTime + Time.deltaTime, 0, duration);
+            transform.position = GameManager.SmoothStep(startPos, gameWinPos, currentTime / duration);
+            yield return null;
+        }
     }
 }

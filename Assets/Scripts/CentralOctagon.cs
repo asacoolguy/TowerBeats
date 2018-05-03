@@ -181,6 +181,7 @@ public class CentralOctagon : Octagon {
         upgradeButton.transform.Find("Text").GetComponent<Text>().color = c;
         upgradeButton.transform.Find("Cost").GetComponent<Text>().color = c;
         upgradeButton.transform.Find("Level").GetComponent<Text>().color = c;
+        upgradeButton.transform.Find("Rhythm").GetComponent<Image>().color = c;
         upgradeButton.transform.Find("Description").GetComponent<Image>().color = c;
         upgradeButton.transform.Find("Description").GetComponentInChildren<Text>().color = c;
     }

@@ -17,7 +17,6 @@ public class Scanner : MonoBehaviour {
 	public int measurePerRotation = 1;
 	private float rotationSpeed;
 	public bool rotating;
-	public bool finishedUp = false;
 
 	// variables for spawning axes
 	public float minAxisLength = 10f;
@@ -34,6 +33,7 @@ public class Scanner : MonoBehaviour {
 	private float totalRotateAmount;
 	private float fullRotationCounter;
 	private float measureRotationCounter;
+    private int rotationTillFinish = 0;
 
 	// variables for kepeing track of audio
 	private AudioSource[] audios;
@@ -111,6 +111,7 @@ public class Scanner : MonoBehaviour {
 				RotatedFully();
                 PlayMusic(true);
                 fullRotationCounter -= 360f;
+                if (rotationTillFinish > 0) rotationTillFinish--;
 			}
 
 			// move enemies after each measure
@@ -226,31 +227,13 @@ public class Scanner : MonoBehaviour {
 
 	// stops scanner from rotating in r rotations 
 	public IEnumerator StopScannerRotation(int r){
-		int rotationsLeft = r;
-		while (rotationsLeft > 0){
-			if (nextAxisToPlay == 5){
-				rotationsLeft--;
-				yield return new WaitForSeconds(0.4f);
-			}
+		rotationTillFinish = r;
+		while (rotationTillFinish > 0){
 			yield return null;
 		}
 
-        // stop rotation ?
-
-        // stop music
-        PlayMusic(false);
-
-		// delete all towers
-		for (int i = 0; i < axisNumber; i++){
-			for (int j = 0; j < towerLists[i].Count; j++){
-				Destroy(towerLists[i][j]);
-			}
-		}
-
+        // stop everything
 		SetRotate(false);
-		finishedUp = true;
-
-		yield break;
 	}
 
     private IEnumerator StartScannerRotation(float delay) {

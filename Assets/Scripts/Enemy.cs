@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour {
 	private Animator anim;
@@ -23,12 +24,16 @@ public class Enemy : MonoBehaviour {
 		anim = GetComponent<Animator>();
         healthBar = transform.Find("HealthBar").GetComponent<LineRenderer>();
         initialHealth = health;
+
+        transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
+        transform.Find("MoneyText").gameObject.SetActive(false);
     }
 	
 
 	private void Update () {
         healthBar.SetPosition(0, transform.position + new Vector3(-initialHealth / 4f, 0f, 4f));
-        healthBar.SetPosition(1, healthBar.GetPosition(0) + new Vector3(health / 2f, 0, 0));
+        float fill = Mathf.Max(0f, health / 2f);
+        healthBar.SetPosition(1, healthBar.GetPosition(0) + new Vector3(fill, 0, 0));
     }
 
 	void OnTriggerEnter(Collider other){
@@ -52,14 +57,13 @@ public class Enemy : MonoBehaviour {
 
         if (slowCounter > 0) {
             slowCounter--;
-            moveSpeed /= 2f;
+            moveSpeed = moveSpeed * 2f / 3f;
         }
 
 		while(currentDuration <= moveDuration){
 			float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
 			float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
             Vector3 moveDirection = (targetLocation - transform.position);
-            float distance = Vector3.Distance(transform.position, targetLocation);
 
             // if we're still ascending out of the spawn point, use the set speed and face up
             if (nextTarget == 1) {
@@ -112,10 +116,15 @@ public class Enemy : MonoBehaviour {
 		FindObjectOfType<GameManager>().GainPoints(pointVal);
         FindObjectOfType<GameManager>().GainMoney(moneyDropped);
 
+        // show moneyText
+        transform.Find("MoneyText").localEulerAngles = new Vector3(90, -transform.localEulerAngles.y, 0);
+        transform.Find("MoneyText").gameObject.SetActive(true);
+
         ParticleSystem ps = transform.GetChild(0).GetComponent<ParticleSystem>();
 		ps.Play();
 		GetComponent<MeshRenderer>().enabled = false;
-		FindObjectOfType<EnemyManager>().PlayDestroyEnemySound();
+        healthBar.enabled = false;
+        FindObjectOfType<EnemyManager>().PlayDestroyEnemySound();
 
 		while (ps.isPlaying){
 			yield return null;

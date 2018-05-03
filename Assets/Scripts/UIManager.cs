@@ -25,13 +25,13 @@ public class UIManager : MonoBehaviour {
 		healthText = healthTextObj.GetComponent<Text>();
 		waveText = waveTextObj.GetComponent<Text>();
 		moneyText = moneyTextObj.GetComponent<Text>();
-		/*
+		
 		gameOverBox = transform.Find("GameOverBox").gameObject;
 		gameOverBox.SetActive(false);
 		gameWinBox = transform.Find("GameWinBox").gameObject;
 		gameWinBox.SetActive(false);
-		pauseScreen = transform.Find("PauseScreen").gameObject;
-*/
+		//pauseScreen = transform.Find("PauseScreen").gameObject;
+
 		// show the game start button and reset the progress bar
 		//transform.Find("StartButton").gameObject.SetActive(true);
 
@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour {
     }
 
 	public void UpdateWave(int current, int max){
-		waveText.text = "Wave: " + current + "/" + max;
+		waveText.text = "Wave: " + (current +1) + "/" + max;
         waveText.GetComponent<Animator>().SetTrigger("Pop");
 	}
 
@@ -71,9 +71,16 @@ public class UIManager : MonoBehaviour {
 		gameOverBox.SetActive(true);
 	}
 
-	public void DisplayGameWinScreen(float score){
+
+    public void ShowGUI(bool b) {
+        transform.Find("ControlPanel").gameObject.SetActive(b);
+        transform.Find("StatusPanel").gameObject.SetActive(b);
+        transform.Find("WavePanel").gameObject.SetActive(b);
+    }
+
+
+	public void DisplayGameWinScreen(){
 		gameWinBox.SetActive(true);
-		gameWinBox.transform.Find("Text_Score").GetComponent<Text>().text = "SCORE: " + (int)score;
 	}
 
 	public void RestartGame(){

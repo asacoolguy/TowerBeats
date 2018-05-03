@@ -13,15 +13,8 @@ public class GameManager : MonoBehaviour {
 
 	public List<GameObject> buildableTowers;
 	public GameObject homeBase;
-    [SerializeField] private LayerMask selectableLayerMask, towerLayerMask;
-
-    /// <summary>
-    /// Enum that describes if the user is currently building a tower or not.
-    /// Unselected means the player is currently
-    /// </summary>
-    private enum BuildState{unselected, selected};
-	[SerializeField] private BuildState bState = BuildState.unselected;
-	private GameObject selectedTower = null;
+    [SerializeField] private LayerMask selectableLayerMask;
+    
     private BuildableOctagon hoveredOctagon = null;
     private BuildableOctagon selectedOctagon = null;
     public GameObject towerBuildPanelPrefab;
@@ -30,12 +23,12 @@ public class GameManager : MonoBehaviour {
 	// game progression variables
 	public float currentScore = 0;
 	public float totalScore = 0;
-	public int startingMoney, maxWave, maxHealth;
-	private int currentMoney, currentWave, currentHealth;
+	public int startingMoney, maxHealth;
+	private int currentMoney, maxWave, currentWave, currentHealth;
+    private bool gameOver = false;
 
     // Audio clips used for the game
-	private AudioClip[] endGameClips;
-	private AudioClip youWinClip, youLoseClip;
+	private AudioClip youWinClip, youLoseClip, displayBoxClip;
 
     // string used for spawning
     [TextArea(3, 10)]
@@ -47,9 +40,9 @@ public class GameManager : MonoBehaviour {
 		Time.timeScale = 1;
 
 		// set up music clips
-		endGameClips = FindObjectOfType<MusicDatabase>().endGameClips;
 		youWinClip = FindObjectOfType<MusicDatabase>().youWinClip;
 		youLoseClip = FindObjectOfType<MusicDatabase>().youLoseClip;
+        displayBoxClip = FindObjectOfType<MusicDatabase>().displayBoxClip;
 
         // set up some variables
 		audioSource = transform.Find("Audio").GetComponent<AudioSource>();
@@ -57,8 +50,13 @@ public class GameManager : MonoBehaviour {
         currentMoney = startingMoney;
 		currentWave = 0;
 
-		// initialize the UI with some values
-		uiManager = FindObjectOfType<UIManager>();
+        // set up enemy manager and parse the spawn pattern
+        enemyManager = FindObjectOfType<EnemyManager>();
+        spawnPatterns = spawnPattern.Split('\n');
+        maxWave = spawnPatterns.Length;
+
+        // initialize the UI with some values
+        uiManager = FindObjectOfType<UIManager>();
 		uiManager.UpdateHealth(currentHealth, maxHealth);
 		uiManager.UpdateMoney(currentMoney);
 		uiManager.UpdateWave(currentWave, maxWave);
@@ -78,18 +76,32 @@ public class GameManager : MonoBehaviour {
             // set up the right cost
             towerBuildPanel.GetComponent<BuildPanel>().SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
         }
-
-
-        // set up enemy manager and parse the spawn pattern
-        enemyManager = FindObjectOfType<EnemyManager>();
-        spawnPatterns = spawnPattern.Split('\n');
     }
 
 
     private void Update() {
+        if (gameOver) return;
+
+        if (currentHealth <= 0) {
+            gameOver = true;
+            Time.timeScale = 0;
+            uiManager.DisplayGameOverScreen();
+            audioSource.PlayOneShot(displayBoxClip);
+        }
+
         // if enemyManager is done with the current wave, advance to the next wave
         if (enemyManager.waveDone) {
-            SpawnWave();
+            currentWave++;
+
+            if (currentWave >= maxWave) {
+                if (!gameOver) {
+                    gameOver = true;
+                    StartCoroutine(WinGame());
+                }
+            }
+            else {
+                SpawnWave();
+            }
         }
         
         // highlight any BuildableOctagons the mouse is hovering over that's not already built on
@@ -122,6 +134,8 @@ public class GameManager : MonoBehaviour {
     }
 
     private void LateUpdate() {
+        if (gameOver) return;
+
         // handle clicking events
         if (Input.GetMouseButtonDown(0)) {
             int buttonClicked = GetBuildPanelFromMouse();
@@ -226,32 +240,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-    // returns the tower that the mouse is currently hovering over
-    // only valid for built towers
-    private GameObject GetTowerFromMouse() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, towerLayerMask)) {
-            // trace parents until we find the object with BasicTower script on it
-            // in case ray tracing hit a child component of a tower
-            GameObject current = hit.collider.gameObject;
-            //print("initial hit is " + current.name);
-            while (current.GetComponent<BasicTower>() == null && 
-                current.transform.parent != null) {
-                current = current.transform.parent.gameObject;
-            }
-            //print("final hit is " + current.name);
-            if (hit.collider.gameObject.GetComponent<BasicTower>() != null
-                && hit.collider.gameObject.GetComponent<BasicTower>().IsBuilt()) {
-                return hit.collider.gameObject;
-            }
-        }
-
-        // otherwise no tower hit
-        return null;
-    }
-
-
     // returns the BuildableOctagon that the mouse is currently hovering over
     // only valid for built towers
     private BuildableOctagon GetOctagonFromMouse() {
@@ -342,7 +330,7 @@ public class GameManager : MonoBehaviour {
 	public void SpawnWave() {
 		uiManager.ShowSpawnButton(false);
 
-        enemyManager.SetupWave(spawnPatterns[currentWave++]);
+        enemyManager.SetupWave(spawnPatterns[currentWave]);
 
 		uiManager.UpdateWave(currentWave, maxWave);
 	}
@@ -368,29 +356,29 @@ public class GameManager : MonoBehaviour {
         uiManager.UpdateMoney(currentMoney);
     }
 
-    /*
+    
 	private IEnumerator WinGame(){
-		// destroy all enemies
-		enemyManager.DestroyAllEnemies();
-		FindObjectOfType<Scanner>().spawnEnemies = false;
 		// stop scanner in 4 measures
 		StartCoroutine(FindObjectOfType<Scanner>().StopScannerRotation(2));
-		while(FindObjectOfType<Scanner>().finishedUp == false){
+		while(FindObjectOfType<Scanner>().rotating == true){
 			yield return null;
 		}
-		// play the end game sound
-		audioSource.clip = endGameClips[Random.Range(0, endGameClips.Length)];
-		audioSource.Play();
+
+		// play the end game sound and zoomout
+		audioSource.PlayOneShot(youWinClip);
+        uiManager.ShowGUI(false);
+        FindObjectOfType<CameraMover>().ZoomOut(youWinClip.length);
+
 		while(audioSource.isPlaying){
 			yield return null;
 		}
-		// pop the game over box
-		uiManager.DisplayGameWinScreen(totalScore);
-		audioSource.clip = youWinClip;
-		audioSource.Play();
+
+		// show the game win screen
+		uiManager.DisplayGameWinScreen();
+        audioSource.PlayOneShot(displayBoxClip);
 
 		Time.timeScale = 0;
-	}*/
+	}
 
     public static float GetAngleFromVector(Vector3 pos){
 		float angle = 0f;

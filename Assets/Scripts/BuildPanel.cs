@@ -99,6 +99,7 @@ public class BuildPanel : MonoBehaviour {
         Text towerCost = towerButtons[index].transform.Find("Cost").GetComponent<Text>();
         towerButtons[index].GetComponent<Image>().color = c;
         towerButtons[index].transform.Find("Description").GetComponent<Image>().color = c;
+        towerButtons[index].transform.Find("Rhythm").GetComponent<Image>().color = c;
         towerButtons[index].transform.Find("Description").GetComponentInChildren<Text>().color = c;
         towerName.color = c;
         towerCost.color = c;
