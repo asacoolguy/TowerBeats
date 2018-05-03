@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 
 public class EnemyManager : MonoBehaviour {
-	public GameObject enemyPrefab;
+	public GameObject[] enemyPrefabs;
     public GameObject[] spawnPoints;
 	public float spawnDistance = 40f;
 	public float enemyAltitude = 10f;
@@ -15,8 +15,9 @@ public class EnemyManager : MonoBehaviour {
 	public float enemyDistancePerMove = 6f;
 
 	private List<GameObject> allEnemies;
-	private List<Vector3> spawnPositions;
-	private List<int> enemiesNumberToSpawn;
+    private string[] spawnInstruction;
+    private int instructionIndex;
+    private int waitCounter;
 	private bool isSpawning;
 
     private EnemyPath enemyPath;
@@ -40,27 +41,12 @@ public class EnemyManager : MonoBehaviour {
 
 	void Start() {
 		allEnemies = new List<GameObject>();
-		spawnPositions = new List<Vector3>();
-		enemiesNumberToSpawn = new List<int>();
         enemyPath = FindObjectOfType<EnemyPath>();
+        instructionIndex = -1;
+        waitCounter = 0;
 	}
 
 	void LateUpdate() {
-        // if all enemies are done ascending, turn off the light there
-        // TODO: can do this better by keeping track of number of enemies done ascending
-        if (!isSpawning) {
-            bool doneAscending = true;
-            foreach (GameObject e in allEnemies) {
-                if (e.GetComponent<Enemy>().ascending) {
-                    doneAscending = false;
-                }
-            }
-            if (doneAscending) {
-                enemyPath.ToggleLight(0, false);
-            }
-        }
-       
-
 		// destory enemies and play the destruction sound at the right volume
 		if (enemyDestroySoundCounter > 0) {
 			float volume = Mathf.Clamp(0.9f + enemyDestroySoundCounter * 0.1f, 1f, 1.5f);
@@ -71,38 +57,94 @@ public class EnemyManager : MonoBehaviour {
 
 
 	// set up the correct spawn info for the current wave
-	// ith wave will have 1 + i spawn points
-	// each spawn point will spawn 3 + i enemies
-	public void SetupWave(int wave) {
+	public void SetupWave(string pattern) {
 		isSpawning = true;
 
-		enemiesNumberToSpawn.Clear();
-		for (int i = 0; i < wave; i++) {
-			enemiesNumberToSpawn.Add(3 + wave);
-		}
-
-        // TODO: make the light turn on after a short delay
-        enemyPath.ToggleLight(0, true);
+        if (pattern.Contains("A")) {
+            enemyPath.TogglePath(0, true);
+        }
+        if (pattern.Contains("B")) {
+            enemyPath.TogglePath(1, true);
+        }
+        
+        spawnInstruction = pattern.Split(';');
+        instructionIndex = 0;
+        waitCounter = 1; // wait a round before actually spawning
     }
 
 
 	// spawns the appropriate amount of enemies for the current wave
 	public void SpawnEnemies() {
-		bool justSpawned = false;
-
-        for (int i = 0; i < enemiesNumberToSpawn.Count; i++) {
-            if (enemiesNumberToSpawn[i] > 0) {
-                GameObject enemyObj = Instantiate(enemyPrefab, spawnPoints[0].transform.position, Quaternion.identity, this.transform);
-                enemyObj.GetComponent<Enemy>().SetPath(enemyPath.GetPath(0));
-                allEnemies.Add(enemyObj);
-                enemiesNumberToSpawn[i]--;
-                justSpawned = true;
-                
-            }
+        // guard against null
+        if (spawnInstruction == null || spawnInstruction.Length == 0) {
+            return;
         }
 
-		isSpawning = justSpawned;
+        // if we've read all instructions, then we are done spawning.
+        if (instructionIndex >= spawnInstruction.Length) {
+            isSpawning = false;
+        }
+        // if we're supposed to wait this round, wait and decrement the counter
+        else if(waitCounter > 0) {
+            waitCounter--;
+        }
+        else{
+            // parse the spawnPattern
+            // A and B denotes which spawn point
+            // s# = small enemy
+            // l# = large enemy
+            // w# = wait some amount of rotations
+            // so As3,Bs3;w2;Al1,Bs2 means spawn 3 small enemies at A and 3 small enemies at B, 
+            // wait 2 rotations, then spawn 1 large enemy at A and 2 small enemies at B
+            string[] currentInstruction = spawnInstruction[instructionIndex++].Split(',');
+            foreach (string instruction in currentInstruction) {
+                if (instruction == "") continue;
+                string char1 = instruction.Substring(0, 1);
+                if (char1 == "w") {
+                    waitCounter = int.Parse(instruction.Substring(1, 1));
+                }
+                else{
+                    int spawnPointIndex = 0;
+                    if (char1 == "A") {
+                        spawnPointIndex = 0;
+                    } else if (char1 == "B") {
+                        spawnPointIndex = 1;
+                    }
+
+                    int enemyType = 0;
+                    string char2 = instruction.Substring(1, 1);
+                    if (char2 == "s") {
+                        enemyType = 0;
+                    }
+                    else if (char2 == "l") {
+                        enemyType = 1;
+                    }
+
+                    int spawnAmount = int.Parse(instruction.Substring(2, 1));
+
+                    StartCoroutine(SpawnEnemies(spawnPointIndex, enemyType, spawnAmount));
+                }
+            }
+        }
 	}
+
+
+    // spawns enemies with some random delay
+    private IEnumerator SpawnEnemies(int spawnPointIndex, int enemyType, int spawnAmount) {
+        Vector3 offset = Vector3.zero;
+        for (int i = 0; i < spawnAmount; i++) {
+            Vector3 position = spawnPoints[spawnPointIndex].transform.position + offset;
+            GameObject enemyObj = Instantiate(enemyPrefabs[enemyType], 
+                                              position, 
+                                              Quaternion.identity, 
+                                              this.transform);
+            enemyObj.GetComponent<Enemy>().SetPath(enemyPath.GetPath(spawnPointIndex));
+            allEnemies.Add(enemyObj);
+            
+            //offset -= new Vector3(0, Random.Range(3f, 7f), 0);
+            yield return null;
+        }
+    }
 
 
 	// move all enemies

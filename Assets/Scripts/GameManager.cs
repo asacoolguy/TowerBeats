@@ -37,6 +37,11 @@ public class GameManager : MonoBehaviour {
 	private AudioClip[] endGameClips;
 	private AudioClip youWinClip, youLoseClip;
 
+    // string used for spawning
+    [TextArea(3, 10)]
+    public string spawnPattern;
+    private string[] spawnPatterns;
+
 
 	private void Start () {
 		Time.timeScale = 1;
@@ -61,6 +66,9 @@ public class GameManager : MonoBehaviour {
         // make the tower build panel
         towerBuildPanel = Instantiate(towerBuildPanelPrefab);
         towerBuildPanel.SetActive(false);
+
+        // parse the spawn pattern
+        spawnPatterns = spawnPattern.Split('\n');
     }
 
 
@@ -104,6 +112,7 @@ public class GameManager : MonoBehaviour {
 
 
 		// if enemyManager is done spawning, show the spawnButton again
+        // TODO: on last wave this should not happen
 		if (!FindObjectOfType<EnemyManager>().IsSpawning()){
 			uiManager.ShowSpawnButton(true);
 		}
@@ -216,8 +225,6 @@ public class GameManager : MonoBehaviour {
             print("no octagon selected");
             return;
         }
-
-        //print("building tower " + i + " in gamemanager");
 
         // build the tower
         GameObject towerObj = Instantiate(buildableTowers[input]) as GameObject;
@@ -385,12 +392,11 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	// starts spawning enemies on all levels
+	// starts spawning enemies 
 	public void SpawnWave() {
-		currentWave++;
 		uiManager.ShowSpawnButton(false);
 
-		FindObjectOfType<EnemyManager>().SetupWave(currentWave);
+		FindObjectOfType<EnemyManager>().SetupWave(spawnPatterns[currentWave++]);
 
 		uiManager.UpdateWave(currentWave, maxWave);
 	}

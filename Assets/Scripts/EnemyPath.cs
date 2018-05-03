@@ -7,7 +7,7 @@ public class EnemyPath : MonoBehaviour {
 	private List<LineRenderer> lineRenderers;
     private List<List<Vector3>> paths;
     private List<GameObject> lights;
-	private List<float> magnitudes;
+    public AudioClip turnOnPathSound;
 
 	private void Start () {
         lineRenderers = new List<LineRenderer>();
@@ -41,9 +41,9 @@ public class EnemyPath : MonoBehaviour {
             //lights.Add(pathObj.transform.Find("Light").gameObject);
 		}
 
-        // turn off all lights
+        // turn off all paths at start
         for (int i = 0; i < lights.Count; i++) {
-            ToggleLight(i, false);
+            TogglePath(i, false);
         }
 	}
 	
@@ -59,7 +59,13 @@ public class EnemyPath : MonoBehaviour {
             return paths[index];
     }
 
-    public void ToggleLight(int index, bool on) {
-        lights[index].SetActive(on);
+    public void TogglePath(int index, bool b) {
+        // if we're turning on this path for the first time, play an effect
+        if (lineRenderers[index].enabled == false && b) {
+            GetComponent<AudioSource>().PlayOneShot(turnOnPathSound);
+        }
+
+        lineRenderers[index].enabled = b;
+        lights[index].SetActive(b);
     }
 }

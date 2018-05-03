@@ -804,7 +804,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294963199
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -898,7 +898,7 @@ MonoBehaviour:
   originalMat: {fileID: 2100000, guid: cd15e3a81c83872409e0b544da84fa0d, type: 2}
   planningMat: {fileID: 2100000, guid: ce397a7269fa73a44bab2d4d0dcc12e6, type: 2}
   planningInvalidMat: {fileID: 2100000, guid: 0a88b7df744822948b8c0bd0dae46156, type: 2}
-  popYScale: 1.5
+  popYScale: 1.3
   popTime: 0.2
   lightBoostTime: 1
   lightMinIntensity: 0.5

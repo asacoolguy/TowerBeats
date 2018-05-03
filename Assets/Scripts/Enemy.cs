@@ -53,10 +53,11 @@ public class Enemy : MonoBehaviour {
 			float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
 			float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
             Vector3 moveDirection = (targetLocation - transform.position);
+            float distance = Vector3.Distance(transform.position, targetLocation);
 
-            // if we're still ascending out of the spawn point, double the speed and face up
+            // if we're still ascending out of the spawn point, use the set speed and face up
             if (nextTarget == 1) {
-                moveAmount *= 2;
+                moveAmount = 50 * speedRatio * Time.deltaTime;
                 float angle = 90f + GameManager.GetAngleFromVectorSpecial(transform.position);
                 transform.eulerAngles = new Vector3(90, 0, angle);
                 ascending = true;
@@ -67,8 +68,8 @@ public class Enemy : MonoBehaviour {
             }
 
 			transform.position += moveDirection.normalized * moveAmount;
-            if (Vector3.Distance(transform.position, targetLocation) < 0.1f) {
-                targetLocation = path[++nextTarget];
+            if (Vector3.Distance(transform.position, targetLocation) < 0.5f && ++nextTarget <= path.Count) {
+                targetLocation = path[nextTarget];
             }
 
 			currentDuration += Time.deltaTime;
@@ -113,8 +114,14 @@ public class Enemy : MonoBehaviour {
 
 
     public void SetPath(List<Vector3> input) {
-        path = input;
         nextTarget = 1;
         ascending = true;
+        path = new List<Vector3>();
+
+        // randomize the path a little
+        Vector3 offset = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), Random.Range(-3f, 3f));
+        for (int i = 0; i < input.Count; i++) {
+            path.Add(input[i] + offset);
+        }
     }
 }

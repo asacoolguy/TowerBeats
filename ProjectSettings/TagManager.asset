@@ -24,7 +24,7 @@ TagManager:
   - Enemies
   - Bullets
   - Towers
-  - GlowLines
+  - EnemyPath
   - GlowUI
   - HomeBase
   - OuterGrid
