@@ -6,7 +6,7 @@ using UnityEngine;
 /// Repository for all music clips used in this stage for all objects to reference
 /// </summary>
 public class MusicDatabase : MonoBehaviour {
-	public AudioClip youWinClip, youLoseClip, displayBoxClip;
+	public AudioClip youWinClip, youLoseClip, displayBoxClip, gameStartClip, wooshClip;
 	public AudioClip[] greenTowerClips;
 	public AudioClip[] blueTowerClips;
 	public AudioClip[] goldTowerClips;

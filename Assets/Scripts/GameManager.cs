@@ -9,16 +9,17 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 	private UIManager uiManager;
     private EnemyManager enemyManager;
-	private AudioSource audioSource;
+	private AudioSource audioSource, menuAudioSource;
 
 	public List<GameObject> buildableTowers;
 	public GameObject homeBase;
-    [SerializeField] private LayerMask selectableLayerMask;
+    public LayerMask selectableLayerMask;
     
     private BuildableOctagon hoveredOctagon = null;
     private BuildableOctagon selectedOctagon = null;
     public GameObject towerBuildPanelPrefab;
     private BuildPanel towerBuildPanel = null;
+    public GameObject buildableGrid;
 
 	// game progression variables
 	public float currentScore = 0;
@@ -28,12 +29,12 @@ public class GameManager : MonoBehaviour {
     private bool gameOver = false;
 
     // Audio clips used for the game
-	private AudioClip youWinClip, youLoseClip, displayBoxClip;
+	private AudioClip youWinClip, youLoseClip, displayBoxClip, gameStartClip, wooshClip;
 
     // string used for spawning
     [TextArea(3, 10)]
-    public string spawnPattern;
-    private string[] spawnPatterns;
+    public string[] spawnPatterns;
+    private string[] waveSpawnPatterns;
 
 
 	private void Start () {
@@ -43,23 +44,22 @@ public class GameManager : MonoBehaviour {
 		youWinClip = FindObjectOfType<MusicDatabase>().youWinClip;
 		youLoseClip = FindObjectOfType<MusicDatabase>().youLoseClip;
         displayBoxClip = FindObjectOfType<MusicDatabase>().displayBoxClip;
+        gameStartClip = FindObjectOfType<MusicDatabase>().gameStartClip;
+        wooshClip = FindObjectOfType<MusicDatabase>().wooshClip;
 
         // set up some variables
-		audioSource = transform.Find("Audio").GetComponent<AudioSource>();
+        audioSource = transform.Find("Audio").GetComponent<AudioSource>();
+        menuAudioSource = transform.Find("MenuAudio").GetComponent<AudioSource>();
 		currentHealth = maxHealth;
         currentMoney = startingMoney;
 		currentWave = 0;
 
         // set up enemy manager and parse the spawn pattern
         enemyManager = FindObjectOfType<EnemyManager>();
-        spawnPatterns = spawnPattern.Split('\n');
-        maxWave = spawnPatterns.Length;
+        
 
         // initialize the UI with some values
         uiManager = FindObjectOfType<UIManager>();
-		uiManager.UpdateHealth(currentHealth, maxHealth);
-		uiManager.UpdateMoney(currentMoney);
-		uiManager.UpdateWave(currentWave, maxWave);
 
         // make the tower build panel and give it the correct AOEIndicators
         towerBuildPanel = Instantiate(towerBuildPanelPrefab).GetComponent<BuildPanel>();
@@ -76,6 +76,10 @@ public class GameManager : MonoBehaviour {
             // set up the right cost
             towerBuildPanel.GetComponent<BuildPanel>().SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
         }
+
+        // initiate the camera with its splash screen
+        uiManager.DisplaySplashScreen(true, 2.2f);
+        StartCoroutine(PlayThemeWithDelay(2f));
     }
 
 
@@ -330,7 +334,7 @@ public class GameManager : MonoBehaviour {
 	public void SpawnWave() {
 		uiManager.ShowSpawnButton(false);
 
-        enemyManager.SetupWave(spawnPatterns[currentWave]);
+        enemyManager.SetupWave(waveSpawnPatterns[currentWave]);
 
 		uiManager.UpdateWave(currentWave, maxWave);
 	}
@@ -356,7 +360,51 @@ public class GameManager : MonoBehaviour {
         uiManager.UpdateMoney(currentMoney);
     }
 
+
+    public void LoadStage(int i) {
+        // load the spawn info 
+        waveSpawnPatterns = spawnPatterns[i].Split('\n');
+        maxWave = waveSpawnPatterns.Length;
+
+        // start the camera movement and get panels to fly in
+        StartCoroutine(StartGame());
+    }
+
+
+    private IEnumerator StartGame() {
+        // play the game starting sound
+        menuAudioSource.Stop();
+        audioSource.PlayOneShot(gameStartClip);
+        yield return new WaitForSeconds(gameStartClip.length + 1);
+
+        // pull the camera up
+        audioSource.PlayOneShot(wooshClip);
+        FindObjectOfType<CameraMover>().MoveToGame(wooshClip.length);
+        FindObjectOfType<LevelSelector>().ShowLevelSelection(false);
+        yield return new WaitForSeconds(wooshClip.length + 1);
+
+        // fly the panels in and show the GUI
+        float flyInDuration = 1f;
+        for (int i = 0; i < buildableGrid.transform.childCount; i++) {
+            BuildableOctagon oct = buildableGrid.transform.GetChild(i).GetComponent<BuildableOctagon>();
+            oct.gameObject.SetActive(true);
+            StartCoroutine(oct.FlyIn(flyInDuration));
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        // show the GUI when all panels have flown in
+        yield return new WaitForSeconds(flyInDuration);        
+        uiManager.ShowGUI(true);
+        uiManager.UpdateHealth(currentHealth, maxHealth);
+        uiManager.UpdateMoney(currentMoney);
+        uiManager.UpdateWave(currentWave, maxWave);
+
+        yield return new WaitForSeconds(1);
+        FindObjectOfType<Scanner>().ShowScannerLine(true);
+        FindObjectOfType<Scanner>().SetRotate(true);
+    }
     
+
 	private IEnumerator WinGame(){
 		// stop scanner in 4 measures
 		StartCoroutine(FindObjectOfType<Scanner>().StopScannerRotation(2));
@@ -367,18 +415,26 @@ public class GameManager : MonoBehaviour {
 		// play the end game sound and zoomout
 		audioSource.PlayOneShot(youWinClip);
         uiManager.ShowGUI(false);
-        FindObjectOfType<CameraMover>().ZoomOut(youWinClip.length);
+        FindObjectOfType<CameraMover>().MoveToGameWin(youWinClip.length);
 
 		while(audioSource.isPlaying){
 			yield return null;
 		}
 
 		// show the game win screen
-		uiManager.DisplayGameWinScreen();
+		uiManager.DisplayGameWinScreen(true);
         audioSource.PlayOneShot(displayBoxClip);
 
 		Time.timeScale = 0;
 	}
+
+
+    private IEnumerator PlayThemeWithDelay(float delay) {
+        yield return new WaitForSeconds(delay);
+        menuAudioSource.Play();
+        FindObjectOfType<CameraMover>().ToggleBlankScreen(false);
+    }
+
 
     public static float GetAngleFromVector(Vector3 pos){
 		float angle = 0f;

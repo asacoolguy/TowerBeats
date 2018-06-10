@@ -10,10 +10,17 @@ public class UIManager : MonoBehaviour {
 	private Text healthText, moneyText, waveText;
 	public GameObject spawnButton;
 
-	// pop up windows
-	private GameObject gameOverBox, gameWinBox, pauseScreen, tutorialBox;
+    // pop up windows
+    public GameObject gameOverBox, gameWinBox, controlPanel, statusPanel, wavePanel;
 
-	public List<AudioSource> pausedAudios;
+    // menus
+    public GameObject splashScreen, levelSelect;
+
+    public enum MenuState { splashScreen, splashScreenClickable, levelMenu, duringGame, pauseGame, gameWin };
+    private MenuState state;
+    public float splashToLevelDuration, levelToGameDuration;
+
+    public List<AudioSource> pausedAudios;
 	private bool paused = false;
 
 	// UI sound effects
@@ -26,10 +33,9 @@ public class UIManager : MonoBehaviour {
 		waveText = waveTextObj.GetComponent<Text>();
 		moneyText = moneyTextObj.GetComponent<Text>();
 		
-		gameOverBox = transform.Find("GameOverBox").gameObject;
 		gameOverBox.SetActive(false);
-		gameWinBox = transform.Find("GameWinBox").gameObject;
 		gameWinBox.SetActive(false);
+        ShowGUI(false);
 		//pauseScreen = transform.Find("PauseScreen").gameObject;
 
 		// show the game start button and reset the progress bar
@@ -48,6 +54,14 @@ public class UIManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape)){
 			TogglePause();
 		}
+
+        if (state == MenuState.splashScreenClickable && Input.GetMouseButtonDown(0)) {
+            state = MenuState.levelMenu;
+            splashScreen.transform.GetChild(2).gameObject.SetActive(false);
+            FindObjectOfType<CameraMover>().MoveSplashToLevel(splashToLevelDuration);
+            FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
+            FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
+        }
 	}
 
 	public void UpdateHealth(int current, int max){
@@ -73,15 +87,49 @@ public class UIManager : MonoBehaviour {
 
 
     public void ShowGUI(bool b) {
-        transform.Find("ControlPanel").gameObject.SetActive(b);
-        transform.Find("StatusPanel").gameObject.SetActive(b);
-        transform.Find("WavePanel").gameObject.SetActive(b);
+        controlPanel.gameObject.SetActive(b);
+        statusPanel.gameObject.SetActive(b);
+        wavePanel.gameObject.SetActive(b);
     }
 
 
-	public void DisplayGameWinScreen(){
+	public void DisplayGameWinScreen(bool b){
 		gameWinBox.SetActive(true);
 	}
+
+    public void DisplaySplashScreen(bool b, float delay = 0f) {
+        if (b && delay > 0f) {
+            StartCoroutine(DisplaySplashScreenTimed(delay));
+        }
+
+        splashScreen.SetActive(b);
+
+        if (b) {
+            state = MenuState.splashScreen;
+        }
+    }
+
+    private IEnumerator DisplaySplashScreenTimed(float delay) {
+        splashScreen.SetActive(true);
+        splashScreen.transform.GetChild(0).gameObject.SetActive(false);
+        splashScreen.transform.GetChild(1).gameObject.SetActive(false);
+        splashScreen.transform.GetChild(2).gameObject.SetActive(false);
+
+        float wait = 1.64f;
+
+        yield return new WaitForSeconds(delay + wait - 0.1f);
+        splashScreen.transform.GetChild(0).gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(wait);
+        splashScreen.transform.GetChild(1).gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(wait);
+        splashScreen.transform.GetChild(2).gameObject.SetActive(true);
+        state = MenuState.splashScreenClickable;
+
+        yield return new WaitForSeconds(wait);
+        splashScreen.transform.GetChild(2).GetComponent<Animator>().SetTrigger("Blink");
+    }
 
 	public void RestartGame(){
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -108,7 +156,7 @@ public class UIManager : MonoBehaviour {
 		if (paused){
 			paused = false;
 			Time.timeScale = 1;
-			pauseScreen.SetActive(false);
+			//pauseScreen.SetActive(false);
 
 			// unpause all audiosources
 			foreach(AudioSource au in pausedAudios){
@@ -118,7 +166,7 @@ public class UIManager : MonoBehaviour {
 		else if (!paused){
 			paused = true;
 			Time.timeScale = 0;
-			pauseScreen.SetActive(true);
+			//pauseScreen.SetActive(true);
 
 			// pause all audiosources
 			pausedAudios = new List<AudioSource>();

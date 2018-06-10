@@ -81,8 +81,9 @@ public class Scanner : MonoBehaviour {
 		// initialize variables for rotation counting
 		ResetRotation();
 
+        ShowScannerLine(false);
         // start rotation after some delay
-        StartCoroutine(StartScannerRotation(2f));
+        //StartCoroutine(StartScannerRotation(2f));
 	}
 
 	// Update is called once per frame
@@ -239,6 +240,12 @@ public class Scanner : MonoBehaviour {
     private IEnumerator StartScannerRotation(float delay) {
         yield return new WaitForSeconds(delay);
         SetRotate(true);
+    }
+
+
+    public void ShowScannerLine(bool b) {
+        transform.Find("Spotlight").gameObject.SetActive(b);
+        transform.Find("ScannerLine").gameObject.SetActive(b);
     }
 
     private void PlayMusic(bool b) {

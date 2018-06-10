@@ -17,6 +17,9 @@ public class BuildableOctagon : Octagon {
     public float raisedTexStr, raisedGlowPow;
     private float loweredTexStr, loweredGlowPow, tempTexStr, tempGlowPow;
 
+    public AnimationCurve flyInCurve;
+    public float flyInHeight;
+    public AudioClip flyInSound;
 
     private GameObject selector; // a collection of colliders that will allow this tower to be selected
     private GameObject buildPanel; // a GUI for building towers on this BuildableOct;
@@ -134,6 +137,22 @@ public class BuildableOctagon : Octagon {
         }
     }
 
+
+    public IEnumerator FlyIn(float duration) {
+        GetComponent<AudioSource>().PlayOneShot(flyInSound);
+
+        float t = 0;
+        float endingPos = transform.position.y;
+        float startingPos = endingPos + flyInHeight;
+        while (t < duration) {
+            float newY = startingPos - flyInHeight * flyInCurve.Evaluate(t / duration);
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = new Vector3(transform.position.x, endingPos, transform.position.z);
+    }
 
     public void SetBuiltTower(GameObject tower) {
         if (IsBuiltOn()) {

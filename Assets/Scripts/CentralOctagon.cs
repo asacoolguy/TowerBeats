@@ -13,6 +13,8 @@ public class CentralOctagon : Octagon {
     public float highlightedButtonSize;
     public int[] cost;
     public float[] powerFactors;
+    public bool interactable = false; // set to true when the level starts and false for level selection screen
+
 
     private new void Awake() {
         base.Awake();
@@ -30,6 +32,10 @@ public class CentralOctagon : Octagon {
     
 	
 	private new void Update () {
+        if (!interactable) {
+            return;
+        }
+
         highlighted = IsHighlighted();
         buttonHighlighted = IsButtonHighlighted();
         buttonEnabled = (FindObjectOfType<GameManager>().GetMoney() >= cost[level]);
@@ -184,5 +190,10 @@ public class CentralOctagon : Octagon {
         upgradeButton.transform.Find("Rhythm").GetComponent<Image>().color = c;
         upgradeButton.transform.Find("Description").GetComponent<Image>().color = c;
         upgradeButton.transform.Find("Description").GetComponentInChildren<Text>().color = c;
+    }
+
+
+    public void EnableLevelSelection() {
+        GetComponentInChildren<LevelSelector>().EnableLevelSelection();
     }
 }
