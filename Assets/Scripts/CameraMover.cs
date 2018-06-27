@@ -11,7 +11,7 @@ public class CameraMover : MonoBehaviour {
     public GameObject splashScreenPos, levelMenuPos, gamePos, pausePos, gameWinPos;
     private bool playerControllable, moving;
 
-    public AnimationCurve splashToLevelCurve, levelToGameCurve;
+    public AnimationCurve splashToLevelCurve, levelToGameCurve, gameToWinCurve;
 
     private void Start() {
         // default is splashScreenPos
@@ -50,7 +50,7 @@ public class CameraMover : MonoBehaviour {
     public void MoveToGameWin(float duration) {
         // camera can only initiate a new move when the old move is finished
         if (!moving) {
-            StartCoroutine(MoveToPosition(gameWinPos, duration));
+            StartCoroutine(MoveToPosition(gameWinPos, duration, false, gameToWinCurve, null));
         }
     }
 
@@ -64,14 +64,14 @@ public class CameraMover : MonoBehaviour {
     public void MoveSplashToLevel(float duration) {
         // camera can only initiate a new move when the old move is finished
         if (!moving) {
-            StartCoroutine(MoveToPosition(levelMenuPos, duration, false, splashToLevelCurve));
+            StartCoroutine(MoveToPosition(levelMenuPos, duration, false, splashToLevelCurve, null));
         }
     }
 
     public void MoveToGame(float duration) {
         // camera can only initiate a new move when the old move is finished
         if (!moving) {
-            StartCoroutine(MoveToPosition(gamePos, duration, false, levelToGameCurve));
+            StartCoroutine(MoveToPosition(gamePos, duration, true, null, levelToGameCurve));
         }
     }
 
@@ -83,7 +83,7 @@ public class CameraMover : MonoBehaviour {
     }
 
 
-    private IEnumerator MoveToPosition(GameObject target, float duration, bool playerControl = false, AnimationCurve curve = null) {
+    private IEnumerator MoveToPosition(GameObject target, float duration, bool playerControl = false, AnimationCurve moveCurve = null, AnimationCurve rotCurve = null) {
         float currentTime = 0f;
         Vector3 startPos = transform.position;
         Quaternion startRot = transform.rotation;
@@ -93,11 +93,19 @@ public class CameraMover : MonoBehaviour {
 
         while (currentTime < duration) {
             currentTime = Mathf.Clamp(currentTime + Time.deltaTime, 0, duration);
-            transform.position = GameManager.SmoothStep(startPos, target.transform.position, currentTime / duration);
-            //transform.rotation = Quaternion.RotateTowards(startRot, target.transform.rotation, 10f * Time.deltaTime);
-            rotationSpeed = curve.Evaluate(currentTime / duration) - rotationSpeed;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, target.transform.rotation, rotationSpeed * rotationAmount);
-
+            if (moveCurve == null) {
+                transform.position = GameManager.SmoothStep(startPos, target.transform.position, currentTime / duration);
+            }
+            else {
+                transform.position = GameManager.SmoothStep(startPos, target.transform.position, moveCurve.Evaluate(currentTime / duration));
+            }
+            if (rotCurve == null) {
+                transform.rotation = Quaternion.RotateTowards(startRot, target.transform.rotation, 20f * Time.deltaTime);
+            }
+            else {
+                rotationSpeed = rotCurve.Evaluate(currentTime / duration) - rotationSpeed;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, target.transform.rotation, rotationSpeed * rotationAmount);
+            }
             yield return null;
         }
 

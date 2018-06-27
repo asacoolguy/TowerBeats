@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour {
     public string[] spawnPatterns;
     private string[] waveSpawnPatterns;
 
+    public bool devMode;
+
 
 	private void Start () {
 		Time.timeScale = 1;
@@ -77,9 +79,30 @@ public class GameManager : MonoBehaviour {
             towerBuildPanel.GetComponent<BuildPanel>().SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
         }
 
-        // initiate the camera with its splash screen
-        uiManager.DisplaySplashScreen(true, 2.2f);
-        StartCoroutine(PlayThemeWithDelay(2f));
+        if (devMode) {
+            waveSpawnPatterns = spawnPatterns[0].Split('\n');
+            maxWave = waveSpawnPatterns.Length;
+
+            for (int i = 0; i < buildableGrid.transform.childCount; i++) {
+                BuildableOctagon oct = buildableGrid.transform.GetChild(i).GetComponent<BuildableOctagon>();
+                oct.gameObject.SetActive(true);
+            }
+
+            FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
+            FindObjectOfType<CentralOctagon>().interactable = true;
+
+            uiManager.ShowGUI(true);
+            FindObjectOfType<CameraMover>().MoveToGame(0.1f);
+            FindObjectOfType<CameraMover>().ToggleBlankScreen(false);
+
+            FindObjectOfType<Scanner>().ShowScannerLine(true);
+            FindObjectOfType<Scanner>().SetRotate(true);
+        }
+        else {
+            // initiate the camera with its splash screen
+            uiManager.DisplaySplashScreen(true, 2.2f);
+            StartCoroutine(PlayThemeWithDelay(2f));
+        }
     }
 
 
@@ -173,6 +196,12 @@ public class GameManager : MonoBehaviour {
                 }
                 selectedOctagon = hoveredOctagon;
                 selectedOctagon.SelectOctagon(true);
+            }
+        }
+
+        if (devMode) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                StartCoroutine(WinGame());
             }
         }
     }
@@ -406,18 +435,18 @@ public class GameManager : MonoBehaviour {
     
 
 	private IEnumerator WinGame(){
-		// stop scanner in 4 measures
-		StartCoroutine(FindObjectOfType<Scanner>().StopScannerRotation(2));
+		// stop scanner in 1 rotation
+		StartCoroutine(FindObjectOfType<Scanner>().StopScannerRotation(1));
 		while(FindObjectOfType<Scanner>().rotating == true){
 			yield return null;
 		}
 
-		// play the end game sound and zoomout
-		audioSource.PlayOneShot(youWinClip);
+		// play the end game sound and zoom out
         uiManager.ShowGUI(false);
         FindObjectOfType<CameraMover>().MoveToGameWin(youWinClip.length);
+        audioSource.PlayOneShot(youWinClip);
 
-		while(audioSource.isPlaying){
+        while (audioSource.isPlaying){
 			yield return null;
 		}
 

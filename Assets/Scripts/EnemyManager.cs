@@ -11,8 +11,6 @@ public class EnemyManager : MonoBehaviour {
     public GameObject[] spawnPoints;
 	public float spawnDistance = 40f;
 	public float enemyAltitude = 10f;
-	public float enemyHealth = 2f;
-	public float enemyDistancePerMove = 6f;
 
 	private List<GameObject> allEnemies;
     private string[] spawnInstruction;

@@ -7,6 +7,7 @@ public class LevelSelector : MonoBehaviour {
     private List<GameObject> levels;
     private int currentLevel;
     private bool canSelectLevels = false;
+    private bool startStagePressed = false;
 
     public int numberOfLevels;
     public AnimationCurve changeLevelRotationCurve, changeLevelScaleCurve;
@@ -83,7 +84,10 @@ public class LevelSelector : MonoBehaviour {
 
 
     public void StartStage() {
-        FindObjectOfType<GameManager>().LoadStage(currentLevel);
+        if (!startStagePressed) {
+            FindObjectOfType<GameManager>().LoadStage(currentLevel);
+            startStagePressed = true;
+        }
     }
 
 

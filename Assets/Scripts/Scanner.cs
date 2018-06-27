@@ -4,7 +4,6 @@ using UnityEngine;
 
 /// <summary>
 /// This class controls the scanner that rotates 360 degrees every 2 measures. 
-/// Make sure to use an audioclip of exactly 2 measures or tempo will be off. 
 ///
 /// The scanner starts off not rotating, facing 12 o'clock. Use setRotate to start 
 /// or pause rotations. Axes will be constructed upon object initiation to indicate
@@ -13,10 +12,12 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour {
 	// variables for tracking rotations
-	private float secondsPerMeasure;
-	public int measurePerRotation = 1;
+    public int measurePerSong;
+	private int measurePerRotation;
+    private int rotationPerSong;
 	private float rotationSpeed;
 	public bool rotating;
+    private int measuresPlayed;
 
 	// variables for spawning axes
 	public float minAxisLength = 10f;
@@ -63,10 +64,11 @@ public class Scanner : MonoBehaviour {
 		audios[3] = transform.Find("audio3").GetComponent<AudioSource>();
 		audios[3].clip = audioClips[Random.Range(6, 8)];
 
-
-		secondsPerMeasure = audios[0].clip.length / measurePerRotation;
+        measurePerRotation = 2;
+        rotationPerSong = measurePerSong / measurePerRotation;
 		anglePerAxis = 360f / axisNumber;
-		rotationSpeed = 360f / (measurePerRotation * secondsPerMeasure);
+		rotationSpeed = 360f / audios[0].clip.length * rotationPerSong;
+        print(rotationSpeed);
 
 		// initiate the axes and disble them
 		//SetupAxis();
@@ -110,7 +112,11 @@ public class Scanner : MonoBehaviour {
 			fullRotationCounter += angleSpun;
 			if (fullRotationCounter > 360f){
 				RotatedFully();
-                PlayMusic(true);
+                measuresPlayed += measurePerRotation;
+                if (measuresPlayed >= measurePerSong) {
+                    PlayMusic(true);
+                    measuresPlayed = 0;
+                }
                 fullRotationCounter -= 360f;
                 if (rotationTillFinish > 0) rotationTillFinish--;
 			}
@@ -213,11 +219,13 @@ public class Scanner : MonoBehaviour {
 		if (b){
             PlayMusic(true);
 			transform.Find("ScannerLine").gameObject.SetActive(true);
-		}
+            transform.Find("Spotlight").gameObject.SetActive(true);
+        }
 		else{
             PlayMusic(false);
 			transform.Find("ScannerLine").gameObject.SetActive(false);
-		}
+            transform.Find("Spotlight").gameObject.SetActive(false);
+        }
 	}
 
     

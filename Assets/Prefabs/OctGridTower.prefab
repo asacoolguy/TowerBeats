@@ -45,7 +45,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1461649408755924
 GameObject:
   m_ObjectHideFlags: 1
@@ -413,4 +413,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   flyInHeight: 45
-  flyInSound: {fileID: 8300000, guid: 22fdfe4935769fd4a8c4ec4ac9b14dce, type: 3}
+  flyInSound: {fileID: 8300000, guid: 66bebfca084090d4aa8245d718964477, type: 3}
