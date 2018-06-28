@@ -6,10 +6,13 @@ using UnityEngine;
 /// <summary>
 /// Game Manager class that handles spawning towers at the right locations and tracking scores & progression
 /// </summary>
+
 public class GameManager : MonoBehaviour {
 	private UIManager uiManager;
     private EnemyManager enemyManager;
 	private AudioSource audioSource, menuAudioSource;
+    private Animator cameraAnimator;
+    private Scanner scanner;
 
 	public List<GameObject> buildableTowers;
 	public GameObject homeBase;
@@ -36,6 +39,9 @@ public class GameManager : MonoBehaviour {
     public string[] spawnPatterns;
     private string[] waveSpawnPatterns;
 
+    public enum GameState { Intro, SplashScreen, LevelScreen, GameScreen, PauseScreen, ResultScreen};
+    public GameState state;
+
     public bool devMode;
 
 
@@ -56,12 +62,11 @@ public class GameManager : MonoBehaviour {
         currentMoney = startingMoney;
 		currentWave = 0;
 
-        // set up enemy manager and parse the spawn pattern
+        // set up references to essential scripts
         enemyManager = FindObjectOfType<EnemyManager>();
-        
-
-        // initialize the UI with some values
         uiManager = FindObjectOfType<UIManager>();
+        cameraAnimator = FindObjectOfType<CameraMover>().GetComponent<Animator>();
+        scanner = FindObjectOfType<Scanner>();
 
         // make the tower build panel and give it the correct AOEIndicators
         towerBuildPanel = Instantiate(towerBuildPanelPrefab).GetComponent<BuildPanel>();
@@ -79,7 +84,10 @@ public class GameManager : MonoBehaviour {
             towerBuildPanel.GetComponent<BuildPanel>().SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
         }
 
+        
         if (devMode) {
+            state = GameState.GameScreen;
+
             waveSpawnPatterns = spawnPatterns[0].Split('\n');
             maxWave = waveSpawnPatterns.Length;
 
@@ -92,116 +100,125 @@ public class GameManager : MonoBehaviour {
             FindObjectOfType<CentralOctagon>().interactable = true;
 
             uiManager.ShowGUI(true);
-            FindObjectOfType<CameraMover>().MoveToGame(0.1f);
-            FindObjectOfType<CameraMover>().ToggleBlankScreen(false);
+            cameraAnimator.SetTrigger("SkipToGame");
 
-            FindObjectOfType<Scanner>().ShowScannerLine(true);
-            FindObjectOfType<Scanner>().SetRotate(true);
+            scanner.ShowScannerLine(true);
+            scanner.SetRotate(true);
         }
         else {
+            state = GameState.Intro;
             // initiate the camera with its splash screen
-            uiManager.DisplaySplashScreen(true, 2.2f);
+            uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(true, 2f));
             StartCoroutine(PlayThemeWithDelay(2f));
         }
     }
 
 
     private void Update() {
-        if (gameOver) return;
-
-        if (currentHealth <= 0) {
-            gameOver = true;
-            Time.timeScale = 0;
-            uiManager.DisplayGameOverScreen();
-            audioSource.PlayOneShot(displayBoxClip);
+        if (state == GameState.SplashScreen && Input.GetMouseButtonDown(0)) {
+            state = GameState.LevelScreen;
+            uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(false));
+            cameraAnimator.SetTrigger("SplashToLevel");
+            FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
+            FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
         }
+        else if (state == GameState.GameScreen) {
 
-        // if enemyManager is done with the current wave, advance to the next wave
-        if (enemyManager.waveDone) {
-            currentWave++;
+            if (currentHealth <= 0) {
+                gameOver = true;
+                Time.timeScale = 0;
+                uiManager.DisplayGameOverScreen();
+                audioSource.PlayOneShot(displayBoxClip);
+            }
 
-            if (currentWave >= maxWave) {
-                if (!gameOver) {
-                    gameOver = true;
-                    StartCoroutine(WinGame());
+            // if enemyManager is done with the current wave, advance to the next wave
+            if (enemyManager.waveDone) {
+                currentWave++;
+
+                if (currentWave >= maxWave) {
+                    if (!gameOver) {
+                        gameOver = true;
+                        StartCoroutine(WinGame());
+                    }
+                }
+                else {
+                    SpawnWave();
                 }
             }
-            else {
-                SpawnWave();
-            }
-        }
-        
-        // highlight any BuildableOctagons the mouse is hovering over that's not already built on
-        BuildableOctagon newHoveredOctagon = GetOctagonFromMouse();
-        if (hoveredOctagon != newHoveredOctagon) {
-            if (hoveredOctagon != null) {
-                hoveredOctagon.LowerOctagon();
-            }
-            if (newHoveredOctagon != null) {
-                newHoveredOctagon.RaiseOctagon();
-            }
-            hoveredOctagon = newHoveredOctagon;
-        }
 
-		
-		if (towerBuildPanel.gameObject.activeSelf){
-            // highlight any BuildPanelButtons the mouse is hovering over
-            towerBuildPanel.HighlightButton(GetBuildPanelFromMouse());
+            // highlight any BuildableOctagons the mouse is hovering over that's not already built on
+            BuildableOctagon newHoveredOctagon = GetOctagonFromMouse();
+            if (hoveredOctagon != newHoveredOctagon) {
+                if (hoveredOctagon != null) {
+                    hoveredOctagon.LowerOctagon();
+                }
+                if (newHoveredOctagon != null) {
+                    newHoveredOctagon.RaiseOctagon();
+                }
+                hoveredOctagon = newHoveredOctagon;
+            }
 
-            // enable/disable BuildPanelButtons based on money
-            for (int i = 0; i < buildableTowers.Count; i++) {
-                if (currentMoney >= buildableTowers[i].GetComponent<BasicTower>().cost) {
-                    towerBuildPanel.EnableButton(i, true);
-                } else {
-                    towerBuildPanel.EnableButton(i, false);
+
+            if (towerBuildPanel.gameObject.activeSelf) {
+                // highlight any BuildPanelButtons the mouse is hovering over
+                towerBuildPanel.HighlightButton(GetBuildPanelFromMouse());
+
+                // enable/disable BuildPanelButtons based on money
+                for (int i = 0; i < buildableTowers.Count; i++) {
+                    if (currentMoney >= buildableTowers[i].GetComponent<BasicTower>().cost) {
+                        towerBuildPanel.EnableButton(i, true);
+                    }
+                    else {
+                        towerBuildPanel.EnableButton(i, false);
+                    }
                 }
             }
         }
-
     }
 
     private void LateUpdate() {
-        if (gameOver) return;
+        if (state == GameState.GameScreen) {
 
-        // handle clicking events
-        if (Input.GetMouseButtonDown(0)) {
-            int buttonClicked = GetBuildPanelFromMouse();
-            // if we clicked on a BuildablePanel that's enabled, build that tower
-            if (buttonClicked >= 0) {
-                if (towerBuildPanel.IsButtonEnabled(buttonClicked)) {
-                    BuildTower(buttonClicked);
+            // handle clicking events
+            if (Input.GetMouseButtonDown(0)) {
+                int buttonClicked = GetBuildPanelFromMouse();
+                // if we clicked on a BuildablePanel that's enabled, build that tower
+                if (buttonClicked >= 0) {
+                    if (towerBuildPanel.IsButtonEnabled(buttonClicked)) {
+                        BuildTower(buttonClicked);
+                        towerBuildPanel.ActivatePanel(false);
+                    }
+                }
+                // if you clicked somewhere random or on the selected Octagon, deselect the selectedOctagon
+                else if (hoveredOctagon == null || hoveredOctagon == selectedOctagon) {
+                    //towerBuildPanel.transform.parent = null;
                     towerBuildPanel.ActivatePanel(false);
-                }
-            }
-            // if you clicked somewhere random or on the selected Octagon, deselect the selectedOctagon
-            else if (hoveredOctagon == null || hoveredOctagon == selectedOctagon) {
-                //towerBuildPanel.transform.parent = null;
-                towerBuildPanel.ActivatePanel(false);
-                // deselect any selectedOctagons
-                if (selectedOctagon) {
-                    selectedOctagon.SelectOctagon(false);
-                    selectedOctagon = null;
-                }
-                
-            }
-            // if the clicked on hoverOctagon is not yet selected or built on, select it
-            else if (hoveredOctagon && hoveredOctagon != selectedOctagon && !hoveredOctagon.IsBuiltOn()) {
-				towerBuildPanel.ActivatePanel(true);
-                towerBuildPanel.transform.SetParent(hoveredOctagon.transform, true);
-                //towerBuildPanel.transform.parent = hoveredOctagon.transform;
-                towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
-                // set the new selectedOctagon
-                if (selectedOctagon) {
-                    selectedOctagon.SelectOctagon(false);
-                }
-                selectedOctagon = hoveredOctagon;
-                selectedOctagon.SelectOctagon(true);
-            }
-        }
+                    // deselect any selectedOctagons
+                    if (selectedOctagon) {
+                        selectedOctagon.SelectOctagon(false);
+                        selectedOctagon = null;
+                    }
 
-        if (devMode) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                StartCoroutine(WinGame());
+                }
+                // if the clicked on hoverOctagon is not yet selected or built on, select it
+                else if (hoveredOctagon && hoveredOctagon != selectedOctagon && !hoveredOctagon.IsBuiltOn()) {
+                    towerBuildPanel.ActivatePanel(true);
+                    towerBuildPanel.transform.SetParent(hoveredOctagon.transform, true);
+                    //towerBuildPanel.transform.parent = hoveredOctagon.transform;
+                    towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
+                    // set the new selectedOctagon
+                    if (selectedOctagon) {
+                        selectedOctagon.SelectOctagon(false);
+                    }
+                    selectedOctagon = hoveredOctagon;
+                    selectedOctagon.SelectOctagon(true);
+                }
+            }
+
+            if (devMode) {
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    StartCoroutine(WinGame());
+                }
             }
         }
     }
@@ -251,26 +268,10 @@ public class GameManager : MonoBehaviour {
         }
 
         // do some stuff about finding the right list to add tower to
-        int axisIndex = FindObjectOfType<Scanner>().FindClosestAxisIndex(tower.transform.position);
+        int axisIndex = scanner.FindClosestAxisIndex(tower.transform.position);
         tower.axisIndex = axisIndex;
-        FindObjectOfType<Scanner>().AddTowerToList(towerObj);
+        scanner.AddTowerToList(towerObj);
     }
-
-
-	// returns the mouse position in world coordinates if mouse is within the ground plane
-	private Vector3 GetMousePositionInWorld(){
-        /*
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 100, groundLayerMask)){
-        	return new Vector3(hit.point.x, 0, hit.point.z);
-        }
-        else{
-        	//print("Error: cannot get mouse position");
-        	return Vector3.zero;
-        }*/
-        return Vector3.zero;
-	}
 
 
     // returns the BuildableOctagon that the mouse is currently hovering over
@@ -333,7 +334,7 @@ public class GameManager : MonoBehaviour {
 
     // given a position, return the point nearest ring to that position
     private Vector3 SnapToAxisPosition(Vector3 pos){
-		Vector3 newPos = FindObjectOfType<Scanner>().FindPointOnAxis(pos);
+		Vector3 newPos = scanner.FindPointOnAxis(pos);
 		return new Vector3(newPos.x, 0, newPos.z);
 	}
 
@@ -408,7 +409,7 @@ public class GameManager : MonoBehaviour {
 
         // pull the camera up
         audioSource.PlayOneShot(wooshClip);
-        FindObjectOfType<CameraMover>().MoveToGame(wooshClip.length);
+        cameraAnimator.SetTrigger("LevelToGame");
         FindObjectOfType<LevelSelector>().ShowLevelSelection(false);
         yield return new WaitForSeconds(wooshClip.length + 1);
 
@@ -429,21 +430,22 @@ public class GameManager : MonoBehaviour {
         uiManager.UpdateWave(currentWave, maxWave);
 
         yield return new WaitForSeconds(1);
-        FindObjectOfType<Scanner>().ShowScannerLine(true);
-        FindObjectOfType<Scanner>().SetRotate(true);
+        scanner.ShowScannerLine(true);
+        scanner.SetRotate(true);
+        state = GameState.GameScreen;
     }
     
 
 	private IEnumerator WinGame(){
 		// stop scanner in 1 rotation
-		StartCoroutine(FindObjectOfType<Scanner>().StopScannerRotation(1));
-		while(FindObjectOfType<Scanner>().rotating == true){
+		StartCoroutine(scanner.StopScannerRotation(1));
+		while(scanner.rotating == true){
 			yield return null;
 		}
 
 		// play the end game sound and zoom out
         uiManager.ShowGUI(false);
-        FindObjectOfType<CameraMover>().MoveToGameWin(youWinClip.length);
+        cameraAnimator.SetTrigger("GameToResult");
         audioSource.PlayOneShot(youWinClip);
 
         while (audioSource.isPlaying){

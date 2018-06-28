@@ -54,14 +54,6 @@ public class UIManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape)){
 			TogglePause();
 		}
-
-        if (state == MenuState.splashScreenClickable && Input.GetMouseButtonDown(0)) {
-            state = MenuState.levelMenu;
-            splashScreen.transform.GetChild(2).gameObject.SetActive(false);
-            FindObjectOfType<CameraMover>().MoveSplashToLevel(splashToLevelDuration);
-            FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
-            FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
-        }
 	}
 
 	public void UpdateHealth(int current, int max){
@@ -97,39 +89,23 @@ public class UIManager : MonoBehaviour {
 		gameWinBox.SetActive(true);
 	}
 
-    public void DisplaySplashScreen(bool b, float delay = 0f) {
-        if (b && delay > 0f) {
-            StartCoroutine(DisplaySplashScreenTimed(delay));
-        }
 
-        splashScreen.SetActive(b);
-
+    public IEnumerator DisplaySplashScreenWithDelay(bool b, float delay = 0f) {
         if (b) {
-            state = MenuState.splashScreen;
+            yield return new WaitForSeconds(delay);
+            splashScreen.SetActive(true);
+            splashScreen.GetComponent<Animator>().SetTrigger("FadeIn");
+
+            // sets the mode to splashScreen after the intro animation is done playing
+            yield return new WaitForEndOfFrame(); // wait for a frame for the animator state to kick in
+            yield return new WaitForSeconds(splashScreen.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+            FindObjectOfType<GameManager>().state = GameManager.GameState.SplashScreen;
+        }
+        else {
+            splashScreen.GetComponent<Animator>().SetTrigger("FadeOut");
         }
     }
-
-    private IEnumerator DisplaySplashScreenTimed(float delay) {
-        splashScreen.SetActive(true);
-        splashScreen.transform.GetChild(0).gameObject.SetActive(false);
-        splashScreen.transform.GetChild(1).gameObject.SetActive(false);
-        splashScreen.transform.GetChild(2).gameObject.SetActive(false);
-
-        float wait = 1.64f;
-
-        yield return new WaitForSeconds(delay + wait - 0.1f);
-        splashScreen.transform.GetChild(0).gameObject.SetActive(true);
-
-        yield return new WaitForSeconds(wait);
-        splashScreen.transform.GetChild(1).gameObject.SetActive(true);
-
-        yield return new WaitForSeconds(wait);
-        splashScreen.transform.GetChild(2).gameObject.SetActive(true);
-        state = MenuState.splashScreenClickable;
-
-        yield return new WaitForSeconds(wait);
-        splashScreen.transform.GetChild(2).GetComponent<Animator>().SetTrigger("Blink");
-    }
+   
 
 	public void RestartGame(){
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
