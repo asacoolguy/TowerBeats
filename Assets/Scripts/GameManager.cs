@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour {
     public string[] spawnPatterns;
     private string[] waveSpawnPatterns;
 
-    public enum GameState { Intro, SplashScreen, LevelScreen, GameScreen, PauseScreen, ResultScreen};
+    public enum GameState { SplashScreenDisplaying, SplashScreen, LevelScreen, GameScreen, PauseScreen, ResultScreenDisplaying, ResultScreen};
     public GameState state;
 
     public bool devMode;
@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour {
         
         if (devMode) {
             state = GameState.GameScreen;
+            currentMoney = 9999;
 
             waveSpawnPatterns = spawnPatterns[0].Split('\n');
             maxWave = waveSpawnPatterns.Length;
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour {
             scanner.SetRotate(true);
         }
         else {
-            state = GameState.Intro;
+            state = GameState.SplashScreenDisplaying;
             // initiate the camera with its splash screen
             uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(true, 2f));
             StartCoroutine(PlayThemeWithDelay(2f));
@@ -115,22 +116,7 @@ public class GameManager : MonoBehaviour {
 
 
     private void Update() {
-        if (state == GameState.SplashScreen && Input.GetMouseButtonDown(0)) {
-            state = GameState.LevelScreen;
-            uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(false));
-            cameraAnimator.SetTrigger("SplashToLevel");
-            FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
-            FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
-        }
-        else if (state == GameState.GameScreen) {
-
-            if (currentHealth <= 0) {
-                gameOver = true;
-                Time.timeScale = 0;
-                uiManager.DisplayGameOverScreen();
-                audioSource.PlayOneShot(displayBoxClip);
-            }
-
+        if (state == GameState.GameScreen) {
             // if enemyManager is done with the current wave, advance to the next wave
             if (enemyManager.waveDone) {
                 currentWave++;
@@ -177,8 +163,14 @@ public class GameManager : MonoBehaviour {
     }
 
     private void LateUpdate() {
-        if (state == GameState.GameScreen) {
-
+        if (state == GameState.SplashScreen && Input.GetMouseButtonDown(0)) {
+            state = GameState.LevelScreen;
+            uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(false));
+            cameraAnimator.SetTrigger("SplashToLevel");
+            FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
+            FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
+        }
+        else if (state == GameState.GameScreen) {
             // handle clicking events
             if (Input.GetMouseButtonDown(0)) {
                 int buttonClicked = GetBuildPanelFromMouse();
@@ -216,10 +208,13 @@ public class GameManager : MonoBehaviour {
             }
 
             if (devMode) {
-                if (Input.GetKeyDown(KeyCode.Space)) {
+                if (state == GameState.GameScreen && Input.GetKeyDown(KeyCode.Space)) {
                     StartCoroutine(WinGame());
                 }
             }
+        }
+        else if (state == GameState.ResultScreen && Input.GetMouseButtonDown(0)) {
+            StartCoroutine(ResetGame());
         }
     }
 
@@ -355,7 +350,8 @@ public class GameManager : MonoBehaviour {
 
 			audioSource.clip = youLoseClip;
 			audioSource.Play();
-			uiManager.DisplayGameOverScreen();
+            StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
+            state = GameState.ResultScreenDisplaying;
 			Time.timeScale = 0;
 		}
 	}
@@ -452,9 +448,9 @@ public class GameManager : MonoBehaviour {
 			yield return null;
 		}
 
-		// show the game win screen
-		uiManager.DisplayGameWinScreen(true);
-        audioSource.PlayOneShot(displayBoxClip);
+        // show the game win screen
+        state = GameState.ResultScreenDisplaying;
+        StartCoroutine(uiManager.DisplayGameResultScreen(true, true, totalScore));
 
 		Time.timeScale = 0;
 	}
@@ -464,6 +460,30 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(delay);
         menuAudioSource.Play();
         FindObjectOfType<CameraMover>().ToggleBlankScreen(false);
+    }
+
+
+    private IEnumerator ResetGame() {
+        Time.timeScale = 1;
+        state = GameState.LevelScreen;
+
+        // make all octagons fall and lower the central tower
+        FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Lower");
+        FindObjectOfType<CentralOctagon>().interactable = true;
+        foreach (BuildableOctagon oct in FindObjectsOfType<BuildableOctagon>()) {
+            StartCoroutine(oct.FallOff());
+        }
+        yield return new WaitForSeconds(2);
+        
+
+        uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
+        cameraAnimator.SetTrigger("ResultToLevel");
+        FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
+        FindObjectOfType<CentralOctagon>().interactable = false;
+        FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
+
+        scanner.DestroyAllTowers();
+        FindObjectOfType<EnemyPath>().ToggleAllPaths(false);
     }
 
 

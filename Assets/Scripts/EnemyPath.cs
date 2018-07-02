@@ -42,9 +42,7 @@ public class EnemyPath : MonoBehaviour {
 		}
 
         // turn off all paths at start
-        for (int i = 0; i < lights.Count; i++) {
-            TogglePath(i, false);
-        }
+        ToggleAllPaths(false);
 	}
 	
 
@@ -67,5 +65,12 @@ public class EnemyPath : MonoBehaviour {
 
         lineRenderers[index].enabled = b;
         lights[index].SetActive(b);
+    }
+
+
+    public void ToggleAllPaths(bool b) {
+        for (int i = 0; i < lights.Count; i++) {
+            TogglePath(i, b);
+        }
     }
 }

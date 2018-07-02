@@ -206,9 +206,12 @@ public class Scanner : MonoBehaviour {
 
 
 	// destory all towers. usually called during level transitions. 
-	public void ClearTowerList(){
+	public void DestroyAllTowers(){
 		for (int i = 0; i < axisNumber; i++){
-			towerLists[0].Clear();
+            for (int j = towerLists[i].Count - 1; j >= 0; j--) {
+                Destroy(towerLists[i][j]);
+            }
+			towerLists[i].Clear();
 		}
 	}
 

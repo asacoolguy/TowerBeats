@@ -196,5 +196,4 @@ public class EnemyManager : MonoBehaviour {
 			Destroy(allEnemies[i]);
 		}
 	}
-    
 }

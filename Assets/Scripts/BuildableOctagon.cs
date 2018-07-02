@@ -18,7 +18,7 @@ public class BuildableOctagon : Octagon {
     private float loweredTexStr, loweredGlowPow, tempTexStr, tempGlowPow;
 
     public AnimationCurve flyInCurve;
-    public float flyInHeight;
+    public float flyInHeight, fallOffHeight;
     public AudioClip flyInSound;
 
     private GameObject selector; // a collection of colliders that will allow this tower to be selected
@@ -76,6 +76,10 @@ public class BuildableOctagon : Octagon {
             float glowPow = GameManager.SmoothStep(loweredGlowPow, raisedGlowPow, t);
             mat.SetFloat("_MKGlowTexStrength", texStr);
             mat.SetFloat("_MKGlowPower", glowPow);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C)) {
+            StartCoroutine(FallOff());
         }
     }
 
@@ -160,5 +164,27 @@ public class BuildableOctagon : Octagon {
         }
 
         builtTower = tower;
+    }
+
+
+    public IEnumerator FallOff() {
+        SetColor(Color.gray);
+
+        Vector2 r = Random.insideUnitCircle;
+        Vector3 randomAxis = new Vector3(r.x, 0, r.y);
+        Vector3 initialPos = transform.position;
+        float t = 0;
+        Vector3 speed = new Vector3(0, -4.9f, 0);
+        while (t < 3) {
+            t += Time.deltaTime;
+            transform.position = initialPos + speed * t * t * t;
+            transform.rotation *= Quaternion.AngleAxis(20 * Time.deltaTime, randomAxis);
+            yield return null;
+        }
+
+        this.gameObject.SetActive(false);
+        transform.position = new Vector3(transform.position.x, flyInHeight, transform.position.z);
+        transform.localEulerAngles = new Vector3(0, 22.5f, 0);
+        print("done");
     }
 }

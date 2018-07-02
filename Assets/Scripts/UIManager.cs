@@ -10,21 +10,17 @@ public class UIManager : MonoBehaviour {
 	private Text healthText, moneyText, waveText;
 	public GameObject spawnButton;
 
-    // pop up windows
-    public GameObject gameOverBox, gameWinBox, controlPanel, statusPanel, wavePanel;
+    // screens/panels
+    public GameObject controlPanel, statusPanel, wavePanel, pauseScreen;
 
     // menus
-    public GameObject splashScreen, levelSelect;
-
-    public enum MenuState { splashScreen, splashScreenClickable, levelMenu, duringGame, pauseGame, gameWin };
-    private MenuState state;
-    public float splashToLevelDuration, levelToGameDuration;
+    public GameObject splashScreen, gameResultScreen;
 
     public List<AudioSource> pausedAudios;
 	private bool paused = false;
 
 	// UI sound effects
-	public AudioClip buttonEnable, buttonPress;
+	public AudioClip buttonEnable, buttonPress, bigThud, smallThud;
 
 
 	// Use this for initialization
@@ -32,9 +28,7 @@ public class UIManager : MonoBehaviour {
 		healthText = healthTextObj.GetComponent<Text>();
 		waveText = waveTextObj.GetComponent<Text>();
 		moneyText = moneyTextObj.GetComponent<Text>();
-		
-		gameOverBox.SetActive(false);
-		gameWinBox.SetActive(false);
+
         ShowGUI(false);
 		//pauseScreen = transform.Find("PauseScreen").gameObject;
 
@@ -72,11 +66,7 @@ public class UIManager : MonoBehaviour {
 	public void ShowSpawnButton(bool b){
 		spawnButton.gameObject.SetActive(b);
 	}
-
-	public void DisplayGameOverScreen(){
-		gameOverBox.SetActive(true);
-	}
-
+    
 
     public void ShowGUI(bool b) {
         controlPanel.gameObject.SetActive(b);
@@ -85,8 +75,24 @@ public class UIManager : MonoBehaviour {
     }
 
 
-	public void DisplayGameWinScreen(bool b){
-		gameWinBox.SetActive(true);
+	public IEnumerator DisplayGameResultScreen(bool display, bool winLose = true, float score = 0){
+        if (display) {
+            gameResultScreen.transform.GetChild(0).GetComponent<Text>().text = winLose ? "Level Complete" : "Level Failed";
+            gameResultScreen.transform.GetChild(1).GetComponent<Text>().text = "Score : " + score;
+
+            for (int i = 0; i < gameResultScreen.transform.childCount; i++) {
+                gameResultScreen.transform.GetChild(i).gameObject.SetActive(true);
+                GetComponent<AudioSource>().PlayOneShot(bigThud);
+                yield return new WaitForSecondsRealtime(1);
+            }
+            FindObjectOfType<GameManager>().state = GameManager.GameState.ResultScreen;
+
+        }
+        else {
+            for (int i = 0; i < gameResultScreen.transform.childCount; i++) {
+                gameResultScreen.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
 	}
 
 
@@ -132,7 +138,7 @@ public class UIManager : MonoBehaviour {
 		if (paused){
 			paused = false;
 			Time.timeScale = 1;
-			//pauseScreen.SetActive(false);
+			pauseScreen.SetActive(false);
 
 			// unpause all audiosources
 			foreach(AudioSource au in pausedAudios){
@@ -142,7 +148,7 @@ public class UIManager : MonoBehaviour {
 		else if (!paused){
 			paused = true;
 			Time.timeScale = 0;
-			//pauseScreen.SetActive(true);
+			pauseScreen.SetActive(true);
 
 			// pause all audiosources
 			pausedAudios = new List<AudioSource>();
