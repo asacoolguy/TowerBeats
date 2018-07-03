@@ -32,7 +32,7 @@ public abstract class BasicTower : MonoBehaviour {
         spotlight.intensity = lightMinIntensity;
         defaultYScale = transform.localScale.y;
 
-        powerFactor = FindObjectOfType<CentralOctagon>().GetPowerFactor();
+        powerFactor = FindObjectOfType<CentralPlatform>().GetPowerFactor();
 	}
 	
 
@@ -64,8 +64,8 @@ public abstract class BasicTower : MonoBehaviour {
         // enable the lights
         StartCoroutine(BoostLight());
         // boost the color and size of the octagon
-        transform.parent.GetComponent<BuildableOctagon>().BoostColor();
-        transform.parent.GetComponent<BuildableOctagon>().BoostSize(popYScale, popTime);
+        transform.parent.GetComponent<TowerPlatform>().BoostColor();
+        transform.parent.GetComponent<TowerPlatform>().BoostSize(popYScale, popTime);
     }
 
 

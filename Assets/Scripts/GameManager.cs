@@ -15,11 +15,11 @@ public class GameManager : MonoBehaviour {
     private Scanner scanner;
 
 	public List<GameObject> buildableTowers;
-	public GameObject homeBase;
+	public GameObject homeBase, CentralPlatform;
     public LayerMask selectableLayerMask;
     
-    private BuildableOctagon hoveredOctagon = null;
-    private BuildableOctagon selectedOctagon = null;
+    private TowerPlatform hoveredPlatform = null;
+    private TowerPlatform selectedPlatform = null;
     public GameObject towerBuildPanelPrefab;
     private BuildPanel towerBuildPanel = null;
     public GameObject buildableGrid;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
     private bool gameOver = false;
 
     // Audio clips used for the game
-	private AudioClip youWinClip, youLoseClip, displayBoxClip, gameStartClip, wooshClip;
+	private AudioClip youWinClip, youLoseClip, gameStartClip, wooshClip;
 
     // string used for spawning
     [TextArea(3, 10)]
@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour {
 		// set up music clips
 		youWinClip = FindObjectOfType<MusicDatabase>().youWinClip;
 		youLoseClip = FindObjectOfType<MusicDatabase>().youLoseClip;
-        displayBoxClip = FindObjectOfType<MusicDatabase>().displayBoxClip;
         gameStartClip = FindObjectOfType<MusicDatabase>().gameStartClip;
         wooshClip = FindObjectOfType<MusicDatabase>().wooshClip;
 
@@ -79,9 +78,9 @@ public class GameManager : MonoBehaviour {
             AOEIndicator.transform.parent = towerBuildPanel.transform;
             AOEIndicator.transform.localPosition = Vector3.zero;
             AOEIndicator.SetActive(false);
-            towerBuildPanel.GetComponent<BuildPanel>().AOEIndicators.Add(AOEIndicator);
+            towerBuildPanel.AOEIndicators.Add(AOEIndicator);
             // set up the right cost
-            towerBuildPanel.GetComponent<BuildPanel>().SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
+            towerBuildPanel.SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
         }
 
         
@@ -93,12 +92,12 @@ public class GameManager : MonoBehaviour {
             maxWave = waveSpawnPatterns.Length;
 
             for (int i = 0; i < buildableGrid.transform.childCount; i++) {
-                BuildableOctagon oct = buildableGrid.transform.GetChild(i).GetComponent<BuildableOctagon>();
+                TowerPlatform oct = buildableGrid.transform.GetChild(i).GetComponent<TowerPlatform>();
                 oct.gameObject.SetActive(true);
             }
 
-            FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
-            FindObjectOfType<CentralOctagon>().interactable = true;
+            FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Rise");
+            FindObjectOfType<CentralPlatform>().interactable = true;
 
             uiManager.ShowGUI(true);
             cameraAnimator.SetTrigger("SkipToGame");
@@ -132,16 +131,16 @@ public class GameManager : MonoBehaviour {
                 }
             }
 
-            // highlight any BuildableOctagons the mouse is hovering over that's not already built on
-            BuildableOctagon newHoveredOctagon = GetOctagonFromMouse();
-            if (hoveredOctagon != newHoveredOctagon) {
-                if (hoveredOctagon != null) {
-                    hoveredOctagon.LowerOctagon();
+            // highlight any TowerPlatforms the mouse is hovering over that's not already built on
+            TowerPlatform newHoveredPlatform = GetPlatformFromMouse();
+            if (hoveredPlatform != newHoveredPlatform) {
+                if (hoveredPlatform != null) {
+                    hoveredPlatform.LowerPlatform();
                 }
-                if (newHoveredOctagon != null) {
-                    newHoveredOctagon.RaiseOctagon();
+                if (newHoveredPlatform != null) {
+                    newHoveredPlatform.RaisePlatform();
                 }
-                hoveredOctagon = newHoveredOctagon;
+                hoveredPlatform = newHoveredPlatform;
             }
 
 
@@ -167,7 +166,7 @@ public class GameManager : MonoBehaviour {
             state = GameState.LevelScreen;
             uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(false));
             cameraAnimator.SetTrigger("SplashToLevel");
-            FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
+            FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Rise");
             FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
         }
         else if (state == GameState.GameScreen) {
@@ -181,29 +180,29 @@ public class GameManager : MonoBehaviour {
                         towerBuildPanel.ActivatePanel(false);
                     }
                 }
-                // if you clicked somewhere random or on the selected Octagon, deselect the selectedOctagon
-                else if (hoveredOctagon == null || hoveredOctagon == selectedOctagon) {
+                // if you clicked somewhere random or on the selected Octagon, deselect the selectedPlatform
+                else if (hoveredPlatform == null || hoveredPlatform == selectedPlatform) {
                     //towerBuildPanel.transform.parent = null;
                     towerBuildPanel.ActivatePanel(false);
                     // deselect any selectedOctagons
-                    if (selectedOctagon) {
-                        selectedOctagon.SelectOctagon(false);
-                        selectedOctagon = null;
+                    if (selectedPlatform) {
+                        selectedPlatform.SelectPlatform(false);
+                        selectedPlatform = null;
                     }
 
                 }
                 // if the clicked on hoverOctagon is not yet selected or built on, select it
-                else if (hoveredOctagon && hoveredOctagon != selectedOctagon && !hoveredOctagon.IsBuiltOn()) {
+                else if (hoveredPlatform && hoveredPlatform != selectedPlatform && !hoveredPlatform.IsBuiltOn()) {
                     towerBuildPanel.ActivatePanel(true);
-                    towerBuildPanel.transform.SetParent(hoveredOctagon.transform, true);
-                    //towerBuildPanel.transform.parent = hoveredOctagon.transform;
+                    towerBuildPanel.transform.SetParent(hoveredPlatform.transform, true);
+                    //towerBuildPanel.transform.parent = hoveredPlatform.transform;
                     towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
-                    // set the new selectedOctagon
-                    if (selectedOctagon) {
-                        selectedOctagon.SelectOctagon(false);
+                    // set the new selectedPlatform
+                    if (selectedPlatform) {
+                        selectedPlatform.SelectPlatform(false);
                     }
-                    selectedOctagon = hoveredOctagon;
-                    selectedOctagon.SelectOctagon(true);
+                    selectedPlatform = hoveredPlatform;
+                    selectedPlatform.SelectPlatform(true);
                 }
             }
 
@@ -226,7 +225,7 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 
-        if (selectedOctagon == null) {
+        if (selectedPlatform == null) {
             print("no octagon selected");
             return;
         }
@@ -235,22 +234,22 @@ public class GameManager : MonoBehaviour {
         GameObject towerObj = Instantiate(buildableTowers[input]) as GameObject;
 		towerObj.SetActive(true);
 
-        // parent it to selectedOctagon and set its position and rotation accordingly
+        // parent it to selectedPlatform and set its position and rotation accordingly
         // TODO: need better way of handling tower positioning
         Vector3 pos = Vector3.zero;
         if (input == 0)  pos = new Vector3(0, 4.4f, 0);
         else if (input == 1) pos = new Vector3(0, 3.6f, 0);
         else if (input == 2) pos = new Vector3(0, 5f, 0);
-        float angle = 180f - GameManager.GetAngleFromVectorSpecial(-selectedOctagon.transform.position);
+        float angle = 180f - GameManager.GetAngleFromVectorSpecial(-selectedPlatform.transform.position);
         towerObj.transform.eulerAngles = new Vector3(0, angle, 0);
-        towerObj.transform.SetParent(selectedOctagon.transform, true);
+        towerObj.transform.SetParent(selectedPlatform.transform, true);
         towerObj.transform.localPosition = pos;
 
-        // link tower to selectedOctagon, change its color and deselect it
-        selectedOctagon.SetBuiltTower(towerObj);
-        selectedOctagon.SetColor(towerBuildPanel.towerColors[input]);
-        selectedOctagon.SelectOctagon(false);
-        selectedOctagon = null;
+        // link tower to selectedPlatform, change its color and deselect it
+        selectedPlatform.SetBuiltTower(towerObj);
+        selectedPlatform.SetColor(towerBuildPanel.towerColors[input]);
+        selectedPlatform.SelectPlatform(false);
+        selectedPlatform = null;
 
         BasicTower tower = towerObj.GetComponent<BasicTower>();
         tower.ToggleOutline(false);
@@ -269,24 +268,24 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    // returns the BuildableOctagon that the mouse is currently hovering over
+    // returns the TowerPlatform that the mouse is currently hovering over
     // only valid for built towers
-    private BuildableOctagon GetOctagonFromMouse() {
+    private TowerPlatform GetPlatformFromMouse() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
-            // trace parents until we find the object with BuildableOctagon script on it
+            // trace parents until we find the object with TowerPlatform script on it
             // in case ray tracing hit a child component of a tower
             GameObject current = hit.collider.gameObject;
             //print("initial hit is " + current.name);
-            while (current.GetComponent<BuildableOctagon>() == null &&
+            while (current.GetComponent<TowerPlatform>() == null &&
                 current.transform.parent != null) {
                 current = current.transform.parent.gameObject;
             }
             //print("final hit is " + current.name);
-            if (current.GetComponent<BuildableOctagon>() != null) {
+            if (current.GetComponent<TowerPlatform>() != null) {
                 //print("script returned");
-                return current.GetComponent<BuildableOctagon>();
+                return current.GetComponent<TowerPlatform>();
             }
             //print("no script");
         }
@@ -334,7 +333,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	// called when the homeBase takes damage. summons a restart button when game over.
+	// called when the homeBase takes damage. spawns a restart button when game over.
 	// passes the UI stuff to the UIManager
 	public void TakeDamage(int i){
 		currentHealth -= i;
@@ -350,8 +349,8 @@ public class GameManager : MonoBehaviour {
 
 			audioSource.clip = youLoseClip;
 			audioSource.Play();
-            StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
             state = GameState.ResultScreenDisplaying;
+            StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
 			Time.timeScale = 0;
 		}
 	}
@@ -412,7 +411,7 @@ public class GameManager : MonoBehaviour {
         // fly the panels in and show the GUI
         float flyInDuration = 1f;
         for (int i = 0; i < buildableGrid.transform.childCount; i++) {
-            BuildableOctagon oct = buildableGrid.transform.GetChild(i).GetComponent<BuildableOctagon>();
+            TowerPlatform oct = buildableGrid.transform.GetChild(i).GetComponent<TowerPlatform>();
             oct.gameObject.SetActive(true);
             StartCoroutine(oct.FlyIn(flyInDuration));
             yield return new WaitForSeconds(0.2f);
@@ -468,9 +467,9 @@ public class GameManager : MonoBehaviour {
         state = GameState.LevelScreen;
 
         // make all octagons fall and lower the central tower
-        FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Lower");
-        FindObjectOfType<CentralOctagon>().interactable = true;
-        foreach (BuildableOctagon oct in FindObjectsOfType<BuildableOctagon>()) {
+        FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Lower");
+        FindObjectOfType<CentralPlatform>().interactable = true;
+        foreach (TowerPlatform oct in FindObjectsOfType<TowerPlatform>()) {
             StartCoroutine(oct.FallOff());
         }
         yield return new WaitForSeconds(2);
@@ -478,8 +477,8 @@ public class GameManager : MonoBehaviour {
 
         uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
         cameraAnimator.SetTrigger("ResultToLevel");
-        FindObjectOfType<CentralOctagon>().GetComponent<Animator>().SetTrigger("Rise");
-        FindObjectOfType<CentralOctagon>().interactable = false;
+        FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Rise");
+        FindObjectOfType<CentralPlatform>().interactable = false;
         FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
 
         scanner.DestroyAllTowers();

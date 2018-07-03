@@ -68,11 +68,7 @@ public class Scanner : MonoBehaviour {
         rotationPerSong = measurePerSong / measurePerRotation;
 		anglePerAxis = 360f / axisNumber;
 		rotationSpeed = 360f / audios[0].clip.length * rotationPerSong;
-        print(rotationSpeed);
-
-		// initiate the axes and disble them
-		//SetupAxis();
-		//EnableAllAxes(false);
+        
 
 		// initialize towerLists
 		towerLists = new List<GameObject>[axisNumber];

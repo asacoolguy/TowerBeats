@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
-    Controls behavior of grid units where towers could be guild
+    Controls behavior of OctPlatform where towers could be guild
     Has a selector to detect mouse hover selection
     Keeps internal states to correctly respond to mouse clicks
  */
  
 
-public class BuildableOctagon : Octagon {
+public class TowerPlatform : OctPlatform {
     private GameObject builtTower;
     
     private float texStrDecaySpeed, glowPowDecaySpeed;
@@ -52,7 +52,7 @@ public class BuildableOctagon : Octagon {
 
         // show AOEIndicator if necessary
         if (IsBuiltOn()){
-            bool highlighted = (status == OctagonStatus.raising || status == OctagonStatus.raised);
+            bool highlighted = (status == PlatformStatus.raising || status == PlatformStatus.raised);
             builtTower.transform.Find("AOEIndicator").gameObject.SetActive(highlighted);
 
             if (highlighted) {
@@ -84,8 +84,8 @@ public class BuildableOctagon : Octagon {
     }
 
 
-    public override void RaiseOctagon() {
-        status = OctagonStatus.raising;
+    public override void RaisePlatform() {
+        status = PlatformStatus.raising;
         if (IsBuiltOn()) {
             tempTexStr = mat.GetFloat("_MKGlowTexStrength");
             tempGlowPow = mat.GetFloat("_MKGlowPower");
@@ -185,6 +185,5 @@ public class BuildableOctagon : Octagon {
         this.gameObject.SetActive(false);
         transform.position = new Vector3(transform.position.x, flyInHeight, transform.position.z);
         transform.localEulerAngles = new Vector3(0, 22.5f, 0);
-        print("done");
     }
 }

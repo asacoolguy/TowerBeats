@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114766795552677248}
   - component: {fileID: 82038645999811902}
   m_Layer: 17
-  m_Name: OctGridTower
+  m_Name: TowerPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

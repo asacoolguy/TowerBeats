@@ -38,7 +38,7 @@ public class LaserTower : BasicTower {
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
 
-        powerFactor = FindObjectOfType<CentralOctagon>().GetPowerFactor();
+        powerFactor = FindObjectOfType<CentralPlatform>().GetPowerFactor();
     }
 	
 	// Update is called once per frame

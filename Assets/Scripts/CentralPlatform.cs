@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // TODO: this entire class is borrowed functions. refactor it to extend other classes instead
-public class CentralOctagon : Octagon {
+public class CentralPlatform : OctPlatform {
     public Color mainColor, disabledColor;
     private int level;
     public LayerMask hitLayers;
@@ -60,10 +60,10 @@ public class CentralOctagon : Octagon {
         }
         else {
             if (highlighted) {
-                RaiseOctagon();
+                RaisePlatform();
             }
             else {
-                LowerOctagon();
+                LowerPlatform();
             }
 
             upgradeButton.transform.Find("Description").gameObject.SetActive(buttonHighlighted);
@@ -76,7 +76,7 @@ public class CentralOctagon : Octagon {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 1000, hitLayers)) {
-            // trace parents until we find the object with BuildableOctagon script on it
+            // trace parents until we find the object with TowerPlatform script on it
             // in case ray tracing hit a child component of a tower
             GameObject current = hit.collider.gameObject;
             //print("initial hit is " + current.name);

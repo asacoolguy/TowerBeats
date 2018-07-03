@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // base class for any Octagon platforms that can be highlighted and selected
-// extended by CentralOctagon and BuildableOctagon
+// extended by CentralPlatform and TowerPlatform
 
-public class Octagon : MonoBehaviour {
-    protected enum OctagonStatus { lowering, raising, lowered, raised };
+public class OctPlatform : MonoBehaviour {
+    protected enum PlatformStatus { lowering, raising, lowered, raised };
 
     // variables for highlighted
-    protected OctagonStatus status;
+    protected PlatformStatus status;
     public float raisedYPos;
     protected float loweredYPos;
     public float moveTime;
@@ -19,7 +19,7 @@ public class Octagon : MonoBehaviour {
     protected void Awake() {
         loweredYPos = transform.localPosition.y;
         currentMoveTime = 0f;
-        status = OctagonStatus.lowered;
+        status = PlatformStatus.lowered;
         selected = false;
     }
 
@@ -27,19 +27,19 @@ public class Octagon : MonoBehaviour {
 
     protected void Update () {
         // raise or lower the tower
-        if (status == OctagonStatus.lowering) {
+        if (status == PlatformStatus.lowering) {
             currentMoveTime -= Time.deltaTime;
             if (currentMoveTime < 0) {
                 currentMoveTime = 0;
-                status = OctagonStatus.lowered;
+                status = PlatformStatus.lowered;
             }
         }
-        else if (status == OctagonStatus.raising) {
+        else if (status == PlatformStatus.raising) {
             currentMoveTime += Time.deltaTime;
             if (currentMoveTime > moveTime) {
                 currentMoveTime = moveTime;
-                if (status == OctagonStatus.raising) {
-                    status = OctagonStatus.raised;
+                if (status == PlatformStatus.raising) {
+                    status = PlatformStatus.raised;
                 }
             }
         }
@@ -50,24 +50,24 @@ public class Octagon : MonoBehaviour {
     }
 
 
-    public virtual void RaiseOctagon() {
-        status = OctagonStatus.raising;
+    public virtual void RaisePlatform() {
+        status = PlatformStatus.raising;
     }
 
-    public virtual void LowerOctagon() {
+    public virtual void LowerPlatform() {
         if (!selected) {
-            status = OctagonStatus.lowering;
+            status = PlatformStatus.lowering;
         }
     }
 
-    public void SelectOctagon(bool b) {
+    public void SelectPlatform(bool b) {
         if (b) {
             selected = true;
-            RaiseOctagon();
+            RaisePlatform();
         }
         else {
             selected = false;
-            LowerOctagon();
+            LowerPlatform();
         }
     }
 }
