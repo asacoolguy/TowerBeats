@@ -6,6 +6,7 @@ public abstract class BasicTower : MonoBehaviour {
 	protected AudioSource audioSource;
 	protected Animator anim;
     public int cost;
+    public int towerType = 0;
 	public int axisIndex = 0;
     public bool refundable = false;
     public float powerFactor = 1f;

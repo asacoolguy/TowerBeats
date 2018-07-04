@@ -11,159 +11,134 @@ using UnityEngine;
 /// </summary>
 
 public class Scanner : MonoBehaviour {
-	// variables for tracking rotations
-    public int measurePerSong;
-	private int measurePerRotation;
-    private int rotationPerSong;
+    // variables for song info
+    private int songPhasesTotal, songPhasesCurrent;
+    public int axisNumber;
+    private float anglePerAxis;
+    public float measurePerSong;
+    private float timePerSong, timePerRotation, timePerMeasure;
+    private float rotationPerSong;
 	private float rotationSpeed;
 	public bool rotating;
-    private int measuresPlayed;
+    private float measuresPlayed;
+	
 
-	// variables for spawning axes
-	public float minAxisLength = 10f;
-	public float maxAxisLength = 50f;
-	public int axisNumber = 8;
-	private float anglePerAxis;
-	[SerializeField]private List<GameObject> axes;
 	// organized by axes. towerLists[1] returns all towers on axes 1.
 	[SerializeField]private List<GameObject>[] towerLists; 
-	public GameObject axisOBj;
 
-	// variables for tracking current rotation amount
-	private int nextAxisToPlay;
-	private float totalRotateAmount;
-	private float fullRotationCounter;
-	private float measureRotationCounter;
+    // variables for tracking current rotation amount
+    private float rotationTimeCounter, measureTimeCounter;
     private int rotationTillFinish = 0;
 
 	// variables for kepeing track of audio
-	private AudioSource[] audios;
+	private AudioSource myAudio;
 	private AudioClip[] audioClips;
 	public int numAudioPlaying = 1;
 
+    // data for ScannerLineObjects
+    public ScannerLineData[] lineData;
+    private GameObject scannerLineObj;
+    private List<ScannerLine> scannerLines;
 
-	// full rotation events
-	public delegate void RotationCounter();
+    // full rotation events
+    public delegate void RotationCounter();
 	public static event RotationCounter RotatedFully;  // scanner has made a full rotation
 	public static event RotationCounter RotatedMeasure;  // scanner has rotated a single measure
 
 
 	// Use this for initialization
 	void Awake () {
-		// set up audio clips
-		audioClips = FindObjectOfType<MusicDatabase>().scannerClips;
-
-		// set up the audio sources
-		audios = new AudioSource[4];
-		audios[0] = transform.Find("audio0").GetComponent<AudioSource>();
-		audios[0].clip = audioClips[Random.Range(0, 2)];
-		audios[1] = transform.Find("audio1").GetComponent<AudioSource>();
-		audios[1].clip = audioClips[Random.Range(2, 4)];
-		audios[2] = transform.Find("audio2").GetComponent<AudioSource>();
-		audios[2].clip = audioClips[Random.Range(4, 6)];
-		audios[3] = transform.Find("audio3").GetComponent<AudioSource>();
-		audios[3].clip = audioClips[Random.Range(6, 8)];
-
-        measurePerRotation = 2;
-        rotationPerSong = measurePerSong / measurePerRotation;
-		anglePerAxis = 360f / axisNumber;
-		rotationSpeed = 360f / audios[0].clip.length * rotationPerSong;
-        
-
-		// initialize towerLists
-		towerLists = new List<GameObject>[axisNumber];
-		for (int i = 0; i < axisNumber; i++){
-			towerLists[i] = new List<GameObject>();
-		}
-
-		// initialize variables for rotation counting
-		ResetRotation();
-
+        SetupScanner();
+        ResetScannerLines();
         ShowScannerLine(false);
-        // start rotation after some delay
-        //StartCoroutine(StartScannerRotation(2f));
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (rotating){
-			// rotate the scanner (and its underlying line)
-			transform.Rotate(new Vector3(0, 0, - rotationSpeed * Time.deltaTime));
+            // rotate the scannerLines
+            foreach (ScannerLine line in scannerLines) {
+                line.Rotate();
+                line.TriggerTowers(towerLists[line.nextAxisToPlay]);
+            }
 
-			float angleSpun = Mathf.Abs(- rotationSpeed * Time.deltaTime);
-			// when the angle's right, play everything on the axis
-			totalRotateAmount += angleSpun;
-			if (totalRotateAmount > anglePerAxis){
-				for (int i = 0; i < towerLists[nextAxisToPlay].Count; i++){
-					if (towerLists[nextAxisToPlay][i] != null){
-						towerLists[nextAxisToPlay][i].GetComponent<BasicTower>().PlaySound();
-					}
-				}
-				nextAxisToPlay++;
-				totalRotateAmount -= anglePerAxis;
-				nextAxisToPlay %= axisNumber;
-			}
-
-			// after each full rotation, run the FullyRotated event 
-			fullRotationCounter += angleSpun;
-			if (fullRotationCounter > 360f){
+            // call the RotatedFully event after full rotation
+            rotationTimeCounter += Time.deltaTime;
+			if (rotationTimeCounter > timePerRotation){
 				RotatedFully();
-                measuresPlayed += measurePerRotation;
+                measuresPlayed += lineData[0].measurePerRotation;
                 if (measuresPlayed >= measurePerSong) {
                     PlayMusic(true);
                     measuresPlayed = 0;
                 }
-                fullRotationCounter -= 360f;
+                rotationTimeCounter -= timePerRotation;
                 if (rotationTillFinish > 0) rotationTillFinish--;
 			}
 
-			// move enemies after each measure
-			measureRotationCounter += angleSpun;
-			if (measureRotationCounter > (360f / measurePerRotation)){
+			// call the RotatedMeasure event after each measure rotated
+			measureTimeCounter += Time.deltaTime;
+			if (measureTimeCounter > timePerMeasure){
 				RotatedMeasure();
-				measureRotationCounter -= (360f / measurePerRotation);
+                measureTimeCounter -= timePerMeasure;
 			}
 		}
 	}
 
 
-	// sets up the correct number of axis based on axisNumber
-	private void SetupAxis(){
-		axes = new List<GameObject>();
+	public void SetupScanner(){
+        // set up audio and do some math
+        {
+            
+            audioClips = FindObjectOfType<MusicDatabase>().scannerClips;
+            myAudio = GetComponent<AudioSource>();
 
-		float sectionAngle = anglePerAxis * Mathf.Deg2Rad;
-		for (int i = 0; i < axisNumber; i++){
-			float angle = sectionAngle * i;
-			GameObject line = Instantiate(axisOBj, this.transform) as GameObject;
-			Vector3 direction = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
-			Vector3 newEndPoint = direction.normalized * maxAxisLength;
-			Vector3 newStartPoint = direction.normalized * minAxisLength;
-			line.GetComponent<LineRenderer>().SetPosition(0, newStartPoint);
-			line.GetComponent<LineRenderer>().SetPosition(1, newEndPoint);
-			axes.Add(line);
-		}
-	}
+            songPhasesTotal = audioClips.Length;
+            songPhasesCurrent = 0;
+
+            anglePerAxis = 360f / 16f;
+            timePerSong = audioClips[0].length;
+            rotationPerSong = measurePerSong / lineData[0].measurePerRotation;
+            timePerRotation = timePerSong / rotationPerSong;
+            timePerMeasure = timePerRotation / lineData[0].measurePerRotation;
+            rotationTimeCounter = measureTimeCounter = 0;
+        }
+
+        // initialize towerLists
+        {
+            towerLists = new List<GameObject>[axisNumber];
+            for (int i = 0; i < axisNumber; i++) {
+                towerLists[i] = new List<GameObject>();
+            }
+        }
+
+        // initialize scannerLines
+        {
+            scannerLineObj = transform.Find("ScannerLine").gameObject;
+            scannerLines = new List<ScannerLine>();
+
+            scannerLines.Add(scannerLineObj.GetComponent<ScannerLine>());
+            scannerLines[0].SetupValues(lineData[0], 360f / timePerSong * rotationPerSong, anglePerAxis);
+
+            for (int i = 1; i < lineData.Length; i++) {
+                GameObject newLineObj = Instantiate(scannerLineObj, transform);
+                ScannerLine newLine = newLineObj.GetComponent<ScannerLine>();
+                
+                rotationPerSong = measurePerSong / lineData[i].measurePerRotation;
+                rotationSpeed = 360f / audioClips[i].length * rotationPerSong;
+                newLine.SetupValues(lineData[i], rotationSpeed, anglePerAxis);
+
+                scannerLines.Add(newLine);
+            }
+        }
+    }
 
 
-	// set the rotation of the scanner back to 12 o'clock
-	// reset all rotation-based counters
-	public void ResetRotation(){
-		nextAxisToPlay = 4;
-	    totalRotateAmount = anglePerAxis;
-		fullRotationCounter = measureRotationCounter = 0;
-	   	transform.localEulerAngles = new Vector3(-90, -90, 0);
-	}
-
-
-	// given a point in space, find the closest point on the closest axis
-	public Vector3 FindPointOnAxis(Vector3 pos){
-		int axisIndex = FindClosestAxisIndex(pos);
-		Vector3 cloestAxis = axes[axisIndex].GetComponent<LineRenderer>().GetPosition(1);
-
-		// return the cloest axis's unit vector scaled by pos's magnitude
-		Vector3 result = cloestAxis.normalized * Mathf.Clamp(pos.magnitude, minAxisLength, maxAxisLength);
-		return result;
-	}
+    // resets the rotation of all scanner lines
+    public void ResetScannerLines() {
+        foreach (ScannerLine line in scannerLines) {
+            line.ResetValues();
+        }
+    }
 
 
 	// given a point in 3D world space, find the index of the axis cloest to that point
@@ -193,14 +168,6 @@ public class Scanner : MonoBehaviour {
     }
 
 
-	// show or hide all axes
-	public void EnableAllAxes(bool b){
-		foreach (GameObject obj in axes){
-			obj.SetActive(b);
-		}
-	}
-
-
 	// destory all towers. usually called during level transitions. 
 	public void DestroyAllTowers(){
 		for (int i = 0; i < axisNumber; i++){
@@ -212,25 +179,17 @@ public class Scanner : MonoBehaviour {
 	}
 
 
-	// enables or disables rotation. 
+	// starts or stops rotation. 
 	public void SetRotate(bool b){
 		rotating = b;
-		if (b){
-            PlayMusic(true);
-			transform.Find("ScannerLine").gameObject.SetActive(true);
-            transform.Find("Spotlight").gameObject.SetActive(true);
-        }
-		else{
-            PlayMusic(false);
-			transform.Find("ScannerLine").gameObject.SetActive(false);
-            transform.Find("Spotlight").gameObject.SetActive(false);
-        }
+        PlayMusic(b);
+        ShowScannerLine(b);
 	}
 
     
     // returns the time required for a whole rotation
     public float GetRotationTime() {
-        return audios[0].clip.length;
+        return timePerSong;
     }
 
 	// stops scanner from rotating in r rotations 
@@ -251,20 +210,17 @@ public class Scanner : MonoBehaviour {
 
 
     public void ShowScannerLine(bool b) {
-        transform.Find("Spotlight").gameObject.SetActive(b);
-        transform.Find("ScannerLine").gameObject.SetActive(b);
+        foreach (ScannerLine line in scannerLines) {
+            line.gameObject.SetActive(b);
+        }
     }
 
     private void PlayMusic(bool b) {
         if (b) {
-            for (int i = 0; i < numAudioPlaying; i++) {
-                audios[i].PlayOneShot(audios[i].clip);
-            }
+            myAudio.PlayOneShot(audioClips[songPhasesCurrent]);
         }
         else {
-            for (int i = 0; i < audios.Length; i++) {
-                audios[i].Stop();
-            }
+            myAudio.Stop();
         }
         
     }

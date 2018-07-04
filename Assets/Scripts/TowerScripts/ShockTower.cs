@@ -14,6 +14,8 @@ public class ShockTower : BasicTower {
 
 		base.Start();
 
+        towerType = 1;
+
 		// randomly pick a sound
 		int r = Random.Range(0, soundClips.Length);
 		audioSource.clip = soundClips[r];

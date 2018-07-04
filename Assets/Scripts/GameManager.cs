@@ -326,13 +326,6 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    // given a position, return the point nearest ring to that position
-    private Vector3 SnapToAxisPosition(Vector3 pos){
-		Vector3 newPos = scanner.FindPointOnAxis(pos);
-		return new Vector3(newPos.x, 0, newPos.z);
-	}
-
-
 	// called when the homeBase takes damage. spawns a restart button when game over.
 	// passes the UI stuff to the UIManager
 	public void TakeDamage(int i){

@@ -36,6 +36,8 @@ public class SniperTower : BasicTower {
         spotlight.intensity = lightMinIntensity;
 
         powerFactor = FindObjectOfType<CentralPlatform>().GetPowerFactor();
+
+        towerType = 2;
     }
 	
 	// Update is called once per frame

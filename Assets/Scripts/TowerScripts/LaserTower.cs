@@ -39,6 +39,8 @@ public class LaserTower : BasicTower {
         spotlight.intensity = lightMinIntensity;
 
         powerFactor = FindObjectOfType<CentralPlatform>().GetPowerFactor();
+
+        towerType = 3;
     }
 	
 	// Update is called once per frame
