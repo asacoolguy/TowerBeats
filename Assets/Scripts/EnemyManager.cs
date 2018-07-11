@@ -8,12 +8,13 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour {
 	public GameObject[] enemyPrefabs;
-    public GameObject[] spawnPoints;
-	public float spawnDistance = 40f;
-	public float enemyAltitude = 10f;
+    public float heightOffset;
+    public float spawnMeasureCount;
+    private float currentMeasureCount;
 
 	private List<GameObject> allEnemies;
-    private string[] spawnInstruction;
+    private string[] waveSpawnInstructions; // spawn instructions for the entire stage
+    private string[] spawnInstruction; // specifc instructions for a certain wave
     private int instructionIndex;
     private int waitCounter;
 	private bool isSpawning;
@@ -28,23 +29,22 @@ public class EnemyManager : MonoBehaviour {
 
 
 	void OnEnable() {
-		Scanner.RotatedFully += SpawnEnemies;
+        //Scanner.RotatedFully += SpawnEnemies;
+        Scanner.RotatedMeasure += IncreaseSpawnEnemyCounter;
 		Scanner.RotatedMeasure += MoveEnemies;
 	}
 
 
 	void OnDisable() {
-		Scanner.RotatedFully -= SpawnEnemies;
-		Scanner.RotatedMeasure -= MoveEnemies;
+        //Scanner.RotatedFully -= SpawnEnemies;
+        Scanner.RotatedMeasure -= IncreaseSpawnEnemyCounter;
+        Scanner.RotatedMeasure -= MoveEnemies;
 	}
 
 
 	void Start() {
 		allEnemies = new List<GameObject>();
         enemyPath = FindObjectOfType<EnemyPath>();
-        instructionIndex = -1;
-        waitCounter = 0;
-        isSpawning = waveDone = false;
 	}
 
 	void LateUpdate() {
@@ -62,22 +62,43 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 
-	// set up the correct spawn info for the current wave
-	public void SetupWave(string pattern) {
-		isSpawning = true;
-        waveDone = false;
+    public void SetSpawnInstruction(string[] instruction) {
+        waveSpawnInstructions = instruction;
+        instructionIndex = -1;
+        waitCounter = 0;
+        currentMeasureCount = 0;
+        isSpawning = waveDone = false;
+    }
 
-        if (pattern.Contains("B")) {
-            pathsUsed = 2;
+
+	// set up the correct spawn info for the current wave
+	public void SetupWave(int waveNum) {
+        if (waveNum < waveSpawnInstructions.Length) {
+
+            isSpawning = true;
+            waveDone = false;
+
+            if (waveSpawnInstructions[waveNum].Contains("B")) {
+                pathsUsed = 2;
+            }
+            else if (waveSpawnInstructions[waveNum].Contains("A")) {
+                pathsUsed = 1;
+            }
+
+
+            spawnInstruction = waveSpawnInstructions[waveNum].Split(';');
+            instructionIndex = 0;
+            waitCounter = 1; // wait a round before actually spawning
         }
-        else if (pattern.Contains("A")) {
-            pathsUsed = 1;
+    }
+
+
+    public void IncreaseSpawnEnemyCounter() {
+        currentMeasureCount++;
+        if (currentMeasureCount >= spawnMeasureCount) {
+            SpawnEnemies();
+            currentMeasureCount = 0;
         }
-        
-        
-        spawnInstruction = pattern.Split(';');
-        instructionIndex = 0;
-        waitCounter = 1; // wait a round before actually spawning
     }
 
 
@@ -147,14 +168,13 @@ public class EnemyManager : MonoBehaviour {
 
     // spawns enemies with some random delay
     private IEnumerator SpawnEnemies(int spawnPointIndex, int enemyType, int spawnAmount) {
-        Vector3 offset = Vector3.zero;
         for (int i = 0; i < spawnAmount; i++) {
-            Vector3 position = spawnPoints[spawnPointIndex].transform.position + offset;
+            Vector3 position = enemyPath.GetSpawnPoint(spawnPointIndex);
             GameObject enemyObj = Instantiate(enemyPrefabs[enemyType], 
                                               position, 
                                               Quaternion.identity, 
                                               this.transform);
-            enemyObj.GetComponent<Enemy>().SetPath(enemyPath.GetPath(spawnPointIndex));
+            enemyObj.GetComponent<Enemy>().SetPath(enemyPath.GetPath(spawnPointIndex), heightOffset);
             allEnemies.Add(enemyObj);
             
             //offset -= new Vector3(0, Random.Range(3f, 7f), 0);

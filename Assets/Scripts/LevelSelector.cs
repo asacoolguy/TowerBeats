@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class LevelSelector : MonoBehaviour {
     private List<GameObject> levels;
-    private int currentLevel;
+    private int currentLevel, numberOfLevels;
     private bool canSelectLevels = false;
     private bool startStagePressed = false;
-
-    public int numberOfLevels;
+    
     public AnimationCurve changeLevelRotationCurve, changeLevelScaleCurve;
     public float rotationTime;
     public GameObject centralTower;
@@ -22,10 +21,14 @@ public class LevelSelector : MonoBehaviour {
 	}
 	
 
-	private void Update () {}
-
-
     public void ResetMenu() {
+        ResetMenu(1);
+    }
+
+
+    public void ResetMenu(int levelNum) {
+        numberOfLevels = levelNum;
+
         // delete all previous levels but 1
         // TODO: make sure this works
         bool saved = true;
@@ -54,6 +57,10 @@ public class LevelSelector : MonoBehaviour {
             newMenu.transform.localEulerAngles = new Vector3(0, angle, 0);
             newMenu.transform.localPosition = new Vector3(dist * Mathf.Sin(angle * Mathf.Deg2Rad), 0, dist * Mathf.Cos(angle * Mathf.Deg2Rad));
             newMenu.transform.Find("LevelText").GetComponent<Text>().text = "LEVEL\n" + (i + 1);
+            // disable buttons for new Levels
+            foreach (Button b in newMenu.GetComponentsInChildren<Button>()) {
+                b.enabled = false;
+            }
 
             levels.Add(newMenu);
         }
@@ -79,7 +86,8 @@ public class LevelSelector : MonoBehaviour {
 
     public void EnableLevelSelection() {
         canSelectLevels = true;
-        //centralTower.GetComponent<Animator>().enabled = false;
+        startStagePressed = false;
+        centralTower.GetComponent<Animator>().enabled = false;
     }
 
 
@@ -95,6 +103,10 @@ public class LevelSelector : MonoBehaviour {
         for(int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(b);
         }
+
+        if (!b) {
+            centralTower.GetComponent<Animator>().enabled = true;
+        }
     }
 
 
@@ -104,6 +116,11 @@ public class LevelSelector : MonoBehaviour {
         float startRotation = centralTower.transform.localEulerAngles.y;
         float startScale = centralTower.transform.localScale.x;
         bool finished = false;
+
+        // disable the button script on all level sides
+        foreach (Button b in GetComponentsInChildren<Button>()) {
+            b.enabled = false;
+        }
 
         while (currentTime <= rotationTime) {
             float t = currentTime / rotationTime;
@@ -124,5 +141,10 @@ public class LevelSelector : MonoBehaviour {
 
         canSelectLevels = true;
         currentLevel += 1 * direction;
+
+        // enable the button script on the current level
+        foreach(Button b in levels[currentLevel].GetComponentsInChildren<Button>()) {
+            b.enabled = true;
+        }
     }
 }

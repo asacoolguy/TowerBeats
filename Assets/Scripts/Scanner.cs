@@ -42,15 +42,15 @@ public class Scanner : MonoBehaviour {
 
     // full rotation events
     public delegate void RotationCounter();
-	public static event RotationCounter RotatedFully;  // scanner has made a full rotation
+	//public static event RotationCounter RotatedFully;  // scanner has made a full rotation
 	public static event RotationCounter RotatedMeasure;  // scanner has rotated a single measure
 
 
 	// Use this for initialization
-	void Awake () {
-        SetupScanner();
-        ResetScannerLines();
-        ShowScannerLine(false);
+	void Start () {
+        //SetupScanner();
+        //ResetScannerLines();
+        //ShowScannerLine(false);
 	}
 
 	// Update is called once per frame
@@ -65,7 +65,7 @@ public class Scanner : MonoBehaviour {
             // call the RotatedFully event after full rotation
             rotationTimeCounter += Time.deltaTime;
 			if (rotationTimeCounter > timePerRotation){
-				RotatedFully();
+				//RotatedFully();
                 measuresPlayed += lineData[0].measurePerRotation;
                 if (measuresPlayed >= measurePerSong) {
                     PlayMusic(true);
@@ -88,8 +88,7 @@ public class Scanner : MonoBehaviour {
 	public void SetupScanner(){
         // set up audio and do some math
         {
-            
-            audioClips = FindObjectOfType<MusicDatabase>().scannerClips;
+            audioClips = FindObjectOfType<GameManager>().GetMusicDatabase().scannerClips;
             myAudio = GetComponent<AudioSource>();
 
             songPhasesTotal = audioClips.Length;

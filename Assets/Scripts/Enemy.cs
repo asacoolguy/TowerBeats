@@ -134,7 +134,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 
-    public void SetPath(List<Vector3> input) {
+    public void SetPath(List<Vector3> input, float heightOffset) {
         nextTarget = 1;
         ascending = true;
         path = new List<Vector3>();
@@ -142,7 +142,12 @@ public class Enemy : MonoBehaviour {
         // randomize the path a little
         Vector3 offset = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), Random.Range(-3f, 3f));
         for (int i = 0; i < input.Count; i++) {
-            path.Add(input[i] + offset);
+            if (i == 0) {
+                path.Add(input[i] + offset);
+            }
+            else {
+                path.Add(input[i] + offset + new Vector3(0, heightOffset, 0));
+            }
         }
     }
 }

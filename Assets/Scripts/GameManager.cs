@@ -22,22 +22,20 @@ public class GameManager : MonoBehaviour {
     private TowerPlatform selectedPlatform = null;
     public GameObject towerBuildPanelPrefab;
     private BuildPanel towerBuildPanel = null;
-    public GameObject buildableGrid;
+    public GameObject towerPlatformGrid, towerPlatformPrefab;
+    private LevelDatabase levelData;
 
 	// game progression variables
 	public float currentScore = 0;
 	public float totalScore = 0;
 	public int startingMoney, maxHealth;
 	private int currentMoney, maxWave, currentWave, currentHealth;
+    public int currentStage;
     private bool gameOver = false;
 
     // Audio clips used for the game
 	private AudioClip youWinClip, youLoseClip, gameStartClip, wooshClip;
 
-    // string used for spawning
-    [TextArea(3, 10)]
-    public string[] spawnPatterns;
-    private string[] waveSpawnPatterns;
 
     public enum GameState { SplashScreenDisplaying, SplashScreen, LevelScreen, GameScreen, PauseScreen, ResultScreenDisplaying, ResultScreen};
     public GameState state;
@@ -48,11 +46,12 @@ public class GameManager : MonoBehaviour {
 	private void Start () {
 		Time.timeScale = 1;
 
-		// set up music clips
-		youWinClip = FindObjectOfType<MusicDatabase>().youWinClip;
-		youLoseClip = FindObjectOfType<MusicDatabase>().youLoseClip;
-        gameStartClip = FindObjectOfType<MusicDatabase>().gameStartClip;
-        wooshClip = FindObjectOfType<MusicDatabase>().wooshClip;
+        // set up music clips
+        levelData = GetComponent<LevelDatabase>();
+		youWinClip = levelData.youWinClip;
+		youLoseClip = levelData.youLoseClip;
+        gameStartClip = levelData.gameStartClip;
+        wooshClip = levelData.wooshClip;
 
         // set up some variables
         audioSource = transform.Find("Audio").GetComponent<AudioSource>();
@@ -60,6 +59,7 @@ public class GameManager : MonoBehaviour {
 		currentHealth = maxHealth;
         currentMoney = startingMoney;
 		currentWave = 0;
+        currentStage = -1; // -1 for no currentStage
 
         // set up references to essential scripts
         enemyManager = FindObjectOfType<EnemyManager>();
@@ -83,17 +83,34 @@ public class GameManager : MonoBehaviour {
             towerBuildPanel.SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
         }
 
+        // load the level menu
+        FindObjectOfType<LevelSelector>().ResetMenu(levelData.levelData.Length);
         
         if (devMode) {
             state = GameState.GameScreen;
             currentMoney = 9999;
 
-            waveSpawnPatterns = spawnPatterns[0].Split('\n');
-            maxWave = waveSpawnPatterns.Length;
+            // load info for stage 1
+            int testStage = 1;
+            currentStage = testStage;
 
-            for (int i = 0; i < buildableGrid.transform.childCount; i++) {
-                TowerPlatform oct = buildableGrid.transform.GetChild(i).GetComponent<TowerPlatform>();
-                oct.gameObject.SetActive(true);
+            // load scannerMusic info
+            scanner.SetupScanner();
+
+            // load the spawn info 
+            string[] spawnPatterns = levelData.levelData[testStage].spawnPattern.Split('\n');
+            maxWave = levelData.levelData[testStage].totalWaves;
+            enemyManager.SetSpawnInstruction(spawnPatterns);
+
+            // load the enemy path info
+            for (int j = 0; j < levelData.levelData[testStage].enemyPaths.Length; j++) {
+                FindObjectOfType<EnemyPath>().AddNewPath(levelData.levelData[testStage].enemyPaths[j]);
+            }
+
+            // load the towerPlatform info
+            for (int j = 0; j < levelData.levelData[testStage].platformData.Length; j++) {
+                GameObject obj = Instantiate(towerPlatformPrefab, levelData.levelData[testStage].platformData[j], towerPlatformPrefab.transform.rotation, towerPlatformGrid.transform);
+                obj.SetActive(true);
             }
 
             FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Rise");
@@ -352,7 +369,7 @@ public class GameManager : MonoBehaviour {
 	public void SpawnWave() {
 		uiManager.ShowSpawnButton(false);
 
-        enemyManager.SetupWave(waveSpawnPatterns[currentWave]);
+        enemyManager.SetupWave(currentWave);
 
 		uiManager.UpdateWave(currentWave, maxWave);
 	}
@@ -379,10 +396,33 @@ public class GameManager : MonoBehaviour {
     }
 
 
+    // load relevant stage info and set up the scene
     public void LoadStage(int i) {
+        currentStage = i;
+
+        // reset all scores and stuff
+        currentHealth = maxHealth;
+        currentMoney = startingMoney;
+        currentScore = totalScore = 0;
+        currentWave = 0;
+
+        // load scannerMusic info
+        scanner.SetupScanner();
+
         // load the spawn info 
-        waveSpawnPatterns = spawnPatterns[i].Split('\n');
-        maxWave = waveSpawnPatterns.Length;
+        string[] spawnPatterns = levelData.levelData[i].spawnPattern.Split('\n');
+        maxWave = levelData.levelData[i].totalWaves;
+        enemyManager.SetSpawnInstruction(spawnPatterns);
+
+        // load the enemy path info
+        for(int j = 0; j < levelData.levelData[i].enemyPaths.Length; j++) {
+            FindObjectOfType<EnemyPath>().AddNewPath(levelData.levelData[i].enemyPaths[j]);
+        }
+
+        // load the towerPlatform info
+        for (int j = 0; j < levelData.levelData[i].platformData.Length; j++) {
+            Instantiate(towerPlatformPrefab, levelData.levelData[i].platformData[j], towerPlatformPrefab.transform.rotation, towerPlatformGrid.transform);
+        }
 
         // start the camera movement and get panels to fly in
         StartCoroutine(StartGame());
@@ -403,8 +443,8 @@ public class GameManager : MonoBehaviour {
 
         // fly the panels in and show the GUI
         float flyInDuration = 1f;
-        for (int i = 0; i < buildableGrid.transform.childCount; i++) {
-            TowerPlatform oct = buildableGrid.transform.GetChild(i).GetComponent<TowerPlatform>();
+        for (int i = 0; i < towerPlatformGrid.transform.childCount; i++) {
+            TowerPlatform oct = towerPlatformGrid.transform.GetChild(i).GetComponent<TowerPlatform>();
             oct.gameObject.SetActive(true);
             StartCoroutine(oct.FlyIn(flyInDuration));
             yield return new WaitForSeconds(0.2f);
@@ -479,6 +519,16 @@ public class GameManager : MonoBehaviour {
     }
 
 
+    public MusicDatabase GetMusicDatabase() {
+        if (currentStage >= 0) {
+            return levelData.levelData[currentStage].musicData;
+        }
+        else {
+            return null;
+        }
+    }
+
+
     public static float GetAngleFromVector(Vector3 pos){
 		float angle = 0f;
 
@@ -545,4 +595,5 @@ public class GameManager : MonoBehaviour {
         t = t * t * t + 1;
         return start + (end - start) * t;
     }
+
 }

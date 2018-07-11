@@ -10,7 +10,7 @@ public class ShockTower : BasicTower {
 	// Use this for initialization
 	new void Start () {
 		// set up audio clips
-		soundClips = FindObjectOfType<MusicDatabase>().greenTowerClips;
+		soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().shockTowerClips;
 
 		base.Start();
 

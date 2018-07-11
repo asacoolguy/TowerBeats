@@ -14,7 +14,7 @@ public class SniperTower : BasicTower {
 	// Use this for initialization
 	new void Start () {
 		// set up audio clips
-		soundClips = FindObjectOfType<MusicDatabase>().blueTowerClips;
+		soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().sniperTowerClips;
 
 		audioSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();

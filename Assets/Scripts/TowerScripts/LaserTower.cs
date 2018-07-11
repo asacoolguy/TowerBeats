@@ -14,7 +14,7 @@ public class LaserTower : BasicTower {
 	// Use this for initialization
 	new void Start () {
 		// set up audio clips
-		soundClips = FindObjectOfType<MusicDatabase>().goldTowerClips;
+		soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().laserTowerClips;
 
 		audioSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
