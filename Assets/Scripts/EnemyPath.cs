@@ -82,7 +82,7 @@ public class EnemyPath : MonoBehaviour {
 
 
     public void ToggleAllPaths(bool b) {
-        for (int i = 0; i < lights.Count; i++) {
+        for (int i = 0; i < pathObjs.Count; i++) {
             TogglePath(i, b);
         }
     }

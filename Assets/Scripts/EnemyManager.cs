@@ -110,9 +110,9 @@ public class EnemyManager : MonoBehaviour {
         }
 
         // turn on the paths we're using
-        for (int i = 0; i < pathsUsed; i++) {
-            enemyPath.TogglePath(i, true);
-        }
+        //for (int i = 0; i < pathsUsed; i++) {
+        //    enemyPath.TogglePath(i, true);
+        //}
 
         // if we've read all instructions, then we are done spawning.
         if (instructionIndex >= spawnInstruction.Length) {

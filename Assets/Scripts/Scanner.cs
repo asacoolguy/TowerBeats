@@ -88,15 +88,18 @@ public class Scanner : MonoBehaviour {
 	public void SetupScanner(){
         // set up audio and do some math
         {
-            audioClips = FindObjectOfType<GameManager>().GetMusicDatabase().scannerClips;
+            MusicDatabase musicData = FindObjectOfType<GameManager>().GetMusicDatabase();
+            audioClips = musicData.scannerClips;
             myAudio = GetComponent<AudioSource>();
 
             songPhasesTotal = audioClips.Length;
             songPhasesCurrent = 0;
 
+            measurePerSong = musicData.measurePerSong;
+            lineData[0].measurePerRotation = measurePerSong;
             anglePerAxis = 360f / 16f;
             timePerSong = audioClips[0].length;
-            rotationPerSong = measurePerSong / lineData[0].measurePerRotation;
+            rotationPerSong = 1;
             timePerRotation = timePerSong / rotationPerSong;
             timePerMeasure = timePerRotation / lineData[0].measurePerRotation;
             rotationTimeCounter = measureTimeCounter = 0;
@@ -122,8 +125,8 @@ public class Scanner : MonoBehaviour {
                 GameObject newLineObj = Instantiate(scannerLineObj, transform);
                 ScannerLine newLine = newLineObj.GetComponent<ScannerLine>();
                 
-                rotationPerSong = measurePerSong / lineData[i].measurePerRotation;
-                rotationSpeed = 360f / audioClips[i].length * rotationPerSong;
+                float rotationPerSong = measurePerSong / lineData[i].measurePerRotation;
+                float rotationSpeed = 360f / audioClips[i].length * rotationPerSong;
                 newLine.SetupValues(lineData[i], rotationSpeed, anglePerAxis);
 
                 scannerLines.Add(newLine);

@@ -8,14 +8,19 @@ using UnityEngine;
 /// </summary>
 
 public class GameManager : MonoBehaviour {
+    // other scripts
 	private UIManager uiManager;
     private EnemyManager enemyManager;
 	private AudioSource audioSource, menuAudioSource;
     private Animator cameraAnimator;
     private Scanner scanner;
+    private CentralPlatform centralPlatform;
+    private LevelSelector levelSelector;
+    private EnemyPath enemyPath;
 
+    // references to objs
 	public List<GameObject> buildableTowers;
-	public GameObject homeBase, CentralPlatform;
+	public GameObject homeBase, enemyPathObj;
     public LayerMask selectableLayerMask;
     
     private TowerPlatform hoveredPlatform = null;
@@ -47,7 +52,7 @@ public class GameManager : MonoBehaviour {
 		Time.timeScale = 1;
 
         // set up music clips
-        levelData = GetComponent<LevelDatabase>();
+        levelData = transform.Find("LevelDatabase").GetComponent<LevelDatabase>();
 		youWinClip = levelData.youWinClip;
 		youLoseClip = levelData.youLoseClip;
         gameStartClip = levelData.gameStartClip;
@@ -66,6 +71,9 @@ public class GameManager : MonoBehaviour {
         uiManager = FindObjectOfType<UIManager>();
         cameraAnimator = FindObjectOfType<CameraMover>().GetComponent<Animator>();
         scanner = FindObjectOfType<Scanner>();
+        centralPlatform = homeBase.transform.parent.GetComponent<CentralPlatform>();
+        levelSelector = homeBase.transform.parent.GetComponentInChildren<LevelSelector>();
+        enemyPath = enemyPathObj.GetComponent<EnemyPath>();
 
         // make the tower build panel and give it the correct AOEIndicators
         towerBuildPanel = Instantiate(towerBuildPanelPrefab).GetComponent<BuildPanel>();
@@ -84,7 +92,7 @@ public class GameManager : MonoBehaviour {
         }
 
         // load the level menu
-        FindObjectOfType<LevelSelector>().ResetMenu(levelData.levelData.Length);
+        levelSelector.ResetMenu(levelData.levelData.Length);
         
         if (devMode) {
             state = GameState.GameScreen;
@@ -98,35 +106,35 @@ public class GameManager : MonoBehaviour {
             scanner.SetupScanner();
 
             // load the spawn info 
-            string[] spawnPatterns = levelData.levelData[testStage].spawnPattern.Split('\n');
-            maxWave = levelData.levelData[testStage].totalWaves;
-            enemyManager.SetSpawnInstruction(spawnPatterns);
+            //string[] spawnPatterns = levelData.levelData[testStage].spawnPattern.Split('\n');
+            //maxWave = levelData.levelData[testStage].totalWaves;
+            //enemyManager.SetSpawnInstruction(spawnPatterns);
 
-            // load the enemy path info
-            for (int j = 0; j < levelData.levelData[testStage].enemyPaths.Length; j++) {
-                FindObjectOfType<EnemyPath>().AddNewPath(levelData.levelData[testStage].enemyPaths[j]);
-            }
+            //// load the enemy path info
+            //for (int j = 0; j < levelData.levelData[testStage].enemyPaths.Length; j++) {
+            //    enemyPath.AddNewPath(levelData.levelData[testStage].enemyPaths[j]);
+            //}
 
-            // load the towerPlatform info
-            for (int j = 0; j < levelData.levelData[testStage].platformData.Length; j++) {
-                GameObject obj = Instantiate(towerPlatformPrefab, levelData.levelData[testStage].platformData[j], towerPlatformPrefab.transform.rotation, towerPlatformGrid.transform);
-                obj.SetActive(true);
-            }
+            //// load the towerPlatform info
+            //for (int j = 0; j < levelData.levelData[testStage].platformData.Length; j++) {
+            //    GameObject obj = Instantiate(towerPlatformPrefab, levelData.levelData[testStage].platformData[j], towerPlatformPrefab.transform.rotation, towerPlatformGrid.transform);
+            //    obj.SetActive(true);
+            //}
 
-            FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Rise");
-            FindObjectOfType<CentralPlatform>().interactable = true;
+            //centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
+            //centralPlatform.interactable = true;
 
-            uiManager.ShowGUI(true);
-            cameraAnimator.SetTrigger("SkipToGame");
+            //uiManager.ShowGUI(true);
+            //cameraAnimator.SetTrigger("SkipToGame");
 
-            scanner.ShowScannerLine(true);
-            scanner.SetRotate(true);
+            //scanner.ShowScannerLine(true);
+            //scanner.SetRotate(true);
         }
         else {
             state = GameState.SplashScreenDisplaying;
             // initiate the camera with its splash screen
-            uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(true, 2f));
-            StartCoroutine(PlayThemeWithDelay(2f));
+            //uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(true, 2f));
+            //StartCoroutine(PlayThemeWithDelay(2f));
         }
     }
 
@@ -183,8 +191,8 @@ public class GameManager : MonoBehaviour {
             state = GameState.LevelScreen;
             uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(false));
             cameraAnimator.SetTrigger("SplashToLevel");
-            FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Rise");
-            FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
+            centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
+            levelSelector.ShowLevelSelection(true);
         }
         else if (state == GameState.GameScreen) {
             // handle clicking events
@@ -416,7 +424,7 @@ public class GameManager : MonoBehaviour {
 
         // load the enemy path info
         for(int j = 0; j < levelData.levelData[i].enemyPaths.Length; j++) {
-            FindObjectOfType<EnemyPath>().AddNewPath(levelData.levelData[i].enemyPaths[j]);
+            enemyPath.AddNewPath(levelData.levelData[i].enemyPaths[j]);
         }
 
         // load the towerPlatform info
@@ -438,7 +446,7 @@ public class GameManager : MonoBehaviour {
         // pull the camera up
         audioSource.PlayOneShot(wooshClip);
         cameraAnimator.SetTrigger("LevelToGame");
-        FindObjectOfType<LevelSelector>().ShowLevelSelection(false);
+        levelSelector.ShowLevelSelection(false);
         yield return new WaitForSeconds(wooshClip.length + 1);
 
         // fly the panels in and show the GUI
@@ -461,6 +469,7 @@ public class GameManager : MonoBehaviour {
         scanner.ShowScannerLine(true);
         scanner.SetRotate(true);
         state = GameState.GameScreen;
+        enemyPath.ToggleAllPaths(true);
     }
     
 
@@ -500,8 +509,8 @@ public class GameManager : MonoBehaviour {
         state = GameState.LevelScreen;
 
         // make all octagons fall and lower the central tower
-        FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Lower");
-        FindObjectOfType<CentralPlatform>().interactable = true;
+        centralPlatform.GetComponent<Animator>().SetTrigger("Lower");
+        centralPlatform.interactable = true;
         foreach (TowerPlatform oct in FindObjectsOfType<TowerPlatform>()) {
             StartCoroutine(oct.FallOff());
         }
@@ -510,12 +519,12 @@ public class GameManager : MonoBehaviour {
 
         uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
         cameraAnimator.SetTrigger("ResultToLevel");
-        FindObjectOfType<CentralPlatform>().GetComponent<Animator>().SetTrigger("Rise");
-        FindObjectOfType<CentralPlatform>().interactable = false;
-        FindObjectOfType<LevelSelector>().ShowLevelSelection(true);
+        centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
+        centralPlatform.interactable = false;
+        levelSelector.ShowLevelSelection(true);
 
         scanner.DestroyAllTowers();
-        FindObjectOfType<EnemyPath>().ToggleAllPaths(false);
+        enemyPath.ToggleAllPaths(false);
     }
 
 
