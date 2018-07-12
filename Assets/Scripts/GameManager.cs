@@ -49,21 +49,21 @@ public class GameManager : MonoBehaviour {
 
 
 	private void Start () {
-		Time.timeScale = 1;
+        Time.timeScale = 1;
 
         // set up music clips
         levelData = transform.Find("LevelDatabase").GetComponent<LevelDatabase>();
-		youWinClip = levelData.youWinClip;
-		youLoseClip = levelData.youLoseClip;
+        youWinClip = levelData.youWinClip;
+        youLoseClip = levelData.youLoseClip;
         gameStartClip = levelData.gameStartClip;
         wooshClip = levelData.wooshClip;
 
         // set up some variables
         audioSource = transform.Find("Audio").GetComponent<AudioSource>();
         menuAudioSource = transform.Find("MenuAudio").GetComponent<AudioSource>();
-		currentHealth = maxHealth;
+        currentHealth = maxHealth;
         currentMoney = startingMoney;
-		currentWave = 0;
+        currentWave = 0;
         currentStage = -1; // -1 for no currentStage
 
         // set up references to essential scripts
@@ -92,49 +92,49 @@ public class GameManager : MonoBehaviour {
         }
 
         // load the level menu
-        levelSelector.ResetMenu(levelData.levelData.Length);
-        
+        levelSelector.SetupMenu(levelData.levelData.Length);
+
         if (devMode) {
             state = GameState.GameScreen;
             currentMoney = 9999;
 
             // load info for stage 1
-            int testStage = 1;
+            int testStage = 0;
             currentStage = testStage;
 
             // load scannerMusic info
             scanner.SetupScanner();
 
-            // load the spawn info 
-            //string[] spawnPatterns = levelData.levelData[testStage].spawnPattern.Split('\n');
-            //maxWave = levelData.levelData[testStage].totalWaves;
-            //enemyManager.SetSpawnInstruction(spawnPatterns);
+            // load the spawn info
+            string[] spawnPatterns = levelData.levelData[testStage].spawnPattern.Split('\n');
+            maxWave = levelData.levelData[testStage].totalWaves;
+            enemyManager.SetSpawnInstruction(spawnPatterns);
 
-            //// load the enemy path info
-            //for (int j = 0; j < levelData.levelData[testStage].enemyPaths.Length; j++) {
-            //    enemyPath.AddNewPath(levelData.levelData[testStage].enemyPaths[j]);
-            //}
+            // load the enemy path info
+            for (int j = 0; j < levelData.levelData[testStage].enemyPaths.Length; j++) {
+                enemyPath.AddNewPath(levelData.levelData[testStage].enemyPaths[j]);
+            }
 
-            //// load the towerPlatform info
-            //for (int j = 0; j < levelData.levelData[testStage].platformData.Length; j++) {
-            //    GameObject obj = Instantiate(towerPlatformPrefab, levelData.levelData[testStage].platformData[j], towerPlatformPrefab.transform.rotation, towerPlatformGrid.transform);
-            //    obj.SetActive(true);
-            //}
+            // load the towerPlatform info
+            for (int j = 0; j < levelData.levelData[testStage].platformData.Length; j++) {
+                GameObject obj = Instantiate(towerPlatformPrefab, levelData.levelData[testStage].platformData[j], towerPlatformPrefab.transform.rotation, towerPlatformGrid.transform);
+                obj.SetActive(true);
+            }
 
-            //centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
-            //centralPlatform.interactable = true;
+            centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
+            centralPlatform.interactable = true;
 
-            //uiManager.ShowGUI(true);
-            //cameraAnimator.SetTrigger("SkipToGame");
+            uiManager.ShowGUI(true);
+            cameraAnimator.SetTrigger("SkipToGame");
 
-            //scanner.ShowScannerLine(true);
-            //scanner.SetRotate(true);
+            scanner.ShowScannerLine(true);
+            scanner.SetRotate(true);
         }
         else {
             state = GameState.SplashScreenDisplaying;
             // initiate the camera with its splash screen
-            //uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(true, 2f));
-            //StartCoroutine(PlayThemeWithDelay(2f));
+            uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(true, 2f));
+            StartCoroutine(PlayThemeWithDelay(2f));
         }
     }
 
@@ -244,11 +244,11 @@ public class GameManager : MonoBehaviour {
 
 
     // select the right tower to build using index
-    public void BuildTower(int input){
-		if (input > buildableTowers.Count){
-			print ("index out of bounds");
-			return;
-		}
+    public void BuildTower(int input) {
+        if (input > buildableTowers.Count) {
+            print("index out of bounds");
+            return;
+        }
 
         if (selectedPlatform == null) {
             print("no octagon selected");
@@ -257,12 +257,12 @@ public class GameManager : MonoBehaviour {
 
         // build the tower
         GameObject towerObj = Instantiate(buildableTowers[input]) as GameObject;
-		towerObj.SetActive(true);
+        towerObj.SetActive(true);
 
         // parent it to selectedPlatform and set its position and rotation accordingly
         // TODO: need better way of handling tower positioning
         Vector3 pos = Vector3.zero;
-        if (input == 0)  pos = new Vector3(0, 4.4f, 0);
+        if (input == 0) pos = new Vector3(0, 4.4f, 0);
         else if (input == 1) pos = new Vector3(0, 3.6f, 0);
         else if (input == 2) pos = new Vector3(0, 5f, 0);
         float angle = 180f - GameManager.GetAngleFromVectorSpecial(-selectedPlatform.transform.position);
@@ -279,7 +279,7 @@ public class GameManager : MonoBehaviour {
         BasicTower tower = towerObj.GetComponent<BasicTower>();
         tower.ToggleOutline(false);
         tower.MakeBuilt();
-        
+
         // deduct money if needed
         if (!tower.refundable) {
             currentMoney -= tower.cost;
@@ -298,7 +298,7 @@ public class GameManager : MonoBehaviour {
     private TowerPlatform GetPlatformFromMouse() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
+        if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
             // trace parents until we find the object with TowerPlatform script on it
             // in case ray tracing hit a child component of a tower
             GameObject current = hit.collider.gameObject;
@@ -326,7 +326,7 @@ public class GameManager : MonoBehaviour {
     private int GetBuildPanelFromMouse() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
+        if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
             // trace parents until we find the object with BuildPanel script on it
             // in case ray tracing hit a child component of a tower
             GameObject current = hit.collider.gameObject;
@@ -351,30 +351,30 @@ public class GameManager : MonoBehaviour {
     }
 
 
-	// called when the homeBase takes damage. spawns a restart button when game over.
-	// passes the UI stuff to the UIManager
-	public void TakeDamage(int i){
-		currentHealth -= i;
-		uiManager.UpdateHealth(currentHealth, maxHealth);
-		homeBase.GetComponent<AudioSource>().Play();
-		homeBase.GetComponent<Animator>().SetTrigger("TakeDamage");
+    // called when the homeBase takes damage. spawns a restart button when game over.
+    // passes the UI stuff to the UIManager
+    public void TakeDamage(int i) {
+        currentHealth -= i;
+        uiManager.UpdateHealth(currentHealth, maxHealth);
+        homeBase.GetComponent<AudioSource>().Play();
+        homeBase.GetComponent<Animator>().SetTrigger("TakeDamage");
 
-		if (currentHealth <= 0){
-			// game over!
-			foreach (AudioSource a in FindObjectsOfType<AudioSource>()){
-				a.Stop();
-			}
+        if (currentHealth <= 0) {
+            // game over!
+            foreach (AudioSource a in FindObjectsOfType<AudioSource>()) {
+                a.Stop();
+            }
 
-			audioSource.clip = youLoseClip;
-			audioSource.Play();
+            audioSource.clip = youLoseClip;
+            audioSource.Play();
             state = GameState.ResultScreenDisplaying;
             StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
-			Time.timeScale = 0;
-		}
-	}
+            Time.timeScale = 0;
+        }
+    }
 
-	// starts spawning enemies 
-	public void SpawnWave() {
+    // starts spawning enemies 
+    public void SpawnWave() {
 		uiManager.ShowSpawnButton(false);
 
         enemyManager.SetupWave(currentWave);
@@ -423,7 +423,7 @@ public class GameManager : MonoBehaviour {
         enemyManager.SetSpawnInstruction(spawnPatterns);
 
         // load the enemy path info
-        for(int j = 0; j < levelData.levelData[i].enemyPaths.Length; j++) {
+        for (int j = 0; j < levelData.levelData[i].enemyPaths.Length; j++) {
             enemyPath.AddNewPath(levelData.levelData[i].enemyPaths[j]);
         }
 
@@ -459,7 +459,7 @@ public class GameManager : MonoBehaviour {
         }
 
         // show the GUI when all panels have flown in
-        yield return new WaitForSeconds(flyInDuration);        
+        yield return new WaitForSeconds(flyInDuration);
         uiManager.ShowGUI(true);
         uiManager.UpdateHealth(currentHealth, maxHealth);
         uiManager.UpdateMoney(currentMoney);
@@ -471,30 +471,30 @@ public class GameManager : MonoBehaviour {
         state = GameState.GameScreen;
         enemyPath.ToggleAllPaths(true);
     }
-    
 
-	private IEnumerator WinGame(){
-		// stop scanner in 1 rotation
-		StartCoroutine(scanner.StopScannerRotation(1));
-		while(scanner.rotating == true){
-			yield return null;
-		}
 
-		// play the end game sound and zoom out
+    private IEnumerator WinGame() {
+        // stop scanner in 1 rotation
+        StartCoroutine(scanner.StopScannerRotation(1));
+        while (scanner.rotating == true) {
+            yield return null;
+        }
+
+        // play the end game sound and zoom out
         uiManager.ShowGUI(false);
         cameraAnimator.SetTrigger("GameToResult");
         audioSource.PlayOneShot(youWinClip);
 
-        while (audioSource.isPlaying){
-			yield return null;
-		}
+        while (audioSource.isPlaying) {
+            yield return null;
+        }
 
         // show the game win screen
         state = GameState.ResultScreenDisplaying;
         StartCoroutine(uiManager.DisplayGameResultScreen(true, true, totalScore));
 
-		Time.timeScale = 0;
-	}
+        Time.timeScale = 0;
+    }
 
 
     private IEnumerator PlayThemeWithDelay(float delay) {
@@ -515,7 +515,7 @@ public class GameManager : MonoBehaviour {
             StartCoroutine(oct.FallOff());
         }
         yield return new WaitForSeconds(2);
-        
+
 
         uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
         cameraAnimator.SetTrigger("ResultToLevel");

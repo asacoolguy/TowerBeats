@@ -14,34 +14,13 @@ public class LevelSelector : MonoBehaviour {
     public GameObject centralTower;
 
 	private void Start () {
-        ResetMenu();
         ShowLevelSelection(false);
 
         // TODO: hide earlier levels as the tower shifts
 	}
-	
 
-    public void ResetMenu() {
-        ResetMenu(1);
-    }
-
-
-    public void ResetMenu(int levelNum) {
+    public void SetupMenu(int levelNum) {
         numberOfLevels = levelNum;
-
-        // delete all previous levels but 1
-        // TODO: make sure this works
-        bool saved = true;
-        for (int i = 0; i < transform.childCount; i++) {
-            if (transform.GetChild(i).tag == "LevelSelector") {
-                if (saved) {
-                    saved = false;
-                }
-                else {
-                    Destroy(transform.GetChild(i--));
-                }
-            }
-        }
 
         currentLevel = 0;
 
