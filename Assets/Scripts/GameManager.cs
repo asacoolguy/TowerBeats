@@ -426,6 +426,7 @@ public class GameManager : MonoBehaviour {
         for (int j = 0; j < levelData.levelData[i].enemyPaths.Length; j++) {
             enemyPath.AddNewPath(levelData.levelData[i].enemyPaths[j]);
         }
+        enemyPath.ToggleAllPaths(false);
 
         // load the towerPlatform info
         for (int j = 0; j < levelData.levelData[i].platformData.Length; j++) {
@@ -465,7 +466,10 @@ public class GameManager : MonoBehaviour {
         uiManager.UpdateMoney(currentMoney);
         uiManager.UpdateWave(currentWave, maxWave);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
+        enemyPath.ToggleAllPaths(true);
+
+        yield return new WaitForSeconds(1.5f);
         scanner.ShowScannerLine(true);
         scanner.SetRotate(true);
         state = GameState.GameScreen;

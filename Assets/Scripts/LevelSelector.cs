@@ -73,6 +73,7 @@ public class LevelSelector : MonoBehaviour {
         canSelectLevels = true;
         startStagePressed = false;
         centralTower.GetComponent<Animator>().enabled = false;
+        currentLevel = 0;
     }
 
 
