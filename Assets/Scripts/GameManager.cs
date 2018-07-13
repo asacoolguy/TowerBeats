@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour {
             centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
             centralPlatform.interactable = true;
 
-            uiManager.ShowGUI(true);
+            uiManager.ShowGUI(true, true);
             cameraAnimator.SetTrigger("SkipToGame");
 
             scanner.ShowScannerLine(true);
@@ -144,6 +144,7 @@ public class GameManager : MonoBehaviour {
             // if enemyManager is done with the current wave, advance to the next wave
             if (enemyManager.waveDone) {
                 currentWave++;
+                scanner.changeSoundPhase(+1);
 
                 if (currentWave >= maxWave) {
                     if (!gameOver) {

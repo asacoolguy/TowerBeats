@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour {
 	// GUI
 	public GameObject healthTextObj, moneyTextObj, waveTextObj;
 	private Text healthText, moneyText, waveText;
-	public GameObject spawnButton;
+	public GameObject spawnButton, waveTestButtons;
 
     // screens/panels
     public GameObject controlPanel, statusPanel, wavePanel, pauseScreen;
@@ -48,6 +48,10 @@ public class UIManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape)){
 			TogglePause();
 		}
+
+        if (waveTestButtons.activeSelf) {
+            waveTestButtons.transform.Find("Text").GetComponent<Text>().text = "wave: " + FindObjectOfType<Scanner>().getSongPhase();
+        }
 	}
 
 	public void UpdateHealth(int current, int max){
@@ -68,10 +72,13 @@ public class UIManager : MonoBehaviour {
 	}
     
 
-    public void ShowGUI(bool b) {
+    public void ShowGUI(bool b, bool devMode = false) {
         controlPanel.gameObject.SetActive(b);
         statusPanel.gameObject.SetActive(b);
         wavePanel.gameObject.SetActive(b);
+
+        ShowSpawnButton(!devMode);
+        waveTestButtons.SetActive(devMode);
     }
 
 

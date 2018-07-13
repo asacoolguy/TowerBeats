@@ -55,7 +55,7 @@ MonoBehaviour:
   youLoseClip: {fileID: 8300000, guid: e87ecab3b48ee6d4286c0622a6095152, type: 3}
   displayBoxClip: {fileID: 8300000, guid: 3e51f7414c281d94d90c99cf0d1fbb65, type: 3}
   gameStartClip: {fileID: 8300000, guid: 545d2a426203bdd409bf485327e0e581, type: 3}
-  wooshClip: {fileID: 8300000, guid: 66bebfca084090d4aa8245d718964477, type: 3}
+  wooshClip: {fileID: 8300000, guid: 22fdfe4935769fd4a8c4ec4ac9b14dce, type: 3}
   levelData:
   - musicData:
       shockTowerClips:
@@ -94,7 +94,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 5dc1942b31c5fcd4ab729cecaa00a563, type: 3}
       - {fileID: 8300000, guid: fcf2d658262850940af395b20cf0dfb3, type: 3}
       - {fileID: 8300000, guid: c33b09249c59cc44fbd7d8ab7f162c59, type: 3}
-      measurePerSong: 8
+      measurePerSong: 08000000080000000800000008000000
     totalWaves: 1
     spawnPattern: As1;
     enemyPaths:
@@ -155,7 +155,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: dda705c587d762240bd9f2760a2f3ff5, type: 3}
       - {fileID: 8300000, guid: ea8a964fb7ef4d047a801da24e480398, type: 3}
       - {fileID: 8300000, guid: e1d4b54ee8fb0074bb7e8f020d89a95b, type: 3}
-      measurePerSong: 16
+      measurePerSong: 10000000100000001000000010000000
     totalWaves: 1
     spawnPattern: As1;
     enemyPaths:

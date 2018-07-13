@@ -31,5 +31,5 @@ public class MusicDatabase {
     public AudioClip[] sniperTowerClips;
     public AudioClip[] laserTowerClips;
     public AudioClip[] scannerClips;
-    public int measurePerSong;
+    public int[] measurePerSong;
 }

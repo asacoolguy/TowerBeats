@@ -65,13 +65,16 @@ public class Scanner : MonoBehaviour {
             // call the RotatedFully event after full rotation
             rotationTimeCounter += Time.deltaTime;
 			if (rotationTimeCounter > timePerRotation){
-				//RotatedFully();
-                measuresPlayed += lineData[0].measurePerRotation;
-                if (measuresPlayed >= measurePerSong) {
-                    PlayMusic(true);
-                    measuresPlayed = 0;
-                }
-                rotationTimeCounter -= timePerRotation;
+                //RotatedFully();
+                // the stuff below is code for if purple line rotates more than once per full playing of song
+                //measuresPlayed += lineData[0].measurePerRotation;
+                //if (measuresPlayed >= measurePerSong) {
+                //    PlayMusic(true);
+                //    measuresPlayed = 0;
+                //}
+                //float tempTimePerRotation = timePerRotation; // save this value in case it changes in PlayMusic
+                PlayMusic(true);
+                //rotationTimeCounter = 0f;
                 if (rotationTillFinish > 0) rotationTillFinish--;
 			}
 
@@ -95,14 +98,7 @@ public class Scanner : MonoBehaviour {
             songPhasesTotal = audioClips.Length;
             songPhasesCurrent = 0;
 
-            measurePerSong = musicData.measurePerSong;
-            lineData[0].measurePerRotation = measurePerSong;
             anglePerAxis = 360f / 16f;
-            timePerSong = audioClips[0].length;
-            rotationPerSong = 1;
-            timePerRotation = timePerSong / rotationPerSong;
-            timePerMeasure = timePerRotation / lineData[0].measurePerRotation;
-            rotationTimeCounter = measureTimeCounter = 0;
         }
 
         // initialize towerLists
@@ -119,18 +115,14 @@ public class Scanner : MonoBehaviour {
             scannerLines = new List<ScannerLine>();
 
             scannerLines.Add(scannerLineObj.GetComponent<ScannerLine>());
-            scannerLines[0].SetupValues(lineData[0], 360f / timePerSong * rotationPerSong, anglePerAxis);
-
+            
             for (int i = 1; i < lineData.Length; i++) {
                 GameObject newLineObj = Instantiate(scannerLineObj, transform);
                 ScannerLine newLine = newLineObj.GetComponent<ScannerLine>();
-                
-                float rotationPerSong = measurePerSong / lineData[i].measurePerRotation;
-                float rotationSpeed = 360f / audioClips[i].length * rotationPerSong;
-                newLine.SetupValues(lineData[i], rotationSpeed, anglePerAxis);
-
                 scannerLines.Add(newLine);
             }
+
+            resetScannerLines();
         }
     }
 
@@ -219,11 +211,49 @@ public class Scanner : MonoBehaviour {
 
     private void PlayMusic(bool b) {
         if (b) {
+            // reset music speed for the new scanner
+            resetScannerLines();            
+
             myAudio.PlayOneShot(audioClips[songPhasesCurrent]);
         }
         else {
             myAudio.Stop();
         }
         
+    }
+
+    
+    public void changeSoundPhase(int i) {
+        int newPhase = songPhasesCurrent + i;
+        if (newPhase < songPhasesTotal && newPhase >= 0) {
+            songPhasesCurrent = newPhase;
+        }
+    }
+
+
+    public int getSongPhase() {
+        return songPhasesCurrent;
+    }
+    
+
+    private void resetScannerLines() {
+        MusicDatabase musicData = FindObjectOfType<GameManager>().GetMusicDatabase();
+
+        // calculate scannerline properties based on data from the current song
+        // some calculations are redundant in case rotationPerSong changes later
+        measurePerSong = musicData.measurePerSong[songPhasesCurrent];
+        lineData[0].measurePerRotation = measurePerSong;
+        timePerSong = audioClips[songPhasesCurrent].length;
+        rotationPerSong = 1;
+        timePerRotation = timePerSong / rotationPerSong;
+        timePerMeasure = timePerRotation / measurePerSong;
+        rotationTimeCounter = measureTimeCounter = 0;
+        //scannerLines[0].SetupValues(lineData[0], 360f / audioClips[songPhasesCurrent].length * rotationPerSong, anglePerAxis);
+
+        for (int i = 0; i < scannerLines.Count; i++) {
+            float rotationPerSong = measurePerSong / lineData[i].measurePerRotation;
+            float rotationSpeed = 360f / audioClips[songPhasesCurrent].length * rotationPerSong;
+            scannerLines[i].SetupValues(lineData[i], rotationSpeed, anglePerAxis);
+        }
     }
 }
