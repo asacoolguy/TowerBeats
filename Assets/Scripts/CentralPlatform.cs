@@ -66,7 +66,7 @@ public class CentralPlatform : OctPlatform {
                 LowerPlatform();
             }
 
-            upgradeButton.transform.Find("Description").gameObject.SetActive(buttonHighlighted);
+            //upgradeButton.transform.Find("Description").gameObject.SetActive(buttonHighlighted);
         }
         base.Update();
     }

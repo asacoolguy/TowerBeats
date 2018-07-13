@@ -98,9 +98,9 @@ public class BuildPanel : MonoBehaviour {
         Text towerName = towerButtons[index].transform.Find("Text").GetComponent<Text>();
         Text towerCost = towerButtons[index].transform.Find("Cost").GetComponent<Text>();
         towerButtons[index].GetComponent<Image>().color = c;
-        towerButtons[index].transform.Find("Description").GetComponent<Image>().color = c;
         towerButtons[index].transform.Find("Rhythm").GetComponent<Image>().color = c;
-        towerButtons[index].transform.Find("Description").GetComponentInChildren<Text>().color = c;
+        towerButtons[index].transform.Find("Description").GetComponent<Image>().color = Color.Lerp(c, Color.gray, 0.7f);
+        towerButtons[index].transform.Find("Description").GetComponentInChildren<Text>().color = Color.Lerp(c, Color.gray, 0.7f);
         towerName.color = c;
         towerCost.color = c;
     }
