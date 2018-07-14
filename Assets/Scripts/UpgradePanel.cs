@@ -9,6 +9,7 @@ public class UpgradePanel : MonoBehaviour {
     private List<Vector3> defaultButtonPos;
     private List<bool> buttonEnabled;
     private int highlightedButton = -1;
+    private BasicTower tower;
 
     public float highlightedButtonSize;
     private float defaultButtonSize;
@@ -91,15 +92,24 @@ public class UpgradePanel : MonoBehaviour {
     }
 
 
-    private void SetButtonInfo(Color c, int upgradeLvl, string upgradeDesc, int upgradeCost) {
-        //Text towerName = towerButtons[index].transform.Find("Text").GetComponent<Text>();
-        //Text towerCost = towerButtons[index].transform.Find("Cost").GetComponent<Text>();
-        //towerButtons[index].GetComponent<Image>().color = c;
-        //towerButtons[index].transform.Find("Rhythm").GetComponent<Image>().color = c;
-        //towerButtons[index].transform.Find("Description").GetComponent<Image>().color = Color.Lerp(c, Color.gray, 0.7f);
-        //towerButtons[index].transform.Find("Description").GetComponentInChildren<Text>().color = Color.Lerp(c, Color.gray, 0.7f);
-        //towerName.color = c;
-        //towerCost.color = c;
+    public void SetButtonInfo(BasicTower tower) {
+        this.tower = tower;
+        // color
+        TowerInfo info = tower.info;
+        towerColor = info.color;
+        SetButtonColor(0, info.color);
+        SetButtonColor(1, info.color);
+        // upgrade lvl, desc, cost
+        if (info.currentLevel < info.maxLevel - 1) {
+            buttons[0].transform.Find("Text").GetComponent<Text>().text = "Upgrade\nLvl " + (info.currentLevel + 1);
+            buttons[0].transform.Find("Description").Find("Text").GetComponent<Text>().text = info.descriptions[info.currentLevel];
+            buttons[0].transform.Find("Cost").GetComponent<Text>().text = "" + info.costs[info.currentLevel];
+        }
+        else {
+            buttons[0].transform.Find("Text").GetComponent<Text>().text = "Upgrade\nLvl" + (info.currentLevel + 1);
+            buttons[0].transform.Find("Description").Find("Text").GetComponent<Text>().text = "Fully\nUpgraded";
+            buttons[0].transform.Find("Cost").GetComponent<Text>().text = "";
+        }
     }
 
 
@@ -133,5 +143,27 @@ public class UpgradePanel : MonoBehaviour {
 
     public bool IsButtonEnabled(int index) {
         return buttonEnabled[index];
+    }
+
+
+    public int GetUpgradeCost() {
+        if (tower.info.currentLevel < tower.info.maxLevel - 1) {
+            return tower.info.costs[tower.info.currentLevel];
+        }
+        else {
+            return 0;
+        }
+    }
+
+
+    public void HandleButtonClick(int index) {
+        if (index == 0) {
+            if (tower != null) {
+                FindObjectOfType<GameManager>().SpendMoney(GetUpgradeCost());
+                tower.UpgradeTower();
+            }
+        }
+        else if (index == 1) {
+        }
     }
 }

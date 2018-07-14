@@ -6,31 +6,27 @@ public class LaserTower : BasicTower {
 	private GameObject launcher;
 	private LineRenderer laser;
 
-	private AudioClip[] soundClips;
+	private TowerMusicClips[] soundClips;
 	public float damagePerSec = 0.5f;
 	private float attackDuration;
 
 
 	// Use this for initialization
 	new void Start () {
-		// set up audio clips
-		soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().laserTowerClips;
-
-		audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
 		mRenderer = transform.Find("tower").GetComponent<MeshRenderer>();
 		originalMat = mRenderer.material;
 
-		// all towers start in the planning stage
-		//MakePlanning();
+        // set up audio clips
+        soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().laserTowerClips;
+        SetupSound();
 
-        // randomly pick a sound
-		int r = Random.Range(0, soundClips.Length);
-		audioSource.clip = soundClips[r];
-		attackDuration = audioSource.clip.length;
+        // all towers start in the planning stage
+        //MakePlanning();
 
-		// set up the laser and launcher
-		laser = transform.Find("LaserBeam").GetComponent<LineRenderer>();;
+        // set up the laser and launcher
+        laser = transform.Find("LaserBeam").GetComponent<LineRenderer>();;
 		laser.gameObject.SetActive(false);
 		launcher = transform.Find("Launcher").gameObject;
 
@@ -51,11 +47,11 @@ public class LaserTower : BasicTower {
 	// plays the designated sound and also does the attack
 	public override void PlaySound(){
         base.PlaySound();
-        audioSource.Play();
-		//anim.SetTrigger("Activate");
+        audioSource.PlayOneShot(audioSource.clip);
+        //anim.SetTrigger("Activate");
 
-		// pause all other towers of this type and sound
-		foreach (LaserTower tower in FindObjectsOfType<LaserTower>()){
+        // pause all other towers of this type and sound
+        foreach (LaserTower tower in FindObjectsOfType<LaserTower>()){
 			if (tower != this && tower.IsBuilt() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
@@ -106,5 +102,16 @@ public class LaserTower : BasicTower {
 			yield return null;
 		}
 	}
+
+
+    public override void SetupSound() {
+        // randomly pick a sound
+        TowerMusicClips musicClips = soundClips[Mathf.Clamp(info.currentLevel, 0, soundClips.Length - 1)];
+        if (randomClipIndex == -1) {
+            randomClipIndex = Random.Range(0, musicClips.clips.Length);
+        }
+        audioSource.clip = musicClips.clips[randomClipIndex];
+        attackDuration = audioSource.clip.length;
+    }
 
 }

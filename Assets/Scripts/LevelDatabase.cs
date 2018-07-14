@@ -27,9 +27,15 @@ public class EnemyPathData {
 
 [Serializable]
 public class MusicDatabase {
-    public AudioClip[] shockTowerClips;
-    public AudioClip[] sniperTowerClips;
-    public AudioClip[] laserTowerClips;
+    public TowerMusicClips[] shockTowerClips;
+    public TowerMusicClips[] sniperTowerClips;
+    public TowerMusicClips[] laserTowerClips;
     public AudioClip[] scannerClips;
     public int[] measurePerSong;
+}
+
+
+[Serializable]
+public class TowerMusicClips {
+    public AudioClip[] clips;
 }

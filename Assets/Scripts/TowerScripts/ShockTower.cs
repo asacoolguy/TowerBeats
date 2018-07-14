@@ -3,36 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShockTower : BasicTower {
-	private AudioClip[] soundClips;
+	private TowerMusicClips[] soundClips;
 	private ParticleSystem pSystem;
 	public float attackPower = 1f;
 
 	// Use this for initialization
 	new void Start () {
-		// set up audio clips
-		soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().shockTowerClips;
-
 		base.Start();
-
         towerType = 1;
 
-		// randomly pick a sound
-		int r = Random.Range(0, soundClips.Length);
-		audioSource.clip = soundClips[r];
+        soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().shockTowerClips;
+        SetupSound();
 
 		// set up particle system
 		pSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	// plays the designated sound and also does the attack
 	public override void PlaySound(){
         base.PlaySound();
-        audioSource.Play();
+        audioSource.PlayOneShot(audioSource.clip);
 		//anim.SetTrigger("Activate");
 
 		pSystem.Emit(1);
@@ -52,5 +43,14 @@ public class ShockTower : BasicTower {
             }
 		}
 	}
-    
+
+
+    public override void SetupSound() {
+        // randomly pick a sound
+        TowerMusicClips musicClips = soundClips[Mathf.Clamp(info.currentLevel, 0, soundClips.Length - 1)];
+        if (randomClipIndex == -1) {
+            randomClipIndex = Random.Range(0, musicClips.clips.Length);
+        }
+        audioSource.clip = musicClips.clips[randomClipIndex];
+    }
 }

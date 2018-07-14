@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public abstract class BasicTower : MonoBehaviour {
 	public int axisIndex = 0;
     public bool refundable = false;
     public float powerFactor = 1f;
+    public TowerInfo info;
+    protected int randomClipIndex = -1;
 
 	// this enum determines what state the tower is in
 	// TODO: combine this with the ready state and other potential states like deactivated, buffed
@@ -68,6 +71,9 @@ public abstract class BasicTower : MonoBehaviour {
         transform.parent.GetComponent<TowerPlatform>().BoostColor();
         transform.parent.GetComponent<TowerPlatform>().BoostSize(popYScale, popTime);
     }
+
+
+    public virtual void SetupSound() { }
 
 
 	public bool IsBuildable(){
@@ -141,5 +147,24 @@ public abstract class BasicTower : MonoBehaviour {
         }
     }
 
+
+    public void UpgradeTower() {
+        if (info.currentLevel < info.maxLevel - 1) {
+            info.currentLevel++;
+            SetupSound();
+
+            // TODO: increase power level and change models
+        }   
+    }
     
+}
+
+
+[Serializable]
+public class TowerInfo {
+    public Color color;
+    public int maxLevel, currentLevel;
+    [TextArea]
+    public string[] descriptions;
+    public int[] costs;
 }

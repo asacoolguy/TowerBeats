@@ -186,4 +186,13 @@ public class TowerPlatform : OctPlatform {
         transform.position = new Vector3(transform.position.x, flyInHeight, transform.position.z);
         transform.localEulerAngles = new Vector3(0, 22.5f, 0);
     }
+
+    
+    public BasicTower getBuiltTower() {
+        if (IsBuiltOn()) {
+            return builtTower.GetComponent<BasicTower>();
+        }
+
+        return null;
+    }
 }

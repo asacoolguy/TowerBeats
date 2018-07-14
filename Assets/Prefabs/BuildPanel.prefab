@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 114564873091004782}
   - component: {fileID: 114986070914594744}
   m_Layer: 13
-  m_Name: BuildPanelNew
+  m_Name: BuildPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -539,6 +539,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95307691201544150
 Animator:
   serializedVersion: 3
@@ -556,6 +557,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95645041325124204
 Animator:
   serializedVersion: 3
@@ -573,6 +575,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114023927835422058
 MonoBehaviour:
   m_ObjectHideFlags: 1

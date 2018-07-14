@@ -5,7 +5,7 @@ using UnityEngine;
 public class SniperTower : BasicTower {
 	public GameObject bulletObj;
 	private GameObject launcher;
-	private AudioClip[] soundClips;
+	private TowerMusicClips[] soundClips;
 
 	public float attackPower = 1f;
 	public float bulletFadeTime = 0.6f;
@@ -13,23 +13,20 @@ public class SniperTower : BasicTower {
 
 	// Use this for initialization
 	new void Start () {
-		// set up audio clips
-		soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().sniperTowerClips;
-
 		audioSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
 		mRenderer = transform.Find("tower").GetComponent<MeshRenderer>();
 		originalMat = mRenderer.material;
 
-		// all towers start in the planning stage
-		// MakePlanning();
+        // set up audio clips
+        soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().sniperTowerClips;
+        SetupSound();
 
-		// randomly pick a sound
-		int r = Random.Range(0, soundClips.Length);
-		audioSource.clip = soundClips[r];
+        // all towers start in the planning stage
+        // MakePlanning();
 
-		// set up the muzzle for bullets
-		launcher = transform.Find("Launcher").gameObject;
+        // set up the muzzle for bullets
+        launcher = transform.Find("Launcher").gameObject;
 
         // set up the light
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
@@ -48,13 +45,13 @@ public class SniperTower : BasicTower {
 	// plays the designated sound and also does the attack
 	public override void PlaySound(){
         base.PlaySound();
-		audioSource.Play();
-		//anim.SetTrigger("Activate");
+        audioSource.PlayOneShot(audioSource.clip);
+        //anim.SetTrigger("Activate");
 
-		//pSystem.Emit(1);
+        //pSystem.Emit(1);
 
-		// pause all other towers of this type and sound
-		foreach (SniperTower tower in FindObjectsOfType<SniperTower>()){
+        // pause all other towers of this type and sound
+        foreach (SniperTower tower in FindObjectsOfType<SniperTower>()){
 			if (tower != this && tower.IsBuilt() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
@@ -90,5 +87,14 @@ public class SniperTower : BasicTower {
 			}
 		}
 	}
+
+    public override void SetupSound() {
+        // randomly pick a sound
+        TowerMusicClips musicClips = soundClips[Mathf.Clamp(info.currentLevel, 0, soundClips.Length - 1)];
+        if (randomClipIndex == -1) {
+            randomClipIndex = Random.Range(0, musicClips.clips.Length);
+        }
+        audioSource.clip = musicClips.clips[randomClipIndex];
+    }
 
 }

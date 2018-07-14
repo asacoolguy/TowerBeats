@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour {
     private TowerPlatform selectedPlatform = null;
     public GameObject towerBuildPanelPrefab;
     private BuildPanel towerBuildPanel = null;
+    public GameObject towerUpgradePanelPrefab;
+    private UpgradePanel towerUpgradePanel = null;
     public GameObject towerPlatformGrid, towerPlatformPrefab;
     private LevelDatabase levelData;
 
@@ -90,6 +92,10 @@ public class GameManager : MonoBehaviour {
             // set up the right cost
             towerBuildPanel.SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
         }
+
+        // make the tower upgraePanel 
+        towerUpgradePanel = Instantiate(towerUpgradePanelPrefab).GetComponent<UpgradePanel>();
+        towerUpgradePanel.gameObject.SetActive(false);
 
         // load the level menu
         levelSelector.SetupMenu(levelData.levelData.Length);
@@ -184,6 +190,15 @@ public class GameManager : MonoBehaviour {
                     }
                 }
             }
+
+            if (towerUpgradePanel.gameObject.activeSelf) {
+                // highlight any upgradePanelButtons the mouse is hovering over
+                towerUpgradePanel.HighlightButton(GetUpgradePanelFromMouse());
+
+                // enable/disable upgradePanelButtons based on money
+                towerUpgradePanel.EnableButton(0, currentMoney >= towerUpgradePanel.GetUpgradeCost());
+                towerUpgradePanel.EnableButton(1, true);
+            }
         }
     }
 
@@ -198,31 +213,56 @@ public class GameManager : MonoBehaviour {
         else if (state == GameState.GameScreen) {
             // handle clicking events
             if (Input.GetMouseButtonDown(0)) {
-                int buttonClicked = GetBuildPanelFromMouse();
+                int buildPanelButtonClicked = GetBuildPanelFromMouse();
+                int upgradePanelButtonClicked = GetUpgradePanelFromMouse();
                 // if we clicked on a BuildablePanel that's enabled, build that tower
-                if (buttonClicked >= 0) {
-                    if (towerBuildPanel.IsButtonEnabled(buttonClicked)) {
-                        BuildTower(buttonClicked);
+                if (buildPanelButtonClicked >= 0) {
+                    if (towerBuildPanel.IsButtonEnabled(buildPanelButtonClicked)) {
+                        BuildTower(buildPanelButtonClicked);
                         towerBuildPanel.ActivatePanel(false);
+                    }
+                }
+                // if we clicked on a UpgradePanel that's enabled, do that upgrade
+                else if (upgradePanelButtonClicked >= 0) {
+                    if (towerUpgradePanel.IsButtonEnabled(upgradePanelButtonClicked)) {
+                        towerUpgradePanel.HandleButtonClick(upgradePanelButtonClicked);
+                        towerUpgradePanel.ActivatePanel(false);
+                    }
+                    // deselect any selectedOctagons
+                    if (selectedPlatform) {
+                        selectedPlatform.SelectPlatform(false);
+                        selectedPlatform = null;
                     }
                 }
                 // if you clicked somewhere random or on the selected Octagon, deselect the selectedPlatform
                 else if (hoveredPlatform == null || hoveredPlatform == selectedPlatform) {
                     //towerBuildPanel.transform.parent = null;
                     towerBuildPanel.ActivatePanel(false);
+                    towerUpgradePanel.ActivatePanel(false);
                     // deselect any selectedOctagons
                     if (selectedPlatform) {
                         selectedPlatform.SelectPlatform(false);
                         selectedPlatform = null;
                     }
-
                 }
-                // if the clicked on hoverOctagon is not yet selected or built on, select it
-                else if (hoveredPlatform && hoveredPlatform != selectedPlatform && !hoveredPlatform.IsBuiltOn()) {
-                    towerBuildPanel.ActivatePanel(true);
-                    towerBuildPanel.transform.SetParent(hoveredPlatform.transform, true);
-                    //towerBuildPanel.transform.parent = hoveredPlatform.transform;
-                    towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
+                // if the clicked on hoverOctagon 
+                else if (hoveredPlatform && hoveredPlatform != selectedPlatform) {
+                    if (hoveredPlatform.IsBuiltOn()) {
+                        // this one is already built on, select it and show the upgrade Panel
+                        towerUpgradePanel.ActivatePanel(true);
+                        towerUpgradePanel.transform.SetParent(hoveredPlatform.transform, true);
+                        towerUpgradePanel.SetButtonInfo(hoveredPlatform.getBuiltTower());
+                        towerUpgradePanel.transform.localPosition = new Vector3(0, 1.2f, 0);
+                        // TODO: get info from this platform's tower
+                    }
+                    else {
+                        // this hoverOctagon is not yet selected or built on, select it and show the build panel
+                        towerBuildPanel.ActivatePanel(true);
+                        towerBuildPanel.transform.SetParent(hoveredPlatform.transform, true);
+                        //towerBuildPanel.transform.parent = hoveredPlatform.transform;
+                        towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
+                    }
+
                     // set the new selectedPlatform
                     if (selectedPlatform) {
                         selectedPlatform.SelectPlatform(false);
@@ -351,6 +391,34 @@ public class GameManager : MonoBehaviour {
         return -1;
     }
 
+
+    // returns the upgradePanel button the mouse is currently hovering over
+    // -1 if no upgradePanel
+    private int GetUpgradePanelFromMouse() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 1000, selectableLayerMask)) {
+            // trace parents until we find the object with UpgradePanel script on it
+            // in case ray tracing hit a child component of a tower
+            GameObject current = hit.collider.gameObject;
+            //print("initial hit is " + current.name);
+            while (current.GetComponent<UpgradePanel>() == null &&
+                current.transform.parent != null) {
+                current = current.transform.parent.gameObject;
+            }
+            //print("final hit is " + current.name);
+            if (current.GetComponent<UpgradePanel>() != null) {
+                //print("script returned");
+                GameObject button = hit.collider.transform.parent.gameObject;
+                return button.name == "Upgrade" ? 0 : 1;
+            }
+            //print("no script");
+        }
+
+        // print("no hit ");
+        // otherwise no tower hit
+        return -1;
+    }
 
     // called when the homeBase takes damage. spawns a restart button when game over.
     // passes the UI stuff to the UIManager

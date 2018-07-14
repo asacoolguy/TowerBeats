@@ -59,36 +59,29 @@ MonoBehaviour:
   levelData:
   - musicData:
       shockTowerClips:
-      - {fileID: 8300000, guid: 0200e6db33e9343469c434ec64ed973c, type: 3}
-      - {fileID: 8300000, guid: 737240a4bb95f244386b8c152dfca56d, type: 3}
-      - {fileID: 8300000, guid: fc72967a23af6264f9a5ba737dba8770, type: 3}
-      - {fileID: 8300000, guid: ba52adf0a5b349649aff3746b7487345, type: 3}
-      - {fileID: 8300000, guid: 6fdc873b0efcd7e42be2bf3e7cd883b9, type: 3}
-      - {fileID: 8300000, guid: 5b010b6bf16e1bf498df5c497efc42f2, type: 3}
-      - {fileID: 8300000, guid: ba3d8f7ad8aa2024bbfded62f5d58844, type: 3}
-      - {fileID: 8300000, guid: 8d588f5ecc7444b4db435b83c7bd50f0, type: 3}
-      - {fileID: 8300000, guid: afcc8c4a7f82d5e4996a3dbf854f43bc, type: 3}
-      - {fileID: 8300000, guid: 84feef1ee3306c44490f839d252867b5, type: 3}
-      - {fileID: 8300000, guid: 2db5ae3e45ae1f646b82abfb733544a2, type: 3}
-      - {fileID: 8300000, guid: 2f12e5451d8e46c429e34726021abf01, type: 3}
-      - {fileID: 8300000, guid: 971fe78b68351ec4d990aa85d4194819, type: 3}
-      - {fileID: 8300000, guid: c3cf8d0b466cee64d8dbb0ef296c5673, type: 3}
-      - {fileID: 8300000, guid: 12817053a3eb7e6499a5af172a80242d, type: 3}
-      - {fileID: 8300000, guid: 18f54aad969b22242be2cf8e78d70c48, type: 3}
-      - {fileID: 8300000, guid: cc38fb744e9ec2848be0f7356e94f423, type: 3}
-      - {fileID: 8300000, guid: d338ec1e62d1f9343a2269ba6322ce39, type: 3}
-      - {fileID: 8300000, guid: 6cd2812183c635d408e27307a3c692aa, type: 3}
-      - {fileID: 8300000, guid: 1b9ec1c27be391d4493f595461428300, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 2f12e5451d8e46c429e34726021abf01, type: 3}
+        - {fileID: 8300000, guid: 8d588f5ecc7444b4db435b83c7bd50f0, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 971fe78b68351ec4d990aa85d4194819, type: 3}
+        - {fileID: 8300000, guid: ba3d8f7ad8aa2024bbfded62f5d58844, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: c3cf8d0b466cee64d8dbb0ef296c5673, type: 3}
+        - {fileID: 8300000, guid: afcc8c4a7f82d5e4996a3dbf854f43bc, type: 3}
       sniperTowerClips:
-      - {fileID: 8300000, guid: 86c808038963f234ba9018719568f58e, type: 3}
-      - {fileID: 8300000, guid: 96761b8f63103de41a87688240da7bab, type: 3}
-      - {fileID: 8300000, guid: 815e6af5e1fa7734d8dd0c1eb8722510, type: 3}
-      - {fileID: 8300000, guid: b30654b78ae308343ad28f8eed37c4bd, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 86c808038963f234ba9018719568f58e, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 96761b8f63103de41a87688240da7bab, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 815e6af5e1fa7734d8dd0c1eb8722510, type: 3}
       laserTowerClips:
-      - {fileID: 8300000, guid: 3cb45bbc21e14f847a0b1a9f55390f02, type: 3}
-      - {fileID: 8300000, guid: 8d686a66fc4c07947984dd2fdd087736, type: 3}
-      - {fileID: 8300000, guid: d458573b777c38748b5c3d933b27b538, type: 3}
-      - {fileID: 8300000, guid: b33385e54c8d4824480abce46dba5b1f, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 3cb45bbc21e14f847a0b1a9f55390f02, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 8d686a66fc4c07947984dd2fdd087736, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: d458573b777c38748b5c3d933b27b538, type: 3}
       scannerClips:
       - {fileID: 8300000, guid: 2adb565b5ee0e85419b8470a458a1270, type: 3}
       - {fileID: 8300000, guid: 5dc1942b31c5fcd4ab729cecaa00a563, type: 3}
@@ -120,36 +113,36 @@ MonoBehaviour:
     - {x: 14.15, y: 15, z: -40}
   - musicData:
       shockTowerClips:
-      - {fileID: 8300000, guid: 0200e6db33e9343469c434ec64ed973c, type: 3}
-      - {fileID: 8300000, guid: 737240a4bb95f244386b8c152dfca56d, type: 3}
-      - {fileID: 8300000, guid: fc72967a23af6264f9a5ba737dba8770, type: 3}
-      - {fileID: 8300000, guid: ba52adf0a5b349649aff3746b7487345, type: 3}
-      - {fileID: 8300000, guid: 6fdc873b0efcd7e42be2bf3e7cd883b9, type: 3}
-      - {fileID: 8300000, guid: 5b010b6bf16e1bf498df5c497efc42f2, type: 3}
-      - {fileID: 8300000, guid: ba3d8f7ad8aa2024bbfded62f5d58844, type: 3}
-      - {fileID: 8300000, guid: 8d588f5ecc7444b4db435b83c7bd50f0, type: 3}
-      - {fileID: 8300000, guid: afcc8c4a7f82d5e4996a3dbf854f43bc, type: 3}
-      - {fileID: 8300000, guid: 84feef1ee3306c44490f839d252867b5, type: 3}
-      - {fileID: 8300000, guid: 2db5ae3e45ae1f646b82abfb733544a2, type: 3}
-      - {fileID: 8300000, guid: 2f12e5451d8e46c429e34726021abf01, type: 3}
-      - {fileID: 8300000, guid: 971fe78b68351ec4d990aa85d4194819, type: 3}
-      - {fileID: 8300000, guid: c3cf8d0b466cee64d8dbb0ef296c5673, type: 3}
-      - {fileID: 8300000, guid: 12817053a3eb7e6499a5af172a80242d, type: 3}
-      - {fileID: 8300000, guid: 18f54aad969b22242be2cf8e78d70c48, type: 3}
-      - {fileID: 8300000, guid: cc38fb744e9ec2848be0f7356e94f423, type: 3}
-      - {fileID: 8300000, guid: d338ec1e62d1f9343a2269ba6322ce39, type: 3}
-      - {fileID: 8300000, guid: 6cd2812183c635d408e27307a3c692aa, type: 3}
-      - {fileID: 8300000, guid: 1b9ec1c27be391d4493f595461428300, type: 3}
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
       sniperTowerClips:
-      - {fileID: 8300000, guid: 8911ebc292ba6dc4cad9546ad81043d0, type: 3}
-      - {fileID: 8300000, guid: db0249b8f3a4c6a40bb7dabbcbfcab2f, type: 3}
-      - {fileID: 8300000, guid: e9abd45ab411f574abdc8a7b67a2fa1d, type: 3}
-      - {fileID: 8300000, guid: 6905c43048d1ba344a85231ab1b8bc70, type: 3}
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
       laserTowerClips:
-      - {fileID: 8300000, guid: a1969e4b713ee994188ce4f53aca6a37, type: 3}
-      - {fileID: 8300000, guid: b7c0ce65e088f9041a6945e54cfb1799, type: 3}
-      - {fileID: 8300000, guid: c577d09c4533fa348a944bd8e3b90f01, type: 3}
-      - {fileID: 8300000, guid: 659e1738846e78e4fa8dc1e04d7a0914, type: 3}
+      - clips: []
+      - clips: []
+      - clips: []
+      - clips: []
       scannerClips:
       - {fileID: 8300000, guid: 956ff6061f44f324eae72db422ce8159, type: 3}
       - {fileID: 8300000, guid: dda705c587d762240bd9f2760a2f3ff5, type: 3}
