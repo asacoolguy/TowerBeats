@@ -321,11 +321,7 @@ public class GameManager : MonoBehaviour {
         tower.ToggleOutline(false);
         tower.MakeBuilt();
 
-        // deduct money if needed
-        if (!tower.refundable) {
-            currentMoney -= tower.cost;
-            uiManager.UpdateMoney(currentMoney);
-        }
+        GainMoney(-tower.cost);
 
         // do some stuff about finding the right list to add tower to
         int axisIndex = scanner.FindClosestAxisIndex(tower.transform.position);

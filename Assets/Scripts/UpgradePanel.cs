@@ -164,6 +164,12 @@ public class UpgradePanel : MonoBehaviour {
             }
         }
         else if (index == 1) {
+            if (tower != null) {
+                FindObjectOfType<GameManager>().GainMoney((tower.info.currentLevel + 1) * tower.cost / 3);
+                FindObjectOfType<Scanner>().RemoveTowerFromList(tower.gameObject);
+                transform.parent.GetComponent<TowerPlatform>().RemoveBuiltTower();
+                Destroy(tower.gameObject);
+            }
         }
     }
 }

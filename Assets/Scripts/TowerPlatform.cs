@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class TowerPlatform : OctPlatform {
     private GameObject builtTower;
-    
+    private Color originalColor;
     private float texStrDecaySpeed, glowPowDecaySpeed;
 
     public float raisedTexStr, raisedGlowPow;
@@ -35,6 +35,7 @@ public class TowerPlatform : OctPlatform {
         
         loweredTexStr = mat.GetFloat("_MKGlowTexStrength");
         loweredGlowPow = mat.GetFloat("_MKGlowPower");
+        originalColor = mat.GetColor("_Color");
     }
 
 
@@ -159,11 +160,17 @@ public class TowerPlatform : OctPlatform {
     }
 
     public void SetBuiltTower(GameObject tower) {
-        if (IsBuiltOn()) {
-            Destroy(builtTower);
+        if (!IsBuiltOn()) {
+            builtTower = tower;
         }
+    }
 
-        builtTower = tower;
+
+    public void RemoveBuiltTower() {
+        if (IsBuiltOn()) {
+            builtTower = null;
+            SetColor(originalColor);
+        }
     }
 
 

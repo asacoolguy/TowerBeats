@@ -9,7 +9,6 @@ public abstract class BasicTower : MonoBehaviour {
     public int cost;
     public int towerType = 0;
 	public int axisIndex = 0;
-    public bool refundable = false;
     public float powerFactor = 1f;
     public TowerInfo info;
     protected int randomClipIndex = -1;
@@ -99,7 +98,6 @@ public abstract class BasicTower : MonoBehaviour {
     // set the tower in its moving stage
     // really just do planning stage, but enable a refund if you cancel the build
     public virtual void MakeMoving() {
-        refundable = true;
         MakePlanning();
     }
 
@@ -108,7 +106,6 @@ public abstract class BasicTower : MonoBehaviour {
 	public virtual void MakeBuilt(){
 		// TODO should there still be planning stage?
 		state = TowerState.built;
-        refundable = false;
         //mRenderer.material = originalMat;
 		transform.Find("AOEIndicator").gameObject.SetActive(false);
 	}
@@ -156,7 +153,6 @@ public abstract class BasicTower : MonoBehaviour {
             // TODO: increase power level and change models
         }   
     }
-    
 }
 
 
