@@ -38,6 +38,7 @@ public class OuterGrid : MonoBehaviour {
         octTowers = new List<GameObject>();
         octTowerScales = new List<float>();
         octTowerColorType = new List<int>();
+        int i = 0;
         foreach (Transform t in transform.GetComponentInChildren<Transform>()) {
             octTowers.Add(t.gameObject);
             float scale = GetScaleByDistance(t.position);
@@ -46,7 +47,20 @@ public class OuterGrid : MonoBehaviour {
             octTowerScales.Add(scale);
 
             // make each transform a random type
-            int i = Random.Range(0, bumpColors.Length);
+            // random
+            //int i = Random.Range(0, bumpColors.Length);
+            //i = ++i % bumpColors.Length;
+
+            // distance based
+            float dist = new Vector3(t.localPosition.x, 0, t.localPosition.z).magnitude;
+            i = dist < 75 ? 0 : dist < 85 ? 1 : 2;
+
+            // angle based
+            //float angle = GameManager.GetAngleFromVector(t.localPosition);
+            //if (angle < 0) angle += 360;
+            //angle %= 60;
+            //i = angle < 20 ? 0 : angle < 40 ? 1 : 2;
+
             octTowerColorType.Add(i);
         }
 
@@ -76,9 +90,13 @@ public class OuterGrid : MonoBehaviour {
             Material mat = octTowers[i].GetComponent<MeshRenderer>().material;
             mat.SetFloat("_MKGlowTexStrength", Mathf.Clamp(minTextreStr + diffGlowStr * spectrumValues[octTowerColorType[i]] * 2, minTextreStr, maxTextureStr));
             mat.SetFloat("_MKGlowPower", Mathf.Clamp(minGlowPow + diffGlowPow * spectrumValues[octTowerColorType[i]], minGlowPow, maxGlowPow));
-            Color newMainColor = Color.Lerp(defaultMainColor, bumpColors[octTowerColorType[i]], 5 * spectrumValues[octTowerColorType[i]]);
+
+            float t = spectrumValues[octTowerColorType[i]] * 5;
+            //Color newMainColor = Color.Lerp(defaultMainColor, bumpColors[octTowerColorType[i]], t);
+            Color newMainColor = GameManager.SmoothStep(defaultMainColor, bumpColors[octTowerColorType[i]], t);
             mat.SetColor("_Color", newMainColor);
-            Color newTextureColor = Color.Lerp(defaultTextureColor, bumpColors[octTowerColorType[i]], spectrumValues[octTowerColorType[i]] * 5);
+            //Color newTextureColor = Color.Lerp(defaultTextureColor, bumpColors[octTowerColorType[i]], t);
+            Color newTextureColor = GameManager.SmoothStep(defaultMainColor, bumpColors[octTowerColorType[i]], t);
             mat.SetColor("_MKGlowTexColor", newTextureColor);
         }
     }
