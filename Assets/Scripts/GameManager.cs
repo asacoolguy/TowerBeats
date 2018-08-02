@@ -49,16 +49,17 @@ public class GameManager : MonoBehaviour {
 
     public bool devMode;
 
-
-	private void Start () {
-        Time.timeScale = 1;
-
+    private void Awake() {
         // set up music clips
         levelData = transform.Find("LevelDatabase").GetComponent<LevelDatabase>();
         youWinClip = levelData.youWinClip;
         youLoseClip = levelData.youLoseClip;
         gameStartClip = levelData.gameStartClip;
         wooshClip = levelData.wooshClip;
+    }
+
+    private void Start () {
+        Time.timeScale = 1;
 
         // set up some variables
         audioSource = transform.Find("Audio").GetComponent<AudioSource>();
@@ -604,6 +605,10 @@ public class GameManager : MonoBehaviour {
         else {
             return null;
         }
+    }
+
+    public AudioClip[] GetEnemyAudioClips() {
+        return levelData.enemyDeathClips;
     }
 
 

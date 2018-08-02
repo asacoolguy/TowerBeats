@@ -77,7 +77,8 @@ public class UIManager : MonoBehaviour {
         statusPanel.gameObject.SetActive(b);
         wavePanel.gameObject.SetActive(b);
 
-        ShowSpawnButton(!devMode);
+        ShowSpawnButton(true);
+        //ShowSpawnButton(!devMode);
         waveTestButtons.SetActive(devMode);
     }
 

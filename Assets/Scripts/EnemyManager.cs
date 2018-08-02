@@ -25,7 +25,8 @@ public class EnemyManager : MonoBehaviour {
 
 	// enemy destroy audio
 	private int enemyDestroySoundCounter;
-	public AudioClip enemyDestroySound;
+    private AudioClip[] enemyDeathClips;
+    private int enemyDeathClipIndex = 0;
 
 
 	void OnEnable() {
@@ -45,14 +46,16 @@ public class EnemyManager : MonoBehaviour {
 	void Start() {
 		allEnemies = new List<GameObject>();
         enemyPath = FindObjectOfType<EnemyPath>();
+        enemyDeathClips = FindObjectOfType<GameManager>().GetEnemyAudioClips();
 	}
 
 	void LateUpdate() {
 		// destory enemies and play the destruction sound at the right volume
 		if (enemyDestroySoundCounter > 0) {
 			float volume = Mathf.Clamp(0.9f + enemyDestroySoundCounter * 0.1f, 1f, 1.5f);
-			GetComponent<AudioSource>().PlayOneShot(enemyDestroySound, volume);
+			GetComponent<AudioSource>().PlayOneShot(enemyDeathClips[enemyDeathClipIndex], volume);
 			enemyDestroySoundCounter = 0;
+            enemyDeathClipIndex = ++enemyDeathClipIndex % enemyDeathClips.Length;
 
             // shake camera
             float temp = 1f + enemyDestroySoundCounter / 5f;
