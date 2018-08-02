@@ -28,7 +28,7 @@ public class Scanner : MonoBehaviour {
 
     // variables for tracking current rotation amount
     private float rotationTimeCounter, measureTimeCounter;
-    private int rotationTillFinish = 0;
+    private int measureTillFinish = 0;
 
 	// variables for kepeing track of audio
 	private AudioSource myAudio;
@@ -75,7 +75,6 @@ public class Scanner : MonoBehaviour {
                 //float tempTimePerRotation = timePerRotation; // save this value in case it changes in PlayMusic
                 PlayMusic(true);
                 //rotationTimeCounter = 0f;
-                if (rotationTillFinish > 0) rotationTillFinish--;
 			}
 
 			// call the RotatedMeasure event after each measure rotated
@@ -83,7 +82,8 @@ public class Scanner : MonoBehaviour {
 			if (measureTimeCounter > timePerMeasure){
 				RotatedMeasure();
                 measureTimeCounter -= timePerMeasure;
-			}
+                if (measureTillFinish > 0) measureTillFinish--;
+            }
 		}
 	}
 
@@ -188,8 +188,8 @@ public class Scanner : MonoBehaviour {
 
 	// stops scanner from rotating in r rotations 
 	public IEnumerator StopScannerRotation(int r){
-		rotationTillFinish = r;
-		while (rotationTillFinish > 0){
+		measureTillFinish = r;
+		while (measureTillFinish > 0){
 			yield return null;
 		}
 
