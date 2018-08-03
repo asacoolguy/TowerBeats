@@ -250,6 +250,7 @@ public class GameManager : MonoBehaviour {
                     if (hoveredPlatform.IsBuiltOn()) {
                         // this one is already built on, select it and show the upgrade Panel
                         towerUpgradePanel.ActivatePanel(true);
+                        towerBuildPanel.ActivatePanel(false);
                         towerUpgradePanel.transform.SetParent(hoveredPlatform.transform, true);
                         towerUpgradePanel.SetButtonInfo(hoveredPlatform.getBuiltTower());
                         towerUpgradePanel.transform.localPosition = new Vector3(0, 1.2f, 0);
@@ -258,6 +259,7 @@ public class GameManager : MonoBehaviour {
                     else {
                         // this hoverOctagon is not yet selected or built on, select it and show the build panel
                         towerBuildPanel.ActivatePanel(true);
+                        towerUpgradePanel.ActivatePanel(false);
                         towerBuildPanel.transform.SetParent(hoveredPlatform.transform, true);
                         //towerBuildPanel.transform.parent = hoveredPlatform.transform;
                         towerBuildPanel.transform.localPosition = new Vector3(0, 1.2f, 0);
