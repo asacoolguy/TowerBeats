@@ -8,16 +8,15 @@ public class ShockTower : BasicTower {
 	public float attackPower = 1f;
 
 	// Use this for initialization
-	new void Start () {
-		base.Start();
-        towerType = 1;
-
+	private void Start () {
         soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().shockTowerClips;
         SetupSound();
 
 		// set up particle system
 		pSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
-	}
+
+        towerType = 1;
+    }
 	
 
 	// plays the designated sound and also does the attack
@@ -30,7 +29,7 @@ public class ShockTower : BasicTower {
 
 		// pause all other towers of this type and sound
 		foreach (ShockTower tower in FindObjectsOfType<ShockTower>()){
-			if (tower != this && tower.IsBuilt() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
+			if (tower != this && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
 		}

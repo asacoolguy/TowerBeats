@@ -319,7 +319,6 @@ public class GameManager : MonoBehaviour {
 
         BasicTower tower = towerObj.GetComponent<BasicTower>();
         tower.ToggleOutline(false);
-        tower.MakeBuilt();
 
         GainMoney(-tower.cost);
 

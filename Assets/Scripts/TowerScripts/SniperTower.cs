@@ -12,25 +12,13 @@ public class SniperTower : BasicTower {
 
 
 	// Use this for initialization
-	new void Start () {
-		audioSource = GetComponent<AudioSource>();
-		anim = GetComponent<Animator>();
-		mRenderer = transform.Find("tower").GetComponent<MeshRenderer>();
-		originalMat = mRenderer.material;
-
+	private void Start () {
         // set up audio clips
         soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().sniperTowerClips;
         SetupSound();
-
-        // all towers start in the planning stage
-        // MakePlanning();
-
+        
         // set up the muzzle for bullets
         launcher = transform.Find("Launcher").gameObject;
-
-        // set up the light
-        spotlight = transform.Find("Spotlight").GetComponent<Light>();
-        spotlight.intensity = lightMinIntensity;
 
         towerType = 2;
     }
@@ -50,7 +38,7 @@ public class SniperTower : BasicTower {
 
         // pause all other towers of this type and sound
         foreach (SniperTower tower in FindObjectsOfType<SniperTower>()){
-			if (tower != this && tower.IsBuilt() && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
+			if (tower != this && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
 		}
