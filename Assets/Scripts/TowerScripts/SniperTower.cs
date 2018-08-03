@@ -32,8 +32,6 @@ public class SniperTower : BasicTower {
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
 
-        powerFactor = FindObjectOfType<CentralPlatform>().GetPowerFactor();
-
         towerType = 2;
     }
 	
@@ -81,7 +79,7 @@ public class SniperTower : BasicTower {
 				LineRenderer line = bullet.GetComponent<LineRenderer>();
 				line.SetPosition(0, launcher.transform.position);
 				line.SetPosition(1, enemies[enemyIndex].transform.position);
-				enemies[enemyIndex].TakeDamage(attackPower * powerFactor);
+				enemies[enemyIndex].TakeDamage(attackPower);
 
 				yield return new WaitForSeconds(0.4f);
 			}

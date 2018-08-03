@@ -41,6 +41,7 @@ public class OuterGrid : MonoBehaviour {
         int i = 0;
         foreach (Transform t in transform.GetComponentInChildren<Transform>()) {
             octTowers.Add(t.gameObject);
+
             float scale = GetScaleByDistance(t.position);
             t.localScale = new Vector3(t.localScale.x, scale, t.localScale.z);
             t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y + yPosOffset, t.localPosition.z);
@@ -118,7 +119,7 @@ public class OuterGrid : MonoBehaviour {
         else {
             finalScale = minScale + (maxScale - minScale) * ((distanceSqrd - minDistSqrd) / (maxDistSqrd - minDistSqrd));
             //finalScale = GameManager.SmoothStep(minScale, maxScale, (distanceSqrd - minDistSqrd) / (maxDistSqrd - minDistSqrd));
-            finalScale *= Random.Range(0.8f, 1.2f);
+            finalScale *= Random.Range(0.85f, 1.15f);
         }
 
         return finalScale;

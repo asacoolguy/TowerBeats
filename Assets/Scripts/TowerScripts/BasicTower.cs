@@ -34,8 +34,6 @@ public abstract class BasicTower : MonoBehaviour {
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
         defaultYScale = transform.localScale.y;
-
-        powerFactor = FindObjectOfType<CentralPlatform>().GetPowerFactor();
 	}
 	
 

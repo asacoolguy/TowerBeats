@@ -34,8 +34,6 @@ public class LaserTower : BasicTower {
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
 
-        powerFactor = FindObjectOfType<CentralPlatform>().GetPowerFactor();
-
         towerType = 3;
     }
 	
@@ -89,7 +87,7 @@ public class LaserTower : BasicTower {
 					while (target != null && enemies.Contains(target) && target.health > 0){
 						laser.SetPosition(0, launcher.transform.position);
 						laser.SetPosition(1, target.transform.position);
-						target.TakeDamage(damagePerSec * Time.deltaTime * powerFactor);
+						target.TakeDamage(damagePerSec * Time.deltaTime);
 
 						t += Time.deltaTime;
 						yield return null;

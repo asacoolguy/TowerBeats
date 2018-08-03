@@ -12,9 +12,8 @@ public class GameManager : MonoBehaviour {
 	private UIManager uiManager;
     private EnemyManager enemyManager;
 	private AudioSource audioSource, menuAudioSource;
-    private Animator cameraAnimator;
+    private Animator cameraAnimator, centralTowerAnimator;
     private Scanner scanner;
-    private CentralPlatform centralPlatform;
     private LevelSelector levelSelector;
     private EnemyPath enemyPath;
 
@@ -74,7 +73,7 @@ public class GameManager : MonoBehaviour {
         uiManager = FindObjectOfType<UIManager>();
         cameraAnimator = FindObjectOfType<CameraMover>().GetComponent<Animator>();
         scanner = FindObjectOfType<Scanner>();
-        centralPlatform = homeBase.transform.parent.GetComponent<CentralPlatform>();
+        centralTowerAnimator = homeBase.transform.parent.GetComponent<Animator>();
         levelSelector = homeBase.transform.parent.GetComponentInChildren<LevelSelector>();
         enemyPath = enemyPathObj.GetComponent<EnemyPath>();
 
@@ -128,14 +127,14 @@ public class GameManager : MonoBehaviour {
                 obj.SetActive(true);
             }
 
-            centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
-            centralPlatform.interactable = true;
+            centralTowerAnimator.SetTrigger("Rise");
 
             uiManager.ShowGUI(true, true);
             cameraAnimator.SetTrigger("SkipToGame");
 
             scanner.ShowScannerLine(true);
             scanner.SetRotate(true);
+            FindObjectOfType<CameraMover>().ToggleBlankScreen(false);
         }
         else {
             state = GameState.SplashScreenDisplaying;
@@ -208,7 +207,7 @@ public class GameManager : MonoBehaviour {
             state = GameState.LevelScreen;
             uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(false));
             cameraAnimator.SetTrigger("SplashToLevel");
-            centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
+            centralTowerAnimator.SetTrigger("Rise");
             levelSelector.ShowLevelSelection(true);
         }
         else if (state == GameState.GameScreen) {
@@ -579,8 +578,7 @@ public class GameManager : MonoBehaviour {
         state = GameState.LevelScreen;
 
         // make all octagons fall and lower the central tower
-        centralPlatform.GetComponent<Animator>().SetTrigger("Lower");
-        centralPlatform.interactable = true;
+        centralTowerAnimator.SetTrigger("Lower");
         foreach (TowerPlatform oct in FindObjectsOfType<TowerPlatform>()) {
             StartCoroutine(oct.FallOff());
         }
@@ -589,8 +587,7 @@ public class GameManager : MonoBehaviour {
 
         uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
         cameraAnimator.SetTrigger("ResultToLevel");
-        centralPlatform.GetComponent<Animator>().SetTrigger("Rise");
-        centralPlatform.interactable = false;
+        centralTowerAnimator.SetTrigger("Rise");
         levelSelector.ShowLevelSelection(true);
 
         scanner.DestroyAllTowers();
