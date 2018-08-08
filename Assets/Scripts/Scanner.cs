@@ -234,6 +234,10 @@ public class Scanner : MonoBehaviour {
     public int getSongPhase() {
         return songPhasesCurrent;
     }
+
+    public float getTimePerMeasure() {
+        return timePerMeasure;
+    }
     
 
     private void resetScannerLines() {

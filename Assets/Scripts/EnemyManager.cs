@@ -153,11 +153,17 @@ public class EnemyManager : MonoBehaviour {
 
                     int enemyType = 0;
                     string char2 = instruction.Substring(1, 1);
-                    if (char2 == "s") {
-                        enemyType = 0;
+                    if (char2 == "n") {
+                        enemyType = 0; // normal
                     }
-                    else if (char2 == "l") {
-                        enemyType = 1;
+                    else if (char2 == "r") {
+                        enemyType = 1; // regen
+                    }
+                    else if (char2 == "f") {
+                        enemyType = 2; // fast
+                    }
+                    else if (char2 == "h") {
+                        enemyType = 3; // heavy
                     }
 
                     int spawnAmount = int.Parse(instruction.Substring(2, 1));

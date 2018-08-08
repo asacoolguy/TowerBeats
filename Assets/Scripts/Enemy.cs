@@ -19,6 +19,11 @@ public class Enemy : MonoBehaviour {
 
     public bool ascending; // this is true when enemy is still rising. enemy is untargetable in this phase
 
+    public bool regenerate;
+    public int regenerateStartDelay;
+    private int currentRegenerateDelay;
+    public float regenerateMeasure;
+    private float regenerateSpeed;
 
 	private void Start () {
 		anim = GetComponent<Animator>();
@@ -27,10 +32,20 @@ public class Enemy : MonoBehaviour {
 
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
         transform.Find("MoneyText").gameObject.SetActive(false);
+
+        regenerateSpeed = health / (regenerateMeasure * FindObjectOfType<Scanner>().getTimePerMeasure());
     }
 	
 
 	private void Update () {
+        if (regenerate && currentRegenerateDelay == 0 && health < initialHealth) {
+            // regain health
+            health += regenerateSpeed * Time.deltaTime;
+            if (health > initialHealth) {
+                health = initialHealth;
+            }
+        }
+
         healthBar.SetPosition(0, transform.position + new Vector3(-initialHealth / 4f, 0f, 4f));
         float fill = Mathf.Max(0f, health / 2f);
         healthBar.SetPosition(1, healthBar.GetPosition(0) + new Vector3(fill, 0, 0));
@@ -54,6 +69,10 @@ public class Enemy : MonoBehaviour {
 		float currentDuration = 0f;
         Vector3 targetLocation = path[nextTarget];
 		float moveSpeed = distancePerMove / moveDuration;
+
+        if (regenerate && currentRegenerateDelay > 0) {
+            currentRegenerateDelay--;
+        }
 
         if (slowCounter > 0) {
             slowCounter--;
@@ -92,6 +111,8 @@ public class Enemy : MonoBehaviour {
 	public void TakeDamage(float i){
         if (!ascending) {
             health -= i;
+            currentRegenerateDelay = regenerateStartDelay;
+
             if (health <= 0f) {
                 // destroy
                 StartCoroutine(SelfDestruct());
