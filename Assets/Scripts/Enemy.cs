@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour {
 	public float pointVal;
     public int moneyDropped;
     private int slowCounter;
+    private float travelDist;
 
     public bool ascending; // this is true when enemy is still rising. enemy is untargetable in this phase
 
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour {
     private int currentRegenerateDelay;
     public float regenerateMeasure;
     private float regenerateSpeed;
+    
 
 	private void Start () {
 		anim = GetComponent<Animator>();
@@ -33,6 +35,7 @@ public class Enemy : MonoBehaviour {
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
         transform.Find("MoneyText").gameObject.SetActive(false);
 
+        travelDist = 0;
         regenerateSpeed = health / (regenerateMeasure * FindObjectOfType<Scanner>().getTimePerMeasure());
     }
 	
@@ -82,11 +85,12 @@ public class Enemy : MonoBehaviour {
 		while(currentDuration <= moveDuration){
 			float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
 			float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
+            travelDist += moveAmount;
             Vector3 moveDirection = (targetLocation - transform.position);
 
             // if we're still ascending out of the spawn point, use the set speed and face up
             if (nextTarget == 1) {
-                moveAmount = 50 * speedRatio * Time.deltaTime;
+                moveAmount = 160 * speedRatio * Time.deltaTime;
                 float angle = 90f + GameManager.GetAngleFromVectorSpecial(transform.position);
                 transform.eulerAngles = new Vector3(90, 0, angle);
                 ascending = true;
@@ -170,5 +174,9 @@ public class Enemy : MonoBehaviour {
                 path.Add(input[i] + offset + new Vector3(0, heightOffset, 0));
             }
         }
+    }
+
+    public float GetTravelDist() {
+        return travelDist;
     }
 }

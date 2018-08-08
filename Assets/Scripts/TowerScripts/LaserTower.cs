@@ -50,39 +50,42 @@ public class LaserTower : BasicTower {
 		while (t < attackDuration){
 			List<Enemy> enemies = GetComponentInChildren<TowerAoE>().enemiesInRange;
 			if (enemies.Count > 0){
-				// find first enemy still alive
+				// find farthest enemy still alive
 				Enemy target = null;
+                float currentDist = 0;
 				for (int i = 0; i < enemies.Count; i++){
-					if (enemies[i] != null && enemies[i].health > 0 && !enemies[i].ascending){
+					if (enemies[i] != null && enemies[i].health > 0 && !enemies[i].ascending && enemies[i].GetTravelDist() > currentDist){
 						target = enemies[i];
-						break;
+                        currentDist = enemies[i].GetTravelDist();
 					}
 				}
 
 				if (target == null){
-					// we didn't find a target, wait .2 seconds
-					t += 0.2f;
-					yield return new WaitForSeconds(0.2f);
+					// we didn't find a target, wait .1 seconds
+					t += 0.1f;
+                    laser.gameObject.SetActive(false);
+                    yield return new WaitForSeconds(0.1f);
 				}
 				else{
 					// target found. keep shooting laser at it until it dies
 					laser.gameObject.SetActive(true);
-					while (target != null && enemies.Contains(target) && target.health > 0){
+					if (target != null && enemies.Contains(target) && target.health > 0){
 						laser.SetPosition(0, launcher.transform.position);
 						laser.SetPosition(1, target.transform.position);
 						target.TakeDamage(damagePerSec * Time.deltaTime);
 
-						t += Time.deltaTime;
-						yield return null;
+						//t += Time.deltaTime;
+						//yield return null;
 					}
-					laser.gameObject.SetActive(false);
+					//laser.gameObject.SetActive(false);
 				}
 
 			}
 			t += Time.deltaTime;
 			yield return null;
 		}
-	}
+        laser.gameObject.SetActive(false);
+    }
 
 
     public override void SetupSound() {
@@ -92,7 +95,8 @@ public class LaserTower : BasicTower {
             randomClipIndex = Random.Range(0, musicClips.clips.Length);
         }
         audioSource.clip = musicClips.clips[randomClipIndex];
-        attackDuration = audioSource.clip.length;
+        //attackDuration = audioSource.clip.length;
+        attackDuration = FindObjectOfType<Scanner>().getTimePerMeasure() * 2;
     }
 
 }

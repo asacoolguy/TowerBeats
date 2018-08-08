@@ -50,28 +50,31 @@ public class SniperTower : BasicTower {
 
 	// shoots 3 bullets towards existing enemies. prefers hitting multiple enemies over hitting a single one
 	private IEnumerator ShootBullets(){
-		List<Enemy> enemies = GetComponentInChildren<TowerAoE>().enemiesInRange;
-		if (enemies.Count > 0){
-			for (int i = 0; i < 3; i++){
-				int enemyIndex = -1;
-				do{
-					enemyIndex++;
-					if (enemyIndex >= enemies.Count){
-						// no enemies left, just return
-						yield break;
-					}
-				}while(enemies[enemyIndex] == null || enemies[enemyIndex].health <= 0 || enemies[enemyIndex].ascending);
+        for (int j = 0; j < 3; j++) {
+            List<Enemy> enemies = GetComponentInChildren<TowerAoE>().enemiesInRange;
+            if (enemies.Count > 0) {
+                // find farthest enemy still alive
+                Enemy target = null;
+                float currentDist = 0;
+                for (int i = 0; i < enemies.Count; i++) {
+                    if (enemies[i] != null && enemies[i].health > 0 && !enemies[i].ascending && enemies[i].GetTravelDist() > currentDist) {
+                        target = enemies[i];
+                        currentDist = enemies[i].GetTravelDist();
+                    }
+                }
 
-				// only shoot lasers when the enemy still exist
-				GameObject bullet = Instantiate(bulletObj, Vector3.zero, Quaternion.identity);
-				LineRenderer line = bullet.GetComponent<LineRenderer>();
-				line.SetPosition(0, launcher.transform.position);
-				line.SetPosition(1, enemies[enemyIndex].transform.position);
-				enemies[enemyIndex].TakeDamage(attackPower);
+                if (target != null) {
+                    // only shoot lasers when the enemy still exist
+                    GameObject bullet = Instantiate(bulletObj, Vector3.zero, Quaternion.identity);
+                    LineRenderer line = bullet.GetComponent<LineRenderer>();
+                    line.SetPosition(0, launcher.transform.position);
+                    line.SetPosition(1, target.transform.position);
+                    target.TakeDamage(attackPower);
 
-				yield return new WaitForSeconds(0.4f);
-			}
-		}
+                    yield return new WaitForSeconds(0.4f);
+                }
+            }
+        }
 	}
 
     public override void SetupSound() {
