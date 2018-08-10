@@ -189,9 +189,10 @@ public class TowerPlatform : OctPlatform {
             yield return null;
         }
 
-        this.gameObject.SetActive(false);
-        transform.position = new Vector3(transform.position.x, flyInHeight, transform.position.z);
-        transform.localEulerAngles = new Vector3(0, 22.5f, 0);
+        //this.gameObject.SetActive(false);
+        //transform.position = new Vector3(transform.position.x, flyInHeight, transform.position.z);
+        //transform.localEulerAngles = new Vector3(0, 22.5f, 0);
+        Destroy(this.gameObject);
     }
 
     

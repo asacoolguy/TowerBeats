@@ -57,7 +57,8 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
         if (nextTarget >= path.Count - 1 && other.gameObject.tag == "HomeBase"){
 			FindObjectOfType<GameManager>().TakeDamage(1);
-			StartCoroutine(SelfDestruct());
+            FindObjectOfType<GameManager>().GainPoints(-pointVal); // no points gained if self destructed
+            StartCoroutine(SelfDestruct());
 		}
 	}
 

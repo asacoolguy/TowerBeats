@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour {
             currentMoney = 9999;
 
             // load info for stage 1
-            int testStage = 0;
+            int testStage = 1;
             currentStage = testStage;
 
             // load scannerMusic info
@@ -550,6 +550,9 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
 
+        // add remaining money to score
+        currentScore += currentMoney;
+
         // play the end game sound and zoom out
         uiManager.ShowGUI(false);
         cameraAnimator.SetTrigger("GameToResult");
@@ -561,7 +564,7 @@ public class GameManager : MonoBehaviour {
 
         // show the game win screen
         state = GameState.ResultScreenDisplaying;
-        StartCoroutine(uiManager.DisplayGameResultScreen(true, true, totalScore));
+        StartCoroutine(uiManager.DisplayGameResultScreen(true, true, currentScore));
 
         Time.timeScale = 0;
     }
@@ -576,6 +579,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator ResetGame() {
         Time.timeScale = 1;
+        gameOver = false;
         state = GameState.LevelScreen;
 
         // make all octagons fall and lower the central tower
@@ -586,13 +590,19 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(2);
 
 
+
         uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
         cameraAnimator.SetTrigger("ResultToLevel");
         centralTowerAnimator.SetTrigger("Rise");
         levelSelector.ShowLevelSelection(true);
 
+        // clear all towers, paths and towerplatforms
         scanner.DestroyAllTowers();
+        enemyPath.Reset();
         enemyPath.ToggleAllPaths(false);
+        //for (int i = towerPlatformGrid.transform.childCount - 1; i >= 0; i--){
+        //    Destroy(towerPlatformGrid.transform.GetChild(i).gameObject);
+        //}
     }
 
 

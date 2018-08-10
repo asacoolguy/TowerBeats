@@ -56,14 +56,14 @@ public class LevelSelector : MonoBehaviour {
     }
 
     public void ShowNextLevel() {
-        if (canSelectLevels && currentLevel < numberOfLevels - 1) {
+        if (canSelectLevels && !startStagePressed && currentLevel < numberOfLevels - 1) {
             StartCoroutine(RotateToNewLevel(1));
         }
     }
 
 
     public void ShowPreviousLevel() {
-        if (canSelectLevels && currentLevel > 0) {
+        if (canSelectLevels && !startStagePressed && currentLevel > 0) {
             StartCoroutine(RotateToNewLevel(-1));
         }
     }
@@ -88,15 +88,23 @@ public class LevelSelector : MonoBehaviour {
     public void ShowLevelSelection(bool b) {
         for(int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(b);
+
         }
 
-        if (!b) {
+        if (b) {
+            canSelectLevels = true;
+            startStagePressed = false;
+            currentLevel = 0;
+        }
+        else {
             centralTower.GetComponent<Animator>().enabled = true;
         }
     }
 
 
     private IEnumerator RotateToNewLevel(int direction) {
+        centralTower.GetComponent<Animator>().enabled = false;
+
         float currentTime = 0;
         canSelectLevels = false;
         float startRotation = centralTower.transform.localEulerAngles.y;
