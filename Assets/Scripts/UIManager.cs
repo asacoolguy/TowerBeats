@@ -119,16 +119,6 @@ public class UIManager : MonoBehaviour {
             splashScreen.GetComponent<Animator>().SetTrigger("FadeOut");
         }
     }
-   
-
-	public void RestartGame(){
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-	}
-
-
-	public void LoadMainMenu(){
-		SceneManager.LoadScene("Main Menu");
-	}
 
 
 	public void StartMusic(){

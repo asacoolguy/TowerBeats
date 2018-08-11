@@ -209,6 +209,7 @@ public class GameManager : MonoBehaviour {
             cameraAnimator.SetTrigger("SplashToLevel");
             centralTowerAnimator.SetTrigger("Rise");
             levelSelector.ShowLevelSelection(true);
+            uiManager.ShowQuitButton(true);
         }
         else if (state == GameState.GameScreen) {
             // handle clicking events
@@ -514,6 +515,7 @@ public class GameManager : MonoBehaviour {
         audioSource.PlayOneShot(wooshClip);
         cameraAnimator.SetTrigger("LevelToGame");
         levelSelector.ShowLevelSelection(false);
+        uiManager.ShowQuitButton(false);
         yield return new WaitForSeconds(wooshClip.length + 1);
 
         // fly the panels in and show the GUI
@@ -589,12 +591,11 @@ public class GameManager : MonoBehaviour {
         }
         yield return new WaitForSeconds(2);
 
-
-
         uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
         cameraAnimator.SetTrigger("ResultToLevel");
         centralTowerAnimator.SetTrigger("Rise");
         levelSelector.ShowLevelSelection(true);
+        uiManager.ShowQuitButton(true);
 
         // clear all towers, paths and towerplatforms
         scanner.DestroyAllTowers();
@@ -603,6 +604,11 @@ public class GameManager : MonoBehaviour {
         //for (int i = towerPlatformGrid.transform.childCount - 1; i >= 0; i--){
         //    Destroy(towerPlatformGrid.transform.GetChild(i).gameObject);
         //}
+    }
+
+
+    public void QuitGame() {
+        Application.Quit();
     }
 
 

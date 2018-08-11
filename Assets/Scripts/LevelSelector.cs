@@ -15,8 +15,6 @@ public class LevelSelector : MonoBehaviour {
 
 	private void Start () {
         ShowLevelSelection(false);
-
-        // TODO: hide earlier levels as the tower shifts
 	}
 
     public void SetupMenu(int levelNum) {
@@ -69,14 +67,6 @@ public class LevelSelector : MonoBehaviour {
     }
 
 
-    public void EnableLevelSelection() {
-        canSelectLevels = true;
-        startStagePressed = false;
-        centralTower.GetComponent<Animator>().enabled = false;
-        currentLevel = 0;
-    }
-
-
     public void StartStage() {
         if (!startStagePressed) {
             FindObjectOfType<GameManager>().LoadStage(currentLevel);
@@ -88,7 +78,6 @@ public class LevelSelector : MonoBehaviour {
     public void ShowLevelSelection(bool b) {
         for(int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(b);
-
         }
 
         if (b) {
