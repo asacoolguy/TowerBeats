@@ -20,16 +20,17 @@ public class LevelSelector : MonoBehaviour {
     public void SetupMenu(int levelNum) {
         numberOfLevels = levelNum;
 
-        currentLevel = 0;
+        currentLevel = 1;
 
-        // add the first level to the list
+        // add the quit button and first level to the list
         levels = new List<GameObject>();
         levels.Add(transform.GetChild(0).gameObject);
+        levels.Add(transform.GetChild(1).gameObject);
 
         // makes the other levels as needed
-        float dist = levels[0].transform.localPosition.z;
+        float dist = levels[1].transform.localPosition.z;
         for (int i = 1; i < numberOfLevels; i++) {
-            GameObject newMenu = Instantiate(levels[0], levels[0].transform.parent);
+            GameObject newMenu = Instantiate(levels[1], levels[1].transform.parent);
             float angle = -45 * i;
             newMenu.transform.localEulerAngles = new Vector3(0, angle, 0);
             newMenu.transform.localPosition = new Vector3(dist * Mathf.Sin(angle * Mathf.Deg2Rad), 0, dist * Mathf.Cos(angle * Mathf.Deg2Rad));
@@ -49,12 +50,12 @@ public class LevelSelector : MonoBehaviour {
         }
         else {
             levels[0].transform.Find("LeftButton").gameObject.SetActive(false);
-            levels[numberOfLevels - 1].transform.Find("RightButton").gameObject.SetActive(false);
+            levels[numberOfLevels].transform.Find("RightButton").gameObject.SetActive(false);
         }
     }
 
     public void ShowNextLevel() {
-        if (canSelectLevels && !startStagePressed && currentLevel < numberOfLevels - 1) {
+        if (canSelectLevels && !startStagePressed && currentLevel < numberOfLevels) {
             StartCoroutine(RotateToNewLevel(1));
         }
     }
@@ -75,6 +76,11 @@ public class LevelSelector : MonoBehaviour {
     }
 
 
+    public void QuitGame() {
+        FindObjectOfType<GameManager>().QuitGame();
+    }
+
+
     public void ShowLevelSelection(bool b) {
         for(int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(b);
@@ -83,7 +89,7 @@ public class LevelSelector : MonoBehaviour {
         if (b) {
             canSelectLevels = true;
             startStagePressed = false;
-            currentLevel = 0;
+            currentLevel = 1;
         }
         else {
             centralTower.GetComponent<Animator>().enabled = true;
