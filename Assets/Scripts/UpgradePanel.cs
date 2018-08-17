@@ -10,6 +10,7 @@ public class UpgradePanel : MonoBehaviour {
     private List<bool> buttonEnabled;
     private int highlightedButton = -1;
     private BasicTower tower;
+    private GameObject upgradedAOE;
 
     public float highlightedButtonSize;
     private float defaultButtonSize;
@@ -36,7 +37,7 @@ public class UpgradePanel : MonoBehaviour {
 
 
     private void Update() {
-        // return all non-highlighted buttons to default state 
+        // increase size of highlighted buttons and return non-highlighted buttons to default size 
         for (int i = 0; i < 2; i++) {
             float newSize = defaultButtonSize;
             if (i == highlightedButton && buttonEnabled[i]) {
@@ -165,7 +166,7 @@ public class UpgradePanel : MonoBehaviour {
         }
         else if (index == 1) {
             if (tower != null) {
-                FindObjectOfType<GameManager>().GainMoney((tower.info.currentLevel + 1) * tower.cost / 3);
+                FindObjectOfType<GameManager>().GainMoney(GetUpgradeCost() / 2);
                 FindObjectOfType<Scanner>().RemoveTowerFromList(tower.gameObject);
                 transform.parent.GetComponent<TowerPlatform>().RemoveBuiltTower();
                 Destroy(tower.gameObject);

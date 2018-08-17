@@ -674,7 +674,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 600b2fbeb59e47d4d9d50e6cc519aa62, type: 2}
+  - {fileID: 2100000, guid: f8ba44eb9897e354db8cd1da5418dc34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1290,12 +1290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277edc837ccc97941bd4702e9b04d479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 200
   towerType: 0
   axisIndex: 0
-  powerFactor: 1
   info:
-    color: {r: 0.80784315, g: 0.80784315, b: 0.80784315, a: 1}
+    color: {r: 0, g: 0.62352943, b: 0.7490196, a: 1}
     maxLevel: 3
     currentLevel: 0
     descriptions:
@@ -1314,13 +1312,20 @@ MonoBehaviour:
       Range and
 
       Damage'
-    costs: eb0000000e010000
+    costs: 96000000c8000000fa000000
+    attackPowers:
+    - 1
+    - 1.2
+    - 1.4
+    attackRanges:
+    - 0.1
+    - 0.11
+    - 0.12
   popYScale: 1.3
   popTime: 0.2
   lightBoostTime: 1
   lightMinIntensity: 0.5
   lightMaxIntensity: 1.5
-  damagePerSec: 1.5
 --- !u!114 &114866520608741302
 MonoBehaviour:
   m_ObjectHideFlags: 1

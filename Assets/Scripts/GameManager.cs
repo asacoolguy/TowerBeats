@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour {
             AOEIndicator.SetActive(false);
             towerBuildPanel.AOEIndicators.Add(AOEIndicator);
             // set up the right cost
-            towerBuildPanel.SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().cost);
+            towerBuildPanel.SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().info.costs[0]);
         }
 
         // make the tower upgraePanel 
@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour {
 
                 // enable/disable BuildPanelButtons based on money
                 for (int i = 0; i < buildableTowers.Count; i++) {
-                    if (currentMoney >= buildableTowers[i].GetComponent<BasicTower>().cost) {
+                    if (currentMoney >= buildableTowers[i].GetComponent<BasicTower>().info.costs[0]) {
                         towerBuildPanel.EnableButton(i, true);
                     }
                     else {
@@ -322,7 +322,7 @@ public class GameManager : MonoBehaviour {
         BasicTower tower = towerObj.GetComponent<BasicTower>();
         tower.ToggleOutline(false);
 
-        GainMoney(-tower.cost);
+        GainMoney(-tower.info.costs[0]);
 
         // do some stuff about finding the right list to add tower to
         int axisIndex = scanner.FindClosestAxisIndex(tower.transform.position);

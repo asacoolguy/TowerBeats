@@ -7,7 +7,6 @@ public class SniperTower : BasicTower {
 	private GameObject launcher;
 	private TowerMusicClips[] soundClips;
 
-	public float attackPower = 1f;
 	public float bulletFadeTime = 0.6f;
 
 
@@ -69,7 +68,7 @@ public class SniperTower : BasicTower {
                     LineRenderer line = bullet.GetComponent<LineRenderer>();
                     line.SetPosition(0, launcher.transform.position);
                     line.SetPosition(1, target.transform.position);
-                    target.TakeDamage(attackPower);
+                    target.TakeDamage(info.attackPowers[info.currentLevel]);
 
                     yield return new WaitForSeconds(0.4f);
                 }

@@ -7,7 +7,6 @@ public class LaserTower : BasicTower {
 	private LineRenderer laser;
 
 	private TowerMusicClips[] soundClips;
-	public float damagePerSec = 0.5f;
 	private float attackDuration;
 
 
@@ -72,7 +71,7 @@ public class LaserTower : BasicTower {
 					if (target != null && enemies.Contains(target) && target.health > 0){
 						laser.SetPosition(0, launcher.transform.position);
 						laser.SetPosition(1, target.transform.position);
-						target.TakeDamage(damagePerSec * Time.deltaTime);
+						target.TakeDamage(info.attackPowers[info.currentLevel] * Time.deltaTime);
 
 						//t += Time.deltaTime;
 						//yield return null;

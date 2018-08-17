@@ -42,7 +42,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1207329105000814
 GameObject:
   m_ObjectHideFlags: 1
@@ -1055,7 +1055,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 74cd88685a7b41046a6c9330faeb43f6, type: 2}
+  - {fileID: 2100000, guid: f8ba44eb9897e354db8cd1da5418dc34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1402,10 +1402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8672ca666e2907b4eb08a70253e418e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 75
   towerType: 0
   axisIndex: 0
-  powerFactor: 1
   info:
     color: {r: 0, g: 0.91764706, b: 1, a: 1}
     maxLevel: 3
@@ -1426,7 +1424,15 @@ MonoBehaviour:
       Range and
 
       Damage'
-    costs: 5a00000073000000
+    costs: 460000005a00000073000000
+    attackPowers:
+    - 1
+    - 1.3
+    - 1.6
+    attackRanges:
+    - 0.25
+    - 0.285
+    - 0.32
   popYScale: 1.3
   popTime: 0.2
   lightBoostTime: 0.5

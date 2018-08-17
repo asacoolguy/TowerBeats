@@ -6,10 +6,8 @@ using UnityEngine;
 public abstract class BasicTower : MonoBehaviour {
 	protected AudioSource audioSource;
 	protected Animator anim;
-    public int cost;
     public int towerType = 0;
 	public int axisIndex = 0;
-    public float powerFactor = 1f;
     public TowerInfo info;
     protected int randomClipIndex = -1;
 
@@ -76,7 +74,16 @@ public abstract class BasicTower : MonoBehaviour {
             info.currentLevel++;
             SetupSound();
 
-            // TODO: increase power level and change models
+            // change model
+            foreach (Transform tran in transform.Find("Models").GetComponentInChildren<Transform>()) {
+                tran.gameObject.SetActive(false);
+            }
+            transform.Find("Models").GetChild(info.currentLevel).gameObject.SetActive(true);
+
+            // increase range
+            transform.Find("AOEIndicator").localScale = new Vector3(info.attackRanges[info.currentLevel], 0.002f, info.attackRanges[info.currentLevel]);
+            transform.Find("Area").GetComponent<CapsuleCollider>().radius = info.attackRanges[info.currentLevel];
+
         }   
     }
 }
@@ -89,4 +96,6 @@ public class TowerInfo {
     [TextArea]
     public string[] descriptions;
     public int[] costs;
+    public float[] attackPowers;
+    public float[] attackRanges;
 }
