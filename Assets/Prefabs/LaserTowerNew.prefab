@@ -1293,7 +1293,7 @@ MonoBehaviour:
   towerType: 0
   axisIndex: 0
   info:
-    color: {r: 0, g: 0.62352943, b: 0.7490196, a: 1}
+    color: {r: 0, g: 0.91764706, b: 1, a: 1}
     maxLevel: 3
     currentLevel: 0
     descriptions:

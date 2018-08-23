@@ -671,7 +671,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1710281807737140, guid: 80c65df6bcea1ae47be330daa8f2d2c0, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114184825983131362, guid: 80c65df6bcea1ae47be330daa8f2d2c0,
+        type: 2}
+      propertyPath: info.color.g
+      value: 0.6414355
+      objectReference: {fileID: 0}
+    - target: {fileID: 114184825983131362, guid: 80c65df6bcea1ae47be330daa8f2d2c0,
+        type: 2}
+      propertyPath: info.color.b
+      value: 0.699
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80c65df6bcea1ae47be330daa8f2d2c0, type: 2}
@@ -5145,6 +5155,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
+      propertyPath: enemyDeathClips.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
+        type: 2}
       propertyPath: levelData.Array.data[2].enemyPaths.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -5504,7 +5519,7 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.shockTowerClips.Array.data[0].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 0535a2ab5e1afed42aab07981d1c1a55, type: 3}
+      objectReference: {fileID: 8300000, guid: 899199521db8c3340b447e4011817814, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.shockTowerClips.Array.data[0].clips.Array.data[1]
@@ -5554,7 +5569,7 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.sniperTowerClips.Array.data[0].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: c7ccfc7baf619994eaa15f31fe18d68e, type: 3}
+      objectReference: {fileID: 8300000, guid: 4c577449dc0fe934185996dc23d2b71b, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.sniperTowerClips.Array.data[0].clips.Array.data[1]
@@ -5604,7 +5619,7 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.laserTowerClips.Array.data[0].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: b1eeee4a7d46ecc488aa8afd417f5309, type: 3}
+      objectReference: {fileID: 8300000, guid: d29f4b83be2b7a745b86bb07b50bd64e, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.laserTowerClips.Array.data[0].clips.Array.data[1]
@@ -5654,7 +5669,7 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.scannerClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: ac37828e6e4b42745afd19b1477ba59b, type: 3}
+      objectReference: {fileID: 8300000, guid: 7af6df5fc8ba58f49a1482e5c30803b5, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.measurePerSong.Array.data[0]
@@ -5874,17 +5889,17 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.scannerClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: f2ffdc86f993ce446b523a190d1743d2, type: 3}
+      objectReference: {fileID: 8300000, guid: 0ea66019d19a9634e80d57383224c704, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.scannerClips.Array.data[2]
       value: 
-      objectReference: {fileID: 8300000, guid: e86176eac5efa8d4e924d1d69b7a40cd, type: 3}
+      objectReference: {fileID: 8300000, guid: 5bbcff9ebe2c29b42b7239d4d24dc8cf, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.scannerClips.Array.data[3]
       value: 
-      objectReference: {fileID: 8300000, guid: 1e65da3683eb1d04f96a0f58b57ca48c, type: 3}
+      objectReference: {fileID: 8300000, guid: 620998d2468e95743a0a51b4a2e8a420, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.measurePerSong.Array.data[1]
@@ -5904,7 +5919,7 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.shockTowerClips.Array.data[1].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 11c24126c52eb2945b647f54cc71a59a, type: 3}
+      objectReference: {fileID: 8300000, guid: 48a1c33d40056e447ba1e749544d0770, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.shockTowerClips.Array.data[1].clips.Array.data[1]
@@ -5954,7 +5969,7 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.shockTowerClips.Array.data[2].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 3c7579e959b8dbf49bc4ce51f32df6c4, type: 3}
+      objectReference: {fileID: 8300000, guid: e32bb165c9200964dac634f7a2e8362e, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.shockTowerClips.Array.data[2].clips.Array.data[1]
@@ -6014,7 +6029,7 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.sniperTowerClips.Array.data[1].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: d6deafb927d24fd46b9ab09934eb2c8a, type: 3}
+      objectReference: {fileID: 8300000, guid: 7385f238f4244904e8aad7f05ec0b4a4, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.sniperTowerClips.Array.data[1].clips.Array.data[1]
@@ -6064,7 +6079,7 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.sniperTowerClips.Array.data[2].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 0bbeee7a48d5f7443af52b80f02347c4, type: 3}
+      objectReference: {fileID: 8300000, guid: 3e6d8b23f8d1c394abbcd64a0f5d8349, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.sniperTowerClips.Array.data[2].clips.Array.data[1]
@@ -6114,12 +6129,42 @@ Prefab:
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.laserTowerClips.Array.data[1].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: aadbfd3bc8db82641bd38db53d592659, type: 3}
+      objectReference: {fileID: 8300000, guid: d275a4d39a7d3f147a65ef2b2ea6ef49, type: 3}
     - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
         type: 2}
       propertyPath: levelData.Array.data[2].musicData.laserTowerClips.Array.data[2].clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 0dceb8c63b8f1fe48b23b703101eee61, type: 3}
+      objectReference: {fileID: 8300000, guid: f79a8db1028199e40b91e83a180bf343, type: 3}
+    - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
+        type: 2}
+      propertyPath: enemyDeathClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 425fa1ccc972cf64eac3c555ece56e02, type: 3}
+    - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
+        type: 2}
+      propertyPath: enemyDeathClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 58b8c04c73542194e9b49e7c1f38edbe, type: 3}
+    - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
+        type: 2}
+      propertyPath: enemyDeathClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: efbbe813ef6527c44935c6fe9c37e692, type: 3}
+    - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
+        type: 2}
+      propertyPath: enemyDeathClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0073f4f6fd73a9744ab25279f96af3a4, type: 3}
+    - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
+        type: 2}
+      propertyPath: enemyDeathClips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8104d10911fca7c438591886b4753760, type: 3}
+    - target: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
+        type: 2}
+      propertyPath: enemyDeathClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: dd7c5361bc6e4eb44b7f3b64f8a4d921, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d8ce01a1b531ab4f934e1a9845e9482, type: 2}
   m_IsPrefabParent: 0
@@ -10745,9 +10790,6 @@ MonoBehaviour:
   numAudioPlaying: 1
   lineData:
   - measurePerRotation: 8
-    color: {r: 1, g: 0, b: 0.8258381, a: 1}
-    targetTowers: 0
-  - measurePerRotation: 2
     color: {r: 1, g: 0, b: 0.8258381, a: 1}
     targetTowers: 123
 --- !u!1 &840718075
@@ -21442,6 +21484,46 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1211793805111186, guid: d34d945d1e3348f4ab0de3c3327ef09e, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766795552677248, guid: d34d945d1e3348f4ab0de3c3327ef09e,
+        type: 2}
+      propertyPath: originalColor.r
+      value: 4.547149
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766795552677248, guid: d34d945d1e3348f4ab0de3c3327ef09e,
+        type: 2}
+      propertyPath: originalColor.g
+      value: 4.547149
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766795552677248, guid: d34d945d1e3348f4ab0de3c3327ef09e,
+        type: 2}
+      propertyPath: originalColor.b
+      value: 4.547149
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766795552677248, guid: d34d945d1e3348f4ab0de3c3327ef09e,
+        type: 2}
+      propertyPath: originalColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766795552677248, guid: d34d945d1e3348f4ab0de3c3327ef09e,
+        type: 2}
+      propertyPath: builtColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766795552677248, guid: d34d945d1e3348f4ab0de3c3327ef09e,
+        type: 2}
+      propertyPath: builtColor.g
+      value: 4.1726794
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766795552677248, guid: d34d945d1e3348f4ab0de3c3327ef09e,
+        type: 2}
+      propertyPath: builtColor.b
+      value: 4.547149
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766795552677248, guid: d34d945d1e3348f4ab0de3c3327ef09e,
+        type: 2}
+      propertyPath: builtColor.a
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

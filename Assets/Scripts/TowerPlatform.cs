@@ -11,11 +11,15 @@ using UnityEngine;
 
 public class TowerPlatform : OctPlatform {
     private GameObject builtTower;
+    [ColorUsageAttribute(true,true)]
+    public Color builtColor;
     private Color originalColor;
-    private float texStrDecaySpeed, glowPowDecaySpeed;
+    private float brightnessDecaySpeed;
 
     public float raisedTexStr, raisedGlowPow;
-    private float loweredTexStr, loweredGlowPow, tempTexStr, tempGlowPow;
+    //private float loweredEmissionStr, tempTexStr, tempGlowPow;
+    private Vector3 currentHSVColor;
+    private float loweredBrightness, raisedBrightness;
 
     public AnimationCurve flyInCurve;
     public float flyInHeight, fallOffHeight;
@@ -32,65 +36,45 @@ public class TowerPlatform : OctPlatform {
 
         selector = transform.Find("Selector").gameObject;
         selector.SetActive(true);
-        
-        loweredTexStr = mat.GetFloat("_MKGlowTexStrength");
-        loweredGlowPow = mat.GetFloat("_MKGlowPower");
-        originalColor = mat.GetColor("_Color");
+
+        originalColor = mat.GetColor("_EmissionColor");
+        float h, s, v;
+        Color.RGBToHSV(originalColor, out h, out s, out v);
+        loweredBrightness = v;
+        raisedBrightness = v * 1.5f;
     }
 
 
     private void Start() {
         float rotationTime = FindObjectOfType<Scanner>().GetRotationTime();
-        texStrDecaySpeed = (raisedTexStr - loweredTexStr) / rotationTime * 2;
-        glowPowDecaySpeed = (raisedGlowPow - loweredGlowPow) / rotationTime * 2;
+        brightnessDecaySpeed = (raisedBrightness - loweredBrightness) / rotationTime;
     }
 
 
     private new void Update () {
         base.Update();
 
-        float t = currentMoveTime / moveTime;
+        float newV = GameManager.SmoothStep(loweredBrightness, raisedBrightness, currentMoveTime / moveTime);
 
-        // show AOEIndicator if necessary
         if (IsBuiltOn()){
             bool highlighted = (status == PlatformStatus.raising || status == PlatformStatus.raised);
+
+            // show AOEIndicator if necessary
             builtTower.transform.Find("AOEIndicator").gameObject.SetActive(highlighted);
 
-            if (highlighted) {
-                // otherwise link color to height using tempTexStr and tempGlowPow
-                float texStr = GameManager.SmoothStep(tempTexStr, raisedTexStr, t);
-                float glowPow = GameManager.SmoothStep(tempGlowPow, raisedGlowPow, t);
-                mat.SetFloat("_MKGlowTexStrength", texStr);
-                mat.SetFloat("_MKGlowPower", glowPow);
+            if (!highlighted) {
+                newV = currentHSVColor.z - (brightnessDecaySpeed * Time.deltaTime);
+                newV = Mathf.Clamp(newV, loweredBrightness, raisedBrightness);
             }
-            else {
-                // decay color if platform is built on and not selected
-                float newTexStr = mat.GetFloat("_MKGlowTexStrength") - (Time.deltaTime * texStrDecaySpeed);
-                float newGlowPow = mat.GetFloat("_MKGlowPower") - (Time.deltaTime * glowPowDecaySpeed);
-                mat.SetFloat("_MKGlowTexStrength", Mathf.Clamp(newTexStr, loweredTexStr, raisedTexStr));
-                mat.SetFloat("_MKGlowPower", Mathf.Clamp(newGlowPow, loweredGlowPow, raisedGlowPow));
-            }
-        }
-        else {
-            // link color to height
-            float texStr = GameManager.SmoothStep(loweredTexStr, raisedTexStr, t);
-            float glowPow = GameManager.SmoothStep(loweredGlowPow, raisedGlowPow, t);
-            mat.SetFloat("_MKGlowTexStrength", texStr);
-            mat.SetFloat("_MKGlowPower", glowPow);
         }
 
-        if (Input.GetKeyDown(KeyCode.C)) {
-            StartCoroutine(FallOff());
-        }
+        currentHSVColor = new Vector3(currentHSVColor.x, currentHSVColor.y, newV);
+        mat.SetColor("_EmissionColor", Color.HSVToRGB(currentHSVColor.x, currentHSVColor.y, currentHSVColor.z));
     }
 
 
     public override void RaisePlatform() {
         status = PlatformStatus.raising;
-        if (IsBuiltOn()) {
-            tempTexStr = mat.GetFloat("_MKGlowTexStrength");
-            tempGlowPow = mat.GetFloat("_MKGlowPower");
-        }
     }
 
     
@@ -101,15 +85,17 @@ public class TowerPlatform : OctPlatform {
 
 
     public void SetColor(Color c) {
-        mat.SetColor("_Color", c);
-        mat.SetColor("_MKGlowColor", c);
-        mat.SetColor("_MKGlowTexColor", c);
+        mat.SetColor("_EmissionColor", c);
+        float h, s, v;
+        Color.RGBToHSV(c, out h, out s, out v);
+        currentHSVColor = new Vector3(h, s, v);
     }
+
 
     public void BoostColor() {
         if (IsBuiltOn()) {
-            mat.SetFloat("_MKGlowTexStrength", raisedTexStr);
-            mat.SetFloat("_MKGlowPower", raisedGlowPow);
+            currentHSVColor = new Vector3(currentHSVColor.x, currentHSVColor.y, raisedBrightness);
+            mat.SetColor("_EmissionColor", Color.HSVToRGB(currentHSVColor.x, currentHSVColor.y, currentHSVColor.z));
         }
     }
 
@@ -162,6 +148,7 @@ public class TowerPlatform : OctPlatform {
     public void SetBuiltTower(GameObject tower) {
         if (!IsBuiltOn()) {
             builtTower = tower;
+            SetColor(builtColor);
         }
     }
 

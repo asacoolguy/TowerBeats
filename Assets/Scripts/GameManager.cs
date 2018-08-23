@@ -313,9 +313,8 @@ public class GameManager : MonoBehaviour {
         towerObj.transform.SetParent(selectedPlatform.transform, true);
         towerObj.transform.localPosition = pos;
 
-        // link tower to selectedPlatform, change its color and deselect it
+        // link tower to selectedPlatform and deselect it
         selectedPlatform.SetBuiltTower(towerObj);
-        selectedPlatform.SetColor(towerBuildPanel.towerColors[input]);
         selectedPlatform.SelectPlatform(false);
         selectedPlatform = null;
 
