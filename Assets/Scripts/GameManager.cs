@@ -684,11 +684,6 @@ public class GameManager : MonoBehaviour {
         return start + (end - start) * t;
     }
 
-    public static Color SmoothStep(Color start, Color end, float t) {
-        t = t * t * t * (t * (6f * t - 15f) + 10f);
-        return Color.Lerp(start, end, t);
-    }
-
     public static float EaseOut(float start, float end, float t) {
         t--;
         t = t * t * t + 1;

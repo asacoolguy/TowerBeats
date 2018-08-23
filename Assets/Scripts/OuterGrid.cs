@@ -15,21 +15,16 @@ public class OuterGrid : MonoBehaviour {
 
     private List<GameObject> octTowers;
     private List<float> octTowerScales;
-    private List<int> octTowerColorType;
-
+    private List<int> octTowerSpectrumType;
+    private Vector3 currentHSVColor;
 
     // color parameters
-    public Color defaultMainColor;
-    public Color defaultTextureColor;
-    public Color[] bumpColors;
     public float minBumpScale, maxBumpScale;
-    public float minTextreStr, maxTextureStr;
-    public float minGlowPow, maxGlowPow;
-    private float diffScale;
-    private float diffGlowStr;
-    private float diffGlowPow;
+    private float maxBrightness;
+    private float diffScale, diffBrightness;
 
     // spectrum parameters
+    public int spectrumNumber;
     private SpectrumData spectrum;
     private float[] spectrumValues;
 
@@ -37,8 +32,8 @@ public class OuterGrid : MonoBehaviour {
     void Awake () {
         octTowers = new List<GameObject>();
         octTowerScales = new List<float>();
-        octTowerColorType = new List<int>();
-        int i = 0;
+        octTowerSpectrumType = new List<int>();
+
         foreach (Transform t in transform.GetComponentInChildren<Transform>()) {
             octTowers.Add(t.gameObject);
 
@@ -54,7 +49,7 @@ public class OuterGrid : MonoBehaviour {
 
             // distance based
             float dist = new Vector3(t.localPosition.x, 0, t.localPosition.z).magnitude;
-            i = dist < 75 ? 0 : dist < 85 ? 1 : 2;
+            int i = dist < 75 ? 2 : dist < 85 ? 1 : 0;
 
             // angle based
             //float angle = GameManager.GetAngleFromVector(t.localPosition);
@@ -62,15 +57,20 @@ public class OuterGrid : MonoBehaviour {
             //angle %= 60;
             //i = angle < 20 ? 0 : angle < 40 ? 1 : 2;
 
-            octTowerColorType.Add(i);
+            octTowerSpectrumType.Add(i);
         }
 
+        Color currentColor = GetComponentInChildren<MeshRenderer>().material.GetColor("_EmissionColor");
+        float h, s, v;
+        Color.RGBToHSV(currentColor, out h, out s, out v);
+        currentHSVColor = new Vector3(h, s, v);
+        maxBrightness = v;
+
         spectrum = FindObjectOfType<GameManager>().GetComponent<SpectrumData>();
-        spectrumValues = new float[bumpColors.Length];
+        spectrumValues = new float[spectrumNumber];
 
         diffScale = maxBumpScale - minBumpScale;
-        diffGlowPow = maxGlowPow - minGlowPow;
-        diffGlowStr = maxTextureStr - minTextreStr;
+        diffBrightness = maxBrightness;
     }
 
 	
@@ -78,27 +78,18 @@ public class OuterGrid : MonoBehaviour {
 	void Update () {
         // respond to spectrum
         spectrum.GetOutputSpectrum(spectrumValues);
-        
 
         for(int i = 0; i < octTowers.Count; i++) {
-            //float newScale = octTowerScales[i] * (1 + spectrumValues[octTowerColorType[i]]);
-            float newScale = octTowerScales[i] * (1 + diffScale * spectrumValues[octTowerColorType[i]]);
+            float newScale = octTowerScales[i] * (1 + diffScale * spectrumValues[octTowerSpectrumType[i]]);
             // change the scale and location accordingly
             octTowers[i].transform.localScale = new Vector3(octTowers[i].transform.localScale.x,
                                                           newScale,
                                                           octTowers[i].transform.localScale.z);
             // make the material brighter/darker accordingly
             Material mat = octTowers[i].GetComponent<MeshRenderer>().material;
-            mat.SetFloat("_MKGlowTexStrength", Mathf.Clamp(minTextreStr + diffGlowStr * spectrumValues[octTowerColorType[i]] * 2, minTextreStr, maxTextureStr));
-            mat.SetFloat("_MKGlowPower", Mathf.Clamp(minGlowPow + diffGlowPow * spectrumValues[octTowerColorType[i]], minGlowPow, maxGlowPow));
-
-            float t = spectrumValues[octTowerColorType[i]] * 5;
-            //Color newMainColor = Color.Lerp(defaultMainColor, bumpColors[octTowerColorType[i]], t);
-            Color newMainColor = GameManager.SmoothStep(defaultMainColor, bumpColors[octTowerColorType[i]], t);
-            mat.SetColor("_Color", newMainColor);
-            //Color newTextureColor = Color.Lerp(defaultTextureColor, bumpColors[octTowerColorType[i]], t);
-            Color newTextureColor = GameManager.SmoothStep(defaultMainColor, bumpColors[octTowerColorType[i]], t);
-            mat.SetColor("_MKGlowTexColor", newTextureColor);
+            float newV = Mathf.Clamp(diffBrightness * spectrumValues[octTowerSpectrumType[i]] * 3, 0, maxBrightness);
+            currentHSVColor = new Vector3(currentHSVColor.x, currentHSVColor.y, newV);
+            mat.SetColor("_EmissionColor", Color.HSVToRGB(currentHSVColor.x, currentHSVColor.y, currentHSVColor.z));
         }
     }
 
@@ -118,7 +109,6 @@ public class OuterGrid : MonoBehaviour {
         }
         else {
             finalScale = minScale + (maxScale - minScale) * ((distanceSqrd - minDistSqrd) / (maxDistSqrd - minDistSqrd));
-            //finalScale = GameManager.SmoothStep(minScale, maxScale, (distanceSqrd - minDistSqrd) / (maxDistSqrd - minDistSqrd));
             finalScale *= Random.Range(0.85f, 1.15f);
         }
 

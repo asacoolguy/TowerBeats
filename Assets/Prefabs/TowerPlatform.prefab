@@ -409,8 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raisedYPos: 20
   moveTime: 0.15
-  originalColor: {r: 4.547149, g: 4.547149, b: 4.547149, a: 1}
-  builtColor: {r: 0, g: 4.1726794, b: 4.547149, a: 1}
+  builtColor: {r: 0, g: 3.451675, b: 4.547149, a: 1}
   raisedTexStr: 10
   raisedGlowPow: 1
   flyInCurve:
