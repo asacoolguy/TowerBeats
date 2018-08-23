@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -13,52 +12,80 @@ public class OuterGrid : MonoBehaviour {
     public float minScale, maxScale;
     public float yPosOffset;
 
-    private List<GameObject> octTowers;
-    private List<float> octTowerScales;
-    private List<int> octTowerSpectrumType;
+    private List<List<GameObject>> octTowers;
+    private List<List<float>> octTowerScales;
     private Vector3 currentHSVColor;
 
-    // color parameters
+    // parameters that change based on spectrum values
     public float minBumpScale, maxBumpScale;
     private float maxBrightness;
-    private float diffScale, diffBrightness;
+    private float diffBumpScale, diffBrightness;
 
     // spectrum parameters
-    public int spectrumNumber;
     private SpectrumData spectrum;
     private float[] spectrumValues;
 
 
     void Awake () {
-        octTowers = new List<GameObject>();
-        octTowerScales = new List<float>();
-        octTowerSpectrumType = new List<int>();
+        octTowers = new List<List<GameObject>>();
 
-        foreach (Transform t in transform.GetComponentInChildren<Transform>()) {
-            octTowers.Add(t.gameObject);
+        for (int i = 0; i < transform.childCount; i++) {
+            List<GameObject> ringList = new List<GameObject>();
 
-            float scale = GetScaleByDistance(t.position);
-            t.localScale = new Vector3(t.localScale.x, scale, t.localScale.z);
-            t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y + yPosOffset, t.localPosition.z);
-            octTowerScales.Add(scale);
+            Transform ring = transform.GetChild(i);
+            for (int j = 0; j < ring.childCount;  j++) {
+                ringList.Add(ring.GetChild(j).gameObject);
+            }
 
-            // make each transform a random type
-            // random
-            //int i = Random.Range(0, bumpColors.Length);
-            //i = ++i % bumpColors.Length;
-
-            // distance based
-            float dist = new Vector3(t.localPosition.x, 0, t.localPosition.z).magnitude;
-            int i = dist < 75 ? 2 : dist < 85 ? 1 : 0;
-
-            // angle based
-            //float angle = GameManager.GetAngleFromVector(t.localPosition);
-            //if (angle < 0) angle += 360;
-            //angle %= 60;
-            //i = angle < 20 ? 0 : angle < 40 ? 1 : 2;
-
-            octTowerSpectrumType.Add(i);
+            octTowers.Add(ringList);
         }
+
+
+        octTowerScales = new List<List<float>>();
+
+        for (int i = 0; i < octTowers.Count; i++) {
+            List<float> scales = new List<float>();
+            float scale = minScale + i / octTowers.Count * (maxScale - minScale);
+
+            for (int j = 0; j < octTowers[i].Count; j++) {
+                GameObject tower = octTowers[i][j];
+
+                float actualScale = scale * Random.Range(0.85f, 1.15f);
+                tower.transform.localScale = new Vector3(tower.transform.localScale.x, actualScale, tower.transform.localScale.z);
+                scales.Add(actualScale);
+
+                Vector3 localPos = tower.transform.localPosition;
+                tower.transform.localPosition = new Vector3(localPos.x, localPos.y + yPosOffset, localPos.z);
+            }
+
+            octTowerScales.Add(scales);
+        }
+
+
+        //foreach (Transform t in transform.GetComponentInChildren<Transform>()) {
+
+        //    float scale = GetScaleByDistance(t.position);
+        //    t.localScale = new Vector3(t.localScale.x, scale, t.localScale.z);
+        //    t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y + yPosOffset, t.localPosition.z);
+        //    octTowerScales.Add(scale);
+
+        //    // make each transform a random type
+        //    // random
+        //    //int i = Random.Range(0, bumpColors.Count);
+        //    //i = ++i % bumpColors.Count;
+
+        //    // distance based
+        //    //float dist = new Vector3(t.localPosition.x, 0, t.localPosition.z).magnitude;
+        //    //int i = dist < 75 ? 2 : dist < 85 ? 1 : 0;
+
+        //    // angle based
+        //    //float angle = GameManager.GetAngleFromVector(t.localPosition);
+        //    //if (angle < 0) angle += 360;
+        //    //angle %= 60;
+        //    //i = angle < 20 ? 0 : angle < 40 ? 1 : 2;
+
+        //    //octTowerSpectrumType.Add(i);
+        //}
 
         Color currentColor = GetComponentInChildren<MeshRenderer>().material.GetColor("_EmissionColor");
         float h, s, v;
@@ -67,9 +94,9 @@ public class OuterGrid : MonoBehaviour {
         maxBrightness = v;
 
         spectrum = FindObjectOfType<GameManager>().GetComponent<SpectrumData>();
-        spectrumValues = new float[spectrumNumber];
+        spectrumValues = new float[octTowers.Count];
 
-        diffScale = maxBumpScale - minBumpScale;
+        diffBumpScale = maxBumpScale - minBumpScale;
         diffBrightness = maxBrightness;
     }
 
@@ -79,39 +106,44 @@ public class OuterGrid : MonoBehaviour {
         // respond to spectrum
         spectrum.GetOutputSpectrum(spectrumValues);
 
+
         for(int i = 0; i < octTowers.Count; i++) {
-            float newScale = octTowerScales[i] * (1 + diffScale * spectrumValues[octTowerSpectrumType[i]]);
-            // change the scale and location accordingly
-            octTowers[i].transform.localScale = new Vector3(octTowers[i].transform.localScale.x,
-                                                          newScale,
-                                                          octTowers[i].transform.localScale.z);
-            // make the material brighter/darker accordingly
-            Material mat = octTowers[i].GetComponent<MeshRenderer>().material;
-            float newV = Mathf.Clamp(diffBrightness * spectrumValues[octTowerSpectrumType[i]] * 3, 0, maxBrightness);
-            currentHSVColor = new Vector3(currentHSVColor.x, currentHSVColor.y, newV);
-            mat.SetColor("_EmissionColor", Color.HSVToRGB(currentHSVColor.x, currentHSVColor.y, currentHSVColor.z));
+            for (int j = 0; j < octTowers[i].Count; j++) {
+                GameObject tower = octTowers[i][j];
+
+                float newScale = octTowerScales[i][j] * (1 + diffBumpScale * spectrumValues[i]);
+                // change the scale and location accordingly
+                tower.transform.localScale = new Vector3(tower.transform.localScale.x,
+                                                         newScale,
+                                                         tower.transform.localScale.z);
+                // make the material brighter/darker accordingly
+                Material mat = tower.GetComponent<MeshRenderer>().material;
+                float newV = Mathf.Clamp(diffBrightness * spectrumValues[i] * 3, 0, maxBrightness);
+                currentHSVColor = new Vector3(currentHSVColor.x, currentHSVColor.y, newV);
+                mat.SetColor("_EmissionColor", Color.HSVToRGB(currentHSVColor.x, currentHSVColor.y, currentHSVColor.z));
+            }
         }
     }
 
 
     // sets the scale according to distance from center
-    float GetScaleByDistance(Vector3 pos) {
-        float finalScale = transform.localScale.y;
-        float distanceSqrd = pos.x * pos.x + pos.z * pos.z;
-        float minDistSqrd = minDistFromCenter * minDistFromCenter;
-        float maxDistSqrd = maxDistFromCenter * maxDistFromCenter;
+    //float GetScaleByDistance(Vector3 pos) {
+    //    float finalScale = transform.localScale.y;
+    //    float distanceSqrd = pos.x * pos.x + pos.z * pos.z;
+    //    float minDistSqrd = minDistFromCenter * minDistFromCenter;
+    //    float maxDistSqrd = maxDistFromCenter * maxDistFromCenter;
 
-        if (distanceSqrd < minDistSqrd) {
-            finalScale = minScale;
-        }
-        else if (distanceSqrd > maxDistSqrd) {
-            finalScale = maxScale;
-        }
-        else {
-            finalScale = minScale + (maxScale - minScale) * ((distanceSqrd - minDistSqrd) / (maxDistSqrd - minDistSqrd));
-            finalScale *= Random.Range(0.85f, 1.15f);
-        }
+    //    if (distanceSqrd < minDistSqrd) {
+    //        finalScale = minScale;
+    //    }
+    //    else if (distanceSqrd > maxDistSqrd) {
+    //        finalScale = maxScale;
+    //    }
+    //    else {
+    //        finalScale = minScale + (maxScale - minScale) * ((distanceSqrd - minDistSqrd) / (maxDistSqrd - minDistSqrd));
+    //        finalScale *= Random.Range(0.85f, 1.15f);
+    //    }
 
-        return finalScale;
-    }
+    //    return finalScale;
+    //}
 }
