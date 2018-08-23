@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 1630591}
   - component: {fileID: 1630590}
   - component: {fileID: 1630589}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 16546303}
   - component: {fileID: 16546302}
   - component: {fileID: 16546301}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (40)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 31102905}
   - component: {fileID: 31102904}
   - component: {fileID: 31102903}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,134 +402,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 31102901}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &54987529
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1966295516559882, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 54987530}
-  - component: {fileID: 54987533}
-  - component: {fileID: 54987532}
-  - component: {fileID: 54987531}
-  m_Layer: 5
-  m_Name: RestartButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &54987530
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224451789251683160, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 54987529}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999838, y: 0.9999844, z: 0.9999844}
-  m_Children:
-  - {fileID: 1124406295}
-  - {fileID: 574637060}
-  m_Father: {fileID: 1423100377}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -117.4}
-  m_SizeDelta: {x: 160, y: 59}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &54987531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114720285024159662, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 54987529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 54987532}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: RestartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &54987532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114285565336199870, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 54987529}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &54987533
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222135101593036584, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 54987529}
 --- !u!1001 &59623065
 Prefab:
   m_ObjectHideFlags: 0
@@ -575,7 +447,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1710281807737140, guid: 80c65df6bcea1ae47be330daa8f2d2c0, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114184825983131362, guid: 80c65df6bcea1ae47be330daa8f2d2c0,
         type: 2}
@@ -602,7 +474,7 @@ GameObject:
   - component: {fileID: 66525556}
   - component: {fileID: 66525555}
   - component: {fileID: 66525554}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (46)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -698,7 +570,7 @@ GameObject:
   - component: {fileID: 69732829}
   - component: {fileID: 69732828}
   - component: {fileID: 69732827}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -782,84 +654,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 69732825}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &70818137
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1532823817693744, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 70818138}
-  - component: {fileID: 70818140}
-  - component: {fileID: 70818139}
-  m_Layer: 5
-  m_Name: Text_Title
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &70818138
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224480437393708904, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 70818137}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1423100377}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 45.3}
-  m_SizeDelta: {x: 400, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &70818139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114238111910694192, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 70818137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
-    m_FontSize: 70
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 74
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: YOU WIN!
---- !u!222 &70818140
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222742872192456950, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 70818137}
 --- !u!1001 &83707586
 Prefab:
   m_ObjectHideFlags: 0
@@ -934,7 +728,7 @@ GameObject:
   - component: {fileID: 87122082}
   - component: {fileID: 87122081}
   - component: {fileID: 87122080}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1030,7 +824,7 @@ GameObject:
   - component: {fileID: 103780616}
   - component: {fileID: 103780615}
   - component: {fileID: 103780614}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1122,7 +916,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 106375223}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Ring0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1260,7 +1054,7 @@ GameObject:
   - component: {fileID: 118937120}
   - component: {fileID: 118937119}
   - component: {fileID: 118937118}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1477,7 +1271,7 @@ GameObject:
   - component: {fileID: 146244316}
   - component: {fileID: 146244315}
   - component: {fileID: 146244314}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1573,7 +1367,7 @@ GameObject:
   - component: {fileID: 156353389}
   - component: {fileID: 156353388}
   - component: {fileID: 156353387}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1669,7 +1463,7 @@ GameObject:
   - component: {fileID: 169333485}
   - component: {fileID: 169333484}
   - component: {fileID: 169333483}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1765,7 +1559,7 @@ GameObject:
   - component: {fileID: 169801386}
   - component: {fileID: 169801385}
   - component: {fileID: 169801384}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1849,100 +1643,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 169801382}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &170476906
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1144340821682274, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 170476907}
-  - component: {fileID: 170476910}
-  - component: {fileID: 170476909}
-  - component: {fileID: 170476908}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &170476907
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224049800155443532, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 170476906}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1418617547}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &170476908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114293884982475696, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 170476906}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.8901961, b: 0, a: 0.316}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
---- !u!114 &170476909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114243586386066610, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 170476906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: MAIN MENU
---- !u!222 &170476910
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222962288511500720, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 170476906}
 --- !u!1 &178649160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1955,7 +1655,7 @@ GameObject:
   - component: {fileID: 178649164}
   - component: {fileID: 178649163}
   - component: {fileID: 178649162}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (64)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2172,7 +1872,7 @@ GameObject:
   - component: {fileID: 194118269}
   - component: {fileID: 194118268}
   - component: {fileID: 194118267}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2268,7 +1968,7 @@ GameObject:
   - component: {fileID: 204414342}
   - component: {fileID: 204414341}
   - component: {fileID: 204414340}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2402,7 +2102,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.8901961, b: 0, a: 0.316}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.316}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &213978273
@@ -2418,7 +2118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8901961, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2458,7 +2158,7 @@ GameObject:
   - component: {fileID: 235664072}
   - component: {fileID: 235664071}
   - component: {fileID: 235664070}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (51)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2542,98 +2242,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 235664068}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &235876232
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1868518476752466, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 235876233}
-  - component: {fileID: 235876236}
-  - component: {fileID: 235876235}
-  - component: {fileID: 235876234}
-  m_Layer: 13
-  m_Name: Glowbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &235876233
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4913677750484502, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 235876232}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15.14, y: 4.2804403, z: 5.052395}
-  m_Children: []
-  m_Father: {fileID: 355529704}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &235876234
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 23975501132617304, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 235876232}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 2100000, guid: d7029a18f4e39c94bbe37b7c08f24ce7, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!64 &235876235
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 64408664142473536, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 235876232}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &235876236
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 33727486083673308, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 235876232}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &243497297
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,7 +2254,7 @@ GameObject:
   - component: {fileID: 243497301}
   - component: {fileID: 243497300}
   - component: {fileID: 243497299}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (67)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2857,7 +2465,7 @@ GameObject:
   - component: {fileID: 252223080}
   - component: {fileID: 252223079}
   - component: {fileID: 252223078}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2953,7 +2561,7 @@ GameObject:
   - component: {fileID: 255835589}
   - component: {fileID: 255835588}
   - component: {fileID: 255835587}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3049,7 +2657,7 @@ GameObject:
   - component: {fileID: 267111103}
   - component: {fileID: 267111102}
   - component: {fileID: 267111101}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3182,7 +2790,7 @@ GameObject:
   - component: {fileID: 276489593}
   - component: {fileID: 276489592}
   - component: {fileID: 276489591}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3278,7 +2886,7 @@ GameObject:
   - component: {fileID: 284800321}
   - component: {fileID: 284800320}
   - component: {fileID: 284800319}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (58)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3374,7 +2982,7 @@ GameObject:
   - component: {fileID: 291692634}
   - component: {fileID: 291692633}
   - component: {fileID: 291692632}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3487,7 +3095,7 @@ RectTransform:
   - {fileID: 412760280}
   - {fileID: 467245042}
   m_Father: {fileID: 1960613382}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3633,7 +3241,7 @@ GameObject:
   - component: {fileID: 303159439}
   - component: {fileID: 303159438}
   - component: {fileID: 303159437}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3729,7 +3337,7 @@ GameObject:
   - component: {fileID: 308371877}
   - component: {fileID: 308371876}
   - component: {fileID: 308371875}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3825,7 +3433,7 @@ GameObject:
   - component: {fileID: 313718615}
   - component: {fileID: 313718614}
   - component: {fileID: 313718613}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3951,134 +3559,6 @@ MonoBehaviour:
   maxVertical: 0
   maxHorizontal: 0
   moveSpeed: 0
---- !u!1 &355529703
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1460821061679652, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 355529704}
-  - component: {fileID: 355529707}
-  - component: {fileID: 355529706}
-  - component: {fileID: 355529705}
-  m_Layer: 5
-  m_Name: RestartButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &355529704
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224775073875911496, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 355529703}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999838, y: 0.9999844, z: 0.9999844}
-  m_Children:
-  - {fileID: 559408712}
-  - {fileID: 235876233}
-  m_Father: {fileID: 1603173102}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -117.4}
-  m_SizeDelta: {x: 160, y: 59}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &355529705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114878975661212432, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 355529703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 355529706}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: RestartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &355529706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114363093143008430, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 355529703}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &355529707
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222158668341010314, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 355529703}
 --- !u!1 &356297798
 GameObject:
   m_ObjectHideFlags: 0
@@ -4298,7 +3778,7 @@ GameObject:
   - component: {fileID: 408397476}
   - component: {fileID: 408397475}
   - component: {fileID: 408397474}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4514,100 +3994,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 412760279}
---- !u!1 &415601368
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1283584513587388, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 415601369}
-  - component: {fileID: 415601372}
-  - component: {fileID: 415601371}
-  - component: {fileID: 415601370}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &415601369
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224256636136374196, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 415601368}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1474085419}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &415601370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114425094789574310, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 415601368}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.8901961, b: 0, a: 0.316}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
---- !u!114 &415601371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114165476652422504, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 415601368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: MAIN MENU
---- !u!222 &415601372
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222595203587343370, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 415601368}
 --- !u!1 &419140555
 GameObject:
   m_ObjectHideFlags: 0
@@ -4620,7 +4006,7 @@ GameObject:
   - component: {fileID: 419140559}
   - component: {fileID: 419140558}
   - component: {fileID: 419140557}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5804,7 +5190,7 @@ GameObject:
   - component: {fileID: 463641209}
   - component: {fileID: 463641208}
   - component: {fileID: 463641207}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6162,7 +5548,7 @@ GameObject:
   - component: {fileID: 487196294}
   - component: {fileID: 487196293}
   - component: {fileID: 487196292}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6296,7 +5682,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.8901961, b: 0, a: 0.316}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.316}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &506243514
@@ -6312,7 +5698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8901961, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6352,7 +5738,7 @@ GameObject:
   - component: {fileID: 508914552}
   - component: {fileID: 508914551}
   - component: {fileID: 508914550}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6448,7 +5834,7 @@ GameObject:
   - component: {fileID: 539623371}
   - component: {fileID: 539623370}
   - component: {fileID: 539623369}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6532,100 +5918,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 539623367}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &559408711
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1927302527719150, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 559408712}
-  - component: {fileID: 559408715}
-  - component: {fileID: 559408714}
-  - component: {fileID: 559408713}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &559408712
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224133156781517666, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 559408711}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 355529704}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &559408713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114610226039835014, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 559408711}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.8901961, b: 0, a: 0.316}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
---- !u!114 &559408714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114244673597299746, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 559408711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: RESTART
---- !u!222 &559408715
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222162169964610410, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 559408711}
 --- !u!4 &572070543
 Transform:
   m_ObjectHideFlags: 0
@@ -6641,98 +5933,6 @@ Transform:
   m_Father: {fileID: 1726706663}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90.00001, y: -90, z: 0}
---- !u!1 &574637059
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1197259752962652, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 574637060}
-  - component: {fileID: 574637063}
-  - component: {fileID: 574637062}
-  - component: {fileID: 574637061}
-  m_Layer: 13
-  m_Name: Glowbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &574637060
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4258557712325070, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 574637059}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15.14, y: 4.2804403, z: 5.052395}
-  m_Children: []
-  m_Father: {fileID: 54987530}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &574637061
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 23939064373516330, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 574637059}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 2100000, guid: d7029a18f4e39c94bbe37b7c08f24ce7, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!64 &574637062
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 64034742202749026, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 574637059}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &574637063
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 33756876939495892, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 574637059}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &581344025
 GameObject:
   m_ObjectHideFlags: 0
@@ -6938,7 +6138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 601749377}
   - component: {fileID: 601749378}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OuterGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6981,84 +6181,6 @@ MonoBehaviour:
   yPosOffset: -40
   minBumpScale: 1
   maxBumpScale: 1.5
---- !u!1 &609009401
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1547111953822730, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 609009402}
-  - component: {fileID: 609009404}
-  - component: {fileID: 609009403}
-  m_Layer: 5
-  m_Name: Text_Score
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &609009402
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224305138944122300, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 609009401}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1603173102}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -18.98}
-  m_SizeDelta: {x: 300, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &609009403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114824375142861394, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 609009401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
-    m_FontSize: 45
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 50
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'SCORE: 0'
---- !u!222 &609009404
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222020855769746764, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 609009401}
 --- !u!1 &613425904
 GameObject:
   m_ObjectHideFlags: 0
@@ -7071,7 +6193,7 @@ GameObject:
   - component: {fileID: 613425908}
   - component: {fileID: 613425907}
   - component: {fileID: 613425906}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7167,7 +6289,7 @@ GameObject:
   - component: {fileID: 614506144}
   - component: {fileID: 614506143}
   - component: {fileID: 614506142}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7251,84 +6373,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 614506140}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &620274073
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1987769277895402, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 620274074}
-  - component: {fileID: 620274076}
-  - component: {fileID: 620274075}
-  m_Layer: 5
-  m_Name: Text_Score
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &620274074
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224704033121574504, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 620274073}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1423100377}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -18.98}
-  m_SizeDelta: {x: 300, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &620274075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114783654317587512, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 620274073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
-    m_FontSize: 45
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 50
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'SCORE: 0'
---- !u!222 &620274076
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222598797567889302, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 620274073}
 --- !u!1 &630403233
 GameObject:
   m_ObjectHideFlags: 0
@@ -7341,7 +6385,7 @@ GameObject:
   - component: {fileID: 630403237}
   - component: {fileID: 630403236}
   - component: {fileID: 630403235}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7438,7 +6482,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4656852014825994, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 90
+      value: 145.7
       objectReference: {fileID: 0}
     - target: {fileID: 4656852014825994, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -7527,6 +6571,11 @@ Prefab:
         type: 2}
       propertyPath: orthographic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20841707109176850, guid: fee68e2386665924ba7d8a60124ed3f4,
+        type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114641984818312056, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
@@ -7670,7 +6719,7 @@ RectTransform:
   - {fileID: 294365070}
   - {fileID: 727141305}
   m_Father: {fileID: 1960613382}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7696,7 +6745,7 @@ GameObject:
   - component: {fileID: 634737824}
   - component: {fileID: 634737823}
   - component: {fileID: 634737822}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7792,7 +6841,7 @@ GameObject:
   - component: {fileID: 636871946}
   - component: {fileID: 636871945}
   - component: {fileID: 636871944}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (57)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7910,7 +6959,7 @@ MonoBehaviour:
   maxHealth: 10
   currentStage: 0
   state: 0
-  devMode: 1
+  devMode: 0
 --- !u!1 &643208838
 GameObject:
   m_ObjectHideFlags: 0
@@ -7961,7 +7010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8901961, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -8001,7 +7050,7 @@ GameObject:
   - component: {fileID: 643611146}
   - component: {fileID: 643611145}
   - component: {fileID: 643611144}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8132,7 +7181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.88965523, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -8265,7 +7314,7 @@ RectTransform:
   - {fileID: 657137642}
   - {fileID: 1723866984}
   m_Father: {fileID: 1960613382}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -8317,7 +7366,7 @@ GameObject:
   - component: {fileID: 700318672}
   - component: {fileID: 700318671}
   - component: {fileID: 700318670}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8409,7 +7458,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 724263040}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Ring1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8493,7 +7542,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 726708281}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Ring2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8712,7 +7761,7 @@ GameObject:
   - component: {fileID: 730999447}
   - component: {fileID: 730999446}
   - component: {fileID: 730999445}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8808,7 +7857,7 @@ GameObject:
   - component: {fileID: 740558844}
   - component: {fileID: 740558843}
   - component: {fileID: 740558842}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8904,7 +7953,7 @@ GameObject:
   - component: {fileID: 746219204}
   - component: {fileID: 746219203}
   - component: {fileID: 746219202}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9056,7 +8105,7 @@ GameObject:
   - component: {fileID: 760574628}
   - component: {fileID: 760574627}
   - component: {fileID: 760574626}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9152,7 +8201,7 @@ GameObject:
   - component: {fileID: 765662035}
   - component: {fileID: 765662034}
   - component: {fileID: 765662033}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (62)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9313,7 +8362,7 @@ GameObject:
   - component: {fileID: 782121881}
   - component: {fileID: 782121880}
   - component: {fileID: 782121879}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9536,7 +8585,7 @@ GameObject:
   - component: {fileID: 804066512}
   - component: {fileID: 804066511}
   - component: {fileID: 804066510}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9632,7 +8681,7 @@ GameObject:
   - component: {fileID: 805897812}
   - component: {fileID: 805897811}
   - component: {fileID: 805897810}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9728,7 +8777,7 @@ GameObject:
   - component: {fileID: 820612510}
   - component: {fileID: 820612509}
   - component: {fileID: 820612508}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9830,7 +8879,7 @@ MonoBehaviour:
   numAudioPlaying: 1
   lineData:
   - measurePerRotation: 8
-    color: {r: 1, g: 0, b: 0.8258381, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
     targetTowers: 123
 --- !u!1 &845902139
 GameObject:
@@ -9844,7 +8893,7 @@ GameObject:
   - component: {fileID: 845902143}
   - component: {fileID: 845902142}
   - component: {fileID: 845902141}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9940,7 +8989,7 @@ GameObject:
   - component: {fileID: 847797941}
   - component: {fileID: 847797940}
   - component: {fileID: 847797939}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10036,7 +9085,7 @@ GameObject:
   - component: {fileID: 848047572}
   - component: {fileID: 848047571}
   - component: {fileID: 848047570}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (55)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10132,7 +9181,7 @@ GameObject:
   - component: {fileID: 854428365}
   - component: {fileID: 854428364}
   - component: {fileID: 854428363}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10228,7 +9277,7 @@ GameObject:
   - component: {fileID: 863099041}
   - component: {fileID: 863099040}
   - component: {fileID: 863099039}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10324,7 +9373,7 @@ GameObject:
   - component: {fileID: 870886669}
   - component: {fileID: 870886668}
   - component: {fileID: 870886667}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10420,7 +9469,7 @@ GameObject:
   - component: {fileID: 883557537}
   - component: {fileID: 883557536}
   - component: {fileID: 883557535}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10516,7 +9565,7 @@ GameObject:
   - component: {fileID: 892289201}
   - component: {fileID: 892289200}
   - component: {fileID: 892289199}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10612,7 +9661,7 @@ GameObject:
   - component: {fileID: 893090926}
   - component: {fileID: 893090925}
   - component: {fileID: 893090924}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (60)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10854,7 +9903,7 @@ GameObject:
   - component: {fileID: 937595246}
   - component: {fileID: 937595245}
   - component: {fileID: 937595244}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10950,7 +9999,7 @@ GameObject:
   - component: {fileID: 939900835}
   - component: {fileID: 939900834}
   - component: {fileID: 939900833}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11046,7 +10095,7 @@ GameObject:
   - component: {fileID: 942659715}
   - component: {fileID: 942659714}
   - component: {fileID: 942659713}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11142,7 +10191,7 @@ GameObject:
   - component: {fileID: 956280415}
   - component: {fileID: 956280414}
   - component: {fileID: 956280413}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (61)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11243,7 +10292,7 @@ GameObject:
   - component: {fileID: 978120389}
   - component: {fileID: 978120388}
   - component: {fileID: 978120387}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11339,7 +10388,7 @@ GameObject:
   - component: {fileID: 981712083}
   - component: {fileID: 981712082}
   - component: {fileID: 981712081}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11435,7 +10484,7 @@ GameObject:
   - component: {fileID: 991818796}
   - component: {fileID: 991818795}
   - component: {fileID: 991818794}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11569,7 +10618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8901961, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -11685,7 +10734,7 @@ GameObject:
   - component: {fileID: 1017299477}
   - component: {fileID: 1017299476}
   - component: {fileID: 1017299475}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11769,41 +10818,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1017299473}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &1020746902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1020746903}
-  m_Layer: 5
-  m_Name: WinLose
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1020746903
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1020746902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1423100377}
-  - {fileID: 1603173102}
-  m_Father: {fileID: 1960613382}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1029934119
 GameObject:
   m_ObjectHideFlags: 0
@@ -12060,7 +11074,7 @@ GameObject:
   - component: {fileID: 1036494663}
   - component: {fileID: 1036494662}
   - component: {fileID: 1036494661}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12224,7 +11238,7 @@ GameObject:
   - component: {fileID: 1074241897}
   - component: {fileID: 1074241896}
   - component: {fileID: 1074241895}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12442,7 +11456,7 @@ GameObject:
   - component: {fileID: 1089192356}
   - component: {fileID: 1089192355}
   - component: {fileID: 1089192354}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12538,7 +11552,7 @@ GameObject:
   - component: {fileID: 1101523628}
   - component: {fileID: 1101523627}
   - component: {fileID: 1101523626}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12634,7 +11648,7 @@ GameObject:
   - component: {fileID: 1101596947}
   - component: {fileID: 1101596946}
   - component: {fileID: 1101596945}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12840,100 +11854,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1121195012}
---- !u!1 &1124406294
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1241379416865296, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1124406295}
-  - component: {fileID: 1124406298}
-  - component: {fileID: 1124406297}
-  - component: {fileID: 1124406296}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1124406295
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224926683141210866, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1124406294}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 54987530}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1124406296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114807964539952116, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1124406294}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.8901961, b: 0, a: 0.316}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
---- !u!114 &1124406297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114814734602176294, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1124406294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: RESTART
---- !u!222 &1124406298
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222344604207084134, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1124406294}
 --- !u!1001 &1125619580
 Prefab:
   m_ObjectHideFlags: 0
@@ -13068,7 +11988,7 @@ GameObject:
   - component: {fileID: 1132646708}
   - component: {fileID: 1132646707}
   - component: {fileID: 1132646706}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13164,7 +12084,7 @@ GameObject:
   - component: {fileID: 1140620169}
   - component: {fileID: 1140620168}
   - component: {fileID: 1140620167}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13260,7 +12180,7 @@ GameObject:
   - component: {fileID: 1142751902}
   - component: {fileID: 1142751901}
   - component: {fileID: 1142751900}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13356,7 +12276,7 @@ GameObject:
   - component: {fileID: 1143157584}
   - component: {fileID: 1143157583}
   - component: {fileID: 1143157582}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (45)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13530,7 +12450,7 @@ GameObject:
   - component: {fileID: 1152354569}
   - component: {fileID: 1152354568}
   - component: {fileID: 1152354567}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13626,7 +12546,7 @@ GameObject:
   - component: {fileID: 1157191673}
   - component: {fileID: 1157191672}
   - component: {fileID: 1157191671}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13791,7 +12711,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294934527
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -13824,7 +12744,7 @@ GameObject:
   - component: {fileID: 1175637874}
   - component: {fileID: 1175637873}
   - component: {fileID: 1175637872}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13920,7 +12840,7 @@ GameObject:
   - component: {fileID: 1180275855}
   - component: {fileID: 1180275854}
   - component: {fileID: 1180275853}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14051,7 +12971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.88965523, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -14084,7 +13004,7 @@ GameObject:
   - component: {fileID: 1209401435}
   - component: {fileID: 1209401434}
   - component: {fileID: 1209401433}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14180,7 +13100,7 @@ GameObject:
   - component: {fileID: 1243532458}
   - component: {fileID: 1243532457}
   - component: {fileID: 1243532456}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14276,7 +13196,7 @@ GameObject:
   - component: {fileID: 1244541254}
   - component: {fileID: 1244541253}
   - component: {fileID: 1244541252}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14446,7 +13366,7 @@ GameObject:
   - component: {fileID: 1252445423}
   - component: {fileID: 1252445422}
   - component: {fileID: 1252445421}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14530,6 +13450,74 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1252445419}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
+--- !u!1 &1258711263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1165622221986856, guid: 54dbcfe79e3785249b220f1e49577fbe,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1258711264}
+  - component: {fileID: 1258711265}
+  m_Layer: 0
+  m_Name: Spotlight (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1258711264
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4580042338871930, guid: 54dbcfe79e3785249b220f1e49577fbe,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258711263}
+  m_LocalRotation: {x: 0.000000059604638, y: 0.6327712, z: -0.00000043213362, w: 0.77433884}
+  m_LocalPosition: {x: 6.310092, y: -0.000028789043, z: -45}
+  m_LocalScale: {x: 1.003176, y: 1.0000008, z: 1.003176}
+  m_Children: []
+  m_Father: {fileID: 1940866663}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 78.51, z: 0}
+--- !u!108 &1258711265
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 108397629629786678, guid: 54dbcfe79e3785249b220f1e49577fbe,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258711263}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 7
+  m_Range: 100
+  m_SpotAngle: 60
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 32768
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &1268962159
 GameObject:
   m_ObjectHideFlags: 0
@@ -14613,7 +13601,7 @@ GameObject:
   - component: {fileID: 1275338551}
   - component: {fileID: 1275338550}
   - component: {fileID: 1275338549}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14846,7 +13834,7 @@ Transform:
   m_GameObject: {fileID: 1294575673}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -80, z: 0}
-  m_LocalScale: {x: 24.63513, y: 24.635143, z: 24.635143}
+  m_LocalScale: {x: 74.55801, y: 38.188366, z: 38.188366}
   m_Children: []
   m_Father: {fileID: 1726706663}
   m_RootOrder: 0
@@ -14907,78 +13895,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1294575673}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1295193959
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1884887298362426, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1295193960}
-  - component: {fileID: 1295193962}
-  - component: {fileID: 1295193961}
-  m_Layer: 5
-  m_Name: PauseBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1295193960
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224298472423640522, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1295193959}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999838, y: 0.9999844, z: 0.9999844}
-  m_Children: []
-  m_Father: {fileID: 1603173102}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 713, y: 838.0021}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1295193961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114810118183378492, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1295193959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.9411765}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1295193962
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222705090762456366, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1295193959}
 --- !u!1 &1306666952
 GameObject:
   m_ObjectHideFlags: 0
@@ -14991,7 +13907,7 @@ GameObject:
   - component: {fileID: 1306666956}
   - component: {fileID: 1306666955}
   - component: {fileID: 1306666954}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15087,7 +14003,7 @@ GameObject:
   - component: {fileID: 1314134675}
   - component: {fileID: 1314134674}
   - component: {fileID: 1314134673}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15183,7 +14099,7 @@ GameObject:
   - component: {fileID: 1317322203}
   - component: {fileID: 1317322202}
   - component: {fileID: 1317322201}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15279,7 +14195,7 @@ GameObject:
   - component: {fileID: 1318214597}
   - component: {fileID: 1318214596}
   - component: {fileID: 1318214595}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15529,7 +14445,7 @@ GameObject:
   - component: {fileID: 1329321540}
   - component: {fileID: 1329321539}
   - component: {fileID: 1329321538}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15699,7 +14615,7 @@ GameObject:
   - component: {fileID: 1336935087}
   - component: {fileID: 1336935086}
   - component: {fileID: 1336935085}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15888,7 +14804,7 @@ GameObject:
   - component: {fileID: 1370500319}
   - component: {fileID: 1370500318}
   - component: {fileID: 1370500317}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (43)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16074,7 +14990,7 @@ GameObject:
   - component: {fileID: 1371878525}
   - component: {fileID: 1371878524}
   - component: {fileID: 1371878523}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16211,84 +15127,6 @@ MonoBehaviour:
   multiplyByFrequency: 1
   highFrequencyTrim: 1
   linearSampleStretch: 1
---- !u!1 &1397270167
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1094565744398376, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1397270168}
-  - component: {fileID: 1397270170}
-  - component: {fileID: 1397270169}
-  m_Layer: 5
-  m_Name: Text_Title
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1397270168
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224035152701114914, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1397270167}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1603173102}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 45.3}
-  m_SizeDelta: {x: 400, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1397270169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114777353191288490, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1397270167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
-    m_FontSize: 70
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 74
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: YOU LOSE!
---- !u!222 &1397270170
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222794606531772142, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1397270167}
 --- !u!1 &1401351781
 GameObject:
   m_ObjectHideFlags: 0
@@ -16301,7 +15139,7 @@ GameObject:
   - component: {fileID: 1401351785}
   - component: {fileID: 1401351784}
   - component: {fileID: 1401351783}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (49)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16431,182 +15269,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c29e1d3d490946649a80d47a9512cdc2, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1418617546
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1130168420279342, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1418617547}
-  - component: {fileID: 1418617550}
-  - component: {fileID: 1418617549}
-  - component: {fileID: 1418617548}
-  m_Layer: 5
-  m_Name: MainMenuButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1418617547
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224030147217928606, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1418617546}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000022888184}
-  m_LocalScale: {x: 0.9999837, y: 0.99998397, z: 0.99998397}
-  m_Children:
-  - {fileID: 170476907}
-  - {fileID: 1776355518}
-  m_Father: {fileID: 1423100377}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -181.26}
-  m_SizeDelta: {x: 180, y: 59}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1418617548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114794803173973278, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1418617546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1418617549}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: LoadMainMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &1418617549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114303346976746552, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1418617546}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1418617550
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222201076995686452, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1418617546}
---- !u!1 &1423100376
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1799698817864088, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1423100377}
-  - component: {fileID: 1423100378}
-  m_Layer: 5
-  m_Name: GameWinBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1423100377
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224056402985583246, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1423100376}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -120}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1878427757}
-  - {fileID: 70818138}
-  - {fileID: 620274074}
-  - {fileID: 54987530}
-  - {fileID: 1418617547}
-  m_Father: {fileID: 1020746903}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 350}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1423100378
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222772308348682430, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1423100376}
 --- !u!1 &1427929387
 GameObject:
   m_ObjectHideFlags: 0
@@ -16619,7 +15281,7 @@ GameObject:
   - component: {fileID: 1427929391}
   - component: {fileID: 1427929390}
   - component: {fileID: 1427929389}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16715,7 +15377,7 @@ GameObject:
   - component: {fileID: 1436975381}
   - component: {fileID: 1436975380}
   - component: {fileID: 1436975379}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16898,7 +15560,7 @@ GameObject:
   - component: {fileID: 1458733928}
   - component: {fileID: 1458733927}
   - component: {fileID: 1458733926}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16999,7 +15661,7 @@ GameObject:
   - component: {fileID: 1468696638}
   - component: {fileID: 1468696637}
   - component: {fileID: 1468696636}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17083,134 +15745,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1468696634}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &1474085418
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1506028029028706, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1474085419}
-  - component: {fileID: 1474085422}
-  - component: {fileID: 1474085421}
-  - component: {fileID: 1474085420}
-  m_Layer: 5
-  m_Name: MainMenuButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1474085419
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224786626857604304, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1474085418}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000022888184}
-  m_LocalScale: {x: 0.9999837, y: 0.99998397, z: 0.99998397}
-  m_Children:
-  - {fileID: 415601369}
-  - {fileID: 1515108146}
-  m_Father: {fileID: 1603173102}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -181.26}
-  m_SizeDelta: {x: 180, y: 59}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1474085420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114617843111766118, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1474085418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1474085421}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: LoadMainMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &1474085421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114756966019673364, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1474085418}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1474085422
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222755494448538406, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1474085418}
 --- !u!1 &1479463944
 GameObject:
   m_ObjectHideFlags: 0
@@ -17319,7 +15853,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d4d79afd6b9743d44938051648e948e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66884013e54e39a43b6b666770d443e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17345,7 +15879,7 @@ GameObject:
   - component: {fileID: 1496797353}
   - component: {fileID: 1496797352}
   - component: {fileID: 1496797351}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17441,7 +15975,7 @@ GameObject:
   - component: {fileID: 1506929866}
   - component: {fileID: 1506929865}
   - component: {fileID: 1506929864}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17537,7 +16071,7 @@ GameObject:
   - component: {fileID: 1507166211}
   - component: {fileID: 1507166210}
   - component: {fileID: 1507166209}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17621,98 +16155,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1507166207}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &1515108145
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1436963286937846, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1515108146}
-  - component: {fileID: 1515108149}
-  - component: {fileID: 1515108148}
-  - component: {fileID: 1515108147}
-  m_Layer: 13
-  m_Name: Glowbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1515108146
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4508130452555718, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1515108145}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 19.2, y: 4.2804403, z: 5.052395}
-  m_Children: []
-  m_Father: {fileID: 1474085419}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1515108147
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 23851551600796228, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1515108145}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 2100000, guid: d7029a18f4e39c94bbe37b7c08f24ce7, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!64 &1515108148
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 64196890596066546, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1515108145}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &1515108149
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 33968864339924280, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1515108145}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1516778950
 GameObject:
   m_ObjectHideFlags: 0
@@ -17760,7 +16202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.88965523, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -17793,7 +16235,7 @@ GameObject:
   - component: {fileID: 1523315680}
   - component: {fileID: 1523315679}
   - component: {fileID: 1523315678}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18030,7 +16472,7 @@ GameObject:
   - component: {fileID: 1526189994}
   - component: {fileID: 1526189993}
   - component: {fileID: 1526189992}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18155,10 +16597,10 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 0
-  m_Color: {r: 1, g: 0, b: 0.972414, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 5
   m_Range: 80
-  m_SpotAngle: 50
+  m_SpotAngle: 60
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -18174,7 +16616,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294832127
+    m_Bits: 131072
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -18194,7 +16636,7 @@ GameObject:
   - component: {fileID: 1549440063}
   - component: {fileID: 1549440062}
   - component: {fileID: 1549440061}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18328,7 +16770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8901961, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -18495,7 +16937,7 @@ GameObject:
   - component: {fileID: 1571521757}
   - component: {fileID: 1571521756}
   - component: {fileID: 1571521755}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18591,7 +17033,7 @@ GameObject:
   - component: {fileID: 1574140549}
   - component: {fileID: 1574140548}
   - component: {fileID: 1574140547}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18759,7 +17201,7 @@ GameObject:
   - component: {fileID: 1598149683}
   - component: {fileID: 1598149682}
   - component: {fileID: 1598149681}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18843,54 +17285,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1598149679}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &1603173101
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1286086345716714, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1603173102}
-  - component: {fileID: 1603173103}
-  m_Layer: 5
-  m_Name: GameOverBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1603173102
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224573960734843468, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1603173101}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -120.00002}
-  m_LocalScale: {x: 0.9999837, y: 0.99998397, z: 0.99998397}
-  m_Children:
-  - {fileID: 1295193960}
-  - {fileID: 1397270168}
-  - {fileID: 609009402}
-  - {fileID: 355529704}
-  - {fileID: 1474085419}
-  m_Father: {fileID: 1020746903}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000005722046}
-  m_SizeDelta: {x: 400, y: 350}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1603173103
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222582448365906470, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1603173101}
 --- !u!1 &1610645518
 GameObject:
   m_ObjectHideFlags: 0
@@ -19030,7 +17424,7 @@ GameObject:
   - component: {fileID: 1621373779}
   - component: {fileID: 1621373778}
   - component: {fileID: 1621373777}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19126,7 +17520,7 @@ GameObject:
   - component: {fileID: 1623005849}
   - component: {fileID: 1623005848}
   - component: {fileID: 1623005847}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (52)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19222,7 +17616,7 @@ GameObject:
   - component: {fileID: 1626802284}
   - component: {fileID: 1626802283}
   - component: {fileID: 1626802282}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19318,7 +17712,7 @@ GameObject:
   - component: {fileID: 1627731550}
   - component: {fileID: 1627731549}
   - component: {fileID: 1627731548}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19414,7 +17808,7 @@ GameObject:
   - component: {fileID: 1644825010}
   - component: {fileID: 1644825009}
   - component: {fileID: 1644825008}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (42)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19552,7 +17946,7 @@ GameObject:
   - component: {fileID: 1652684255}
   - component: {fileID: 1652684254}
   - component: {fileID: 1652684253}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19648,7 +18042,7 @@ GameObject:
   - component: {fileID: 1678269770}
   - component: {fileID: 1678269769}
   - component: {fileID: 1678269768}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19744,7 +18138,7 @@ GameObject:
   - component: {fileID: 1684884043}
   - component: {fileID: 1684884042}
   - component: {fileID: 1684884041}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (38)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19840,7 +18234,7 @@ GameObject:
   - component: {fileID: 1687412450}
   - component: {fileID: 1687412449}
   - component: {fileID: 1687412448}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19936,7 +18330,7 @@ GameObject:
   - component: {fileID: 1691603717}
   - component: {fileID: 1691603716}
   - component: {fileID: 1691603715}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20032,7 +18426,7 @@ GameObject:
   - component: {fileID: 1692050280}
   - component: {fileID: 1692050279}
   - component: {fileID: 1692050278}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20128,7 +18522,7 @@ GameObject:
   - component: {fileID: 1717137898}
   - component: {fileID: 1717137897}
   - component: {fileID: 1717137896}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20337,7 +18731,7 @@ GameObject:
   - component: {fileID: 1732476204}
   - component: {fileID: 1732476203}
   - component: {fileID: 1732476202}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20464,7 +18858,7 @@ GameObject:
   - component: {fileID: 1754587778}
   - component: {fileID: 1754587777}
   - component: {fileID: 1754587776}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20560,7 +18954,7 @@ GameObject:
   - component: {fileID: 1769772387}
   - component: {fileID: 1769772386}
   - component: {fileID: 1769772385}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20656,7 +19050,7 @@ GameObject:
   - component: {fileID: 1770407796}
   - component: {fileID: 1770407795}
   - component: {fileID: 1770407794}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20740,98 +19134,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1770407792}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &1776355517
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1783229234246350, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1776355518}
-  - component: {fileID: 1776355521}
-  - component: {fileID: 1776355520}
-  - component: {fileID: 1776355519}
-  m_Layer: 13
-  m_Name: Glowbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1776355518
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4392744861681340, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1776355517}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 19.2, y: 4.2804403, z: 5.052395}
-  m_Children: []
-  m_Father: {fileID: 1418617547}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1776355519
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 23362350140510362, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1776355517}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 2100000, guid: d7029a18f4e39c94bbe37b7c08f24ce7, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!64 &1776355520
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 64330880580124994, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1776355517}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &1776355521
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 33300053979219742, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1776355517}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1785876450
 GameObject:
   m_ObjectHideFlags: 0
@@ -20844,7 +19146,7 @@ GameObject:
   - component: {fileID: 1785876454}
   - component: {fileID: 1785876453}
   - component: {fileID: 1785876452}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21025,7 +19327,7 @@ RectTransform:
   m_Children:
   - {fileID: 1358204769}
   m_Father: {fileID: 1960613382}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -21077,7 +19379,7 @@ GameObject:
   - component: {fileID: 1831603382}
   - component: {fileID: 1831603381}
   - component: {fileID: 1831603380}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (66)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21173,7 +19475,7 @@ GameObject:
   - component: {fileID: 1831661055}
   - component: {fileID: 1831661054}
   - component: {fileID: 1831661053}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21269,7 +19571,7 @@ GameObject:
   - component: {fileID: 1835852405}
   - component: {fileID: 1835852404}
   - component: {fileID: 1835852403}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21365,7 +19667,7 @@ GameObject:
   - component: {fileID: 1841265544}
   - component: {fileID: 1841265543}
   - component: {fileID: 1841265542}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21489,7 +19791,7 @@ GameObject:
   - component: {fileID: 1855949401}
   - component: {fileID: 1855949400}
   - component: {fileID: 1855949399}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21585,7 +19887,7 @@ GameObject:
   - component: {fileID: 1870207756}
   - component: {fileID: 1870207755}
   - component: {fileID: 1870207754}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (68)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21681,7 +19983,7 @@ GameObject:
   - component: {fileID: 1872026280}
   - component: {fileID: 1872026279}
   - component: {fileID: 1872026278}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21765,78 +20067,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1872026276}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &1878427756
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1261406995867984, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1878427757}
-  - component: {fileID: 1878427759}
-  - component: {fileID: 1878427758}
-  m_Layer: 5
-  m_Name: PauseBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1878427757
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 224882223052810332, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1878427756}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999838, y: 0.9999844, z: 0.9999844}
-  m_Children: []
-  m_Father: {fileID: 1423100377}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 713, y: 838.0021}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1878427758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114189274574371874, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1878427756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.9411765}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1878427759
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 222697652128767578, guid: 6b050be125aa35a49b55d6efb4392e92,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1878427756}
 --- !u!1 &1889837635
 GameObject:
   m_ObjectHideFlags: 0
@@ -21849,7 +20079,7 @@ GameObject:
   - component: {fileID: 1889837639}
   - component: {fileID: 1889837638}
   - component: {fileID: 1889837637}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21945,7 +20175,7 @@ GameObject:
   - component: {fileID: 1907807337}
   - component: {fileID: 1907807336}
   - component: {fileID: 1907807335}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (41)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22041,7 +20271,7 @@ GameObject:
   - component: {fileID: 1913620206}
   - component: {fileID: 1913620205}
   - component: {fileID: 1913620204}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22137,7 +20367,7 @@ GameObject:
   - component: {fileID: 1920533963}
   - component: {fileID: 1920533962}
   - component: {fileID: 1920533961}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22233,7 +20463,7 @@ GameObject:
   - component: {fileID: 1921016439}
   - component: {fileID: 1921016438}
   - component: {fileID: 1921016437}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22433,7 +20663,7 @@ GameObject:
   - component: {fileID: 1939723657}
   - component: {fileID: 1939723656}
   - component: {fileID: 1939723655}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22545,6 +20775,7 @@ Transform:
   m_Children:
   - {fileID: 1370959903}
   - {fileID: 1530198791}
+  - {fileID: 1258711264}
   m_Father: {fileID: 572070543}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22655,7 +20886,6 @@ RectTransform:
   m_Children:
   - {fileID: 453485012}
   - {fileID: 902254259}
-  - {fileID: 1020746903}
   - {fileID: 695209550}
   - {fileID: 1795356506}
   - {fileID: 291943089}
@@ -22680,7 +20910,7 @@ GameObject:
   - component: {fileID: 1966677859}
   - component: {fileID: 1966677858}
   - component: {fileID: 1966677857}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22776,7 +21006,7 @@ GameObject:
   - component: {fileID: 1976743245}
   - component: {fileID: 1976743244}
   - component: {fileID: 1976743243}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22872,7 +21102,7 @@ GameObject:
   - component: {fileID: 2004990164}
   - component: {fileID: 2004990163}
   - component: {fileID: 2004990162}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (41)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22968,7 +21198,7 @@ GameObject:
   - component: {fileID: 2006718972}
   - component: {fileID: 2006718971}
   - component: {fileID: 2006718970}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23064,7 +21294,7 @@ GameObject:
   - component: {fileID: 2008769058}
   - component: {fileID: 2008769057}
   - component: {fileID: 2008769056}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23427,7 +21657,7 @@ GameObject:
   - component: {fileID: 2035659694}
   - component: {fileID: 2035659693}
   - component: {fileID: 2035659692}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23597,7 +21827,7 @@ GameObject:
   - component: {fileID: 2051776327}
   - component: {fileID: 2051776326}
   - component: {fileID: 2051776325}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23693,7 +21923,7 @@ GameObject:
   - component: {fileID: 2056271914}
   - component: {fileID: 2056271913}
   - component: {fileID: 2056271912}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23789,7 +22019,7 @@ GameObject:
   - component: {fileID: 2065165004}
   - component: {fileID: 2065165003}
   - component: {fileID: 2065165002}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23885,7 +22115,7 @@ GameObject:
   - component: {fileID: 2087630022}
   - component: {fileID: 2087630021}
   - component: {fileID: 2087630020}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24014,7 +22244,7 @@ GameObject:
   - component: {fileID: 2131493019}
   - component: {fileID: 2131493018}
   - component: {fileID: 2131493017}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: OctGridTower (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
