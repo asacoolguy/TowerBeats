@@ -1319,8 +1319,8 @@ MonoBehaviour:
     - 1.4
     attackRanges:
     - 0.1
-    - 0.11
     - 0.12
+    - 0.14
   popYScale: 1.3
   popTime: 0.2
   lightBoostTime: 1

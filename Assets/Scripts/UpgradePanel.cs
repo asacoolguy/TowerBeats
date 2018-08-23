@@ -59,6 +59,17 @@ public class UpgradePanel : MonoBehaviour {
         for (int i = 0; i < 2; i++) {
             buttons[i].transform.Find("Description").gameObject.SetActive((i == index));
         }
+
+        if (index == 0 && tower.info.currentLevel < 2 && upgradedAOE == null) {
+            // make a temporary AOE preview
+            upgradedAOE = Instantiate(tower.transform.Find("AOEIndicator").gameObject, tower.transform);
+            upgradedAOE.transform.localScale = new Vector3(tower.info.attackRanges[tower.info.currentLevel + 1], 0.002f, tower.info.attackRanges[tower.info.currentLevel + 1]);
+            upgradedAOE.transform.SetParent(transform);
+        }
+        else if (index != 0 && upgradedAOE != null){
+            // delete any temporary AOE previews
+            Destroy(upgradedAOE);
+        }
     }
 
     // sets the gameobject to active and plays a little animation
@@ -71,6 +82,11 @@ public class UpgradePanel : MonoBehaviour {
         else {
             transform.SetParent(null, true);
             gameObject.SetActive(false);
+        }
+
+        if (upgradedAOE != null) {
+            // delete any temporary AOE previews
+            Destroy(upgradedAOE);
         }
     }
 
