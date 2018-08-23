@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyPath : MonoBehaviour {
 	private List<LineRenderer> lineRenderers;
     private List<List<Vector3>> paths;
+    private List<Vector3> spawnPoints;
     private List<GameObject> pathObjs;
     private List<GameObject> lights;
     public AudioClip turnOnPathSound;
@@ -13,6 +14,7 @@ public class EnemyPath : MonoBehaviour {
 	private void Awake () {
         lineRenderers = new List<LineRenderer>();
         paths = new List<List<Vector3>>();
+        spawnPoints = new List<Vector3>();
         lights = new List<GameObject>();
         pathObjs = new List<GameObject>();
 
@@ -44,7 +46,6 @@ public class EnemyPath : MonoBehaviour {
         GameObject pathObj = Instantiate(referencePathObj, transform);
         LineRenderer line = pathObj.GetComponent<LineRenderer>();
         List<Vector3> path = new List<Vector3>();
-        path.Add(pathData.spawnPosition); // index 0 contains the spawn position
         lights.Add(pathObj.transform.Find("Light").gameObject);
 
         // set up the points on the line
@@ -58,6 +59,7 @@ public class EnemyPath : MonoBehaviour {
         lineRenderers.Add(line);
         paths.Add(path);
         pathObjs.Add(pathObj);
+        spawnPoints.Add(pathData.spawnPosition);
     }
 
 
@@ -67,7 +69,7 @@ public class EnemyPath : MonoBehaviour {
 
 
     public Vector3 GetSpawnPoint(int index) {
-        return paths[index][0];
+        return spawnPoints[index];
     }
 
     public void TogglePath(int index, bool b) {

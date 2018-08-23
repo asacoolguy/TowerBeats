@@ -27,13 +27,15 @@ public class Enemy : MonoBehaviour {
     private float regenerateSpeed;
     
 
-	private void Start () {
+	private void Awake () {
 		anim = GetComponent<Animator>();
         healthBar = transform.Find("HealthBar").GetComponent<LineRenderer>();
         initialHealth = health;
 
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
         transform.Find("MoneyText").gameObject.SetActive(false);
+
+        print("spawned at position " + transform.position);
 
         travelDist = 0;
         regenerateSpeed = health / (regenerateMeasure * FindObjectOfType<Scanner>().getTimePerMeasure());
@@ -55,7 +57,7 @@ public class Enemy : MonoBehaviour {
     }
 
 	void OnTriggerEnter(Collider other){
-        if (nextTarget >= path.Count && other.gameObject.tag == "HomeBase"){
+        if (nextTarget == path.Count - 1 && other.gameObject.tag == "HomeBase"){
 			FindObjectOfType<GameManager>().TakeDamage(1);
             FindObjectOfType<GameManager>().GainPoints(-pointVal); // no points gained if self destructed
             StartCoroutine(SelfDestruct());
@@ -72,10 +74,11 @@ public class Enemy : MonoBehaviour {
 
 
 	public IEnumerator Move(){
-        if (nextTarget < path.Count) {
+        if (nextTarget < path.Count && GetComponent<MeshRenderer>().enabled) {
             float currentDuration = 0f;
             Vector3 targetLocation = path[nextTarget];
             float moveSpeed = distancePerMove / moveDuration;
+            Vector3 moveDirection = (targetLocation - transform.position);
 
             if (regenerate && currentRegenerateDelay > 0) {
                 currentRegenerateDelay--;
@@ -86,27 +89,26 @@ public class Enemy : MonoBehaviour {
                 moveSpeed = moveSpeed * 2f / 3f;
             }
 
+            // if we're still ascending out of the spawn point, use the set speed and face up
+            if (nextTarget == 0) {
+                float angle = 90f + GameManager.GetAngleFromVector(transform.position);
+                transform.eulerAngles = new Vector3(-90, 0, angle);
+                ascending = true;
+            }
+            else {
+                FaceDirection(moveDirection);
+                ascending = false;
+            }
+
             while (currentDuration <= moveDuration) {
                 float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
-                float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
+                float moveAmount = (ascending ? 60 : moveSpeed) * speedRatio * Time.deltaTime;
                 travelDist += moveAmount;
-                Vector3 moveDirection = (targetLocation - transform.position);
-
-                // if we're still ascending out of the spawn point, use the set speed and face up
-                if (nextTarget == 1) {
-                    moveAmount = 160 * speedRatio * Time.deltaTime;
-                    float angle = 90f + GameManager.GetAngleFromVector(transform.position);
-                    transform.eulerAngles = new Vector3(-90, 0, angle);
-                    ascending = true;
-                }
-                else {
-                    FaceDirection(moveDirection);
-                    ascending = false;
-                }
 
                 transform.position += moveDirection.normalized * moveAmount;
-                if (Vector3.Distance(transform.position, targetLocation) < 0.5f && ++nextTarget < path.Count) {
-                    targetLocation = path[nextTarget];
+                if (Vector3.Distance(transform.position, targetLocation) < 0.5f && (nextTarget + 1) < path.Count) {
+                    print("transform is at " + transform.position + " and target is at " + targetLocation + " and distance is " + Vector3.Distance(transform.position, targetLocation));
+                    targetLocation = path[++nextTarget];
                 }
 
                 currentDuration += Time.deltaTime;
@@ -165,19 +167,15 @@ public class Enemy : MonoBehaviour {
 
 
     public void SetPath(List<Vector3> input, float heightOffset) {
-        nextTarget = 1;
+        nextTarget = 0;
         ascending = true;
         path = new List<Vector3>();
 
         // randomize the path a little
-        Vector3 offset = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), Random.Range(-3f, 3f));
+        float offsetRange = 1f;
+        Vector3 offset = new Vector3(Random.Range(-offsetRange, offsetRange), Random.Range(-offsetRange, offsetRange), Random.Range(-offsetRange, offsetRange));
         for (int i = 0; i < input.Count; i++) {
-            if (i == 0) {
-                path.Add(input[i] + offset);
-            }
-            else {
-                path.Add(input[i] + offset + new Vector3(0, heightOffset, 0));
-            }
+            path.Add(input[i] + offset + new Vector3(0, heightOffset, 0));
         }
     }
 
