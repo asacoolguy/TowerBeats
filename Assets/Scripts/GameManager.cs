@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour {
             currentMoney = 9999;
 
             // load info for stage 1
-            int testStage = 2;
+            int testStage = 0;
             currentStage = testStage;
 
             // load scannerMusic info
@@ -308,7 +308,7 @@ public class GameManager : MonoBehaviour {
         if (input == 0) pos = new Vector3(0, 4.4f, 0);
         else if (input == 1) pos = new Vector3(0, 3.6f, 0);
         else if (input == 2) pos = new Vector3(0, 5f, 0);
-        float angle = 180f - GameManager.GetAngleFromVectorSpecial(-selectedPlatform.transform.position);
+        float angle = 180f - GameManager.GetAngleFromVector(-selectedPlatform.transform.position);
         towerObj.transform.eulerAngles = new Vector3(0, angle, 0);
         towerObj.transform.SetParent(selectedPlatform.transform, true);
         towerObj.transform.localPosition = pos;
@@ -623,28 +623,7 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    public static float GetAngleFromVector(Vector3 pos){
-		float angle = 0f;
-
-		if (pos.x == 0){
-			if (pos.z == 0){
-				angle = 0f;
-			}
-			else{
-				angle = 180f;
-			}
-		}
-		else{
-			angle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
-		}
-		if (angle < 0){
-			angle += 360f;
-		}
-
-		return angle;
-	}
-
-	public static float GetAngleFromVectorSpecial(Vector3 pos) {
+	public static float GetAngleFromVector(Vector3 pos) {
 		float angle = 0f;
 
 		if (pos.x == 0) {

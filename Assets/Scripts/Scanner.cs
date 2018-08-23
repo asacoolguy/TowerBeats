@@ -138,7 +138,7 @@ public class Scanner : MonoBehaviour {
 	// given a point in 3D world space, find the index of the axis cloest to that point
 	public int FindClosestAxisIndex(Vector3 pos){
         // first find the angle of the pos vector
-        float angle = 180 + GameManager.GetAngleFromVectorSpecial(-pos);
+        float angle = 180 + GameManager.GetAngleFromVector(-pos);
         // then find the vector of the cloest axis
         int axisIndex = (int)(angle / (anglePerAxis / 2f));
 		axisIndex = (axisIndex + 1) / 2;
