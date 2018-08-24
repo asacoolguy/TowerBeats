@@ -115,9 +115,6 @@ public class UpgradePanel : MonoBehaviour {
         this.tower = tower;
         // color
         TowerInfo info = tower.info;
-        //towerColor = info.color;
-        //SetButtonColor(0, info.color);
-        //SetButtonColor(1, info.color);
         // upgrade lvl, desc, cost
         if (info.currentLevel < info.maxLevel - 1) {
             buttons[0].transform.Find("Text").GetComponent<Text>().text = "Upgrade\nLvl " + (info.currentLevel + 1);

@@ -91,7 +91,6 @@ public abstract class BasicTower : MonoBehaviour {
 
 [Serializable]
 public class TowerInfo {
-    public Color color;
     public int maxLevel, currentLevel;
     [TextArea]
     public string[] descriptions;

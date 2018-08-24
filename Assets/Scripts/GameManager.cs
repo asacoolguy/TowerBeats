@@ -14,27 +14,27 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
     // other scripts
+    [System.NonSerialized]
+    public PrefabDatabase prefabDatabase;
     private UIManager uiManager;
     private EnemyManager enemyManager;
 	private AudioSource audioSource, menuAudioSource;
     private Animator cameraAnimator, centralTowerAnimator;
     private Scanner scanner;
+    private LevelDatabase levelData;
     private LevelSelector levelSelector;
     private EnemyPath enemyPath;
 
     // references to objs
-	public List<GameObject> buildableTowers;
 	public GameObject homeBase, enemyPathObj;
     public LayerMask selectableLayerMask;
     
     private TowerPlatform hoveredPlatform = null;
     private TowerPlatform selectedPlatform = null;
-    public GameObject towerBuildPanelPrefab;
     private BuildPanel towerBuildPanel = null;
-    public GameObject towerUpgradePanelPrefab;
     private UpgradePanel towerUpgradePanel = null;
-    public GameObject towerPlatformGrid, towerPlatformPrefab;
-    private LevelDatabase levelData;
+    public GameObject towerPlatformGrid;
+    
 
 	// game progression variables
 	public float currentScore = 0;
@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour {
         currentStage = -1; // -1 for no currentStage
 
         // set up references to essential scripts
+        prefabDatabase = GetComponent<PrefabDatabase>();
         enemyManager = FindObjectOfType<EnemyManager>();
         uiManager = FindObjectOfType<UIManager>();
         cameraAnimator = Camera.main.GetComponentInParent<Animator>();
@@ -92,23 +93,24 @@ public class GameManager : MonoBehaviour {
         enemyPath = enemyPathObj.GetComponent<EnemyPath>();
 
         // make the tower build panel and give it the correct AOEIndicators
-        towerBuildPanel = Instantiate(towerBuildPanelPrefab).GetComponent<BuildPanel>();
+        towerBuildPanel = Instantiate(prefabDatabase.buildPanel).GetComponent<BuildPanel>();
         towerBuildPanel.gameObject.SetActive(false);
-        for (int i = 0; i < buildableTowers.Count; i++) {
+        for (int i = 0; i < 3; i++) {
             // set up the appropriate AOEIndicator
-            GameObject AOEIndicatorPrefab = buildableTowers[i].transform.Find("AOEIndicator").gameObject;
+            GameObject AOEIndicatorPrefab = prefabDatabase.GetTower(i).transform.Find("AOEIndicator").gameObject;
             GameObject AOEIndicator = Instantiate(AOEIndicatorPrefab);
             AOEIndicator.transform.localScale = AOEIndicatorPrefab.transform.lossyScale;
             AOEIndicator.transform.parent = towerBuildPanel.transform;
             AOEIndicator.transform.localPosition = Vector3.zero;
             AOEIndicator.SetActive(false);
             towerBuildPanel.AOEIndicators.Add(AOEIndicator);
+
             // set up the right cost
-            towerBuildPanel.SetButtonCost(i, buildableTowers[i].GetComponent<BasicTower>().info.costs[0]);
+            towerBuildPanel.SetButtonCost(i, prefabDatabase.GetTower(i).GetComponent<BasicTower>().info.costs[0]);
         }
 
         // make the tower upgraePanel 
-        towerUpgradePanel = Instantiate(towerUpgradePanelPrefab).GetComponent<UpgradePanel>();
+        towerUpgradePanel = Instantiate(prefabDatabase.upgradePanel).GetComponent<UpgradePanel>();
         towerUpgradePanel.gameObject.SetActive(false);
 
         // load the level menu
@@ -137,7 +139,7 @@ public class GameManager : MonoBehaviour {
 
             // load the towerPlatform info
             for (int j = 0; j < levelData.levelData[testStage].platformData.Length; j++) {
-                GameObject obj = Instantiate(towerPlatformPrefab, levelData.levelData[testStage].platformData[j], towerPlatformPrefab.transform.rotation, towerPlatformGrid.transform);
+                GameObject obj = Instantiate(prefabDatabase.towerPlatform, levelData.levelData[testStage].platformData[j], prefabDatabase.towerPlatform.transform.rotation, towerPlatformGrid.transform);
                 obj.SetActive(true);
             }
 
@@ -194,8 +196,8 @@ public class GameManager : MonoBehaviour {
                 towerBuildPanel.HighlightButton(GetBuildPanelFromMouse());
 
                 // enable/disable BuildPanelButtons based on money
-                for (int i = 0; i < buildableTowers.Count; i++) {
-                    if (currentMoney >= buildableTowers[i].GetComponent<BasicTower>().info.costs[0]) {
+                for (int i = 0; i < 3; i++) {
+                    if (currentMoney >= prefabDatabase.GetTower(i).GetComponent<BasicTower>().info.costs[0]) {
                         towerBuildPanel.EnableButton(i, true);
                     }
                     else {
@@ -301,7 +303,7 @@ public class GameManager : MonoBehaviour {
 
     // select the right tower to build using index
     public void BuildTower(int input) {
-        if (input > buildableTowers.Count) {
+        if (input > 3) {
             print("index out of bounds");
             return;
         }
@@ -312,7 +314,7 @@ public class GameManager : MonoBehaviour {
         }
 
         // build the tower
-        GameObject towerObj = Instantiate(buildableTowers[input]) as GameObject;
+        GameObject towerObj = Instantiate(prefabDatabase.GetTower(input)) as GameObject;
         towerObj.SetActive(true);
 
         // parent it to selectedPlatform and set its position and rotation accordingly
@@ -508,7 +510,7 @@ public class GameManager : MonoBehaviour {
 
         // load the towerPlatform info
         for (int j = 0; j < levelData.levelData[i].platformData.Length; j++) {
-            Instantiate(towerPlatformPrefab, levelData.levelData[i].platformData[j], towerPlatformPrefab.transform.rotation, towerPlatformGrid.transform);
+            Instantiate(prefabDatabase.towerPlatform, levelData.levelData[i].platformData[j], prefabDatabase.towerPlatform.transform.rotation, towerPlatformGrid.transform);
         }
 
         // start the camera movement and get panels to fly in

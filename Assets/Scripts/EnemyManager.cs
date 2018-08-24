@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 
 public class EnemyManager : MonoBehaviour {
-	public GameObject[] enemyPrefabs;
     public float heightOffset;
     public float spawnMeasureCount;
     private float currentMeasureCount;
@@ -151,23 +150,22 @@ public class EnemyManager : MonoBehaviour {
                         spawnPointIndex = 1;
                     }
 
-                    int enemyType = 0;
+                    GameObject enemyType = null;
                     string char2 = instruction.Substring(1, 1);
                     if (char2 == "n") {
-                        enemyType = 0; // normal
+                        enemyType = GameManager.instance.prefabDatabase.enemy; // normal
                     }
                     else if (char2 == "r") {
-                        enemyType = 1; // regen
+                        enemyType = GameManager.instance.prefabDatabase.enemyRegen; // regen
                     }
                     else if (char2 == "f") {
-                        enemyType = 2; // fast
+                        enemyType = GameManager.instance.prefabDatabase.enemyFast; // fast
                     }
                     else if (char2 == "h") {
-                        enemyType = 3; // heavy
+                        enemyType = GameManager.instance.prefabDatabase.enemyHeavy; // heavy
                     }
 
                     int spawnAmount = int.Parse(instruction.Substring(2, 1));
-
                     StartCoroutine(SpawnEnemies(spawnPointIndex, enemyType, spawnAmount));
                 }
             }
@@ -176,10 +174,10 @@ public class EnemyManager : MonoBehaviour {
 
 
     // spawns enemies with some random delay
-    private IEnumerator SpawnEnemies(int spawnPointIndex, int enemyType, int spawnAmount) {
+    private IEnumerator SpawnEnemies(int spawnPointIndex, GameObject enemyPrefab, int spawnAmount) {
         for (int i = 0; i < spawnAmount; i++) {
             Vector3 position = enemyPath.GetSpawnPoint(spawnPointIndex);
-            GameObject enemyObj = Instantiate(enemyPrefabs[enemyType], 
+            GameObject enemyObj = Instantiate(enemyPrefab, 
                                               position, 
                                               Quaternion.identity, 
                                               this.transform);
