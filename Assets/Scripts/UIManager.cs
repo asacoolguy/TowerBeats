@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour {
 		}
 
         if (waveTestButtons.activeSelf) {
-            waveTestButtons.transform.Find("Text").GetComponent<Text>().text = "wave: " + FindObjectOfType<Scanner>().getSongPhase();
+            waveTestButtons.transform.Find("Text").GetComponent<Text>().text = "wave: " + FindObjectOfType<Scanner>().GetSongPhase();
         }
 	}
 

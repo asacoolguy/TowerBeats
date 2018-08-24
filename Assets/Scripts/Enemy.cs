@@ -34,10 +34,8 @@ public class Enemy : MonoBehaviour {
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
         transform.Find("MoneyText").gameObject.SetActive(false);
 
-        print("spawned at position " + transform.position);
-
         travelDist = 0;
-        regenerateSpeed = health / (regenerateMeasure * FindObjectOfType<Scanner>().getTimePerMeasure());
+        regenerateSpeed = health / (regenerateMeasure * FindObjectOfType<Scanner>().GetTimePerMeasure());
     }
 	
 
@@ -69,20 +67,40 @@ public class Enemy : MonoBehaviour {
 
 
 	public void FaceDirection(Vector3 direction){
-        //float angle = GameManager.GetAngleFromVector(direction) + 90;
-        //transform.eulerAngles = new Vector3(0, angle, 0);
-        Vector3 lookPos = new Vector3(direction.x, transform.position.y, direction.z);
-        transform.LookAt(lookPos);
+        Vector3 dir = new Vector3(Mathf.Abs(direction.x) > 0.2f ? direction.x : 0,
+                                  0,
+                                  Mathf.Abs(direction.z) > 0.2f ? direction.z : 0);
+
+        float angle;
+        if (dir.x == 0) {
+            if (dir.z > 0) {
+                angle = 0;
+            }
+            else {
+                angle = 180f;
+            }
+        }
+        else if (dir.z == 0) {
+            if (dir.x > 0) {
+                angle = 90f;
+            }
+            else {
+                angle = 0f;
+            }
+        }
+        else {
+            angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg - 90f;
+        }
+        
+        transform.eulerAngles = new Vector3(0, angle, 0);
 	}
 
 
 	public IEnumerator Move(){
-        print("move called");
         if (nextTarget < path.Count && GetComponent<MeshRenderer>().enabled) {
             float currentDuration = 0f;
             Vector3 targetLocation = path[nextTarget];
             float moveSpeed = (nextTarget == 0 ? distancePerMoveOnSpawn : distancePerMove) / moveDuration;
-            Vector3 moveDirection = (targetLocation - transform.position);
 
             if (regenerate && currentRegenerateDelay > 0) {
                 currentRegenerateDelay--;
@@ -98,19 +116,19 @@ public class Enemy : MonoBehaviour {
                 float angle = 90f + GameManager.GetAngleFromVector(transform.position);
                 transform.eulerAngles = new Vector3(-90, 0, angle);
             }
-
+            
             while (currentDuration <= moveDuration) {
                 float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
                 float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
+                Vector3 moveDirection = targetLocation - transform.position;
                 travelDist += moveAmount;
 
                 transform.position += moveDirection.normalized * moveAmount;
                 if (Vector3.Distance(transform.position, targetLocation) < 0.5f && (nextTarget + 1) < path.Count) {
-                    print("transform is at " + transform.position + " and target is at " + targetLocation + " and distance is " + Vector3.Distance(transform.position, targetLocation));
                     targetLocation = path[++nextTarget];
-                    FaceDirection(moveDirection);
+                    FaceDirection(targetLocation - path[nextTarget - 1]);
                 }
-
+                
                 currentDuration += Time.deltaTime;
                 yield return null;
             }

@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour {
             // if enemyManager is done with the current wave, advance to the next wave
             if (enemyManager.waveDone) {
                 currentWave++;
-                scanner.changeSoundPhase(+1);
+                scanner.ChangeSoundPhase(+1);
 
                 if (currentWave >= maxWave) {
                     if (!gameOver) {

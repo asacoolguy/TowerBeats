@@ -46,13 +46,6 @@ public class Scanner : MonoBehaviour {
 	public static event RotationCounter RotatedMeasure;  // scanner has rotated a single measure
 
 
-	// Use this for initialization
-	void Start () {
-        //SetupScanner();
-        //ResetScannerLines();
-        //ShowScannerLine(false);
-	}
-
 	// Update is called once per frame
 	void Update () {
 		if (rotating){
@@ -64,7 +57,7 @@ public class Scanner : MonoBehaviour {
 
             // call the RotatedFully event after full rotation
             rotationTimeCounter += Time.deltaTime;
-			if (rotationTimeCounter > timePerRotation){
+            if (rotationTimeCounter > timePerRotation) {
                 //RotatedFully();
                 // the stuff below is code for if purple line rotates more than once per full playing of song
                 //measuresPlayed += lineData[0].measurePerRotation;
@@ -74,15 +67,18 @@ public class Scanner : MonoBehaviour {
                 //}
                 //float tempTimePerRotation = timePerRotation; // save this value in case it changes in PlayMusic
                 PlayMusic(true);
-                //rotationTimeCounter = 0f;
-			}
-
-			// call the RotatedMeasure event after each measure rotated
-			measureTimeCounter += Time.deltaTime;
-			if (measureTimeCounter > timePerMeasure){
-				RotatedMeasure();
-                measureTimeCounter -= timePerMeasure;
+                RotatedMeasure();
                 if (measureTillFinish > 0) measureTillFinish--;
+                //rotationTimeCounter = 0f;
+            }
+            else {
+                // call the RotatedMeasure event after each measure rotated
+                measureTimeCounter += Time.deltaTime;
+                if (measureTimeCounter > timePerMeasure) {
+                    RotatedMeasure();
+                    measureTimeCounter -= timePerMeasure;
+                    if (measureTillFinish > 0) measureTillFinish--;
+                }
             }
 		}
 	}
@@ -122,15 +118,7 @@ public class Scanner : MonoBehaviour {
                 scannerLines.Add(newLine);
             }
 
-            resetScannerLines();
-        }
-    }
-
-
-    // resets the rotation of all scanner lines
-    public void ResetScannerLines() {
-        foreach (ScannerLine line in scannerLines) {
-            line.ResetValues();
+            ResetScannerLines();
         }
     }
 
@@ -212,8 +200,7 @@ public class Scanner : MonoBehaviour {
     private void PlayMusic(bool b) {
         if (b) {
             // reset music speed for the new scanner
-            resetScannerLines();            
-
+            ResetScannerLines();        
             myAudio.PlayOneShot(audioClips[songPhasesCurrent]);
         }
         else {
@@ -223,7 +210,7 @@ public class Scanner : MonoBehaviour {
     }
 
     
-    public void changeSoundPhase(int i) {
+    public void ChangeSoundPhase(int i) {
         int newPhase = songPhasesCurrent + i;
         if (newPhase < songPhasesTotal && newPhase >= 0) {
             songPhasesCurrent = newPhase;
@@ -231,16 +218,16 @@ public class Scanner : MonoBehaviour {
     }
 
 
-    public int getSongPhase() {
+    public int GetSongPhase() {
         return songPhasesCurrent;
     }
 
-    public float getTimePerMeasure() {
+    public float GetTimePerMeasure() {
         return timePerMeasure;
     }
     
 
-    private void resetScannerLines() {
+    private void ResetScannerLines() {
         MusicDatabase musicData = FindObjectOfType<GameManager>().GetMusicDatabase();
 
         // calculate scannerline properties based on data from the current song

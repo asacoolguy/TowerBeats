@@ -1281,8 +1281,14 @@ MonoBehaviour:
 
       Damage'
     costs: 640000007d00000096000000
-    attackPowers: []
-    attackRanges: []
+    attackPowers:
+    - 1
+    - 1.25
+    - 15
+    attackRanges:
+    - 0.25
+    - 0.3
+    - 0.35
   popYScale: 1.3
   popTime: 0.2
   lightBoostTime: 0.2
