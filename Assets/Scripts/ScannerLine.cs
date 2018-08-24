@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -60,5 +60,20 @@ public class ScannerLine : MonoBehaviour {
     public void SetColor(Color c) {
         transform.Find("Line").GetComponent<MeshRenderer>().material.color = c;
         transform.Find("Spotlight").GetComponent<Light>().color = c;
+    }
+}
+
+
+
+[Serializable]
+public class ScannerLineData {
+    public float measurePerRotation;
+    public Color color;
+    public String targetTowers;
+
+    public ScannerLineData() {
+        measurePerRotation = 1;
+        color = Color.white;
+        targetTowers = "";
     }
 }

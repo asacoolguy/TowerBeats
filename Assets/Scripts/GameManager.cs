@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour {
         // set up references to essential scripts
         enemyManager = FindObjectOfType<EnemyManager>();
         uiManager = FindObjectOfType<UIManager>();
-        cameraAnimator = FindObjectOfType<CameraMover>().GetComponent<Animator>();
+        cameraAnimator = Camera.main.GetComponentInParent<Animator>();
         scanner = FindObjectOfType<Scanner>();
         centralTowerAnimator = homeBase.transform.parent.GetComponent<Animator>();
         levelSelector = homeBase.transform.parent.GetComponentInChildren<LevelSelector>();
@@ -134,7 +134,6 @@ public class GameManager : MonoBehaviour {
 
             scanner.ShowScannerLine(true);
             scanner.SetRotate(true);
-            FindObjectOfType<CameraMover>().ToggleBlankScreen(false);
         }
         else {
             state = GameState.SplashScreenDisplaying;
@@ -570,9 +569,12 @@ public class GameManager : MonoBehaviour {
 
 
     private IEnumerator PlayThemeWithDelay(float delay) {
+        Camera.main.transform.parent.GetChild(1).gameObject.SetActive(true);
+
         yield return new WaitForSeconds(delay);
         menuAudioSource.Play();
-        FindObjectOfType<CameraMover>().ToggleBlankScreen(false);
+        //FindObjectOfType<CameraMover>().ToggleBlankScreen(false);
+        Camera.main.transform.parent.GetChild(1).gameObject.SetActive(false);
     }
 
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// This class controls the scanner that rotates 360 degrees every 2 measures. 
 ///

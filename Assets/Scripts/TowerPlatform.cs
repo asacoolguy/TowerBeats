@@ -9,7 +9,17 @@ using UnityEngine;
  */
  
 
-public class TowerPlatform : OctPlatform {
+public class TowerPlatform : MonoBehaviour {
+    protected enum PlatformStatus { lowering, raising, lowered, raised };
+
+    // variables for highlighted
+    protected PlatformStatus status;
+    public float raisedYPos;
+    protected float loweredYPos;
+    public float moveTime;
+    protected float currentMoveTime;
+    protected bool selected;
+
     private GameObject builtTower;
     [ColorUsageAttribute(true,true)]
     public Color builtColor;
@@ -30,8 +40,12 @@ public class TowerPlatform : OctPlatform {
     private Material mat;
 
 
-    private new void Awake () {
-        base.Awake();
+    private void Awake () {
+        loweredYPos = transform.localPosition.y;
+        currentMoveTime = 0f;
+        status = PlatformStatus.lowered;
+        selected = false;
+
         mat = GetComponent<MeshRenderer>().material;
 
         selector = transform.Find("Selector").gameObject;
@@ -51,11 +65,31 @@ public class TowerPlatform : OctPlatform {
     }
 
 
-    private new void Update () {
-        base.Update();
+    private void Update () {
+        // raise or lower the tower
+        if (status == PlatformStatus.lowering) {
+            currentMoveTime -= Time.deltaTime;
+            if (currentMoveTime < 0) {
+                currentMoveTime = 0;
+                status = PlatformStatus.lowered;
+            }
+        }
+        else if (status == PlatformStatus.raising) {
+            currentMoveTime += Time.deltaTime;
+            if (currentMoveTime > moveTime) {
+                currentMoveTime = moveTime;
+                if (status == PlatformStatus.raising) {
+                    status = PlatformStatus.raised;
+                }
+            }
+        }
 
+        float t = currentMoveTime / moveTime;
+        float yPos = GameManager.SmoothStep(loweredYPos, raisedYPos, t);
+        transform.localPosition = new Vector3(transform.localPosition.x, yPos, transform.localPosition.z);
+
+        // change color and size if hovered
         float newV = GameManager.SmoothStep(loweredBrightness, raisedBrightness, currentMoveTime / moveTime);
-
         if (IsBuiltOn()){
             bool highlighted = (status == PlatformStatus.raising || status == PlatformStatus.raised);
 
@@ -73,14 +107,27 @@ public class TowerPlatform : OctPlatform {
     }
 
 
-    public override void RaisePlatform() {
+    public void RaisePlatform() {
         status = PlatformStatus.raising;
     }
 
-    
 
-    public bool IsBuiltOn() {
-        return builtTower != null;
+    public void LowerPlatform() {
+        if (!selected) {
+            status = PlatformStatus.lowering;
+        }
+    }
+
+
+    public void SelectPlatform(bool b) {
+        if (b) {
+            selected = true;
+            RaisePlatform();
+        }
+        else {
+            selected = false;
+            LowerPlatform();
+        }
     }
 
 
@@ -144,6 +191,12 @@ public class TowerPlatform : OctPlatform {
 
         transform.position = new Vector3(transform.position.x, endingPos, transform.position.z);
     }
+
+
+    public bool IsBuiltOn() {
+        return builtTower != null;
+    }
+
 
     public void SetBuiltTower(GameObject tower) {
         if (!IsBuiltOn()) {

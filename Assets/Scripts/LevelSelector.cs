@@ -44,14 +44,8 @@ public class LevelSelector : MonoBehaviour {
         }
 
         // hide the left and right buttons accordingly
-        if (numberOfLevels == 1) {
-            levels[0].transform.Find("LeftButton").gameObject.SetActive(false);
-            levels[0].transform.Find("RightButton").gameObject.SetActive(false);
-        }
-        else {
-            levels[0].transform.Find("LeftButton").gameObject.SetActive(false);
-            levels[numberOfLevels].transform.Find("RightButton").gameObject.SetActive(false);
-        }
+        levels[0].transform.Find("LeftButton").gameObject.SetActive(false);
+        levels[numberOfLevels].transform.Find("RightButton").gameObject.SetActive(false);
     }
 
     public void ShowNextLevel() {
