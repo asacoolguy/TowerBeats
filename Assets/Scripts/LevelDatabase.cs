@@ -13,7 +13,7 @@ public class LevelDatabase : MonoBehaviour{
 public class LevelData {
     public MusicDatabase musicData;
     public int totalWaves;
-    public string spawnPattern;
+    public string[] spawnPatterns;
     public EnemyPathData[] enemyPaths;
     public Vector3[] platformData;
 }

@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour {
         }
 
         // set up music clips
-        levelData = transform.Find("LevelDatabase").GetComponent<LevelDatabase>();
+        levelData = GetComponent<LevelDatabase>();
         youWinClip = levelData.youWinClip;
         youLoseClip = levelData.youLoseClip;
         gameStartClip = levelData.gameStartClip;
@@ -128,8 +128,8 @@ public class GameManager : MonoBehaviour {
             scanner.SetupScanner();
 
             // load the spawn info
-            string[] spawnPatterns = levelData.levelData[testStage].spawnPattern.Split('\n');
-            maxWave = levelData.levelData[testStage].totalWaves;
+            string[] spawnPatterns = levelData.levelData[testStage].spawnPatterns;
+            maxWave = spawnPatterns.Length;
             enemyManager.SetSpawnInstruction(spawnPatterns);
 
             // load the enemy path info
@@ -498,8 +498,8 @@ public class GameManager : MonoBehaviour {
         scanner.SetupScanner();
 
         // load the spawn info 
-        string[] spawnPatterns = levelData.levelData[i].spawnPattern.Split('\n');
-        maxWave = levelData.levelData[i].totalWaves;
+        string[] spawnPatterns = levelData.levelData[i].spawnPatterns;
+        maxWave = spawnPatterns.Length;
         enemyManager.SetSpawnInstruction(spawnPatterns);
 
         // load the enemy path info

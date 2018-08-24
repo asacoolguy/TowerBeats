@@ -5916,7 +5916,7 @@ MonoBehaviour:
   maxHealth: 10
   currentStage: 0
   state: 0
-  devMode: 1
+  devMode: 0
 --- !u!1 &643208838
 GameObject:
   m_ObjectHideFlags: 0
@@ -13989,6 +13989,7 @@ GameObject:
   - component: {fileID: 637831619}
   - component: {fileID: 1377568350}
   - component: {fileID: 1377568348}
+  - component: {fileID: 1377568351}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -14033,7 +14034,6 @@ Transform:
   m_Children:
   - {fileID: 801916981}
   - {fileID: 1610645519}
-  - {fileID: 1467554251}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14055,6 +14055,85 @@ MonoBehaviour:
   multiplyByFrequency: 1
   highFrequencyTrim: 1
   linearSampleStretch: 1
+--- !u!114 &1377568351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1377568347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087958b5dc4af1c4499b3baccf4009f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  youWinClip: {fileID: 8300000, guid: 3074b73da96a5324ebb7d942b6c75f53, type: 3}
+  youLoseClip: {fileID: 8300000, guid: e87ecab3b48ee6d4286c0622a6095152, type: 3}
+  displayBoxClip: {fileID: 8300000, guid: 3e51f7414c281d94d90c99cf0d1fbb65, type: 3}
+  gameStartClip: {fileID: 8300000, guid: 545d2a426203bdd409bf485327e0e581, type: 3}
+  wooshClip: {fileID: 8300000, guid: 22fdfe4935769fd4a8c4ec4ac9b14dce, type: 3}
+  enemyDeathClips:
+  - {fileID: 8300000, guid: 425fa1ccc972cf64eac3c555ece56e02, type: 3}
+  - {fileID: 8300000, guid: 58b8c04c73542194e9b49e7c1f38edbe, type: 3}
+  - {fileID: 8300000, guid: efbbe813ef6527c44935c6fe9c37e692, type: 3}
+  - {fileID: 8300000, guid: 0073f4f6fd73a9744ab25279f96af3a4, type: 3}
+  - {fileID: 8300000, guid: 8104d10911fca7c438591886b4753760, type: 3}
+  - {fileID: 8300000, guid: dd7c5361bc6e4eb44b7f3b64f8a4d921, type: 3}
+  levelData:
+  - musicData:
+      shockTowerClips:
+      - clips:
+        - {fileID: 8300000, guid: 899199521db8c3340b447e4011817814, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 48a1c33d40056e447ba1e749544d0770, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: e32bb165c9200964dac634f7a2e8362e, type: 3}
+      sniperTowerClips:
+      - clips:
+        - {fileID: 8300000, guid: 4c577449dc0fe934185996dc23d2b71b, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 7385f238f4244904e8aad7f05ec0b4a4, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: 3e6d8b23f8d1c394abbcd64a0f5d8349, type: 3}
+      laserTowerClips:
+      - clips:
+        - {fileID: 8300000, guid: d29f4b83be2b7a745b86bb07b50bd64e, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: d275a4d39a7d3f147a65ef2b2ea6ef49, type: 3}
+      - clips:
+        - {fileID: 8300000, guid: f79a8db1028199e40b91e83a180bf343, type: 3}
+      scannerClips:
+      - {fileID: 8300000, guid: 7af6df5fc8ba58f49a1482e5c30803b5, type: 3}
+      - {fileID: 8300000, guid: 0ea66019d19a9634e80d57383224c704, type: 3}
+      - {fileID: 8300000, guid: 5bbcff9ebe2c29b42b7239d4d24dc8cf, type: 3}
+      - {fileID: 8300000, guid: 620998d2468e95743a0a51b4a2e8a420, type: 3}
+      measurePerSong: 04000000040000000400000004000000
+    totalWaves: 1
+    spawnPatterns:
+    - An1;
+    - Af1;
+    - Ar1;
+    - Ah1;
+    enemyPaths:
+    - spawnPosition: {x: -60, y: -100, z: 10}
+      enemyPaths:
+      - {x: -60, y: 0, z: 10}
+      - {x: -10, y: 0, z: 10}
+      - {x: -10, y: 0, z: 30}
+      - {x: 30, y: 0, z: 30}
+      - {x: 30, y: 0, z: 10}
+      - {x: 10, y: 0, z: 10}
+      - {x: 0, y: 0, z: 0}
+    platformData:
+    - {x: -40, y: 15, z: 0}
+    - {x: -20, y: 15, z: 20}
+    - {x: 0, y: 15, z: 15}
+    - {x: 20, y: 15, z: 20}
+    - {x: 40, y: 15, z: 14.15}
+    - {x: 15, y: 15, z: 0}
+    - {x: 20, y: 15, z: -15}
+    - {x: 0, y: 15, z: -20}
+    - {x: 0, y: 15, z: -40}
+    - {x: 14.15, y: 15, z: -40}
 --- !u!1 &1401351781
 GameObject:
   m_ObjectHideFlags: 0
@@ -14536,20 +14615,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4317319291350976, guid: 72ffb22bfb6f8ef41895d7215ba015e9,
     type: 2}
   m_PrefabInternal: {fileID: 1308100312}
---- !u!4 &1467554251
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4726733185202730, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1806991121}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1377568349}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1468696634
 GameObject:
   m_ObjectHideFlags: 0
@@ -18277,99 +18342,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1795356505}
---- !u!1 &1806991121
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1775342916522968, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1467554251}
-  - component: {fileID: 1806991122}
-  m_Layer: 0
-  m_Name: LevelDatabase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1806991122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114374537617836576, guid: 8d8ce01a1b531ab4f934e1a9845e9482,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1806991121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 087958b5dc4af1c4499b3baccf4009f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  youWinClip: {fileID: 8300000, guid: 3074b73da96a5324ebb7d942b6c75f53, type: 3}
-  youLoseClip: {fileID: 8300000, guid: e87ecab3b48ee6d4286c0622a6095152, type: 3}
-  displayBoxClip: {fileID: 8300000, guid: 3e51f7414c281d94d90c99cf0d1fbb65, type: 3}
-  gameStartClip: {fileID: 8300000, guid: 545d2a426203bdd409bf485327e0e581, type: 3}
-  wooshClip: {fileID: 8300000, guid: 22fdfe4935769fd4a8c4ec4ac9b14dce, type: 3}
-  enemyDeathClips:
-  - {fileID: 8300000, guid: 425fa1ccc972cf64eac3c555ece56e02, type: 3}
-  - {fileID: 8300000, guid: 58b8c04c73542194e9b49e7c1f38edbe, type: 3}
-  - {fileID: 8300000, guid: efbbe813ef6527c44935c6fe9c37e692, type: 3}
-  - {fileID: 8300000, guid: 0073f4f6fd73a9744ab25279f96af3a4, type: 3}
-  - {fileID: 8300000, guid: 8104d10911fca7c438591886b4753760, type: 3}
-  - {fileID: 8300000, guid: dd7c5361bc6e4eb44b7f3b64f8a4d921, type: 3}
-  levelData:
-  - musicData:
-      shockTowerClips:
-      - clips:
-        - {fileID: 8300000, guid: 899199521db8c3340b447e4011817814, type: 3}
-      - clips:
-        - {fileID: 8300000, guid: 48a1c33d40056e447ba1e749544d0770, type: 3}
-      - clips:
-        - {fileID: 8300000, guid: e32bb165c9200964dac634f7a2e8362e, type: 3}
-      sniperTowerClips:
-      - clips:
-        - {fileID: 8300000, guid: 4c577449dc0fe934185996dc23d2b71b, type: 3}
-      - clips:
-        - {fileID: 8300000, guid: 7385f238f4244904e8aad7f05ec0b4a4, type: 3}
-      - clips:
-        - {fileID: 8300000, guid: 3e6d8b23f8d1c394abbcd64a0f5d8349, type: 3}
-      laserTowerClips:
-      - clips:
-        - {fileID: 8300000, guid: d29f4b83be2b7a745b86bb07b50bd64e, type: 3}
-      - clips:
-        - {fileID: 8300000, guid: d275a4d39a7d3f147a65ef2b2ea6ef49, type: 3}
-      - clips:
-        - {fileID: 8300000, guid: f79a8db1028199e40b91e83a180bf343, type: 3}
-      scannerClips:
-      - {fileID: 8300000, guid: 7af6df5fc8ba58f49a1482e5c30803b5, type: 3}
-      - {fileID: 8300000, guid: 0ea66019d19a9634e80d57383224c704, type: 3}
-      - {fileID: 8300000, guid: 5bbcff9ebe2c29b42b7239d4d24dc8cf, type: 3}
-      - {fileID: 8300000, guid: 620998d2468e95743a0a51b4a2e8a420, type: 3}
-      measurePerSong: 04000000040000000400000004000000
-    totalWaves: 1
-    spawnPattern: An1;
-    enemyPaths:
-    - spawnPosition: {x: -60, y: -100, z: 10}
-      enemyPaths:
-      - {x: -60, y: 0, z: 10}
-      - {x: -10, y: 0, z: 10}
-      - {x: -10, y: 0, z: 30}
-      - {x: 30, y: 0, z: 30}
-      - {x: 30, y: 0, z: 10}
-      - {x: 10, y: 0, z: 10}
-      - {x: 0, y: 0, z: 0}
-    platformData:
-    - {x: -40, y: 15, z: 0}
-    - {x: -20, y: 15, z: 20}
-    - {x: 0, y: 15, z: 15}
-    - {x: 20, y: 15, z: 20}
-    - {x: 40, y: 15, z: 14.15}
-    - {x: 15, y: 15, z: 0}
-    - {x: 20, y: 15, z: -15}
-    - {x: 0, y: 15, z: -20}
-    - {x: 0, y: 15, z: -40}
-    - {x: 14.15, y: 15, z: -40}
 --- !u!1 &1820044425
 GameObject:
   m_ObjectHideFlags: 0
@@ -19908,7 +19880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1940866663
 Transform:
   m_ObjectHideFlags: 0

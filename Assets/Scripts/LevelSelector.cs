@@ -64,7 +64,7 @@ public class LevelSelector : MonoBehaviour {
 
     public void StartStage() {
         if (!startStagePressed) {
-            GameManager.instance.LoadStage(currentLevel);
+            GameManager.instance.LoadStage(currentLevel - 1);
             startStagePressed = true;
         }
     }
