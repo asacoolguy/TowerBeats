@@ -5644,7 +5644,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114951675172109134, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
   m_IsPrefabParent: 0
 --- !u!20 &630785126 stripped
@@ -9999,8 +10000,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 837947205}
-        m_MethodName: changeSoundPhase
+      - m_Target: {fileID: 1323576909}
+        m_MethodName: ChangeSongPhase
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10381,8 +10382,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 837947205}
-        m_MethodName: changeSoundPhase
+      - m_Target: {fileID: 1323576909}
+        m_MethodName: ChangeSongPhase
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12327,12 +12328,12 @@ GameObject:
   - component: {fileID: 1258711264}
   - component: {fileID: 1258711265}
   m_Layer: 0
-  m_Name: Spotlight (1)
+  m_Name: Spotlight Low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1258711264
 Transform:
   m_ObjectHideFlags: 0
@@ -12358,7 +12359,7 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 7
+  m_Intensity: 5
   m_Range: 100
   m_SpotAngle: 60
   m_CookieSize: 10
@@ -19898,7 +19899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1940866663
 Transform:
   m_ObjectHideFlags: 0

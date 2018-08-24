@@ -60,7 +60,7 @@ public class TowerPlatform : MonoBehaviour {
 
 
     private void Start() {
-        float rotationTime = FindObjectOfType<Scanner>().GetRotationTime();
+        float rotationTime = GameManager.instance.GetScanner().GetRotationTime();
         brightnessDecaySpeed = (raisedBrightness - loweredBrightness) / rotationTime;
     }
 

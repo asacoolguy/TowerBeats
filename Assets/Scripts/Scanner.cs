@@ -88,7 +88,7 @@ public class Scanner : MonoBehaviour {
 	public void SetupScanner(){
         // set up audio and do some math
         {
-            MusicDatabase musicData = FindObjectOfType<GameManager>().GetMusicDatabase();
+            MusicDatabase musicData = GameManager.instance.GetMusicDatabase();
             audioClips = musicData.scannerClips;
             myAudio = GetComponent<AudioSource>();
 
@@ -229,7 +229,7 @@ public class Scanner : MonoBehaviour {
     
 
     private void ResetScannerLines() {
-        MusicDatabase musicData = FindObjectOfType<GameManager>().GetMusicDatabase();
+        MusicDatabase musicData = GameManager.instance.GetMusicDatabase();
 
         // calculate scannerline properties based on data from the current song
         // some calculations are redundant in case rotationPerSong changes later

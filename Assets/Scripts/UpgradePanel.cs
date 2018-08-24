@@ -178,14 +178,14 @@ public class UpgradePanel : MonoBehaviour {
     public void HandleButtonClick(int index) {
         if (index == 0) {
             if (tower != null) {
-                FindObjectOfType<GameManager>().SpendMoney(GetUpgradeCost());
+                GameManager.instance.SpendMoney(GetUpgradeCost());
                 tower.UpgradeTower();
             }
         }
         else if (index == 1) {
             if (tower != null) {
-                FindObjectOfType<GameManager>().GainMoney(GetUpgradeCost() / 2);
-                FindObjectOfType<Scanner>().RemoveTowerFromList(tower.gameObject);
+                GameManager.instance.GainMoney(GetUpgradeCost() / 2);
+                GameManager.instance.GetScanner().RemoveTowerFromList(tower.gameObject);
                 transform.parent.GetComponent<TowerPlatform>().RemoveBuiltTower();
                 Destroy(tower.gameObject);
             }

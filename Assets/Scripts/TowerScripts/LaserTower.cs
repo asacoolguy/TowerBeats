@@ -12,7 +12,7 @@ public class LaserTower : BasicTower {
 
 	private void Start () {
         // set up audio clips
-        soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().laserTowerClips;
+        soundClips = GameManager.instance.GetMusicDatabase().laserTowerClips;
         SetupSound();
 
         // set up the laser and launcher
@@ -95,7 +95,7 @@ public class LaserTower : BasicTower {
         }
         audioSource.clip = musicClips.clips[randomClipIndex];
         //attackDuration = audioSource.clip.length;
-        attackDuration = FindObjectOfType<Scanner>().GetTimePerMeasure() * 2;
+        attackDuration = GameManager.instance.GetScanner().GetTimePerMeasure() * 2;
     }
 
 }

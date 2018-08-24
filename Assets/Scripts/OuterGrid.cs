@@ -93,16 +93,18 @@ public class OuterGrid : MonoBehaviour {
         currentHSVColor = new Vector3(h, s, v);
         maxBrightness = v;
 
-        spectrum = FindObjectOfType<GameManager>().GetComponent<SpectrumData>();
-        spectrumValues = new float[octTowers.Count];
-
         diffBumpScale = maxBumpScale - minBumpScale;
         diffBrightness = maxBrightness;
     }
 
-	
 
-	void Update () {
+    private void Start() {
+        spectrum = GameManager.instance.GetComponent<SpectrumData>();
+        spectrumValues = new float[octTowers.Count];
+    }
+
+
+    void Update () {
         // respond to spectrum
         spectrum.GetOutputSpectrum(spectrumValues);
 

@@ -46,7 +46,7 @@ public class EnemyManager : MonoBehaviour {
 	void Start() {
 		allEnemies = new List<GameObject>();
         enemyPath = FindObjectOfType<EnemyPath>();
-        enemyDeathClips = FindObjectOfType<GameManager>().GetEnemyAudioClips();
+        enemyDeathClips = GameManager.instance.GetEnemyAudioClips();
 	}
 
 	void LateUpdate() {
@@ -184,6 +184,7 @@ public class EnemyManager : MonoBehaviour {
                                               Quaternion.identity, 
                                               this.transform);
             enemyObj.GetComponent<Enemy>().SetPath(enemyPath.GetPath(spawnPointIndex), heightOffset);
+            enemyObj.GetComponent<Enemy>().SetEnemyManager(this);
             allEnemies.Add(enemyObj);
             
             //offset -= new Vector3(0, Random.Range(3f, 7f), 0);

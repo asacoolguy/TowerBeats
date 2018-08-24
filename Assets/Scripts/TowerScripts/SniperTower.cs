@@ -13,7 +13,7 @@ public class SniperTower : BasicTower {
 	// Use this for initialization
 	private void Start () {
         // set up audio clips
-        soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().sniperTowerClips;
+        soundClips = GameManager.instance.GetMusicDatabase().sniperTowerClips;
         SetupSound();
         
         // set up the muzzle for bullets

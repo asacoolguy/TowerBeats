@@ -8,7 +8,7 @@ public class ShockTower : BasicTower {
 
 	// Use this for initialization
 	private void Start () {
-        soundClips = FindObjectOfType<GameManager>().GetMusicDatabase().shockTowerClips;
+        soundClips = GameManager.instance.GetMusicDatabase().shockTowerClips;
         SetupSound();
 
 		// set up particle system

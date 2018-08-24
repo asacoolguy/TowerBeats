@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-/// <summary>
-/// Game Manager class that handles spawning towers at the right locations and tracking scores & progression
-/// </summary>
+/**
+    GameManager is a singleton that oversees the goings of the entire game. 
+    It handles handling inputs and cameras based on the current gamestate.
+    It loads info about the stage selected into other Manager classes.
+     */
 
 public class GameManager : MonoBehaviour {
+    // define singleton behavior
+    public static GameManager instance;
+
     // other scripts
-	private UIManager uiManager;
+    private UIManager uiManager;
     private EnemyManager enemyManager;
 	private AudioSource audioSource, menuAudioSource;
     private Animator cameraAnimator, centralTowerAnimator;
@@ -49,6 +54,15 @@ public class GameManager : MonoBehaviour {
     public bool devMode;
 
     private void Awake() {
+        // set up singleton behavior
+        if (instance == null) {
+            instance = this;
+        }
+        else if (instance != this) {
+            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
+        }
+
         // set up music clips
         levelData = transform.Find("LevelDatabase").GetComponent<LevelDatabase>();
         youWinClip = levelData.youWinClip;
@@ -620,8 +634,14 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+
     public AudioClip[] GetEnemyAudioClips() {
         return levelData.enemyDeathClips;
+    }
+
+
+    public Scanner GetScanner() {
+        return scanner;
     }
 
 

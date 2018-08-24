@@ -64,14 +64,14 @@ public class LevelSelector : MonoBehaviour {
 
     public void StartStage() {
         if (!startStagePressed) {
-            FindObjectOfType<GameManager>().LoadStage(currentLevel);
+            GameManager.instance.LoadStage(currentLevel);
             startStagePressed = true;
         }
     }
 
 
     public void QuitGame() {
-        FindObjectOfType<GameManager>().QuitGame();
+        GameManager.instance.QuitGame();
     }
 
 

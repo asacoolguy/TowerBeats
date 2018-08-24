@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
     private List<Vector3> path;
     private int nextTarget;
     private LineRenderer healthBar;
+    private EnemyManager enemyManager;
 
 	public float health;
     private float initialHealth;
@@ -35,7 +36,7 @@ public class Enemy : MonoBehaviour {
         transform.Find("MoneyText").gameObject.SetActive(false);
 
         travelDist = 0;
-        regenerateSpeed = health / (regenerateMeasure * FindObjectOfType<Scanner>().GetTimePerMeasure());
+        regenerateSpeed = health / (regenerateMeasure * GameManager.instance.GetScanner().GetTimePerMeasure());
     }
 	
 
@@ -59,8 +60,8 @@ public class Enemy : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
         if (nextTarget == path.Count - 1 && other.gameObject.tag == "HomeBase"){
-			FindObjectOfType<GameManager>().TakeDamage(1);
-            FindObjectOfType<GameManager>().GainPoints(-pointVal); // no points gained if self destructed
+			GameManager.instance.TakeDamage(1);
+            GameManager.instance.GainPoints(-pointVal); // no points gained if self destructed
             StartCoroutine(SelfDestruct());
 		}
 	}
@@ -158,8 +159,8 @@ public class Enemy : MonoBehaviour {
 
 	// destroy this object and play the appropriate animation
 	private IEnumerator SelfDestruct(){
-		FindObjectOfType<GameManager>().GainPoints(pointVal);
-        FindObjectOfType<GameManager>().GainMoney(moneyDropped);
+		GameManager.instance.GainPoints(pointVal);
+        GameManager.instance.GainMoney(moneyDropped);
 
         // show moneyText
         transform.Find("MoneyText").localEulerAngles = new Vector3(90, -transform.localEulerAngles.y, 0);
@@ -169,14 +170,19 @@ public class Enemy : MonoBehaviour {
 		ps.Play();
 		GetComponent<MeshRenderer>().enabled = false;
         healthBar.enabled = false;
-        FindObjectOfType<EnemyManager>().PlayDestroyEnemySound();
+        enemyManager.PlayDestroyEnemySound();
 
 		while (ps.isPlaying){
 			yield return null;
 		}
 
-		FindObjectOfType<EnemyManager>().DestroyEnemy(this.gameObject);
+		enemyManager.DestroyEnemy(this.gameObject);
 	}
+
+
+    public void SetEnemyManager(EnemyManager manager) {
+        enemyManager = manager;
+    }
 
 
     public void SetPath(List<Vector3> input, float heightOffset) {

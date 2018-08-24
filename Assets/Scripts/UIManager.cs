@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour {
 		}
 
         if (waveTestButtons.activeSelf) {
-            waveTestButtons.transform.Find("Text").GetComponent<Text>().text = "wave: " + FindObjectOfType<Scanner>().GetSongPhase();
+            waveTestButtons.transform.Find("Text").GetComponent<Text>().text = "wave: " + GameManager.instance.GetScanner().GetSongPhase();
         }
 	}
 
@@ -83,6 +83,11 @@ public class UIManager : MonoBehaviour {
     }
 
 
+    public void ChangeSongPhase(int i) {
+        GameManager.instance.GetScanner().ChangeSoundPhase(i);
+    }
+
+
 	public IEnumerator DisplayGameResultScreen(bool display, bool winLose = true, float score = 0){
         if (display) {
             gameResultScreen.transform.GetChild(0).GetComponent<Text>().text = winLose ? "Level Complete" : "Level Failed";
@@ -93,7 +98,7 @@ public class UIManager : MonoBehaviour {
                 GetComponent<AudioSource>().PlayOneShot(bigThud);
                 yield return new WaitForSecondsRealtime(1);
             }
-            FindObjectOfType<GameManager>().state = GameManager.GameState.ResultScreen;
+            GameManager.instance.state = GameManager.GameState.ResultScreen;
 
         }
         else {
@@ -113,7 +118,7 @@ public class UIManager : MonoBehaviour {
             // sets the mode to splashScreen after the intro animation is done playing
             yield return new WaitForEndOfFrame(); // wait for a frame for the animator state to kick in
             yield return new WaitForSeconds(splashScreen.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
-            FindObjectOfType<GameManager>().state = GameManager.GameState.SplashScreen;
+            GameManager.instance.state = GameManager.GameState.SplashScreen;
         }
         else {
             splashScreen.GetComponent<Animator>().SetTrigger("FadeOut");
