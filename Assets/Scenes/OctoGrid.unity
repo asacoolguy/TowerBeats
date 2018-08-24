@@ -8649,16 +8649,6 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114822838827446306, guid: e1faa1cea6b4fb04cae18678a23c611b,
-        type: 2}
-      propertyPath: info.color.g
-      value: 0.91764706
-      objectReference: {fileID: 0}
-    - target: {fileID: 114822838827446306, guid: e1faa1cea6b4fb04cae18678a23c611b,
-        type: 2}
-      propertyPath: info.color.b
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
   m_IsPrefabParent: 0
@@ -12502,13 +12492,13 @@ Prefab:
         type: 2}
       propertyPath: enemyPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 1711153588299652, guid: 0fe34e8ecb7195a44a036d740a616dc5,
+      objectReference: {fileID: 1325798523966904, guid: 0fe34e8ecb7195a44a036d740a616dc5,
         type: 2}
     - target: {fileID: 114160230879880306, guid: f35b8e92be6b0f549bb63dc035186820,
         type: 2}
       propertyPath: enemyPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 1379293802710276, guid: 72ffb22bfb6f8ef41895d7215ba015e9,
+      objectReference: {fileID: 1248700073550756, guid: 72ffb22bfb6f8ef41895d7215ba015e9,
         type: 2}
     - target: {fileID: 114160230879880306, guid: f35b8e92be6b0f549bb63dc035186820,
         type: 2}
@@ -12534,13 +12524,13 @@ Prefab:
         type: 2}
       propertyPath: enemyPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 1330191616354760, guid: b7db14bce591c924eb04c0985ed44a37,
+      objectReference: {fileID: 1744259261239630, guid: b7db14bce591c924eb04c0985ed44a37,
         type: 2}
     - target: {fileID: 114160230879880306, guid: f35b8e92be6b0f549bb63dc035186820,
         type: 2}
       propertyPath: enemyPrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 1330191616354760, guid: 258ae93cc2786b34db5f5187818d26fc,
+      objectReference: {fileID: 1752084681505982, guid: 258ae93cc2786b34db5f5187818d26fc,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f35b8e92be6b0f549bb63dc035186820, type: 2}
@@ -16976,6 +16966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnOnPathSound: {fileID: 8300000, guid: 08279e179b9c80043871e18bd7fac930, type: 3}
+  heightOffset: 20
 --- !u!82 &1525331217
 AudioSource:
   m_ObjectHideFlags: 0

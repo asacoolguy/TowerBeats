@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UpgradePanel : MonoBehaviour {
-    private Color towerColor;
+    private Color towerColor, originalColor;
     private List<GameObject> buttons;
     private List<Vector3> defaultButtonPos;
     private List<bool> buttonEnabled;
@@ -32,6 +32,8 @@ public class UpgradePanel : MonoBehaviour {
             buttonEnabled.Add(false);
         }
 
+
+        originalColor = buttons[0].GetComponent<Image>().color;
         defaultButtonSize = buttons[0].transform.localScale.x;
     }
 
@@ -113,9 +115,9 @@ public class UpgradePanel : MonoBehaviour {
         this.tower = tower;
         // color
         TowerInfo info = tower.info;
-        towerColor = info.color;
-        SetButtonColor(0, info.color);
-        SetButtonColor(1, info.color);
+        //towerColor = info.color;
+        //SetButtonColor(0, info.color);
+        //SetButtonColor(1, info.color);
         // upgrade lvl, desc, cost
         if (info.currentLevel < info.maxLevel - 1) {
             buttons[0].transform.Find("Text").GetComponent<Text>().text = "Upgrade\nLvl " + (info.currentLevel + 1);
@@ -151,7 +153,7 @@ public class UpgradePanel : MonoBehaviour {
     public void EnableButton(int index, bool b) {
         buttonEnabled[index] = b;
         if (b) {
-            SetButtonColor(index, towerColor);
+            SetButtonColor(index, originalColor);
         }
         else {
             SetButtonColor(index, Color.gray);

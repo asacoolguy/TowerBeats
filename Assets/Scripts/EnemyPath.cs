@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPath : MonoBehaviour {
+    public AudioClip turnOnPathSound;
+    public float heightOffset;
+
 	private List<LineRenderer> lineRenderers;
     private List<List<Vector3>> paths;
     private List<Vector3> spawnPoints;
     private List<GameObject> pathObjs;
     private List<GameObject> lights;
-    public AudioClip turnOnPathSound;
     private GameObject referencePathObj;
 
 	private void Awake () {
@@ -51,7 +53,7 @@ public class EnemyPath : MonoBehaviour {
         // set up the points on the line
         line.positionCount = pathData.enemyPaths.Length;
         for (int i = 0; i < pathData.enemyPaths.Length; i++) {
-            line.SetPosition(i, pathData.enemyPaths[i]);
+            line.SetPosition(i, pathData.enemyPaths[i] + new Vector3(0, heightOffset, 0));
             path.Add(pathData.enemyPaths[i]);
         }
 

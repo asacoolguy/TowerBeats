@@ -56,7 +56,7 @@ public class SniperTower : BasicTower {
                 Enemy target = null;
                 float currentDist = 0;
                 for (int i = 0; i < enemies.Count; i++) {
-                    if (enemies[i] != null && enemies[i].health > 0 && !enemies[i].ascending && enemies[i].GetTravelDist() > currentDist) {
+                    if (enemies[i] != null && enemies[i].health > 0 && enemies[i].IsVulnerable() && enemies[i].GetTravelDist() > currentDist) {
                         target = enemies[i];
                         currentDist = enemies[i].GetTravelDist();
                     }

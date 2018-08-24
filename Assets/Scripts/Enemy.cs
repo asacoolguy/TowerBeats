@@ -11,14 +11,13 @@ public class Enemy : MonoBehaviour {
 
 	public float health;
     private float initialHealth;
-	public float distancePerMove;
+	public float distancePerMove, distancePerMoveOnSpawn;
 	public float moveDuration;
 	public float pointVal;
     public int moneyDropped;
     private int slowCounter;
     private float travelDist;
-
-    public bool ascending; // this is true when enemy is still rising. enemy is untargetable in this phase
+    private float maxHeight;
 
     public bool regenerate;
     public int regenerateStartDelay;
@@ -43,6 +42,10 @@ public class Enemy : MonoBehaviour {
 	
 
 	private void Update () {
+        if (transform.position.y > maxHeight) {
+            transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
+        }
+
         if (regenerate && currentRegenerateDelay == 0 && health < initialHealth) {
             // regain health
             health += regenerateSpeed * Time.deltaTime;
@@ -74,10 +77,11 @@ public class Enemy : MonoBehaviour {
 
 
 	public IEnumerator Move(){
+        print("move called");
         if (nextTarget < path.Count && GetComponent<MeshRenderer>().enabled) {
             float currentDuration = 0f;
             Vector3 targetLocation = path[nextTarget];
-            float moveSpeed = distancePerMove / moveDuration;
+            float moveSpeed = (nextTarget == 0 ? distancePerMoveOnSpawn : distancePerMove) / moveDuration;
             Vector3 moveDirection = (targetLocation - transform.position);
 
             if (regenerate && currentRegenerateDelay > 0) {
@@ -93,22 +97,18 @@ public class Enemy : MonoBehaviour {
             if (nextTarget == 0) {
                 float angle = 90f + GameManager.GetAngleFromVector(transform.position);
                 transform.eulerAngles = new Vector3(-90, 0, angle);
-                ascending = true;
-            }
-            else {
-                FaceDirection(moveDirection);
-                ascending = false;
             }
 
             while (currentDuration <= moveDuration) {
                 float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
-                float moveAmount = (ascending ? 60 : moveSpeed) * speedRatio * Time.deltaTime;
+                float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
                 travelDist += moveAmount;
 
                 transform.position += moveDirection.normalized * moveAmount;
                 if (Vector3.Distance(transform.position, targetLocation) < 0.5f && (nextTarget + 1) < path.Count) {
                     print("transform is at " + transform.position + " and target is at " + targetLocation + " and distance is " + Vector3.Distance(transform.position, targetLocation));
                     targetLocation = path[++nextTarget];
+                    FaceDirection(moveDirection);
                 }
 
                 currentDuration += Time.deltaTime;
@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour {
 
 	// called by other functions to damage this enemy. destroys this enemy when appropriate
 	public void TakeDamage(float i){
-        if (!ascending) {
+        if (IsVulnerable()) {
             health -= i;
             currentRegenerateDelay = regenerateStartDelay;
 
@@ -168,7 +168,6 @@ public class Enemy : MonoBehaviour {
 
     public void SetPath(List<Vector3> input, float heightOffset) {
         nextTarget = 0;
-        ascending = true;
         path = new List<Vector3>();
 
         // randomize the path a little
@@ -177,9 +176,17 @@ public class Enemy : MonoBehaviour {
         for (int i = 0; i < input.Count; i++) {
             path.Add(input[i] + offset + new Vector3(0, heightOffset, 0));
         }
+
+        maxHeight = offset.y + heightOffset;
     }
+
 
     public float GetTravelDist() {
         return travelDist;
+    }
+
+    
+    public bool IsVulnerable() {
+        return nextTarget != 0;
     }
 }
