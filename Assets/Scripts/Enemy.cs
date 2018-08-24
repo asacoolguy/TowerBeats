@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour {
         if (nextTarget < path.Count && GetComponent<MeshRenderer>().enabled) {
             float currentDuration = 0f;
             Vector3 targetLocation = path[nextTarget];
-            float moveSpeed = (nextTarget == 0 ? distancePerMoveOnSpawn : distancePerMove) / moveDuration;
+            float slowFactor = 1;
 
             if (regenerate && currentRegenerateDelay > 0) {
                 currentRegenerateDelay--;
@@ -108,17 +108,12 @@ public class Enemy : MonoBehaviour {
 
             if (slowCounter > 0) {
                 slowCounter--;
-                moveSpeed = moveSpeed * 2f / 3f;
-            }
-
-            // if we're still ascending out of the spawn point, use the set speed and face up
-            if (nextTarget == 0) {
-                float angle = 90f + GameManager.GetAngleFromVector(transform.position);
-                transform.eulerAngles = new Vector3(-90, 0, angle);
+                slowFactor = 2f / 3f;
             }
             
             while (currentDuration <= moveDuration) {
                 float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
+                float moveSpeed = (nextTarget == 0 ? distancePerMoveOnSpawn : distancePerMove) / moveDuration * slowFactor;
                 float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
                 Vector3 moveDirection = targetLocation - transform.position;
                 travelDist += moveAmount;
@@ -196,6 +191,10 @@ public class Enemy : MonoBehaviour {
         }
 
         maxHeight = offset.y + heightOffset;
+
+        // face up
+        float angle = 90f + GameManager.GetAngleFromVector(transform.position);
+        transform.eulerAngles = new Vector3(-90, 0, angle);
     }
 
 
