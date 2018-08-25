@@ -319,12 +319,8 @@ public class GameManager : MonoBehaviour {
 
         // parent it to selectedPlatform and set its position and rotation accordingly
         // TODO: need better way of handling tower positioning
-        Vector3 pos = Vector3.zero;
-        if (input == 0) pos = new Vector3(0, 4.4f, 0);
-        else if (input == 1) pos = new Vector3(0, 3.6f, 0);
-        else if (input == 2) pos = new Vector3(0, 5f, 0);
         towerObj.transform.SetParent(selectedPlatform.transform, true);
-        towerObj.transform.localPosition = pos;
+        towerObj.transform.localPosition = Vector3.zero;
 
         // link tower to selectedPlatform and deselect it
         selectedPlatform.SetBuiltTower(towerObj);

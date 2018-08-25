@@ -6976,9 +6976,74 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1540731325554862, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1253749910608102, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4153759357120830, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153759357120830, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153759357120830, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260218520753840, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260218520753840, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260218520753840, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138887725885952, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138887725885952, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138887725885952, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620986770323460, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235072476299394, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620986770323460, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235072476299394, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620986770323460, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235072476299394, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 33106629374030586, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e1faa1cea6b4fb04cae18678a23c611b, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &760574624
@@ -14211,7 +14276,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1922785463306400, guid: c29e1d3d490946649a80d47a9512cdc2, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c29e1d3d490946649a80d47a9512cdc2, type: 2}
@@ -21212,7 +21277,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1974791588842996, guid: 80c65df6bcea1ae47be330daa8f2d2c0, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80c65df6bcea1ae47be330daa8f2d2c0, type: 2}

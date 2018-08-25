@@ -95,7 +95,7 @@ public class LaserTower : BasicTower {
         }
         audioSource.clip = musicClips.clips[randomClipIndex];
         //attackDuration = audioSource.clip.length;
-        attackDuration = GameManager.instance.GetScanner().GetTimePerMeasure() * 2;
+        attackDuration = 2;
     }
 
 }
