@@ -4,27 +4,36 @@ using UnityEngine;
 
 public class SniperTower : BasicTower {
 	public GameObject bulletObj;
-	private GameObject launcher;
+	private GameObject launchers;
 	private TowerMusicClips[] soundClips;
+    public float idleAttackInterval;
+    private float idleAttackIntervalCounter;
 
 	public float bulletFadeTime = 0.6f;
 
 
 	// Use this for initialization
 	private void Start () {
+        idleAttackIntervalCounter = 0;
         // set up audio clips
         soundClips = GameManager.instance.GetMusicDatabase().sniperTowerClips;
         SetupSound();
-        
+
         // set up the muzzle for bullets
-        launcher = transform.Find("Launcher").gameObject;
+        launchers = transform.Find("Launchers").GetChild(0).gameObject;
 
         towerType = 2;
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        idleAttackIntervalCounter += Time.deltaTime;
+
+        if (idleAttackIntervalCounter > idleAttackInterval) {
+            idleAttackIntervalCounter = 0;
+
+            ShootBullet(false);
+        }
 	}
 
 	// plays the designated sound and also does the attack
@@ -43,38 +52,50 @@ public class SniperTower : BasicTower {
 		}
 
 		// shoots 3 bullets towards 3 targets
-		StartCoroutine(ShootBullets());
+		StartCoroutine(ShootFlurry());
 	}
 
 
 	// shoots 3 bullets towards existing enemies. prefers hitting multiple enemies over hitting a single one
-	private IEnumerator ShootBullets(){
+	private IEnumerator ShootFlurry(){
         for (int j = 0; j < 3; j++) {
-            List<Enemy> enemies = area.enemiesInRange;
-            if (enemies.Count > 0) {
-                // find farthest enemy still alive
-                Enemy target = null;
-                float currentDist = 0;
-                for (int i = 0; i < enemies.Count; i++) {
-                    if (enemies[i] != null && enemies[i].health > 0 && enemies[i].IsVulnerable() && enemies[i].GetTravelDist() > currentDist) {
-                        target = enemies[i];
-                        currentDist = enemies[i].GetTravelDist();
-                    }
-                }
-
-                if (target != null) {
-                    // only shoot lasers when the enemy still exist
-                    GameObject bullet = Instantiate(bulletObj, Vector3.zero, Quaternion.identity);
-                    LineRenderer line = bullet.GetComponent<LineRenderer>();
-                    line.SetPosition(0, launcher.transform.position);
-                    line.SetPosition(1, target.transform.position);
-                    target.TakeDamage(info.attackPowers[info.currentLevel]);
-
-                    yield return new WaitForSeconds(0.4f);
-                }
-            }
+            ShootBullet(true);
+            yield return new WaitForSeconds(0.3f);
         }
 	}
+
+
+    private bool ShootBullet(bool powered) {
+        List<Enemy> enemies = area.enemiesInRange;
+        if (enemies.Count > 0) {
+            // find farthest enemy still alive
+            Enemy target = null;
+            float currentDist = 0;
+            for (int i = 0; i < enemies.Count; i++) {
+                if (enemies[i] != null && enemies[i].health > 0 && enemies[i].IsVulnerable() && enemies[i].GetTravelDist() > currentDist) {
+                    target = enemies[i];
+                    currentDist = enemies[i].GetTravelDist();
+                }
+            }
+
+            if (target != null) {
+                Vector3 lookPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                transform.LookAt(lookPos);
+
+                for (int i = 0; i < launchers.transform.childCount; i++) {
+                    GameObject bullet = Instantiate(bulletObj, Vector3.zero, Quaternion.identity);
+                    LineRenderer line = bullet.GetComponent<LineRenderer>();
+                    line.SetPosition(0, launchers.transform.GetChild(i).position);
+                    line.SetPosition(1, target.transform.position);
+                    target.TakeDamage(info.attackPowers[info.currentLevel] * (powered ? 1.5f : 1));
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     public override void SetupSound() {
         // randomly pick a sound
@@ -84,5 +105,27 @@ public class SniperTower : BasicTower {
         }
         audioSource.clip = musicClips.clips[randomClipIndex];
     }
+
+
+    public override void UpgradeTower() {
+        if (info.currentLevel < info.maxLevel - 1) {
+            info.currentLevel++;
+            SetupSound();
+
+            // change model
+            foreach (Transform tran in transform.Find("Models").GetComponentInChildren<Transform>()) {
+                tran.gameObject.SetActive(false);
+            }
+            transform.Find("Models").GetChild(info.currentLevel).gameObject.SetActive(true);
+
+            // increase range
+            transform.Find("AOEIndicator").localScale = new Vector3(info.attackRanges[info.currentLevel], 0.002f, info.attackRanges[info.currentLevel]);
+            transform.Find("Area").GetComponent<CapsuleCollider>().radius = info.attackRanges[info.currentLevel];
+
+            // change Launcher positions
+            launchers = transform.Find("Launchers").GetChild(info.currentLevel).gameObject;
+        }
+    }
+    
 
 }

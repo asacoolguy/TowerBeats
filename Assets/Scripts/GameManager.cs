@@ -323,8 +323,6 @@ public class GameManager : MonoBehaviour {
         if (input == 0) pos = new Vector3(0, 4.4f, 0);
         else if (input == 1) pos = new Vector3(0, 3.6f, 0);
         else if (input == 2) pos = new Vector3(0, 5f, 0);
-        float angle = 180f - GameManager.GetAngleFromVector(-selectedPlatform.transform.position);
-        towerObj.transform.eulerAngles = new Vector3(0, angle, 0);
         towerObj.transform.SetParent(selectedPlatform.transform, true);
         towerObj.transform.localPosition = pos;
 
