@@ -47,7 +47,7 @@ public class LaserTower : BasicTower {
 		float t = 0f;
 
 		while (t < attackDuration){
-			List<Enemy> enemies = GetComponentInChildren<TowerAoE>().enemiesInRange;
+			List<Enemy> enemies = area.enemiesInRange;
 			if (enemies.Count > 0){
 				// find farthest enemy still alive
 				Enemy target = null;

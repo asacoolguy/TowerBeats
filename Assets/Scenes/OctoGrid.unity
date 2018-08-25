@@ -702,10 +702,6 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4419017248487092, guid: 0fe34e8ecb7195a44a036d740a616dc5, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0fe34e8ecb7195a44a036d740a616dc5, type: 2}
   m_IsPrefabParent: 0
@@ -5916,7 +5912,7 @@ MonoBehaviour:
   maxHealth: 10
   currentStage: 0
   state: 0
-  devMode: 0
+  devMode: 1
 --- !u!1 &643208838
 GameObject:
   m_ObjectHideFlags: 0
@@ -14109,7 +14105,7 @@ MonoBehaviour:
       measurePerSong: 04000000040000000400000004000000
     totalWaves: 1
     spawnPatterns:
-    - An1;
+    - An6;
     - Af1;
     - Ar1;
     - Ah1;

@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
     private int nextTarget;
     private LineRenderer healthBar;
     private EnemyManager enemyManager;
+    private GameObject lightning;
 
 	public float health;
     private float initialHealth;
@@ -31,6 +32,9 @@ public class Enemy : MonoBehaviour {
 		anim = GetComponent<Animator>();
         healthBar = transform.Find("HealthBar").GetComponent<LineRenderer>();
         initialHealth = health;
+
+        lightning = transform.Find("Lightning").gameObject;
+        lightning.SetActive(false);
 
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
         transform.Find("MoneyText").gameObject.SetActive(false);
@@ -86,11 +90,11 @@ public class Enemy : MonoBehaviour {
                 angle = 90f;
             }
             else {
-                angle = 0f;
+                angle = 270f;
             }
         }
         else {
-            angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg - 90f;
+            angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
         }
         
         transform.eulerAngles = new Vector3(0, angle, 0);
@@ -109,7 +113,11 @@ public class Enemy : MonoBehaviour {
 
             if (slowCounter > 0) {
                 slowCounter--;
-                slowFactor = 2f / 3f;
+                slowFactor = 1f / 2f;
+                lightning.SetActive(true);
+            }
+            else {
+                lightning.SetActive(false);
             }
             
             while (currentDuration <= moveDuration) {

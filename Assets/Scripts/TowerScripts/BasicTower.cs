@@ -14,12 +14,14 @@ public abstract class BasicTower : MonoBehaviour {
     public float popYScale, popTime, lightBoostTime;
     public float lightMinIntensity, lightMaxIntensity;
     protected Light spotlight;
+    protected TowerAoE area;
 
     protected void Awake () {
 		audioSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
         spotlight = transform.Find("Spotlight").GetComponent<Light>();
         spotlight.intensity = lightMinIntensity;
+        area = GetComponentInChildren<TowerAoE>();
 	}
 	
 
@@ -69,7 +71,7 @@ public abstract class BasicTower : MonoBehaviour {
     }
 
 
-    public void UpgradeTower() {
+    public virtual void UpgradeTower() {
         if (info.currentLevel < info.maxLevel - 1) {
             info.currentLevel++;
             SetupSound();

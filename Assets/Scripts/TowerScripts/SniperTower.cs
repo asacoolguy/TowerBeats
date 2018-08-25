@@ -50,7 +50,7 @@ public class SniperTower : BasicTower {
 	// shoots 3 bullets towards existing enemies. prefers hitting multiple enemies over hitting a single one
 	private IEnumerator ShootBullets(){
         for (int j = 0; j < 3; j++) {
-            List<Enemy> enemies = GetComponentInChildren<TowerAoE>().enemiesInRange;
+            List<Enemy> enemies = area.enemiesInRange;
             if (enemies.Count > 0) {
                 // find farthest enemy still alive
                 Enemy target = null;
