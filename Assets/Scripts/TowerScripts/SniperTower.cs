@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SniperTower : BasicTower {
 	private GameObject launchers;
-	private TowerMusicClips[] soundClips;
     public float idleAttackInterval;
     private float idleAttackIntervalCounter;
 
@@ -15,8 +14,10 @@ public class SniperTower : BasicTower {
 	private void Start () {
         idleAttackIntervalCounter = 0;
         // set up audio clips
-        soundClips = GameManager.instance.GetMusicDatabase().sniperTowerClips;
-        SetupSound();
+        TowerMusicClips[] allClips = GameManager.instance.GetMusicDatabase().sniperTowerClips;
+        int randomIndex = Random.Range(0, allClips.Length);
+        soundClips = allClips[randomIndex];
+        audioSource.clip = soundClips.clips[info.currentLevel];
 
         // set up the muzzle for bullets
         launchers = transform.Find("Launchers").GetChild(0).gameObject;
@@ -96,20 +97,10 @@ public class SniperTower : BasicTower {
     }
 
 
-    public override void SetupSound() {
-        // randomly pick a sound
-        TowerMusicClips musicClips = soundClips[Mathf.Clamp(info.currentLevel, 0, soundClips.Length - 1)];
-        if (randomClipIndex == -1) {
-            randomClipIndex = Random.Range(0, musicClips.clips.Length);
-        }
-        audioSource.clip = musicClips.clips[randomClipIndex];
-    }
-
-
     public override void UpgradeTower() {
         if (info.currentLevel < info.maxLevel - 1) {
             info.currentLevel++;
-            SetupSound();
+            audioSource.clip = soundClips.clips[info.currentLevel];
 
             // change model
             foreach (Transform tran in transform.Find("Models").GetComponentInChildren<Transform>()) {

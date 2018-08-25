@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserTower : BasicTower {
+public class PlasmaTower : BasicTower {
 	private GameObject launcher;
     public float plasmaFlyDuration;
-    private TowerMusicClips[] soundClips;
 
 
 	private void Start () {
         // set up audio clips
-        soundClips = GameManager.instance.GetMusicDatabase().laserTowerClips;
-        SetupSound();
+        TowerMusicClips[] allClips = GameManager.instance.GetMusicDatabase().plasmaTowerClips;
+        int randomIndex = Random.Range(0, allClips.Length);
+        soundClips = allClips[randomIndex];
+        audioSource.clip = soundClips.clips[info.currentLevel];
 
         // set up the laser and launcher
-		launcher = transform.Find("Launcher").gameObject;
+        launcher = transform.Find("Launcher").gameObject;
 
         towerType = 3;
     }
@@ -27,7 +28,7 @@ public class LaserTower : BasicTower {
         //anim.SetTrigger("Activate");
 
         // pause all other towers of this type and sound
-        foreach (LaserTower tower in FindObjectsOfType<LaserTower>()){
+        foreach (PlasmaTower tower in FindObjectsOfType<PlasmaTower>()){
 			if (tower != this && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
@@ -58,16 +59,6 @@ public class LaserTower : BasicTower {
                 plasma.GetComponent<PlasmaBall>().SetTarget(target.gameObject, plasmaFlyDuration, info.attackPowers[info.currentLevel]);
             }
         }
-    }
-
-
-    public override void SetupSound() {
-        // randomly pick a sound
-        TowerMusicClips musicClips = soundClips[Mathf.Clamp(info.currentLevel, 0, soundClips.Length - 1)];
-        if (randomClipIndex == -1) {
-            randomClipIndex = Random.Range(0, musicClips.clips.Length);
-        }
-        audioSource.clip = musicClips.clips[randomClipIndex];
     }
 
 }

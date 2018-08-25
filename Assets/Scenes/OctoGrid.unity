@@ -13966,7 +13966,8 @@ MonoBehaviour:
   enemyHeavy: {fileID: 1752084681505982, guid: 258ae93cc2786b34db5f5187818d26fc, type: 2}
   shockTower: {fileID: 1922785463306400, guid: c29e1d3d490946649a80d47a9512cdc2, type: 2}
   sniperTower: {fileID: 556878101}
-  laserTower: {fileID: 1160471332546692, guid: 12039ebe69374484a90f3aec28d4b62d, type: 2}
+  plasmaTower: {fileID: 1160471332546692, guid: 12039ebe69374484a90f3aec28d4b62d,
+    type: 2}
   sniperBullet: {fileID: 1911099843679222, guid: d930b58b2945cd241860048fe429938d,
     type: 2}
   plasmaBall: {fileID: 1181701316925182, guid: b4b3ae218d48f6748b20b308ec98ede1, type: 2}
@@ -14037,23 +14038,17 @@ MonoBehaviour:
       shockTowerClips:
       - clips:
         - {fileID: 8300000, guid: 899199521db8c3340b447e4011817814, type: 3}
-      - clips:
         - {fileID: 8300000, guid: 48a1c33d40056e447ba1e749544d0770, type: 3}
-      - clips:
         - {fileID: 8300000, guid: e32bb165c9200964dac634f7a2e8362e, type: 3}
       sniperTowerClips:
       - clips:
         - {fileID: 8300000, guid: 4c577449dc0fe934185996dc23d2b71b, type: 3}
-      - clips:
         - {fileID: 8300000, guid: 7385f238f4244904e8aad7f05ec0b4a4, type: 3}
-      - clips:
         - {fileID: 8300000, guid: 3e6d8b23f8d1c394abbcd64a0f5d8349, type: 3}
-      laserTowerClips:
+      plasmaTowerClips:
       - clips:
         - {fileID: 8300000, guid: d29f4b83be2b7a745b86bb07b50bd64e, type: 3}
-      - clips:
         - {fileID: 8300000, guid: d275a4d39a7d3f147a65ef2b2ea6ef49, type: 3}
-      - clips:
         - {fileID: 8300000, guid: f79a8db1028199e40b91e83a180bf343, type: 3}
       scannerClips:
       - {fileID: 8300000, guid: 7af6df5fc8ba58f49a1482e5c30803b5, type: 3}

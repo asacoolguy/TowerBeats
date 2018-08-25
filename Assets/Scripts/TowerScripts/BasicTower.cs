@@ -6,10 +6,10 @@ using UnityEngine;
 public abstract class BasicTower : MonoBehaviour {
 	protected AudioSource audioSource;
 	protected Animator anim;
+    protected TowerMusicClips soundClips;
     public int towerType = 0;
 	public int axisIndex = 0;
     public TowerInfo info;
-    protected int randomClipIndex = -1;
 
     public float popYScale, popTime, lightBoostTime;
     public float lightMinIntensity, lightMaxIntensity;
@@ -34,9 +34,6 @@ public abstract class BasicTower : MonoBehaviour {
     }
 
 
-    public virtual void SetupSound() { }
-    
-    
     // toggle on/off the outlines for this tower and its kids
     public void ToggleOutline(bool b) {
         //print("toggled outline to " + b);
@@ -74,7 +71,7 @@ public abstract class BasicTower : MonoBehaviour {
     public virtual void UpgradeTower() {
         if (info.currentLevel < info.maxLevel - 1) {
             info.currentLevel++;
-            SetupSound();
+            audioSource.clip = soundClips.clips[info.currentLevel];
 
             // change model
             foreach (Transform tran in transform.Find("Models").GetComponentInChildren<Transform>()) {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShockTower : BasicTower {
-	private TowerMusicClips[] soundClips;
 	private ParticleSystem shockwave, lightning;
     private ParticleSystemRenderer lightningRenderer;
     public float[] shockWaveRadius;
@@ -11,8 +10,10 @@ public class ShockTower : BasicTower {
 
 
 	private void Start () {
-        soundClips = GameManager.instance.GetMusicDatabase().shockTowerClips;
-        SetupSound();
+        TowerMusicClips[] allClips = GameManager.instance.GetMusicDatabase().shockTowerClips;
+        int randomIndex = Random.Range(0, allClips.Length);
+        soundClips = allClips[randomIndex];
+        audioSource.clip = soundClips.clips[info.currentLevel];
 
         // set up particle system
         shockwave = transform.Find("Shockwave").GetComponent<ParticleSystem>();
@@ -57,22 +58,12 @@ public class ShockTower : BasicTower {
             }
 		}
 	}
-
-
-    public override void SetupSound() {
-        // randomly pick a sound
-        TowerMusicClips musicClips = soundClips[Mathf.Clamp(info.currentLevel, 0, soundClips.Length - 1)];
-        if (randomClipIndex == -1) {
-            randomClipIndex = Random.Range(0, musicClips.clips.Length);
-        }
-        audioSource.clip = musicClips.clips[randomClipIndex];
-    }
-
+   
 
     public override void UpgradeTower() {
         if (info.currentLevel < info.maxLevel - 1) {
             info.currentLevel++;
-            SetupSound();
+            audioSource.clip = soundClips.clips[info.currentLevel];
 
             // change model
             foreach (Transform tran in transform.Find("Models").GetComponentInChildren<Transform>()) {
