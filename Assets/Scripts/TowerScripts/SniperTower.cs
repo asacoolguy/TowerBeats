@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SniperTower : BasicTower {
-	public GameObject bulletObj;
 	private GameObject launchers;
 	private TowerMusicClips[] soundClips;
     public float idleAttackInterval;
@@ -83,7 +82,7 @@ public class SniperTower : BasicTower {
                 transform.LookAt(lookPos);
 
                 for (int i = 0; i < launchers.transform.childCount; i++) {
-                    GameObject bullet = Instantiate(bulletObj, Vector3.zero, Quaternion.identity);
+                    GameObject bullet = Instantiate(GameManager.instance.prefabDatabase.sniperBullet, Vector3.zero, Quaternion.identity);
                     LineRenderer line = bullet.GetComponent<LineRenderer>();
                     line.SetPosition(0, launchers.transform.GetChild(i).position);
                     line.SetPosition(1, target.transform.position);

@@ -13,6 +13,10 @@ public class PrefabDatabase : MonoBehaviour{
     public GameObject laserTower;
     private GameObject[] towerPrefabs;
 
+    [Header("Bullets")]
+    public GameObject sniperBullet;
+    public GameObject plasmaBall;
+
     [Header("Panels")]
     public GameObject buildPanel;
     public GameObject upgradePanel;

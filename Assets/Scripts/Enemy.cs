@@ -62,6 +62,7 @@ public class Enemy : MonoBehaviour {
         healthBar.SetPosition(1, healthBar.GetPosition(0) + new Vector3(fill, 0, 0));
     }
 
+
 	void OnTriggerEnter(Collider other){
         if (nextTarget == path.Count - 1 && other.gameObject.tag == "HomeBase"){
 			GameManager.instance.TakeDamage(1);

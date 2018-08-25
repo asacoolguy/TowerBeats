@@ -562,6 +562,7 @@ public class GameManager : MonoBehaviour {
         currentScore += currentMoney;
 
         // play the end game sound and zoom out
+        state = GameState.ResultScreenDisplaying;
         uiManager.ShowGUI(false);
         cameraAnimator.SetTrigger("GameToResult");
         audioSource.PlayOneShot(youWinClip);
@@ -571,7 +572,6 @@ public class GameManager : MonoBehaviour {
         }
 
         // show the game win screen
-        state = GameState.ResultScreenDisplaying;
         StartCoroutine(uiManager.DisplayGameResultScreen(true, true, currentScore));
 
         Time.timeScale = 0;

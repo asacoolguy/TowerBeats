@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class LaserTower : BasicTower {
 	private GameObject launcher;
-	private LineRenderer laser;
-
-	private TowerMusicClips[] soundClips;
-	private float attackDuration;
+    public float plasmaFlyDuration;
+    private TowerMusicClips[] soundClips;
 
 
 	private void Start () {
@@ -16,8 +14,6 @@ public class LaserTower : BasicTower {
         SetupSound();
 
         // set up the laser and launcher
-        laser = transform.Find("LaserBeam").GetComponent<LineRenderer>();;
-		laser.gameObject.SetActive(false);
 		launcher = transform.Find("Launcher").gameObject;
 
         towerType = 3;
@@ -38,52 +34,30 @@ public class LaserTower : BasicTower {
 		}
 
 		// shoot lasers to enemies in the area
-		StartCoroutine(ShootLaser());
+		ShootPlasma();
 	}
 
 
-	// shoots the laser at any enemies in range
-	private IEnumerator ShootLaser(){
-		float t = 0f;
+    private void ShootPlasma() {
+        List<Enemy> enemies = area.enemiesInRange;
+        if (enemies.Count > 0) {
+            // find farthest enemy still alive
+            Enemy target = null;
+            float currentDist = 0;
+            for (int i = 0; i < enemies.Count; i++) {
+                if (enemies[i] != null && enemies[i].health > 0 && enemies[i].IsVulnerable() && enemies[i].GetTravelDist() > currentDist) {
+                    target = enemies[i];
+                    currentDist = enemies[i].GetTravelDist();
+                }
+            }
 
-		while (t < attackDuration){
-			List<Enemy> enemies = area.enemiesInRange;
-			if (enemies.Count > 0){
-				// find farthest enemy still alive
-				Enemy target = null;
-                float currentDist = 0;
-				for (int i = 0; i < enemies.Count; i++){
-					if (enemies[i] != null && enemies[i].health > 0 && enemies[i].IsVulnerable() && enemies[i].GetTravelDist() > currentDist){
-						target = enemies[i];
-                        currentDist = enemies[i].GetTravelDist();
-					}
-				}
-
-				if (target == null){
-					// we didn't find a target, wait .1 seconds
-					t += 0.1f;
-                    laser.gameObject.SetActive(false);
-                    yield return new WaitForSeconds(0.1f);
-				}
-				else{
-					// target found. keep shooting laser at it until it dies
-					laser.gameObject.SetActive(true);
-					if (target != null && enemies.Contains(target) && target.health > 0){
-						laser.SetPosition(0, launcher.transform.position);
-						laser.SetPosition(1, target.transform.position);
-						target.TakeDamage(info.attackPowers[info.currentLevel] * Time.deltaTime);
-
-						//t += Time.deltaTime;
-						//yield return null;
-					}
-					//laser.gameObject.SetActive(false);
-				}
-
-			}
-			t += Time.deltaTime;
-			yield return null;
-		}
-        laser.gameObject.SetActive(false);
+            if (target != null) {
+                Vector3 lookPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                transform.LookAt(lookPos);
+                GameObject plasma = Instantiate(GameManager.instance.prefabDatabase.plasmaBall, launcher.transform.position, Quaternion.identity, this.transform);
+                plasma.GetComponent<PlasmaBall>().SetTarget(target.gameObject, plasmaFlyDuration, info.attackPowers[info.currentLevel]);
+            }
+        }
     }
 
 
@@ -94,8 +68,6 @@ public class LaserTower : BasicTower {
             randomClipIndex = Random.Range(0, musicClips.clips.Length);
         }
         audioSource.clip = musicClips.clips[randomClipIndex];
-        //attackDuration = audioSource.clip.length;
-        attackDuration = 2;
     }
 
 }
