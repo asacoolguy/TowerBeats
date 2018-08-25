@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlasmaTower : BasicTower {
 	private GameObject launcher;
     public float plasmaFlyDuration;
-
+    private float chargeTime, currentChargeTime, targetSize, originalSize;
+    private GameObject plasmaBall;
+    private bool initialBall;
 
 	private void Start () {
         // set up audio clips
@@ -18,11 +20,31 @@ public class PlasmaTower : BasicTower {
         launcher = transform.Find("Launcher").gameObject;
 
         towerType = 3;
-    }
-	
 
-	// plays the designated sound and also does the attack
-	public override void PlaySound(){
+        chargeTime = GameManager.instance.GetScanner().GetRotationTime();
+        plasmaBall = Instantiate(GameManager.instance.prefabDatabase.plasmaBall, launcher.transform.position, Quaternion.identity, this.transform);
+        targetSize = plasmaBall.transform.localScale.x;
+        originalSize = 0.001f;
+        initialBall = true;
+    }
+
+
+    private void Update() {        
+        if (!initialBall && currentChargeTime < chargeTime) {
+            if (plasmaBall == null) {
+                plasmaBall = Instantiate(GameManager.instance.prefabDatabase.plasmaBall, launcher.transform.position, Quaternion.identity, this.transform);
+            }
+
+            currentChargeTime += Time.deltaTime;
+            float t = currentChargeTime / chargeTime;
+            float newSize = Mathf.Lerp(originalSize, targetSize, t);
+            plasmaBall.transform.localScale = new Vector3(newSize, newSize, newSize);
+        }
+    }
+
+
+    // plays the designated sound and also does the attack
+    public override void PlaySound(){
         base.PlaySound();
         audioSource.PlayOneShot(audioSource.clip);
         //anim.SetTrigger("Activate");
@@ -35,11 +57,16 @@ public class PlasmaTower : BasicTower {
 		}
 
 		// shoot lasers to enemies in the area
-		ShootPlasma();
-	}
+		bool attackSuccess = ShootPlasma();
+        if (attackSuccess) {
+            plasmaBall = null;
+            currentChargeTime = 0;
+            initialBall = false;
+        }
+    }
 
 
-    private void ShootPlasma() {
+    private bool ShootPlasma() {
         List<Enemy> enemies = area.enemiesInRange;
         if (enemies.Count > 0) {
             // find farthest enemy still alive
@@ -55,10 +82,12 @@ public class PlasmaTower : BasicTower {
             if (target != null) {
                 Vector3 lookPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
                 transform.LookAt(lookPos);
-                GameObject plasma = Instantiate(GameManager.instance.prefabDatabase.plasmaBall, launcher.transform.position, Quaternion.identity, this.transform);
-                plasma.GetComponent<PlasmaBall>().SetTarget(target.gameObject, plasmaFlyDuration, info.attackPowers[info.currentLevel]);
+                plasmaBall.GetComponent<PlasmaBall>().SetTarget(target.gameObject, plasmaFlyDuration, info.attackPowers[info.currentLevel]);
+                return true;
             }
         }
+
+        return false;
     }
 
 }

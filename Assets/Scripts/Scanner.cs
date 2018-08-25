@@ -175,6 +175,7 @@ public class Scanner : MonoBehaviour {
         return timePerSong;
     }
 
+
 	// stops scanner from rotating in r rotations 
 	public IEnumerator StopScannerRotation(int r){
 		measureTillFinish = r;
