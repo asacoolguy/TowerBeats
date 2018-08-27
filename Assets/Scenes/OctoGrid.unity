@@ -4990,11 +4990,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 539623367}
   m_Mesh: {fileID: 4300000, guid: bd00be580e49e044da3da9476e9291cf, type: 3}
---- !u!1 &556878101 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1974791588842996, guid: 80c65df6bcea1ae47be330daa8f2d2c0,
-    type: 2}
-  m_PrefabInternal: {fileID: 2120258499}
 --- !u!4 &572070543
 Transform:
   m_ObjectHideFlags: 0
@@ -13965,11 +13960,10 @@ MonoBehaviour:
   enemyRegen: {fileID: 1248700073550756, guid: 72ffb22bfb6f8ef41895d7215ba015e9, type: 2}
   enemyHeavy: {fileID: 1752084681505982, guid: 258ae93cc2786b34db5f5187818d26fc, type: 2}
   shockTower: {fileID: 1922785463306400, guid: c29e1d3d490946649a80d47a9512cdc2, type: 2}
-  sniperTower: {fileID: 556878101}
+  laserTower: {fileID: 1974791588842996, guid: 80c65df6bcea1ae47be330daa8f2d2c0, type: 2}
   plasmaTower: {fileID: 1160471332546692, guid: 12039ebe69374484a90f3aec28d4b62d,
     type: 2}
-  sniperBullet: {fileID: 1911099843679222, guid: d930b58b2945cd241860048fe429938d,
-    type: 2}
+  laserBeam: {fileID: 1911099843679222, guid: d930b58b2945cd241860048fe429938d, type: 2}
   plasmaBall: {fileID: 1181701316925182, guid: b4b3ae218d48f6748b20b308ec98ede1, type: 2}
   buildPanel: {fileID: 1281267317294998, guid: 9e5619df726071a4ba45d03fb3c3d8e3, type: 2}
   upgradePanel: {fileID: 1965613610246076, guid: c4b461471f6c0b446b3594f6bd462494,
@@ -14041,7 +14035,7 @@ MonoBehaviour:
         - {fileID: 8300000, guid: 899199521db8c3340b447e4011817814, type: 3}
         - {fileID: 8300000, guid: 48a1c33d40056e447ba1e749544d0770, type: 3}
         - {fileID: 8300000, guid: e32bb165c9200964dac634f7a2e8362e, type: 3}
-      sniperTowerClips:
+      laserTowerClips:
       - clips:
         - {fileID: 8300000, guid: 4c577449dc0fe934185996dc23d2b71b, type: 3}
         - {fileID: 8300000, guid: 7385f238f4244904e8aad7f05ec0b4a4, type: 3}
@@ -14059,7 +14053,7 @@ MonoBehaviour:
       measurePerSong: 04000000040000000400000004000000
     totalWaves: 1
     spawnPatterns:
-    - An1;
+    - An1;w3;An1;
     - Bn1;
     - Ar1;
     - Ah1;An4;Ah3
@@ -21216,10 +21210,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4416848525780112, guid: 80c65df6bcea1ae47be330daa8f2d2c0, type: 2}
       propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1974791588842996, guid: 80c65df6bcea1ae47be330daa8f2d2c0, type: 2}
-      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

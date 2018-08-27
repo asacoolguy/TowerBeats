@@ -674,7 +674,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Slow Charge &\nHigh Area \nDamage"
+  m_Text: 'Basic Attack:
+
+    none
+
+
+    Special Attack:
+
+    plasma ball'
 --- !u!114 &114097620118566316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -707,9 +714,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Long Range &
+  m_Text: 'Basic Attack:
 
-    Endless Barage'
+    laser beam
+
+
+    Special Attack
+
+    laser flurry'
 --- !u!114 &114119836212348874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1105,9 +1117,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Area Attack &
+  m_Text: 'Basic Attack:
 
-    Slows Enemies'
+    slowing aura
+
+
+    Special Attack:
+
+    shockwave '
 --- !u!114 &114784055958644160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1359,7 +1376,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SNIPER
+  m_Text: LASER
 --- !u!114 &114986070914594744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1856,8 +1873,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75, y: 75}
-  m_SizeDelta: {x: 125, y: 125}
+  m_AnchoredPosition: {x: 85, y: 85}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224922803224495248
 RectTransform:
@@ -1875,8 +1892,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75.000015, y: -75}
-  m_SizeDelta: {x: 125, y: 125}
+  m_AnchoredPosition: {x: 85, y: -85}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224980294101638692
 RectTransform:
@@ -1894,6 +1911,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -75, y: 75}
-  m_SizeDelta: {x: 125, y: 125}
+  m_AnchoredPosition: {x: -85, y: 85}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}

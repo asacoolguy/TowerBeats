@@ -9,12 +9,12 @@ public class PrefabDatabase : MonoBehaviour{
 
     [Header("Towers")]
     public GameObject shockTower;
-    public GameObject sniperTower;
+    public GameObject laserTower;
     public GameObject plasmaTower;
     private GameObject[] towerPrefabs;
 
     [Header("Bullets")]
-    public GameObject sniperBullet;
+    public GameObject laserBeam;
     public GameObject plasmaBall;
 
     [Header("Panels")]
@@ -30,7 +30,7 @@ public class PrefabDatabase : MonoBehaviour{
             return shockTower;
         }
         else if (i == 1) {
-            return sniperTower;
+            return laserTower;
         }
         else if (i == 2){
             return plasmaTower;

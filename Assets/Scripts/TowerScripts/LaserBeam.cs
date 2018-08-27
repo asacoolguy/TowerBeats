@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Upon creation, travels towards the target location
 /// </summary>
-public class SniperBullet : MonoBehaviour {
+public class LaserBeam : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

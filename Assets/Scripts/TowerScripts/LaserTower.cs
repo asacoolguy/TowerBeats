@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperTower : BasicTower {
+public class LaserTower : BasicTower {
 	private GameObject launchers;
     public float idleAttackInterval;
     private float idleAttackIntervalCounter;
@@ -14,7 +14,7 @@ public class SniperTower : BasicTower {
 	private void Start () {
         idleAttackIntervalCounter = 0;
         // set up audio clips
-        TowerMusicClips[] allClips = GameManager.instance.GetMusicDatabase().sniperTowerClips;
+        TowerMusicClips[] allClips = GameManager.instance.GetMusicDatabase().laserTowerClips;
         int randomIndex = Random.Range(0, allClips.Length);
         soundClips = allClips[randomIndex];
         audioSource.clip = soundClips.clips[info.currentLevel];
@@ -45,7 +45,7 @@ public class SniperTower : BasicTower {
         //pSystem.Emit(1);
 
         // pause all other towers of this type and sound
-        foreach (SniperTower tower in FindObjectsOfType<SniperTower>()){
+        foreach (LaserTower tower in FindObjectsOfType<LaserTower>()){
 			if (tower != this && tower.audioSource.clip == this.audioSource.clip && tower.audioSource.isPlaying){
 				tower.audioSource.Stop();
 			}
@@ -83,7 +83,7 @@ public class SniperTower : BasicTower {
                 transform.LookAt(lookPos);
 
                 for (int i = 0; i < launchers.transform.childCount; i++) {
-                    GameObject bullet = Instantiate(GameManager.instance.prefabDatabase.sniperBullet, Vector3.zero, Quaternion.identity);
+                    GameObject bullet = Instantiate(GameManager.instance.prefabDatabase.laserBeam, Vector3.zero, Quaternion.identity);
                     LineRenderer line = bullet.GetComponent<LineRenderer>();
                     line.SetPosition(0, launchers.transform.GetChild(i).position);
                     line.SetPosition(1, target.transform.position);
