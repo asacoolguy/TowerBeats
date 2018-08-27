@@ -68,8 +68,23 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void ShowSpawnButton(bool b){
-		spawnButton.gameObject.SetActive(b);
+		spawnButton.SetActive(b);
+
+        if (b) {
+            StartCoroutine(PopSpawnButton(20));
+        }
+        else if (!b && spawnButton.activeSelf){
+            spawnButton.GetComponent<Animator>().SetBool("Popping", false);
+        }
 	}
+
+
+    private IEnumerator PopSpawnButton(float delay) {
+        yield return new WaitForSeconds(delay);
+        if (spawnButton.activeSelf) {
+            spawnButton.GetComponent<Animator>().SetBool("Popping", true);
+        }
+    }
     
 
     public void ShowGUI(bool b, bool devMode = false) {

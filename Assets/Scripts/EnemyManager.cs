@@ -90,7 +90,7 @@ public class EnemyManager : MonoBehaviour {
 
             spawnInstruction = waveSpawnInstructions[waveNum].Split(';');
             instructionIndex = 0;
-            waitCounter = 1; // wait a round before actually spawning
+            waitCounter = (int)GameManager.instance.GetScanner().GetMeasurePerRotation(); // wait a round before actually spawning
         }
     }
 
@@ -130,8 +130,7 @@ public class EnemyManager : MonoBehaviour {
         else{
             // parse the spawnPattern
             // A and B denotes which spawn point
-            // s# = small enemy
-            // l# = large enemy
+            // n# = normal enemy. r = regen enemy. f = fast enemy. h = heavy enemy.
             // w# = wait some amount of rotations
             // so As3,Bs3;w2;Al1,Bs2 means spawn 3 small enemies at A and 3 small enemies at B, 
             // wait 2 rotations, then spawn 1 large enemy at A and 2 small enemies at B
@@ -140,7 +139,7 @@ public class EnemyManager : MonoBehaviour {
                 if (instruction == "") continue;
                 string char1 = instruction.Substring(0, 1);
                 if (char1 == "w") {
-                    waitCounter = int.Parse(instruction.Substring(1, 1));
+                    waitCounter = int.Parse(instruction.Substring(1, 1)) * (int)GameManager.instance.GetScanner().GetMeasurePerRotation();
                 }
                 else{
                     int spawnPointIndex = 0;
@@ -167,6 +166,7 @@ public class EnemyManager : MonoBehaviour {
 
                     int spawnAmount = int.Parse(instruction.Substring(2, 1));
                     StartCoroutine(SpawnEnemies(spawnPointIndex, enemyType, spawnAmount));
+                    waitCounter += (int)GameManager.instance.GetScanner().GetMeasurePerRotation();
                 }
             }
         }

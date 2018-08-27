@@ -5863,7 +5863,7 @@ MonoBehaviour:
   towerPlatformGrid: {fileID: 1848917667}
   currentScore: 0
   totalScore: 0
-  startingMoney: 500
+  startingMoney: 250
   maxHealth: 10
   currentStage: 0
   state: 0
@@ -9532,7 +9532,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Next Wave
+  m_Text: Start Wave
 --- !u!222 &993209993
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14053,10 +14053,10 @@ MonoBehaviour:
       measurePerSong: 04000000040000000400000004000000
     totalWaves: 1
     spawnPatterns:
-    - An1;w3;An1;
-    - Bn1;
-    - Ar1;
-    - Ah1;An4;Ah3
+    - An1;An2;An2;w2;An2;An2;An3;w2;An3;An3;w1;An4;An4;
+    - Af2;w1;Af4;Af4;w2;An3;An4;Af5;w2;An5;Af5;An5;w1;An5;Af5;An5;w3;An4;An4;An4;Af5;An4;An4;An4;Af5;
+    - Ar2;w1;Ar5;Af4;w2;An4;Ar4;Af4;Ar4;w3;An6;Ar6;w1;Ar6;An6;w2;Ar4;Ar4;Af4;Ar4;Ar4;Af4;Ar6;
+    - Ah1;W1;An3;Ar3;Ah3;w2;An5;Ar5;An5;Ar5;w1;Ah3;Ah3;w2;Af5,An5;Af5,Ar5;Af5,Ah5;w1;Ah6;Ah6
     enemyPaths:
     - spawnPosition: {x: -60, y: -75, z: 10}
       enemyPaths:
@@ -14064,6 +14064,9 @@ MonoBehaviour:
       - {x: -30, y: 0, z: 10}
       - {x: -15, y: 0, z: 27.5}
       - {x: 27.5, y: 0, z: 27.5}
+      - {x: 27.5, y: 0, z: 10}
+      - {x: 18, y: 0, z: 0}
+      - {x: 27.5, y: 0, z: -10}
       - {x: 27.5, y: 0, z: -27.5}
       - {x: 10, y: 0, z: -27.5}
       - {x: 10, y: 0, z: -10}
@@ -14073,7 +14076,7 @@ MonoBehaviour:
     - {x: -40, y: 20, z: 0}
     - {x: 0, y: 20, z: 20}
     - {x: 20, y: 20, z: 20}
-    - {x: 37.5, y: 20, z: 0}
+    - {x: 30, y: 20, z: 0}
     - {x: 20, y: 20, z: -20}
     - {x: 0, y: 20, z: -20}
 --- !u!1 &1401351781
@@ -15723,6 +15726,7 @@ GameObject:
   - component: {fileID: 1571265335}
   - component: {fileID: 1571265334}
   - component: {fileID: 1571265333}
+  - component: {fileID: 1571265336}
   m_Layer: 5
   m_Name: Spawn
   m_TagString: Untagged
@@ -15834,6 +15838,24 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1571265331}
+--- !u!95 &1571265336
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1571265331}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 36f5a14aee029624bbd59acd8cfcbf83, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1571521753
 GameObject:
   m_ObjectHideFlags: 0

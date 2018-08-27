@@ -56,7 +56,6 @@ public class LaserTower : BasicTower {
 	}
 
 
-	// shoots 3 bullets towards existing enemies. prefers hitting multiple enemies over hitting a single one
 	private IEnumerator ShootFlurry(){
         for (int j = 0; j < 3; j++) {
             ShootBullet(true);

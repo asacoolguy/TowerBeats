@@ -118,8 +118,8 @@ public class UpgradePanel : MonoBehaviour {
         // upgrade lvl, desc, cost
         if (info.currentLevel < info.maxLevel - 1) {
             buttons[0].transform.Find("Text").GetComponent<Text>().text = "Upgrade\nLvl " + (info.currentLevel + 1);
-            buttons[0].transform.Find("Description").Find("Text").GetComponent<Text>().text = info.descriptions[info.currentLevel];
-            buttons[0].transform.Find("Cost").GetComponent<Text>().text = "" + info.costs[info.currentLevel];
+            buttons[0].transform.Find("Description").Find("Text").GetComponent<Text>().text = info.descriptions[info.currentLevel + 1];
+            buttons[0].transform.Find("Cost").GetComponent<Text>().text = "" + info.costs[info.currentLevel + 1];
         }
         else {
             buttons[0].transform.Find("Text").GetComponent<Text>().text = "Upgrade\nLvl" + (info.currentLevel + 1);
@@ -164,7 +164,7 @@ public class UpgradePanel : MonoBehaviour {
 
     public int GetUpgradeCost() {
         if (tower.info.currentLevel < tower.info.maxLevel - 1) {
-            return tower.info.costs[tower.info.currentLevel];
+            return tower.info.costs[tower.info.currentLevel + 1];
         }
         else {
             return 0;

@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour {
 
         if (devMode) {
             state = GameState.GameScreen;
-            currentMoney = 9999;
+            currentMoney = startingMoney;
 
             // load info for stage 1
             int testStage = 0;
@@ -206,6 +206,10 @@ public class GameManager : MonoBehaviour {
                 towerUpgradePanel.EnableButton(0, currentMoney >= towerUpgradePanel.GetUpgradeCost());
                 towerUpgradePanel.EnableButton(1, true);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F)) {
+            Time.timeScale += 0.5f;
         }
     }
 
@@ -636,6 +640,10 @@ public class GameManager : MonoBehaviour {
         return scanner;
     }
 
+
+    public int GetCurrentWave() {
+        return currentWave;
+    }
 
 	public static float GetAngleFromVector(Vector3 pos) {
 		float angle = 0f;

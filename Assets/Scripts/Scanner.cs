@@ -175,9 +175,14 @@ public class Scanner : MonoBehaviour {
         return timePerSong;
     }
 
+    // returns the number of measures in per rotation
+    public float GetMeasurePerRotation() {
+        return measurePerSong;
+    }
 
-	// stops scanner from rotating in r rotations 
-	public IEnumerator StopScannerRotation(int r){
+
+    // stops scanner from rotating in r rotations 
+    public IEnumerator StopScannerRotation(int r){
 		measureTillFinish = r;
 		while (measureTillFinish > 0){
 			yield return null;

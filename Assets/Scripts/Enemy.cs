@@ -36,6 +36,9 @@ public class Enemy : MonoBehaviour {
         lightning = transform.Find("Lightning").gameObject;
         lightning.SetActive(false);
 
+        moneyDropped += Random.Range(-moneyDropped / 4, moneyDropped / 4);
+        distancePerMove *= (1f + 0.15f * GameManager.instance.GetCurrentWave());
+        initialHealth *= (1f + 0.15f * GameManager.instance.GetCurrentWave());
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
         transform.Find("MoneyText").gameObject.SetActive(false);
 
@@ -114,7 +117,7 @@ public class Enemy : MonoBehaviour {
 
             if (slowCounter > 0) {
                 slowCounter--;
-                slowFactor = 1f / 2f;
+                slowFactor = 2f / 3f;
                 lightning.SetActive(true);
             }
             else {
