@@ -438,7 +438,6 @@ public class GameManager : MonoBehaviour {
             audioSource.clip = levelData.youLoseClip;
             audioSource.Play();
             state = GameState.ResultScreenDisplaying;
-            scanner.SetRotate(false);
             StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
             Time.timeScale = 0;
         }
@@ -588,6 +587,7 @@ public class GameManager : MonoBehaviour {
     private IEnumerator ResetGame() {
         Time.timeScale = 1;
         gameOver = false;
+        scanner.SetRotate(false);
         state = GameState.LevelScreen;
 
         enemyManager.DestroyAllEnemies();
@@ -622,6 +622,12 @@ public class GameManager : MonoBehaviour {
         Application.Quit();
     }
 
+
+    public void ReturnToMenu() {
+        uiManager.ShowGUI(false);
+        uiManager.DisplayPauseScreen(false);        
+        StartCoroutine(ResetGame());
+    }
 
     public MusicDatabase GetMusicDatabase() {
         if (currentStage >= 0) {

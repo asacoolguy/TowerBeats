@@ -71,15 +71,17 @@ public class UIManager : MonoBehaviour {
 		spawnButton.SetActive(b);
 
         if (b) {
+            StopCoroutine(PopSpawnButton());
             StartCoroutine(PopSpawnButton(20));
         }
         else if (!b && spawnButton.activeSelf){
+            StopCoroutine(PopSpawnButton());
             spawnButton.GetComponent<Animator>().SetBool("Popping", false);
         }
 	}
 
 
-    private IEnumerator PopSpawnButton(float delay) {
+    private IEnumerator PopSpawnButton(float delay = 0f) {
         yield return new WaitForSeconds(delay);
         if (spawnButton.activeSelf) {
             spawnButton.GetComponent<Animator>().SetBool("Popping", true);
@@ -92,7 +94,7 @@ public class UIManager : MonoBehaviour {
         statusPanel.gameObject.SetActive(b);
         wavePanel.gameObject.SetActive(b);
 
-        ShowSpawnButton(true);
+        ShowSpawnButton(b);
         //ShowSpawnButton(!devMode);
         waveTestButtons.SetActive(devMode);
     }
@@ -178,6 +180,12 @@ public class UIManager : MonoBehaviour {
 			}
 		}
 	}
+
+
+    public void DisplayPauseScreen(bool b) {
+        paused = b;
+        pauseScreen.SetActive(b);
+    }
 
 	public void PlayButtonPressSound(){
 		GetComponent<AudioSource>().PlayOneShot(buttonPress);
