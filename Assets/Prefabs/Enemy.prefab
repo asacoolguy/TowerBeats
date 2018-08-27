@@ -387,11 +387,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   healthDisplayFactor: 1
-  distancePerMove: 20
+  distancePerMove: 12
   distancePerMoveOnSpawn: 80
-  moveDuration: 0.7
+  moveDuration: 0.4
   pointVal: 10
-  moneyDropped: 6
+  moneyDropped: 10
   regenerate: 0
   regenerateStartDelay: 0
   regenerateMeasure: 0

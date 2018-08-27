@@ -5869,7 +5869,7 @@ MonoBehaviour:
   towerPlatformGrid: {fileID: 1848917667}
   currentScore: 0
   totalScore: 0
-  startingMoney: 250
+  startingMoney: 200
   maxHealth: 10
   currentStage: 0
   state: 0
@@ -14056,13 +14056,13 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 0ea66019d19a9634e80d57383224c704, type: 3}
       - {fileID: 8300000, guid: 5bbcff9ebe2c29b42b7239d4d24dc8cf, type: 3}
       - {fileID: 8300000, guid: 620998d2468e95743a0a51b4a2e8a420, type: 3}
-      measurePerSong: 04000000040000000400000004000000
+      measurePerSong: 08000000080000000800000008000000
     totalWaves: 1
     spawnPatterns:
     - An1;An2;An2;w2;An2;An2;An3;w2;An3;An3;w1;An4;An4;
-    - Af2;w1;Af3;Af3;w1;An4;An4;Af3;w2;An5;Af4;An5;w1;w2;Ar2;w1;An4;Ar2;w1;An6;Ar3;An6;w1;Af3;Af3;Ar3;An6;Ar3;Af3;
-    - Ar2;An3;Af3;w2;An6;Af4;Ar3;Ar3;w2;An6;Ar4;Af4;Ar4;w3;Ar3;Ar3;w1;Ar4;Af4;Ar4;w2;Ar4;Af4;Ar4;Ar5;Af5;Ar5;
-    - Ah1;W1;An4;Ar4;Ah2;w2;An5;Ar5;An5;Ar5;w1;Ah2;Ah2;w2;Af4;An5;Af4;Ar5;Ah3;w2;Ah1;Ah3;Ar5;Ah3;Ar5;Ah3;Ar5;;Ar5;Ar5;Ah4;
+    - Af2;w1;An4;Af3;w1;An4;Af4;An4;Af4;w2;An3,Af3;An4,Af4;An4,Af4;An4,Af4;An5,Af5;
+    - Ar1;Ar2;w1;An3,Ar2;An3,Ar2;w2;Af3,Ar4;Af6,Ar4;w1;Ar4;Ar4;Ar4,Af4;An4,Ar4;
+    - Ah1;w1;Ar4;Ar4;Ah2;w1;An5,Ar5;An5,Ar5;Ar5,Ah3;w1;Af5,Ar4;An5,Ar4;Af5;Ah3;Ah3;
     enemyPaths:
     - spawnPosition: {x: -70, y: -75, z: 10}
       enemyPaths:
@@ -14080,8 +14080,9 @@ MonoBehaviour:
     platformData:
     - {x: -35, y: 20, z: 19.5}
     - {x: -40, y: 20, z: 0}
-    - {x: 0, y: 20, z: 20}
+    - {x: 0, y: 20, z: 35}
     - {x: 20, y: 20, z: 20}
+    - {x: 37.5, y: 20, z: 20.9}
     - {x: 30, y: 20, z: 0}
     - {x: 20, y: 20, z: -20}
     - {x: 0, y: 20, z: -20}

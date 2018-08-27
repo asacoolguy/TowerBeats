@@ -211,6 +211,9 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F)) {
             Time.timeScale += 0.5f;
         }
+        else if (Input.GetKeyDown(KeyCode.V)) {
+            Time.timeScale -= 0.5f;
+        }
     }
 
     private void LateUpdate() {

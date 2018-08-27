@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour {
 
             if (slowCounter > 0) {
                 slowCounter--;
-                slowFactor = 0.5f;
+                slowFactor = 0.65f;
                 lightning.SetActive(true);
             }
             else {

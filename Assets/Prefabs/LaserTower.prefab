@@ -1666,9 +1666,9 @@ MonoBehaviour:
       Damage'
     costs: 4b0000008c000000e6000000
     attackPowers:
-    - 0.3
-    - 0.6
-    - 0.9
+    - 0.45
+    - 0.7
+    - 1
     attackRanges:
     - 0.25
     - 0.285
@@ -1678,8 +1678,8 @@ MonoBehaviour:
   lightBoostTime: 0.5
   lightMinIntensity: 0.5
   lightMaxIntensity: 1.5
-  idleAttackInterval: 1
-  bulletFadeTime: 0.6
+  idleAttackInterval: 1.8
+  bulletFadeTime: 0.3
 --- !u!114 &114869840043175348
 MonoBehaviour:
   m_ObjectHideFlags: 1

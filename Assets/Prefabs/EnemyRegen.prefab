@@ -348,13 +348,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59eaa8f6564408441856cce705803bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 25
+  health: 30
   healthDisplayFactor: 0.4
-  distancePerMove: 20
+  distancePerMove: 12
   distancePerMoveOnSpawn: 80
-  moveDuration: 0.7
+  moveDuration: 0.4
   pointVal: 20
-  moneyDropped: 10
+  moneyDropped: 14
   regenerate: 1
   regenerateStartDelay: 4
   regenerateMeasure: 12
