@@ -5869,10 +5869,10 @@ MonoBehaviour:
   currentScore: 0
   totalScore: 0
   startingMoney: 250
-  maxHealth: 1
+  maxHealth: 10
   currentStage: 0
   state: 0
-  devMode: 1
+  devMode: 0
 --- !u!1 &643208838
 GameObject:
   m_ObjectHideFlags: 0
@@ -14059,13 +14059,13 @@ MonoBehaviour:
     totalWaves: 1
     spawnPatterns:
     - An1;An2;An2;w2;An2;An2;An3;w2;An3;An3;w1;An4;An4;
-    - Af2;w1;Af3;Af3;w1;An4;An4;Af3;w2;An6;Af4;An6;w1;w2;Ar2;w1;An4;Ar4;w1;An6;Ar6;An6;w1;Af3;Af3;Ar6;An8;Ar8;Af4;
-    - Ar2;w1;Ar5;Af4;w2;An4;Ar4;Af4;Ar4;w3;An6;Ar6;w1;Ar6;An6;w2;Ar4;Ar4;Af4;Ar4;Ar4;Af4;Ar6;
-    - Ah1;W1;An3;Ar3;Ah3;w2;An5;Ar5;An5;Ar5;w1;Ah3;Ah3;w2;Af5,An5;Af5,Ar5;Af5,Ah5;w1;Ah6;Ah6
+    - Af2;w1;Af3;Af3;w1;An4;An4;Af3;w2;An5;Af4;An5;w1;w2;Ar2;w1;An4;Ar2;w1;An6;Ar3;An6;w1;Af3;Af3;Ar3;An6;Ar3;Af3;
+    - Ar2;An3;Af3;w2;An6;Af4;Ar3;Ar3;w2;An6;Ar4;Af4;Ar4;w3;Ar3;Ar3;w1;Ar4;Af4;Ar4;w2;Ar4;Af4;Ar4;Ar5;Af5;Ar5;
+    - Ah1;W1;An4;Ar4;Ah2;w2;An5;Ar5;An5;Ar5;w1;Ah2;Ah2;w2;Af4;An5;Af4;Ar5;Ah3;w2;Ah1;Ah3;Ar5;Ah3;Ar5;Ah3;Ar5;;Ar5;Ar5;Ah4;
     enemyPaths:
-    - spawnPosition: {x: -80, y: -75, z: 10}
+    - spawnPosition: {x: -70, y: -75, z: 10}
       enemyPaths:
-      - {x: -80, y: 0, z: 10}
+      - {x: -70, y: 0, z: 10}
       - {x: -30, y: 0, z: 10}
       - {x: -15, y: 0, z: 27.5}
       - {x: 27.5, y: 0, z: 27.5}

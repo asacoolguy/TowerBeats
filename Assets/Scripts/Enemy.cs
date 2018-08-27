@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour {
         lightning = transform.Find("Lightning").gameObject;
         lightning.SetActive(false);
 
-        moneyDropped += Random.Range(-moneyDropped / 4, moneyDropped / 4);
+        moneyDropped += Random.Range(-moneyDropped / 4, 2);
         distancePerMove *= (1f + 0.15f * GameManager.instance.GetCurrentWave());
         initialHealth *= (1f + 0.15f * GameManager.instance.GetCurrentWave());
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-        healthBar.SetPosition(0, transform.position + new Vector3(-initialHealth / 4f, 0f, 4f));
+        healthBar.SetPosition(0, transform.position + new Vector3(-initialHealth * healthDisplayFactor / 4f, 0f, 4f));
         float fill = Mathf.Max(0f, health * healthDisplayFactor / 2);
         healthBar.SetPosition(1, healthBar.GetPosition(0) + new Vector3(fill, 0, 0));
     }
