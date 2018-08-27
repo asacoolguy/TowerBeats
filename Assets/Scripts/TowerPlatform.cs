@@ -215,7 +215,7 @@ public class TowerPlatform : MonoBehaviour {
 
 
     public IEnumerator FallOff() {
-        SetColor(Color.gray);
+        float startingV = currentHSVColor.z;
 
         Vector2 r = Random.insideUnitCircle;
         Vector3 randomAxis = new Vector3(r.x, 0, r.y);
@@ -226,6 +226,9 @@ public class TowerPlatform : MonoBehaviour {
             t += Time.deltaTime;
             transform.position = initialPos + speed * t * t * t;
             transform.rotation *= Quaternion.AngleAxis(20 * Time.deltaTime, randomAxis);
+
+            float newV = Mathf.Lerp(startingV, 0, t / 3);
+            mat.SetColor("_EmissionColor", Color.HSVToRGB(currentHSVColor.x, currentHSVColor.y, newV));
             yield return null;
         }
 

@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afcc4a957bb59dd48935bfab6eb966a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raisedYPos: 20
+  raisedYPos: 25
   moveTime: 0.15
   builtColor: {r: 0, g: 3.451675, b: 4.547149, a: 1}
   raisedTexStr: 10

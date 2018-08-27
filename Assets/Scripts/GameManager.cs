@@ -43,10 +43,7 @@ public class GameManager : MonoBehaviour {
 	private int currentMoney, maxWave, currentWave, currentHealth;
     public int currentStage;
     private bool gameOver = false;
-
-    // Audio clips used for the game
-	private AudioClip youWinClip, youLoseClip, gameStartClip, wooshClip;
-
+    
 
     public enum GameState { SplashScreenDisplaying, SplashScreen, LevelScreen, GameScreen, PauseScreen, ResultScreenDisplaying, ResultScreen};
     public GameState state;
@@ -63,12 +60,7 @@ public class GameManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
         }
 
-        // set up music clips
         levelData = GetComponent<LevelDatabase>();
-        youWinClip = levelData.youWinClip;
-        youLoseClip = levelData.youLoseClip;
-        gameStartClip = levelData.gameStartClip;
-        wooshClip = levelData.wooshClip;
     }
 
     private void Start () {
@@ -439,7 +431,7 @@ public class GameManager : MonoBehaviour {
                 a.Stop();
             }
 
-            audioSource.clip = youLoseClip;
+            audioSource.clip = levelData.youLoseClip;
             audioSource.Play();
             state = GameState.ResultScreenDisplaying;
             StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
@@ -515,14 +507,14 @@ public class GameManager : MonoBehaviour {
     private IEnumerator StartGame() {
         // play the game starting sound
         menuAudioSource.Stop();
-        audioSource.PlayOneShot(gameStartClip);
-        yield return new WaitForSeconds(gameStartClip.length + 1);
+        audioSource.PlayOneShot(levelData.gameStartClip);
+        yield return new WaitForSeconds(levelData.gameStartClip.length + 1);
 
         // pull the camera up
-        audioSource.PlayOneShot(wooshClip);
+        audioSource.PlayOneShot(levelData.wooshClip);
         cameraAnimator.SetTrigger("LevelToGame");
         levelSelector.ShowLevelSelection(false);
-        yield return new WaitForSeconds(wooshClip.length + 1);
+        yield return new WaitForSeconds(levelData.wooshClip.length + 1);
 
         // fly the panels in and show the GUI
         float flyInDuration = 1f;
@@ -565,7 +557,7 @@ public class GameManager : MonoBehaviour {
         state = GameState.ResultScreenDisplaying;
         uiManager.ShowGUI(false);
         cameraAnimator.SetTrigger("GameToResult");
-        audioSource.PlayOneShot(youWinClip);
+        audioSource.PlayOneShot(levelData.youWinClip);
 
         while (audioSource.isPlaying) {
             yield return null;
@@ -595,10 +587,13 @@ public class GameManager : MonoBehaviour {
 
         // make all octagons fall and lower the central tower
         centralTowerAnimator.SetTrigger("Lower");
+        audioSource.volume = 0.6f;
+        audioSource.PlayOneShot(levelData.powerdownClip);
         foreach (TowerPlatform oct in FindObjectsOfType<TowerPlatform>()) {
             StartCoroutine(oct.FallOff());
         }
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.8f);
+        audioSource.volume = 1;
 
         uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
         cameraAnimator.SetTrigger("ResultToLevel");
@@ -609,9 +604,10 @@ public class GameManager : MonoBehaviour {
         scanner.DestroyAllTowers();
         enemyPath.Reset();
         enemyPath.ToggleAllPaths(false);
-        //for (int i = towerPlatformGrid.transform.childCount - 1; i >= 0; i--){
-        //    Destroy(towerPlatformGrid.transform.GetChild(i).gameObject);
-        //}
+
+        // wait for the camera to go back to level and play the main theme
+        yield return new WaitForSeconds(2.6f);
+        menuAudioSource.Play();
     }
 
 

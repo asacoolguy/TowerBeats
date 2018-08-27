@@ -3956,8 +3956,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -102.5}
+  m_SizeDelta: {x: 0, y: -205}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &412760281
 MonoBehaviour:
@@ -4378,8 +4378,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -80}
-  m_SizeDelta: {x: 0, y: -160}
+  m_AnchoredPosition: {x: 0, y: -130}
+  m_SizeDelta: {x: 0, y: -260}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &467245043
 MonoBehaviour:
@@ -5868,7 +5868,7 @@ MonoBehaviour:
   towerPlatformGrid: {fileID: 1848917667}
   currentScore: 0
   totalScore: 0
-  startingMoney: 200
+  startingMoney: 500
   maxHealth: 10
   currentStage: 0
   state: 0
@@ -12121,8 +12121,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 0, y: -260}
+  m_AnchoredPosition: {x: 0, y: 100}
+  m_SizeDelta: {x: 0, y: -160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1247316959
 MonoBehaviour:
@@ -14026,6 +14026,7 @@ MonoBehaviour:
   displayBoxClip: {fileID: 8300000, guid: 3e51f7414c281d94d90c99cf0d1fbb65, type: 3}
   gameStartClip: {fileID: 8300000, guid: 545d2a426203bdd409bf485327e0e581, type: 3}
   wooshClip: {fileID: 8300000, guid: 22fdfe4935769fd4a8c4ec4ac9b14dce, type: 3}
+  powerdownClip: {fileID: 8300000, guid: e9ba7fb7a70700541a806895c95d45bd, type: 3}
   enemyDeathClips:
   - {fileID: 8300000, guid: 425fa1ccc972cf64eac3c555ece56e02, type: 3}
   - {fileID: 8300000, guid: 58b8c04c73542194e9b49e7c1f38edbe, type: 3}
@@ -14047,9 +14048,9 @@ MonoBehaviour:
         - {fileID: 8300000, guid: 3e6d8b23f8d1c394abbcd64a0f5d8349, type: 3}
       plasmaTowerClips:
       - clips:
-        - {fileID: 8300000, guid: d29f4b83be2b7a745b86bb07b50bd64e, type: 3}
-        - {fileID: 8300000, guid: d275a4d39a7d3f147a65ef2b2ea6ef49, type: 3}
-        - {fileID: 8300000, guid: f79a8db1028199e40b91e83a180bf343, type: 3}
+        - {fileID: 8300000, guid: dc7b53db2f4c049418ae15f349d6e7dd, type: 3}
+        - {fileID: 8300000, guid: 639d611e7f52e1c4784dd4f64cfa9dde, type: 3}
+        - {fileID: 8300000, guid: de115a1e5949ff74197d1c907842fe73, type: 3}
       scannerClips:
       - {fileID: 8300000, guid: 7af6df5fc8ba58f49a1482e5c30803b5, type: 3}
       - {fileID: 8300000, guid: 0ea66019d19a9634e80d57383224c704, type: 3}
@@ -14058,31 +14059,29 @@ MonoBehaviour:
       measurePerSong: 04000000040000000400000004000000
     totalWaves: 1
     spawnPatterns:
-    - An2;An2;An2;An2;An2;
-    - Af1;
+    - An1;
+    - Bn1;
     - Ar1;
-    - Ah1;
+    - Ah1;An4;Ah3
     enemyPaths:
-    - spawnPosition: {x: -60, y: -10, z: 10}
+    - spawnPosition: {x: -60, y: -75, z: 10}
       enemyPaths:
       - {x: -60, y: 0, z: 10}
-      - {x: -10, y: 0, z: 10}
-      - {x: -10, y: 0, z: 30}
-      - {x: 30, y: 0, z: 30}
-      - {x: 30, y: 0, z: 10}
-      - {x: 10, y: 0, z: 10}
+      - {x: -30, y: 0, z: 10}
+      - {x: -15, y: 0, z: 27.5}
+      - {x: 27.5, y: 0, z: 27.5}
+      - {x: 27.5, y: 0, z: -27.5}
+      - {x: 10, y: 0, z: -27.5}
+      - {x: 10, y: 0, z: -10}
       - {x: 0, y: 0, z: 0}
     platformData:
-    - {x: -40, y: 15, z: 0}
-    - {x: -20, y: 15, z: 20}
-    - {x: 0, y: 15, z: 15}
-    - {x: 20, y: 15, z: 20}
-    - {x: 40, y: 15, z: 14.15}
-    - {x: 15, y: 15, z: 0}
-    - {x: 20, y: 15, z: -15}
-    - {x: 0, y: 15, z: -20}
-    - {x: 0, y: 15, z: -40}
-    - {x: 14.15, y: 15, z: -40}
+    - {x: -35, y: 20, z: 19.5}
+    - {x: -40, y: 20, z: 0}
+    - {x: 0, y: 20, z: 20}
+    - {x: 20, y: 20, z: 20}
+    - {x: 37.5, y: 20, z: 0}
+    - {x: 20, y: 20, z: -20}
+    - {x: 0, y: 20, z: -20}
 --- !u!1 &1401351781
 GameObject:
   m_ObjectHideFlags: 0

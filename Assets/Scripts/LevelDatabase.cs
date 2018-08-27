@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LevelDatabase : MonoBehaviour{
     // general sound effects
-    public AudioClip youWinClip, youLoseClip, displayBoxClip, gameStartClip, wooshClip;
+    public AudioClip youWinClip, youLoseClip, displayBoxClip, gameStartClip, wooshClip, powerdownClip;
     public AudioClip[] enemyDeathClips;
     public LevelData[] levelData;
 }
