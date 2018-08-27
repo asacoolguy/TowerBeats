@@ -92,6 +92,9 @@ public class EnemyManager : MonoBehaviour {
             instructionIndex = 0;
             waitCounter = (int)GameManager.instance.GetScanner().GetMeasurePerRotation(); // wait a round before actually spawning
         }
+        else {
+            isSpawning = false;
+        }
     }
 
 
@@ -112,9 +115,9 @@ public class EnemyManager : MonoBehaviour {
         }
 
         // turn on the paths we're using
-        //for (int i = 0; i < pathsUsed; i++) {
-        //    enemyPath.TogglePath(i, true);
-        //}
+        for (int i = 0; i < pathsUsed; i++) {
+            enemyPath.TogglePath(i, true);
+        }
 
         // if we've read all instructions, then we are done spawning.
         if (instructionIndex >= spawnInstruction.Length) {
@@ -223,5 +226,8 @@ public class EnemyManager : MonoBehaviour {
 		for (int i = 0; i < allEnemies.Count; i++) {
 			Destroy(allEnemies[i]);
 		}
+
+        ClearEnemyList();
+        isSpawning = false;
 	}
 }

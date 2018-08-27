@@ -438,6 +438,7 @@ public class GameManager : MonoBehaviour {
             audioSource.clip = levelData.youLoseClip;
             audioSource.Play();
             state = GameState.ResultScreenDisplaying;
+            scanner.SetRotate(false);
             StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
             Time.timeScale = 0;
         }
@@ -589,6 +590,7 @@ public class GameManager : MonoBehaviour {
         gameOver = false;
         state = GameState.LevelScreen;
 
+        enemyManager.DestroyAllEnemies();
         // make all octagons fall and lower the central tower
         centralTowerAnimator.SetTrigger("Lower");
         audioSource.volume = 0.6f;

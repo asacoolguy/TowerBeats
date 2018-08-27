@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
     private EnemyManager enemyManager;
     private GameObject lightning;
 
-	public float health;
+	public float health, healthDisplayFactor;
     private float initialHealth;
 	public float distancePerMove, distancePerMoveOnSpawn;
 	public float moveDuration;
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
         }
 
         healthBar.SetPosition(0, transform.position + new Vector3(-initialHealth / 4f, 0f, 4f));
-        float fill = Mathf.Max(0f, health / 2f);
+        float fill = Mathf.Max(0f, health * healthDisplayFactor / 2);
         healthBar.SetPosition(1, healthBar.GetPosition(0) + new Vector3(fill, 0, 0));
     }
 
@@ -99,6 +99,9 @@ public class Enemy : MonoBehaviour {
         }
         else {
             angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
+            if (Mathf.Sign(dir.x) != Mathf.Sign(dir.z)) {
+                angle += 180f;
+            }
         }
         
         transform.eulerAngles = new Vector3(0, angle, 0);
@@ -117,7 +120,7 @@ public class Enemy : MonoBehaviour {
 
             if (slowCounter > 0) {
                 slowCounter--;
-                slowFactor = 2f / 3f;
+                slowFactor = 0.5f;
                 lightning.SetActive(true);
             }
             else {

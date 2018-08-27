@@ -348,8 +348,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59eaa8f6564408441856cce705803bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 12
-  distancePerMove: 26
+  health: 25
+  healthDisplayFactor: 0.25
+  distancePerMove: 25
   distancePerMoveOnSpawn: 80
   moveDuration: 0.7
   pointVal: 20

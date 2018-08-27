@@ -86,7 +86,7 @@ public class LaserTower : BasicTower {
                     LineRenderer line = bullet.GetComponent<LineRenderer>();
                     line.SetPosition(0, launchers.transform.GetChild(i).position);
                     line.SetPosition(1, target.transform.position);
-                    target.TakeDamage(info.attackPowers[info.currentLevel] * (powered ? 1.5f : 1));
+                    target.TakeDamage(info.attackPowers[info.currentLevel] * (powered ? 1.3f : 1));
                 }
                 return true;
             }

@@ -5595,6 +5595,11 @@ Prefab:
       propertyPath: volumeLayer.m_Bits
       value: 2098176
       objectReference: {fileID: 0}
+    - target: {fileID: 95140069817535106, guid: fee68e2386665924ba7d8a60124ed3f4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114951675172109134, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
@@ -5864,7 +5869,7 @@ MonoBehaviour:
   currentScore: 0
   totalScore: 0
   startingMoney: 250
-  maxHealth: 10
+  maxHealth: 1
   currentStage: 0
   state: 0
   devMode: 1
@@ -7175,7 +7180,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 0
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.77293205, g: 0, b: 1, a: 1}
   m_Intensity: 3
   m_Range: 120
   m_SpotAngle: 20
@@ -14054,13 +14059,13 @@ MonoBehaviour:
     totalWaves: 1
     spawnPatterns:
     - An1;An2;An2;w2;An2;An2;An3;w2;An3;An3;w1;An4;An4;
-    - Af2;w1;Af4;Af4;w2;An3;An4;Af5;w2;An5;Af5;An5;w1;An5;Af5;An5;w3;An4;An4;An4;Af5;An4;An4;An4;Af5;
+    - Af2;w1;Af3;Af3;w1;An4;An4;Af3;w2;An6;Af4;An6;w1;w2;Ar2;w1;An4;Ar4;w1;An6;Ar6;An6;w1;Af3;Af3;Ar6;An8;Ar8;Af4;
     - Ar2;w1;Ar5;Af4;w2;An4;Ar4;Af4;Ar4;w3;An6;Ar6;w1;Ar6;An6;w2;Ar4;Ar4;Af4;Ar4;Ar4;Af4;Ar6;
     - Ah1;W1;An3;Ar3;Ah3;w2;An5;Ar5;An5;Ar5;w1;Ah3;Ah3;w2;Af5,An5;Af5,Ar5;Af5,Ah5;w1;Ah6;Ah6
     enemyPaths:
-    - spawnPosition: {x: -60, y: -75, z: 10}
+    - spawnPosition: {x: -80, y: -75, z: 10}
       enemyPaths:
-      - {x: -60, y: 0, z: 10}
+      - {x: -80, y: 0, z: 10}
       - {x: -30, y: 0, z: 10}
       - {x: -15, y: 0, z: 27.5}
       - {x: 27.5, y: 0, z: 27.5}
