@@ -558,8 +558,9 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
 
-        // add remaining money to score
+        // add remaining money and health to score
         currentScore += currentMoney;
+        currentScore *= 1f + currentHealth / 10;
 
         // play the end game sound and zoom out
         state = GameState.ResultScreenDisplaying;

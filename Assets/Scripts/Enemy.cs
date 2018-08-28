@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
     private EnemyManager enemyManager;
     private GameObject lightning;
 
-	public float health, healthDisplayFactor;
+	public float health, healthDisplayFactor, healthBonusFactor;
     private float initialHealth;
 	public float distancePerMove, distancePerMoveOnSpawn;
 	public float moveDuration;
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour {
 
         moneyDropped += Random.Range(-moneyDropped / 4, 2);
         distancePerMove *= (1f + 0.15f * GameManager.instance.GetCurrentWave());
-        initialHealth *= (1f + 0.15f * GameManager.instance.GetCurrentWave());
+        initialHealth *= (1f + healthBonusFactor * GameManager.instance.GetCurrentWave());
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
         transform.Find("MoneyText").gameObject.SetActive(false);
 

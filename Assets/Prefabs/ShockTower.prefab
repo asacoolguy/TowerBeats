@@ -1310,11 +1310,11 @@ MonoBehaviour:
       Range and
 
       Damage'
-    costs: 5a000000a0000000f0000000
+    costs: 5a0000008c000000c8000000
     attackPowers:
     - 1
-    - 1.4
-    - 1.9
+    - 2
+    - 3
     attackRanges:
     - 0.25
     - 0.3

@@ -333,6 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 4
   healthDisplayFactor: 1
+  healthBonusFactor: 0.4
   distancePerMove: 22
   distancePerMoveOnSpawn: 80
   moveDuration: 0.4
