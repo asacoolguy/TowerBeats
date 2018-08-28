@@ -14054,10 +14054,10 @@ MonoBehaviour:
       measurePerSong: 08000000080000000800000008000000
     totalWaves: 1
     spawnPatterns:
-    - An1;An1;An2;w2;An2;An3;w2;An3;An4;w1;An4;An5;
-    - Af2;Af3;Af4;w1;An4;Af4;An4;w2;An4,Af6;An4,Af6;An6,Af8;
-    - Ar1;Ar2;w1;Af6,Ar2;An6,Ar2;w2;An6;Ar2;w1;An6,Ar3;Af8,Ar3;
-    - Ah1;w1;Ar4;Ar4;Ah2;w1;An5,Ar5;An5,Ar5;Ar5,Ah3;w1;Af5,Ar4;An5,Ar4;Af5;Ah3;Ah3;
+    - An1;An1;An2;w2;An2;An3;w2;An3;An3;An4;
+    - Af2;Af2;Af4;w1;An4;Af4;An4;w2;An6,Af6;An8;Af6;
+    - Ar1;Ar3;w1;An6,Ar2;Af6,Ar2;w2;An6;Ar2;An6,Ar3;Af8,Ar3;
+    - Ah1;w1;Ar3,Af5;An4,Ar3;Ah2;w2;Ar4;Ar4;Ah2;Af8,Ar4;Ah2;Ah3;
     enemyPaths:
     - spawnPosition: {x: -70, y: -75, z: 10}
       enemyPaths:

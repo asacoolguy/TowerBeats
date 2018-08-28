@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
     private EnemyManager enemyManager;
     private GameObject lightning;
 
-	public float health, healthDisplayFactor, healthBonusFactor;
+	public float health, healthDisplayFactor, healthBonusFactor, slowFactor;
     private float initialHealth;
 	public float distancePerMove, distancePerMoveOnSpawn;
 	public float moveDuration;
@@ -112,7 +112,7 @@ public class Enemy : MonoBehaviour {
         if (nextTarget < path.Count && GetComponent<MeshRenderer>().enabled) {
             float currentDuration = 0f;
             Vector3 targetLocation = path[nextTarget];
-            float slowFactor = 1;
+            float slowFactor = this.slowFactor;
 
             if (regenerate && currentRegenerateDelay > 0) {
                 currentRegenerateDelay--;
@@ -120,7 +120,6 @@ public class Enemy : MonoBehaviour {
 
             if (slowCounter > 0) {
                 slowCounter--;
-                slowFactor = 0.65f;
                 lightning.SetActive(true);
             }
             else {

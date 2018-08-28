@@ -388,6 +388,7 @@ MonoBehaviour:
   health: 60
   healthDisplayFactor: 0.25
   healthBonusFactor: 0
+  slowFactor: 0.6
   distancePerMove: 12
   distancePerMoveOnSpawn: 80
   moveDuration: 0.8
