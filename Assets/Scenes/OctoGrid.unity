@@ -4220,7 +4220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &453485012
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14059,7 +14059,7 @@ MonoBehaviour:
       measurePerSong: 08000000080000000800000008000000
     totalWaves: 1
     spawnPatterns:
-    - An1;An2;An2;w2;An2;An2;An3;w2;An3;An3;w1;An4;An4;
+    - af2;af2
     - Af2;w1;An4;Af3;w1;An4;Af4;An4;Af4;w2;An3,Af3;An4,Af4;An4,Af4;An4,Af4;An5,Af5;
     - Ar1;Ar2;w1;An3,Ar2;An3,Ar2;w2;Af3,Ar4;Af6,Ar4;w1;Ar4;Ar4;Ar4,Af4;An4,Ar4;
     - Ah1;w1;Ar4;Ar4;Ah2;w1;An5,Ar5;An5,Ar5;Ar5,Ah3;w1;Af5,Ar4;An5,Ar4;Af5;Ah3;Ah3;

@@ -335,7 +335,7 @@ MonoBehaviour:
   healthDisplayFactor: 1
   distancePerMove: 22
   distancePerMoveOnSpawn: 80
-  moveDuration: 0.2
+  moveDuration: 0.4
   pointVal: 10
   moneyDropped: 10
   regenerate: 0

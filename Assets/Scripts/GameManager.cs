@@ -431,6 +431,7 @@ public class GameManager : MonoBehaviour {
         uiManager.UpdateHealth(currentHealth, maxHealth);
         homeBase.GetComponent<AudioSource>().Play();
         homeBase.GetComponent<Animator>().SetTrigger("TakeDamage");
+        centralTowerAnimator.SetTrigger("TakeDamage");
 
         if (currentHealth <= 0) {
             // game over!
