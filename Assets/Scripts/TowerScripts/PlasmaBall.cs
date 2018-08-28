@@ -59,10 +59,31 @@ public class PlasmaBall : MonoBehaviour {
         moving = false;
         GetComponent<MeshRenderer>().enabled = false;
 
-        // damage enemies in area
+        // damage target and splash damage enemies in area
+        Enemy mainEnemy = null;
+        if (target == null) {
+            float minDist = float.PositiveInfinity;
+            foreach (Enemy e in area.enemiesInRange) {
+                if (e != null && e.IsVulnerable()) {
+                    float tempDist = (e.transform.position - transform.position).magnitude;
+                    if (tempDist < minDist) {
+                        minDist = tempDist;
+                        mainEnemy = e;
+                    }
+                }
+            }
+        }
+        else {
+            mainEnemy = target.GetComponent<Enemy>();
+        }
+
+        if (mainEnemy != null && mainEnemy.IsVulnerable()) {
+            mainEnemy.TakeDamage(attackPower);
+        }
+        
         foreach (Enemy e in area.enemiesInRange) {
-            if (e != null && e.IsVulnerable()) {
-                e.TakeDamage(attackPower);
+            if (e != null && e!= mainEnemy && e.IsVulnerable()) {
+                e.TakeDamage(attackPower / 3);
             }
         }
 

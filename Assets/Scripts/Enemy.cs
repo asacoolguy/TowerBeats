@@ -31,14 +31,14 @@ public class Enemy : MonoBehaviour {
 	private void Awake () {
 		anim = GetComponent<Animator>();
         healthBar = transform.Find("HealthBar").GetComponent<LineRenderer>();
-        initialHealth = health;
 
         lightning = transform.Find("Lightning").gameObject;
         lightning.SetActive(false);
 
         moneyDropped += Random.Range(-moneyDropped / 4, 2);
         distancePerMove *= (1f + 0.15f * GameManager.instance.GetCurrentWave());
-        initialHealth *= (1f + healthBonusFactor * GameManager.instance.GetCurrentWave());
+        health *= (1f + healthBonusFactor * GameManager.instance.GetCurrentWave());
+        initialHealth = health;
         transform.Find("MoneyText").GetComponentInChildren<Text>().text = "+" + moneyDropped;
         transform.Find("MoneyText").gameObject.SetActive(false);
 
@@ -112,7 +112,6 @@ public class Enemy : MonoBehaviour {
         if (nextTarget < path.Count && GetComponent<MeshRenderer>().enabled) {
             float currentDuration = 0f;
             Vector3 targetLocation = path[nextTarget];
-            float slowFactor = this.slowFactor;
 
             if (regenerate && currentRegenerateDelay > 0) {
                 currentRegenerateDelay--;
@@ -128,7 +127,7 @@ public class Enemy : MonoBehaviour {
             
             while (currentDuration <= moveDuration) {
                 float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
-                float moveSpeed = (nextTarget == 0 ? distancePerMoveOnSpawn : distancePerMove) / moveDuration * slowFactor;
+                float moveSpeed = (nextTarget == 0 ? distancePerMoveOnSpawn : distancePerMove) / moveDuration * (slowCounter > 0 ?  slowFactor : 1);
                 float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
                 Vector3 moveDirection = targetLocation - transform.position;
                 travelDist += moveAmount;
@@ -165,9 +164,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 
-    // slows the enemy for 2 movement cycles
+    // slows the enemy
     public void Slow() {
-        slowCounter = 2;
+        slowCounter = 4;
     }
 
 

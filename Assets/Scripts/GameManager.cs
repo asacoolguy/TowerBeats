@@ -138,6 +138,8 @@ public class GameManager : MonoBehaviour {
             centralTowerAnimator.SetTrigger("Rise");
 
             uiManager.ShowGUI(true, true);
+            uiManager.UpdateHealth(currentHealth, maxHealth);
+            uiManager.UpdateMoney(currentMoney);
             cameraAnimator.SetTrigger("SkipToGame");
 
             scanner.ShowScannerLine(true);
@@ -560,7 +562,7 @@ public class GameManager : MonoBehaviour {
 
         // add remaining money and health to score
         currentScore += currentMoney;
-        currentScore *= 1f + currentHealth / 10;
+        currentScore *= 1f + currentHealth / maxHealth;
 
         // play the end game sound and zoom out
         state = GameState.ResultScreenDisplaying;
