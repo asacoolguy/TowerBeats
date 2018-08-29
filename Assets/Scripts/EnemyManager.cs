@@ -180,6 +180,7 @@ public class EnemyManager : MonoBehaviour {
     private IEnumerator SpawnEnemies(int spawnPointIndex, GameObject enemyPrefab, int spawnAmount) {
         for (int i = 0; i < spawnAmount; i++) {
             Vector3 position = enemyPath.GetSpawnPoint(spawnPointIndex);
+            position += new Vector3(Random.Range(-0.2f, -0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f));
             GameObject enemyObj = Instantiate(enemyPrefab, 
                                               position, 
                                               Quaternion.identity, 
@@ -188,8 +189,8 @@ public class EnemyManager : MonoBehaviour {
             enemyObj.GetComponent<Enemy>().SetEnemyManager(this);
             allEnemies.Add(enemyObj);
             
-            //offset -= new Vector3(0, Random.Range(3f, 7f), 0);
-            yield return null;
+
+            yield return new WaitForSeconds(Random.Range(0.2f, 0.4f));
         }
     }
 

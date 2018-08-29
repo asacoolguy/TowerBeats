@@ -1677,10 +1677,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1752084681505982, guid: 258ae93cc2786b34db5f5187818d26fc, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 258ae93cc2786b34db5f5187818d26fc, type: 2}
   m_IsPrefabParent: 0
@@ -5868,7 +5864,7 @@ MonoBehaviour:
   maxHealth: 20
   currentStage: 0
   state: 0
-  devMode: 1
+  devMode: 0
 --- !u!1 &643208838
 GameObject:
   m_ObjectHideFlags: 0
@@ -14056,31 +14052,32 @@ MonoBehaviour:
     spawnPatterns:
     - An1;An1;An2;w2;An2;An2;w2;An3;An3;An4;
     - Af1;Af2;Af4;w1;An4;Af4;An4;w2;An5,Af5;An8;Af6;
-    - Ar1;Ar3;w1;An6,Ar2;Af6,Ar2;w2;Ar3;An6,Ar3;Af5,Ar3;
-    - Ah1;w1;Ar3,Af5;Ar3,Ah1;w2;Ar3;Ar3,An6;Af8,Ar4,Ah2;
+    - Ar1;An6;Ar2,An6;Ar2;Ar3;w2;Ar2;An6,Ar2;Ar3;
+    - Ah1;w1;Ar3,Af5;Ar2,Ah1;w2;Ar2;Ar3,An6;Af8,Ar4,Ah2;
     enemyPaths:
     - spawnPosition: {x: -70, y: -75, z: 10}
       enemyPaths:
-      - {x: -70, y: 0, z: 10}
-      - {x: -30, y: 0, z: 10}
+      - {x: -70, y: 0, z: 0}
+      - {x: -40, y: 0, z: 0}
       - {x: -15, y: 0, z: 27.5}
       - {x: 27.5, y: 0, z: 27.5}
       - {x: 27.5, y: 0, z: 10}
       - {x: 18, y: 0, z: 0}
       - {x: 27.5, y: 0, z: -10}
-      - {x: 27.5, y: 0, z: -27.5}
+      - {x: 27.5, y: 0, z: -20}
+      - {x: 20, y: 0, z: -27.5}
       - {x: -10, y: 0, z: -27.5}
       - {x: -10, y: 0, z: -10}
       - {x: 0, y: 0, z: 0}
     platformData:
     - {x: -35, y: 20, z: 19.5}
-    - {x: -40, y: 20, z: 0}
+    - {x: -15, y: 20, z: 15}
     - {x: 0, y: 20, z: 20}
     - {x: 20, y: 20, z: 20}
-    - {x: 20.9, y: 20, z: 37.5}
+    - {x: -28, y: 20, z: 0}
     - {x: 30, y: 20, z: 0}
-    - {x: 20, y: 20, z: -20}
-    - {x: 0, y: 20, z: -20}
+    - {x: 15, y: 20, z: -15}
+    - {x: 0, y: 20, z: -15}
 --- !u!1 &1401351781
 GameObject:
   m_ObjectHideFlags: 0

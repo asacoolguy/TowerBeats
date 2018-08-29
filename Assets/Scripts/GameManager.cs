@@ -209,13 +209,6 @@ public class GameManager : MonoBehaviour {
                 towerUpgradePanel.EnableButton(1, true);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.F)) {
-            Time.timeScale += 0.5f;
-        }
-        else if (Input.GetKeyDown(KeyCode.V)) {
-            Time.timeScale -= 0.5f;
-        }
     }
 
     private void LateUpdate() {
@@ -293,6 +286,12 @@ public class GameManager : MonoBehaviour {
             if (devMode) {
                 if (state == GameState.GameScreen && Input.GetKeyDown(KeyCode.Space)) {
                     StartCoroutine(WinGame());
+                }
+                else if (Input.GetKeyDown(KeyCode.F)) {
+                    Time.timeScale += 0.5f;
+                }
+                else if (Input.GetKeyDown(KeyCode.V)) {
+                    Time.timeScale -= 0.5f;
                 }
             }
         }

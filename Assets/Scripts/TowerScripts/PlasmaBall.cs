@@ -10,7 +10,7 @@ public class PlasmaBall : MonoBehaviour {
     private TowerAoE area;
     private bool moving;
     private float moveDuration, currentMoveDuration;
-    private float attackPower;
+    private float attackPower, splashDamageFactor;
 
 	private void Awake () {
         area = transform.Find("Area").GetComponent<TowerAoE>();
@@ -45,12 +45,13 @@ public class PlasmaBall : MonoBehaviour {
     }
 
 
-    public void SetTarget(GameObject enemy, float duration, float power) {
+    public void SetTarget(GameObject enemy, float duration, float power, float splashFactor) {
         target = enemy;
         targetPosition = target.transform.position;
         originalPosition = transform.position;
         moveDuration = duration;
         attackPower = power;
+        splashDamageFactor = splashFactor;
         moving = true;
     }
 
@@ -83,7 +84,7 @@ public class PlasmaBall : MonoBehaviour {
         
         foreach (Enemy e in area.enemiesInRange) {
             if (e != null && e!= mainEnemy && e.IsVulnerable()) {
-                e.TakeDamage(attackPower / 3);
+                e.TakeDamage(attackPower * splashDamageFactor);
             }
         }
 

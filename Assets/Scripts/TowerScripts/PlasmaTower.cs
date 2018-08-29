@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlasmaTower : BasicTower {
 	private GameObject launcher;
-    public float plasmaFlyDuration;
+    public float plasmaFlyDuration, splashDamageFactor;
     private float chargeTime, currentChargeTime, targetSize, originalSize;
     private GameObject plasmaBall;
     private bool initialBall;
@@ -82,7 +82,7 @@ public class PlasmaTower : BasicTower {
             if (target != null) {
                 Vector3 lookPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
                 transform.LookAt(lookPos);
-                plasmaBall.GetComponent<PlasmaBall>().SetTarget(target.gameObject, plasmaFlyDuration, info.attackPowers[info.currentLevel]);
+                plasmaBall.GetComponent<PlasmaBall>().SetTarget(target.gameObject, plasmaFlyDuration, info.attackPowers[info.currentLevel], splashDamageFactor);
                 return true;
             }
         }

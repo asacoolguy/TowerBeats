@@ -674,14 +674,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Basic Attack:
+  m_Text: 'Infrequent but
 
-    none
+    high damage
 
-
-    Special Attack:
-
-    plasma ball'
+    area attack.'
 --- !u!114 &114097620118566316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -714,14 +711,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Basic Attack:
-
-    laser beam
-
-
-    Special Attack
-
-    laser flurry'
+  m_Text: "Long-ranged \nlaser barage.\nConstantly \nShooting."
 --- !u!114 &114119836212348874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1117,14 +1107,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Basic Attack:
-
-    slowing aura
-
-
-    Special Attack:
-
-    shockwave '
+  m_Text: "Low damage \narea attack.\nDrastically slows\nenemies."
 --- !u!114 &114784055958644160
 MonoBehaviour:
   m_ObjectHideFlags: 1

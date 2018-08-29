@@ -168,7 +168,7 @@ Transform:
   m_GameObject: {fileID: 1752084681505982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 33.76, y: 25, z: 5.82}
-  m_LocalScale: {x: 325, y: 325, z: 325}
+  m_LocalScale: {x: 325, y: 325, z: 450}
   m_Children:
   - {fileID: 4979462862731658}
   - {fileID: 4206473977487704}
@@ -231,7 +231,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1752084681505982}
-  m_Mesh: {fileID: 4300000, guid: bd176eddc4c9376469a936881c7b90ad, type: 3}
+  m_Mesh: {fileID: 4300002, guid: bd176eddc4c9376469a936881c7b90ad, type: 3}
 --- !u!54 &54550693046026764
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -257,7 +257,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.012, y: 0.008, z: 0.014}
+  m_Size: {x: 0.014, y: 0.008, z: 0.014}
   m_Center: {x: 0, y: 0, z: 0.0015}
 --- !u!95 &95142657331196862
 Animator:
@@ -268,7 +268,7 @@ Animator:
   m_GameObject: {fileID: 1752084681505982}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f1de7cb69815c7840aa6d69e6fedc403, type: 2}
+  m_Controller: {fileID: 9100000, guid: 61b41b06aa94c17409f02838ad7e6dae, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -385,15 +385,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59eaa8f6564408441856cce705803bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 80
+  health: 60
   healthDisplayFactor: 0.25
   healthBonusFactor: 0
-  slowFactor: 0.5
-  distancePerMove: 12
+  slowFactor: 0.6
+  distancePerMove: 15
   distancePerMoveOnSpawn: 80
   moveDuration: 0.8
   pointVal: 50
-  moneyDropped: 30
+  moneyDropped: 50
   regenerate: 0
   regenerateStartDelay: 0
   regenerateMeasure: 0
