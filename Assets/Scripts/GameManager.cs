@@ -148,8 +148,8 @@ public class GameManager : MonoBehaviour {
         else {
             state = GameState.SplashScreenDisplaying;
             // initiate the camera with its splash screen
-            uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(true, 2f));
-            StartCoroutine(PlayThemeWithDelay(2f));
+            uiManager.StartCoroutine(uiManager.DisplaySplashScreenWithDelay(true, 0.5f));
+            StartCoroutine(PlayThemeWithDelay(0.5f));
         }
     }
 
