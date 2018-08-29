@@ -107,7 +107,7 @@ public class UIManager : MonoBehaviour {
 
 	public IEnumerator DisplayGameResultScreen(bool display, bool winLose = true, float score = 0){
         if (display) {
-            gameResultScreen.transform.GetChild(0).GetComponent<Text>().text = winLose ? "Level Complete" : "Level Failed";
+            gameResultScreen.transform.GetChild(0).GetComponent<Text>().text = winLose ? "Level Complete" : "Game Over";
             gameResultScreen.transform.GetChild(1).GetComponent<Text>().text = "Score : " + score;
 
             for (int i = 0; i < gameResultScreen.transform.childCount; i++) {

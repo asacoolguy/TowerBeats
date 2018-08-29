@@ -127,7 +127,16 @@ public class Enemy : MonoBehaviour {
             
             while (currentDuration <= moveDuration) {
                 float speedRatio = Mathf.Pow(1f - (currentDuration / moveDuration), 3f);
-                float moveSpeed = (nextTarget == 0 ? distancePerMoveOnSpawn : distancePerMove) / moveDuration * (slowCounter > 0 ?  slowFactor : 1);
+                float moveSpeed = distancePerMove / moveDuration * (slowCounter > 0 ?  slowFactor : 1);
+                if (nextTarget == 0){
+                    if (transform.position.y < 0) {
+                        moveSpeed = distancePerMoveOnSpawn;
+                    }
+                    else {
+                        moveSpeed = Mathf.Lerp(distancePerMoveOnSpawn, distancePerMove, transform.position.y / maxHeight);
+                    }
+                }
+
                 float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
                 Vector3 moveDirection = targetLocation - transform.position;
                 travelDist += moveAmount;
@@ -203,7 +212,7 @@ public class Enemy : MonoBehaviour {
         path = new List<Vector3>();
 
         // randomize the path a little
-        float offsetRange = 1f;
+        float offsetRange = 0.5f;
         Vector3 offset = new Vector3(Random.Range(-offsetRange, offsetRange), Random.Range(-offsetRange, offsetRange), Random.Range(-offsetRange, offsetRange));
         for (int i = 0; i < input.Count; i++) {
             path.Add(input[i] + offset + new Vector3(0, heightOffset, 0));

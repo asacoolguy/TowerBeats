@@ -353,7 +353,7 @@ MonoBehaviour:
   healthBonusFactor: 0.1
   slowFactor: 0.6
   distancePerMove: 15
-  distancePerMoveOnSpawn: 80
+  distancePerMoveOnSpawn: 100
   moveDuration: 0.6
   pointVal: 30
   moneyDropped: 35
