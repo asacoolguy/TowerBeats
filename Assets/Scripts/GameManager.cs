@@ -596,6 +596,12 @@ public class GameManager : MonoBehaviour {
         state = GameState.LevelScreen;
 
         enemyManager.DestroyAllEnemies();
+        enemyPath.Reset();
+        enemyPath.ToggleAllPaths(false);
+        towerBuildPanel.ActivatePanel(false);
+        towerUpgradePanel.ActivatePanel(false);
+
+
         // make all octagons fall and lower the central tower
         centralTowerAnimator.SetTrigger("Lower");
         audioSource.volume = 0.6f;
@@ -611,10 +617,8 @@ public class GameManager : MonoBehaviour {
         centralTowerAnimator.SetTrigger("Rise");
         levelSelector.ShowLevelSelection(true);
 
-        // clear all towers, paths and towerplatforms
+        // clear all towers
         scanner.DestroyAllTowers();
-        enemyPath.Reset();
-        enemyPath.ToggleAllPaths(false);
 
         // wait for the camera to go back to level and play the main theme
         yield return new WaitForSeconds(2.6f);
