@@ -443,6 +443,7 @@ public class GameManager : MonoBehaviour {
             audioSource.Play();
             state = GameState.ResultScreenDisplaying;
             StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
+            uiManager.ShowGUI(false);
             Time.timeScale = 0;
         }
     }
