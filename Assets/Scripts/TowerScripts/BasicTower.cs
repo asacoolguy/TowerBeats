@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BasicTower : MonoBehaviour {
@@ -31,23 +30,6 @@ public abstract class BasicTower : MonoBehaviour {
         // boost the color and size of the octagon
         transform.parent.GetComponent<TowerPlatform>().BoostColor();
         transform.parent.GetComponent<TowerPlatform>().BoostSize(popYScale, popTime);
-    }
-
-
-    // toggle on/off the outlines for this tower and its kids
-    public void ToggleOutline(bool b) {
-        //print("toggled outline to " + b);
-
-        if (GetComponent<cakeslice.Outline>() != null) {
-            GetComponent<cakeslice.Outline>().enabled = b;
-        }
-
-        foreach (Transform t in GetComponentsInChildren<Transform>()) {
-            cakeslice.Outline outline = t.gameObject.GetComponent<cakeslice.Outline>();
-            if (outline != null) {
-                outline.enabled = b;
-            }
-        }
     }
     
 
