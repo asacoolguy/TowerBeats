@@ -6,18 +6,6 @@ public class CameraShakeScript : MonoBehaviour {
 	public float shakeIntensity;
 	public float shakeDuration;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-            ShakeCamera();
-        }
-	}
-
 	public void ShakeCamera(){
 		StartCoroutine(Shake(shakeIntensity, shakeDuration));
 	}
