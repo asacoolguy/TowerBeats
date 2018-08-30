@@ -100,13 +100,14 @@ public class OuterGrid : MonoBehaviour {
 
     private void Start() {
         spectrum = GameManager.instance.GetComponent<SpectrumData>();
-        spectrumValues = new float[octTowers.Count];
+        spectrumValues = new float[octTowers.Count + 1];
     }
 
 
     void Update () {
         // respond to spectrum
         spectrum.GetOutputSpectrum(spectrumValues);
+        // some value tweaking
 
 
         for(int i = 0; i < octTowers.Count; i++) {

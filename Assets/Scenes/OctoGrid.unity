@@ -692,12 +692,12 @@ Prefab:
     - target: {fileID: 114251191162110060, guid: ddaadccc5a2555848ba23cfe88c52c2f,
         type: 2}
       propertyPath: color.g
-      value: 0
+      value: 0.69320303
       objectReference: {fileID: 0}
     - target: {fileID: 114251191162110060, guid: ddaadccc5a2555848ba23cfe88c52c2f,
         type: 2}
       propertyPath: color.b
-      value: 0
+      value: 0.9254902
       objectReference: {fileID: 0}
     - target: {fileID: 198664095493011706, guid: ddaadccc5a2555848ba23cfe88c52c2f,
         type: 2}
@@ -706,7 +706,32 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1058980505790196, guid: ddaadccc5a2555848ba23cfe88c52c2f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114251191162110060, guid: ddaadccc5a2555848ba23cfe88c52c2f,
+        type: 2}
+      propertyPath: scale
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 114251191162110060, guid: ddaadccc5a2555848ba23cfe88c52c2f,
+        type: 2}
+      propertyPath: intensity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114251191162110060, guid: ddaadccc5a2555848ba23cfe88c52c2f,
+        type: 2}
+      propertyPath: alpha
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 114251191162110060, guid: ddaadccc5a2555848ba23cfe88c52c2f,
+        type: 2}
+      propertyPath: alphasub
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114251191162110060, guid: ddaadccc5a2555848ba23cfe88c52c2f,
+        type: 2}
+      propertyPath: pow
+      value: 2.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddaadccc5a2555848ba23cfe88c52c2f, type: 2}
@@ -5240,8 +5265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDistFromCenter: 90
   maxDistFromCenter: 130
-  minScale: 40
-  maxScale: 60
+  minScale: 35
+  maxScale: 55
   yPosOffset: -40
   minBumpScale: 1
   maxBumpScale: 1.5
@@ -5876,11 +5901,11 @@ MonoBehaviour:
   towerPlatformGrid: {fileID: 1848917667}
   currentScore: 0
   totalScore: 0
-  startingMoney: 250
+  startingMoney: 9999
   maxHealth: 20
   currentStage: 0
   state: 0
-  devMode: 0
+  devMode: 1
 --- !u!1 &643208838
 GameObject:
   m_ObjectHideFlags: 0
@@ -14079,11 +14104,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sampleNumber: 512
-  attackDamp: 0.25
+  attackDamp: 0.4
   decayDamp: 0.25
   useLogarithmicFrequency: 1
   multiplyByFrequency: 1
-  highFrequencyTrim: 1
+  highFrequencyTrim: 2
   linearSampleStretch: 1
 --- !u!114 &1377568351
 MonoBehaviour:
@@ -14296,10 +14321,6 @@ Prefab:
     - target: {fileID: 4068042764148432, guid: c29e1d3d490946649a80d47a9512cdc2, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1922785463306400, guid: c29e1d3d490946649a80d47a9512cdc2, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c29e1d3d490946649a80d47a9512cdc2, type: 2}
