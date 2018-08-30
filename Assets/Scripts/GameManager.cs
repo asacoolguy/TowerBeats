@@ -229,6 +229,12 @@ public class GameManager : MonoBehaviour {
                     if (towerBuildPanel.IsButtonEnabled(buildPanelButtonClicked)) {
                         BuildTower(buildPanelButtonClicked);
                         towerBuildPanel.ActivatePanel(false);
+
+                        // deselect any selectedOctagons
+                        if (selectedPlatform) {
+                            selectedPlatform.SelectPlatform(false);
+                            selectedPlatform = null;
+                        }
                     }
                 }
                 // if we clicked on a UpgradePanel that's enabled, do that upgrade
@@ -236,11 +242,12 @@ public class GameManager : MonoBehaviour {
                     if (towerUpgradePanel.IsButtonEnabled(upgradePanelButtonClicked)) {
                         towerUpgradePanel.HandleButtonClick(upgradePanelButtonClicked);
                         towerUpgradePanel.ActivatePanel(false);
-                    }
-                    // deselect any selectedOctagons
-                    if (selectedPlatform) {
-                        selectedPlatform.SelectPlatform(false);
-                        selectedPlatform = null;
+
+                        // deselect any selectedOctagons
+                        if (selectedPlatform) {
+                            selectedPlatform.SelectPlatform(false);
+                            selectedPlatform = null;
+                        }
                     }
                 }
                 // if you clicked somewhere random or on the selected Octagon, deselect the selectedPlatform
@@ -317,15 +324,11 @@ public class GameManager : MonoBehaviour {
         GameObject towerObj = Instantiate(prefabDatabase.GetTower(input)) as GameObject;
         towerObj.SetActive(true);
 
-        // parent it to selectedPlatform and set its position and rotation accordingly
-        // TODO: need better way of handling tower positioning
+        // parent it to selectedPlatform and set its position
         towerObj.transform.SetParent(selectedPlatform.transform, true);
         towerObj.transform.localPosition = Vector3.zero;
 
-        // link tower to selectedPlatform and deselect it
         selectedPlatform.SetBuiltTower(towerObj);
-        selectedPlatform.SelectPlatform(false);
-        selectedPlatform = null;
 
         BasicTower tower = towerObj.GetComponent<BasicTower>();
 

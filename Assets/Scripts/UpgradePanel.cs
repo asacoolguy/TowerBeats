@@ -57,6 +57,11 @@ public class UpgradePanel : MonoBehaviour {
 
 
     public void HighlightButton(int index) {
+        // don't highlight the upgrade button at index 0 if it's already fully upgraded
+        if (index == 0 && tower.info.currentLevel >= 2) {
+            return;
+        }
+
         highlightedButton = index;
         for (int i = 0; i < 2; i++) {
             buttons[i].transform.Find("Description").gameObject.SetActive((i == index));
@@ -122,7 +127,7 @@ public class UpgradePanel : MonoBehaviour {
             buttons[0].transform.Find("Cost").GetComponent<Text>().text = "" + info.costs[info.currentLevel + 1];
         }
         else {
-            buttons[0].transform.Find("Text").GetComponent<Text>().text = "Upgrade\nLvl" + (info.currentLevel + 1);
+            buttons[0].transform.Find("Text").GetComponent<Text>().text = "Fully\nUpgraded";
             buttons[0].transform.Find("Description").Find("Text").GetComponent<Text>().text = "Fully\nUpgraded";
             buttons[0].transform.Find("Cost").GetComponent<Text>().text = "";
         }
@@ -167,7 +172,7 @@ public class UpgradePanel : MonoBehaviour {
             return tower.info.costs[tower.info.currentLevel + 1];
         }
         else {
-            return 0;
+            return int.MaxValue;
         }
     }
 
