@@ -22,8 +22,10 @@ public class EnemyManager : MonoBehaviour {
     private EnemyPath enemyPath;
     private int pathsUsed = 0;
 
-	// enemy destroy audio
-	private int enemyDestroySoundCounter;
+    private CameraShakeScript cameraShaker;
+
+    // enemy destroy audio
+    private int enemyDestroySoundCounter;
     private AudioClip[] enemyDeathClips;
     private int enemyDeathClipIndex = 0;
 
@@ -46,7 +48,9 @@ public class EnemyManager : MonoBehaviour {
 		allEnemies = new List<GameObject>();
         enemyPath = FindObjectOfType<EnemyPath>();
         enemyDeathClips = GameManager.instance.GetEnemyAudioClips();
-	}
+        cameraShaker = FindObjectOfType<CameraShakeScript>();
+
+    }
 
 	void LateUpdate() {
 		// destory enemies and play the destruction sound at the right volume
@@ -58,7 +62,7 @@ public class EnemyManager : MonoBehaviour {
 
             // shake camera
             float temp = 1f + enemyDestroySoundCounter / 5f;
-            FindObjectOfType<CameraShakeScript>().ShakeCamera(temp, temp);
+            cameraShaker.ShakeCamera(temp, temp);
         }
         
 	}

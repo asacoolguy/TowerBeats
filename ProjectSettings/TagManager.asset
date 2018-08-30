@@ -26,7 +26,7 @@ TagManager:
   - Bullets
   - Towers
   - EnemyPath
-  - GlowUI
+  - PanelUI
   - HomeBase
   - OuterGrid
   - InnerGrid

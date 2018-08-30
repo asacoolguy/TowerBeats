@@ -5597,48 +5597,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114966837831848576, guid: fee68e2386665924ba7d8a60124ed3f4,
-        type: 2}
-      propertyPath: m_ShowCustomSorter
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114966837831848576, guid: fee68e2386665924ba7d8a60124ed3f4,
-        type: 2}
-      propertyPath: m_ShowToolkit
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114966837831848576, guid: fee68e2386665924ba7d8a60124ed3f4,
-        type: 2}
-      propertyPath: volumeLayer.m_Bits
-      value: 2098176
-      objectReference: {fileID: 0}
-    - target: {fileID: 95140069817535106, guid: fee68e2386665924ba7d8a60124ed3f4,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 20841707109176850, guid: fee68e2386665924ba7d8a60124ed3f4,
-        type: 2}
-      propertyPath: m_BackGroundColor.r
-      value: 0.05660379
-      objectReference: {fileID: 0}
-    - target: {fileID: 20841707109176850, guid: fee68e2386665924ba7d8a60124ed3f4,
-        type: 2}
-      propertyPath: m_BackGroundColor.g
-      value: 0.05660379
-      objectReference: {fileID: 0}
-    - target: {fileID: 20841707109176850, guid: fee68e2386665924ba7d8a60124ed3f4,
-        type: 2}
-      propertyPath: m_BackGroundColor.b
-      value: 0.05660379
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114951675172109134, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fee68e2386665924ba7d8a60124ed3f4, type: 2}
   m_IsPrefabParent: 0
 --- !u!20 &630785126 stripped
 Camera:
-  m_PrefabParentObject: {fileID: 20841707109176850, guid: fee68e2386665924ba7d8a60124ed3f4,
+  m_PrefabParentObject: {fileID: 20276089198343418, guid: fee68e2386665924ba7d8a60124ed3f4,
     type: 2}
   m_PrefabInternal: {fileID: 630785123}
 --- !u!1 &630879308
@@ -5901,11 +5865,11 @@ MonoBehaviour:
   towerPlatformGrid: {fileID: 1848917667}
   currentScore: 0
   totalScore: 0
-  startingMoney: 9999
+  startingMoney: 250
   maxHealth: 20
   currentStage: 0
   state: 0
-  devMode: 1
+  devMode: 0
 --- !u!1 &643208838
 GameObject:
   m_ObjectHideFlags: 0

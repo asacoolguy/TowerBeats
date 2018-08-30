@@ -617,6 +617,7 @@ public class GameManager : MonoBehaviour {
         audioSource.volume = 1;
 
         uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
+        cameraAnimator.enabled = true;
         cameraAnimator.SetTrigger("ResultToLevel");
         centralTowerAnimator.SetTrigger("Rise");
         levelSelector.ShowLevelSelection(true);
