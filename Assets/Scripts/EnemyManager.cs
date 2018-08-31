@@ -47,7 +47,6 @@ public class EnemyManager : MonoBehaviour {
 	void Start() {
 		allEnemies = new List<GameObject>();
         enemyPath = FindObjectOfType<EnemyPath>();
-        enemyDeathClips = GameManager.instance.GetEnemyAudioClips();
         cameraShaker = FindObjectOfType<CameraShakeScript>();
 
     }
@@ -70,6 +69,7 @@ public class EnemyManager : MonoBehaviour {
 
     public void SetSpawnInstruction(string[] instruction) {
         waveSpawnInstructions = instruction;
+        enemyDeathClips = GameManager.instance.GetEnemyAudioClips();
         instructionIndex = -1;
         waitCounter = 0;
         currentMeasureCount = 0;

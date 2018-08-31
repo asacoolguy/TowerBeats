@@ -107,8 +107,9 @@ public class UIManager : MonoBehaviour {
         if (display) {
             gameResultScreen.transform.Find("MainText").GetComponent<Text>().text = winLose ? "Level Complete" : "Game Over";
             gameResultScreen.transform.Find("ScoreText").GetComponent<Text>().text = "Score : " + score;
+            gameResultScreen.transform.Find("Blackscreen").gameObject.SetActive(true);
 
-            for (int i = 0; i < gameResultScreen.transform.childCount; i++) {
+            for (int i = 1; i < gameResultScreen.transform.childCount; i++) {
                 gameResultScreen.transform.GetChild(i).gameObject.SetActive(true);
                 GetComponent<AudioSource>().PlayOneShot(bigThud);
                 yield return new WaitForSecondsRealtime(1);

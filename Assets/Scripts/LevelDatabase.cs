@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class LevelDatabase : MonoBehaviour{
     // general sound effects
-    public AudioClip youWinClip, youLoseClip, displayBoxClip, gameStartClip, wooshClip, powerdownClip;
-    public AudioClip[] enemyDeathClips;
+    public AudioClip takeDamageClip, gameStartClip, cameraPullUpClip, powerdownClip;
     public LevelData[] levelData;
 }
 
@@ -12,7 +11,6 @@ public class LevelDatabase : MonoBehaviour{
 [Serializable]
 public class LevelData {
     public MusicDatabase musicData;
-    public int totalWaves;
     public string[] spawnPatterns;
     public EnemyPathData[] enemyPaths;
     public Vector3[] platformData;
@@ -32,7 +30,9 @@ public class MusicDatabase {
     public TowerMusicClips[] laserTowerClips;
     public TowerMusicClips[] plasmaTowerClips;
     public AudioClip[] scannerClips;
+    public AudioClip[] enemyDeathClips;
     public int[] measurePerSong;
+    public AudioClip ending;
 }
 
 

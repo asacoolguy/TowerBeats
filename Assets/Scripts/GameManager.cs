@@ -442,7 +442,7 @@ public class GameManager : MonoBehaviour {
                 a.Stop();
             }
 
-            audioSource.clip = levelData.youLoseClip;
+            audioSource.clip = levelData.takeDamageClip;
             audioSource.Play();
             state = GameState.ResultScreenDisplaying;
             StartCoroutine(uiManager.DisplayGameResultScreen(true, false, totalScore));
@@ -520,13 +520,13 @@ public class GameManager : MonoBehaviour {
         // play the game starting sound
         menuAudioSource.Stop();
         audioSource.PlayOneShot(levelData.gameStartClip);
-        yield return new WaitForSeconds(levelData.gameStartClip.length + 1);
+        yield return new WaitForSeconds(levelData.gameStartClip.length - 1);
 
         // pull the camera up
-        audioSource.PlayOneShot(levelData.wooshClip);
+        audioSource.PlayOneShot(levelData.cameraPullUpClip);
         cameraAnimator.SetTrigger("LevelToGame");
         levelSelector.ShowLevelSelection(false);
-        yield return new WaitForSeconds(levelData.wooshClip.length + 1);
+        yield return new WaitForSeconds(levelData.cameraPullUpClip.length + 1);
 
         // fly the panels in and show the GUI
         float flyInDuration = 1f;
@@ -549,7 +549,9 @@ public class GameManager : MonoBehaviour {
 
         yield return new WaitForSeconds(1.5f);
 
-        uiManager.DisplayTutorialScreen(true);
+        if (currentStage == 0) {
+            uiManager.DisplayTutorialScreen(true);
+        }
 
         while (uiManager.IsTutorialShowing()) {
             yield return null;
@@ -579,7 +581,7 @@ public class GameManager : MonoBehaviour {
         state = GameState.ResultScreenDisplaying;
         uiManager.ShowGUI(false);
         cameraAnimator.SetTrigger("GameToResult");
-        audioSource.PlayOneShot(levelData.youWinClip);
+        audioSource.PlayOneShot(levelData.levelData[currentStage].musicData.ending);
 
         while (audioSource.isPlaying) {
             yield return null;
@@ -613,7 +615,7 @@ public class GameManager : MonoBehaviour {
         enemyPath.ToggleAllPaths(false);
         towerBuildPanel.ActivatePanel(false);
         towerUpgradePanel.ActivatePanel(false);
-
+        uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
 
         // make all octagons fall and lower the central tower
         centralTowerAnimator.SetTrigger("Lower");
@@ -625,7 +627,6 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(2.8f);
         audioSource.volume = 1;
 
-        uiManager.StartCoroutine(uiManager.DisplayGameResultScreen(false));
         cameraAnimator.enabled = true;
         cameraAnimator.SetTrigger("ResultToLevel");
         centralTowerAnimator.SetTrigger("Rise");
@@ -663,7 +664,7 @@ public class GameManager : MonoBehaviour {
 
 
     public AudioClip[] GetEnemyAudioClips() {
-        return levelData.enemyDeathClips;
+        return levelData.levelData[currentStage].musicData.enemyDeathClips;
     }
 
 
