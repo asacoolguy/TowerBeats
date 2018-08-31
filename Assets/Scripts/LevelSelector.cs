@@ -71,7 +71,16 @@ public class LevelSelector : MonoBehaviour {
 
 
     public void QuitGame() {
-        GameManager.instance.QuitGame();
+        if (!startStagePressed) {
+            GameManager.instance.QuitGame();
+        }
+    }
+
+
+    public void ToggleCredits() {
+        if (!startStagePressed) {
+            FindObjectOfType<UIManager>().ToggleCredits();
+        }
     }
 
 

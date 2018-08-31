@@ -548,6 +548,15 @@ public class GameManager : MonoBehaviour {
         enemyPath.ToggleAllPaths(true);
 
         yield return new WaitForSeconds(1.5f);
+
+        uiManager.DisplayTutorialScreen(true);
+
+        while (uiManager.IsTutorialShowing()) {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1);
+
         scanner.ShowScannerLine(true);
         scanner.SetRotate(true);
         state = GameState.GameScreen;

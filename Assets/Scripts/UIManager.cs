@@ -11,10 +11,11 @@ public class UIManager : MonoBehaviour {
 	public GameObject spawnButton, waveTestButtons;
 
     // screens/panels
-    public GameObject controlPanel, statusPanel, wavePanel, pauseScreen, splashScreen, gameResultScreen, creditsScreen;
+    public GameObject controlPanel, statusPanel, wavePanel, pauseScreen, splashScreen, gameResultScreen, creditsScreen, tutorialScreen;
 
     public List<AudioSource> pausedAudios;
 	private bool paused = false;
+    private int currentTutorial = -1;
 
 	// UI sound effects
 	public AudioClip buttonEnable, buttonPress, bigThud, smallThud;
@@ -188,6 +189,47 @@ public class UIManager : MonoBehaviour {
         paused = b;
         pauseScreen.SetActive(b);
     }
+
+
+    public void DisplayTutorialScreen(bool b) {
+        PlayButtonPressSound();
+
+        if (b) {
+            tutorialScreen.SetActive(true);
+            currentTutorial = 0;
+            for (int i = 0; i < tutorialScreen.transform.Find("Images").childCount; i++) {
+                tutorialScreen.transform.Find("Images").GetChild(i).gameObject.SetActive(i == currentTutorial);
+            }
+        }
+        else {
+            tutorialScreen.SetActive(false);
+        }
+    }
+
+
+    public void ShowNextTutorial() {
+        PlayButtonPressSound();
+
+        if (currentTutorial < tutorialScreen.transform.Find("Images").childCount - 1) {
+            currentTutorial++;
+            for (int i = 0; i < tutorialScreen.transform.Find("Images").childCount; i++) {
+                tutorialScreen.transform.Find("Images").GetChild(i).gameObject.SetActive(i == currentTutorial);
+            }
+
+            if (currentTutorial == 3) {
+                tutorialScreen.transform.Find("NextButton").GetComponentInChildren<Text>().text = "Okay";
+            }
+        }
+        else {
+            DisplayTutorialScreen(false);
+        }
+    }
+
+
+    public bool IsTutorialShowing() {
+        return tutorialScreen.activeSelf;
+    }
+
 
 	public void PlayButtonPressSound(){
 		GetComponent<AudioSource>().PlayOneShot(buttonPress);

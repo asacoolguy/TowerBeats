@@ -11,8 +11,8 @@ public class Tutorial : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if (sprites.Length == 0){
-			HideTutorial();
-		}
+            this.gameObject.SetActive(false);
+        }
 		else{
 			image = transform.Find("Image").GetComponent<Image>();
 			image.sprite = sprites[currentImageIndex];
@@ -21,20 +21,16 @@ public class Tutorial : MonoBehaviour {
 
 	public void ShowNextImage(){
 		if (currentImageIndex == sprites.Length -1){
-			HideTutorial();
-		}
+            this.gameObject.SetActive(false);
+        }
 		else{
 			currentImageIndex++;
 			image.sprite = sprites[currentImageIndex];
 
 			if (currentImageIndex == sprites.Length -1){
-				transform.Find("NextButton").Find("Text").GetComponent<Text>().text = "Done";
+				transform.Find("NextButton").Find("Text").GetComponent<Text>().text = "Okay";
 				transform.Find("SkipButton").gameObject.SetActive(false);
 			}
 		}
-	}
-
-	public void HideTutorial(){
-		this.gameObject.SetActive(false);
 	}
 }
