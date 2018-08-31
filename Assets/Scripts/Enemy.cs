@@ -89,19 +89,8 @@ public class Enemy : MonoBehaviour {
                 angle = 180f;
             }
         }
-        else if (dir.z == 0) {
-            if (dir.x > 0) {
-                angle = 90f;
-            }
-            else {
-                angle = 270f;
-            }
-        }
         else {
-            angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
-            if (Mathf.Sign(dir.x) != Mathf.Sign(dir.z)) {
-                angle += 180f;
-            }
+            angle = 90 * Mathf.Sign(dir.x) - Mathf.Atan(dir.z/dir.x) * Mathf.Rad2Deg;
         }
         
         transform.eulerAngles = new Vector3(0, angle, 0);

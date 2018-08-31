@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour {
             currentMoney = startingMoney;
 
             // load info for stage 1
-            int testStage = 0;
+            int testStage = 1;
             currentStage = testStage;
 
             // load scannerMusic info
