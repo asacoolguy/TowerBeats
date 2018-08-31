@@ -551,13 +551,13 @@ public class GameManager : MonoBehaviour {
 
         if (currentStage == 0) {
             uiManager.DisplayTutorialScreen(true);
-        }
 
-        while (uiManager.IsTutorialShowing()) {
-            yield return null;
-        }
+            while (uiManager.IsTutorialShowing()) {
+                yield return null;
+            }
 
-        yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
+        }
 
         scanner.ShowScannerLine(true);
         scanner.SetRotate(true);
