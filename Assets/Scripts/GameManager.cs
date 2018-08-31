@@ -630,7 +630,7 @@ public class GameManager : MonoBehaviour {
         cameraAnimator.enabled = true;
         cameraAnimator.SetTrigger("ResultToLevel");
         centralTowerAnimator.SetTrigger("Rise");
-        levelSelector.ShowLevelSelection(true);
+        levelSelector.ShowLevelSelection(true, currentStage);
 
         // clear all towers
         scanner.DestroyAllTowers();

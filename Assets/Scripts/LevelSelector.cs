@@ -84,7 +84,7 @@ public class LevelSelector : MonoBehaviour {
     }
 
 
-    public void ShowLevelSelection(bool b) {
+    public void ShowLevelSelection(bool b, int startingLevel = 0) {
         for(int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(b);
         }
@@ -92,7 +92,20 @@ public class LevelSelector : MonoBehaviour {
         if (b) {
             canSelectLevels = true;
             startStagePressed = false;
-            currentLevel = 1;
+            currentLevel = startingLevel + 1;
+
+            float currentRotation = transform.localEulerAngles.y + startingLevel * 45;
+            transform.localEulerAngles = new Vector3(0, currentRotation, 0);
+
+            // disable the button script on all level sides
+            foreach (Button button in GetComponentsInChildren<Button>()) {
+                button.enabled = false;
+            }
+            // enable the button script on the current level
+            foreach (Button button in levels[currentLevel].GetComponentsInChildren<Button>()) {
+                button.enabled = true;
+            }
+
         }
         else {
             centralTower.GetComponent<Animator>().enabled = true;

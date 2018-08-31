@@ -15112,7 +15112,7 @@ MonoBehaviour:
       measurePerSong: 08000000080000000800000008000000
       ending: {fileID: 8300000, guid: 3074b73da96a5324ebb7d942b6c75f53, type: 3}
     spawnPatterns:
-    - An1;An1;An2;w2;An2;An2;w2;An3;An3;An4;
+    - An1;Bn1;An1.Bn1;
     - Af1;Af2;Af4;w1;An4;Af4;An4;w2;An5,Af5;An8;Af6;
     - Ar1;An6;Ar2,An6;Ar2;Ar3;w2;Ar2;An6,Ar2;Ar3;
     - Ah1;w1;Ar3,Af5;Ar2,Ah1;w2;Ar2;Ar3,An6;Af8,Ar4,Ah2;
@@ -15142,7 +15142,7 @@ MonoBehaviour:
     - {x: -32, y: 20, z: 0}
     - {x: 37, y: 20, z: -20.6}
     - {x: 18, y: 20, z: -18}
-    - {x: 0, y: 20, z: 15}
+    - {x: 0, y: 20, z: -15}
 --- !u!1 &1398701589
 GameObject:
   m_ObjectHideFlags: 0
