@@ -200,6 +200,9 @@ public class UIManager : MonoBehaviour {
             for (int i = 0; i < tutorialScreen.transform.Find("Images").childCount; i++) {
                 tutorialScreen.transform.Find("Images").GetChild(i).gameObject.SetActive(i == currentTutorial);
             }
+
+            tutorialScreen.transform.Find("SkipButton").gameObject.SetActive(true);
+            tutorialScreen.transform.Find("NextButton").gameObject.SetActive(true);
         }
         else {
             tutorialScreen.SetActive(false);
@@ -218,6 +221,7 @@ public class UIManager : MonoBehaviour {
 
             if (currentTutorial == 3) {
                 tutorialScreen.transform.Find("NextButton").GetComponentInChildren<Text>().text = "Okay";
+                tutorialScreen.transform.Find("SkipButton").gameObject.SetActive(false);
             }
         }
         else {

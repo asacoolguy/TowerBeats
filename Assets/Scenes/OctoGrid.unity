@@ -624,7 +624,7 @@ RectTransform:
   m_GameObject: {fileID: 69932125}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3427583, y: 0.41131, z: 0.41131}
+  m_LocalScale: {x: 0.5583069, y: 0.669968, z: 0.669968}
   m_Children: []
   m_Father: {fileID: 123970619}
   m_RootOrder: 1
@@ -4454,7 +4454,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -85}
+  m_AnchoredPosition: {x: 100, y: -183}
   m_SizeDelta: {x: 160, y: 59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &463627096
@@ -5225,7 +5225,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -85}
+  m_AnchoredPosition: {x: -100, y: -183}
   m_SizeDelta: {x: 160, y: 59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &522516610
@@ -6364,7 +6364,7 @@ MonoBehaviour:
   towerPlatformGrid: {fileID: 1848917667}
   currentScore: 0
   totalScore: 0
-  startingMoney: 999
+  startingMoney: 250
   maxHealth: 20
   currentStage: 0
   state: 0
@@ -6716,7 +6716,7 @@ RectTransform:
   m_GameObject: {fileID: 691146370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3427583, y: 0.41131, z: 0.41131}
+  m_LocalScale: {x: 0.5583069, y: 0.669968, z: 0.669968}
   m_Children: []
   m_Father: {fileID: 123970619}
   m_RootOrder: 2
@@ -10887,7 +10887,7 @@ RectTransform:
   m_GameObject: {fileID: 1061902143}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3427583, y: 0.41131, z: 0.41131}
+  m_LocalScale: {x: 0.5583069, y: 0.669968, z: 0.669968}
   m_Children: []
   m_Father: {fileID: 123970619}
   m_RootOrder: 3
@@ -16981,7 +16981,7 @@ RectTransform:
   m_GameObject: {fileID: 1567246163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.34276175, y: 0.411314, z: 0.411314}
+  m_LocalScale: {x: 0.55831254, y: 0.66997457, z: 0.66997457}
   m_Children: []
   m_Father: {fileID: 123970619}
   m_RootOrder: 0
