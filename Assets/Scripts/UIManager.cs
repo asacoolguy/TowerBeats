@@ -11,10 +11,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject spawnButton, waveTestButtons;
 
     // screens/panels
-    public GameObject controlPanel, statusPanel, wavePanel, pauseScreen;
-
-    // menus
-    public GameObject splashScreen, gameResultScreen;
+    public GameObject controlPanel, statusPanel, wavePanel, pauseScreen, splashScreen, gameResultScreen, creditsScreen;
 
     public List<AudioSource> pausedAudios;
 	private bool paused = false;
@@ -180,6 +177,11 @@ public class UIManager : MonoBehaviour {
 			}
 		}
 	}
+
+
+    public void ToggleCredits() {
+        creditsScreen.SetActive(!creditsScreen.activeSelf);
+    }
 
 
     public void DisplayPauseScreen(bool b) {
