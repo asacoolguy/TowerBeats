@@ -94,7 +94,7 @@ public class LevelSelector : MonoBehaviour {
             startStagePressed = false;
             currentLevel = startingLevel + 1;
 
-            float currentRotation = transform.localEulerAngles.y + startingLevel * 45;
+            float currentRotation = -22.5f + startingLevel * 45;
             transform.localEulerAngles = new Vector3(0, currentRotation, 0);
 
             // disable the button script on all level sides

@@ -6364,11 +6364,10 @@ MonoBehaviour:
   towerPlatformGrid: {fileID: 1848917667}
   currentScore: 0
   totalScore: 0
-  startingMoney: 7777
   maxHealth: 20
   currentStage: 0
   state: 0
-  devMode: 1
+  devMode: 0
 --- !u!1 &643208838
 GameObject:
   m_ObjectHideFlags: 0
@@ -15082,12 +15081,13 @@ MonoBehaviour:
     - {x: 30, y: 20, z: 0}
     - {x: 15, y: 20, z: -15}
     - {x: 0, y: 20, z: -15}
+    startingMoney: 250
   - musicData:
       shockTowerClips:
       - clips:
-        - {fileID: 8300000, guid: 092768a6cc91cdb4cbcdb4cd13bc4418, type: 3}
-        - {fileID: 8300000, guid: e14ead84969965142b81c4427124e425, type: 3}
-        - {fileID: 8300000, guid: de8fa4e6ae969a441aeff7ea3cc38c12, type: 3}
+        - {fileID: 8300000, guid: a1aeb98b1aa8cc640a04ee3bc906bb5d, type: 3}
+        - {fileID: 8300000, guid: b4aa8e5c82d14654fbd0b715fe436fe0, type: 3}
+        - {fileID: 8300000, guid: 5f81a6245240db848a3997d9940b0bc6, type: 3}
       laserTowerClips:
       - clips:
         - {fileID: 8300000, guid: f6073e65a27effe4788d1a68993a3ce5, type: 3}
@@ -15095,27 +15095,27 @@ MonoBehaviour:
         - {fileID: 8300000, guid: b956c54b3062eb445a57aacf0a03515b, type: 3}
       plasmaTowerClips:
       - clips:
-        - {fileID: 8300000, guid: 3c097f17c46e112418b06230c7b65313, type: 3}
-        - {fileID: 8300000, guid: a5fe70623aba48c4db61bbf93b5617f8, type: 3}
-        - {fileID: 8300000, guid: f1a0b88beb16cdb4a9afd88d4abde087, type: 3}
+        - {fileID: 8300000, guid: d4c691bc4e55869448c8aa68b081b50d, type: 3}
+        - {fileID: 8300000, guid: 4fe31abe1acbeb046ac894b412ae1424, type: 3}
+        - {fileID: 8300000, guid: 46b16eefa07fe2c48aedeef4aa65c49a, type: 3}
       scannerClips:
       - {fileID: 8300000, guid: 55f458bda68119b4a9384890223c05ab, type: 3}
       - {fileID: 8300000, guid: 5e6ed8aa9dacdec4c8a84a2d93a18bda, type: 3}
       - {fileID: 8300000, guid: 55e51ff24df7cc7488cf9b3ffdf90e9b, type: 3}
       - {fileID: 8300000, guid: 606c360946389e34eadf95b2b35f142d, type: 3}
       enemyDeathClips:
-      - {fileID: 8300000, guid: d2c60ea4c3c842a4b8b21b6c5e6b9f38, type: 3}
-      - {fileID: 8300000, guid: e606fbcb9875d444b9f1f31417b1cc9e, type: 3}
-      - {fileID: 8300000, guid: ab7f8d90b50db0748a79c94482d35fb0, type: 3}
-      - {fileID: 8300000, guid: 2a043a4efb805c94491870c5f6a6e888, type: 3}
-      - {fileID: 8300000, guid: cc51715f722c66c469017c13a8e9f782, type: 3}
+      - {fileID: 8300000, guid: 1f0093726db1cf64585c0fcd885bb695, type: 3}
+      - {fileID: 8300000, guid: cef7dfec077ece4419f5b535af020024, type: 3}
+      - {fileID: 8300000, guid: c131dd376191c004783975dad17cb27f, type: 3}
+      - {fileID: 8300000, guid: 1d8092da2faf85244b8c59056808f2a1, type: 3}
+      - {fileID: 8300000, guid: 1f4e6c4d1b5ebc54db1d651596b78093, type: 3}
       measurePerSong: 08000000080000000800000008000000
       ending: {fileID: 8300000, guid: 3074b73da96a5324ebb7d942b6c75f53, type: 3}
     spawnPatterns:
-    - An1;Bn1;An1.Bn1;
-    - Af1;Af2;Af4;w1;An4;Af4;An4;w2;An5,Af5;An8;Af6;
-    - Ar1;An6;Ar2,An6;Ar2;Ar3;w2;Ar2;An6,Ar2;Ar3;
-    - Ah1;w1;Ar3,Af5;Ar2,Ah1;w2;Ar2;Ar3,An6;Af8,Ar4,Ah2;
+    - An1,Bn1;An2,Bn1;w1;An2,Bn2;An3,Bn3;w2;An3;Bn3;An4;Bn4;
+    - Af2,Bf2;Af3,Bf3;w1;An5,Bn5;Af4,Af4;w1;Ar1,Br1;Af5,Bf5;
+    - Ar2;Br1;w2;Af4,Ar2;Bf4,Br2;w1;An6,Bn4,Br1;Ar2,Br1;Ar2,Br2;
+    - Ah1,Bh1;w1;Af6,Br2;Ar3,Bf6;Ah1,Bh1;w2;Ar3,Af8;Br3,Bf8;Ah2,Bh2;
     enemyPaths:
     - spawnPosition: {x: -55, y: -75, z: -30}
       enemyPaths:
@@ -15143,6 +15143,7 @@ MonoBehaviour:
     - {x: 37, y: 20, z: -20.6}
     - {x: 18, y: 20, z: -18}
     - {x: 0, y: 20, z: -15}
+    startingMoney: 335
 --- !u!1 &1398701589
 GameObject:
   m_ObjectHideFlags: 0

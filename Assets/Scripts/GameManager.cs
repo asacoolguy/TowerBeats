@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour {
 	// game progression variables
 	public float currentScore = 0;
 	public float totalScore = 0;
-	public int startingMoney, maxHealth;
+	public int maxHealth;
 	private int currentMoney, maxWave, currentWave, currentHealth;
     public int currentStage;
     private bool gameOver = false;
@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour {
         audioSource = transform.Find("Audio").GetComponent<AudioSource>();
         menuAudioSource = transform.Find("MenuAudio").GetComponent<AudioSource>();
         currentHealth = maxHealth;
-        currentMoney = startingMoney;
         currentWave = 0;
         currentStage = -1; // -1 for no currentStage
 
@@ -110,11 +109,11 @@ public class GameManager : MonoBehaviour {
 
         if (devMode) {
             state = GameState.GameScreen;
-            currentMoney = startingMoney;
 
             // load info for stage 1
             int testStage = 1;
             currentStage = testStage;
+            currentMoney = levelData.levelData[currentStage].startingMoney;
 
             // load scannerMusic info
             scanner.SetupScanner();
@@ -488,7 +487,7 @@ public class GameManager : MonoBehaviour {
 
         // reset all scores and stuff
         currentHealth = maxHealth;
-        currentMoney = startingMoney;
+        currentMoney = levelData.levelData[currentStage].startingMoney;
         currentScore = totalScore = 0;
         currentWave = 0;
 

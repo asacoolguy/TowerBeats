@@ -127,13 +127,13 @@ public class Enemy : MonoBehaviour {
                 }
 
                 float moveAmount = moveSpeed * speedRatio * Time.deltaTime;
-                Vector3 moveDirection = targetLocation - transform.position;
+                Vector3 moveDirection = path[nextTarget] - transform.position;
                 travelDist += moveAmount;
 
                 transform.position += moveDirection.normalized * moveAmount;
-                if (Vector3.Distance(transform.position, targetLocation) < 0.5f && (nextTarget + 1) < path.Count) {
-                    targetLocation = path[++nextTarget];
-                    FaceDirection(targetLocation - path[nextTarget - 1]);
+                if (Vector3.Distance(transform.position, path[nextTarget]) < 0.5f && (nextTarget + 1) < path.Count) {
+                    ++nextTarget;
+                    FaceDirection(path[nextTarget] - path[nextTarget - 1]);
                 }
                 
                 currentDuration += Time.deltaTime;

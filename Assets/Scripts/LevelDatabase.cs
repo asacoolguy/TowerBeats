@@ -14,6 +14,7 @@ public class LevelData {
     public string[] spawnPatterns;
     public EnemyPathData[] enemyPaths;
     public Vector3[] platformData;
+    public int startingMoney;
 }
 
 
