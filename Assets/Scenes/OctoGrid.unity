@@ -15012,19 +15012,19 @@ MonoBehaviour:
   - musicData:
       shockTowerClips:
       - clips:
-        - {fileID: 8300000, guid: a1aeb98b1aa8cc640a04ee3bc906bb5d, type: 3}
-        - {fileID: 8300000, guid: b4aa8e5c82d14654fbd0b715fe436fe0, type: 3}
-        - {fileID: 8300000, guid: 5f81a6245240db848a3997d9940b0bc6, type: 3}
-      laserTowerClips:
-      - clips:
         - {fileID: 8300000, guid: f6073e65a27effe4788d1a68993a3ce5, type: 3}
         - {fileID: 8300000, guid: 7cdc658427c7e2e4bac740d741ed8f2e, type: 3}
         - {fileID: 8300000, guid: b956c54b3062eb445a57aacf0a03515b, type: 3}
-      plasmaTowerClips:
+      laserTowerClips:
       - clips:
         - {fileID: 8300000, guid: d4c691bc4e55869448c8aa68b081b50d, type: 3}
         - {fileID: 8300000, guid: 4fe31abe1acbeb046ac894b412ae1424, type: 3}
         - {fileID: 8300000, guid: 46b16eefa07fe2c48aedeef4aa65c49a, type: 3}
+      plasmaTowerClips:
+      - clips:
+        - {fileID: 8300000, guid: a1aeb98b1aa8cc640a04ee3bc906bb5d, type: 3}
+        - {fileID: 8300000, guid: b4aa8e5c82d14654fbd0b715fe436fe0, type: 3}
+        - {fileID: 8300000, guid: 5f81a6245240db848a3997d9940b0bc6, type: 3}
       scannerClips:
       - {fileID: 8300000, guid: 55f458bda68119b4a9384890223c05ab, type: 3}
       - {fileID: 8300000, guid: 5e6ed8aa9dacdec4c8a84a2d93a18bda, type: 3}
